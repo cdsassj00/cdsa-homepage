@@ -136,7 +136,8 @@ export default function Hero() {
             <span className="text-clay-700">{hero.title2}</span>
           </h1>
           <p className="mt-6 font-serif text-[20px] md:text-[26px] text-ink-900/85 leading-[1.45] max-w-2xl">
-            <span className="highlight">한국데이터사이언티스트협회</span>와 함께{'\n'}
+            <span className="highlight">한국데이터사이언티스트협회</span>와 함께
+            <br className="hidden md:inline" />
             변화하는 AX시대, <span className="highlight">개인과 조직의 역량</span>을 증폭시키세요.
           </p>
           <p className="mt-5 text-[15px] md:text-[17px] text-ink-700 max-w-2xl leading-relaxed">
