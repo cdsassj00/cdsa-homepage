@@ -135,8 +135,9 @@ export default function Hero() {
             <br />
             <span className="text-clay-700">{hero.title2}</span>
           </h1>
-          <p className="mt-6 font-serif text-[20px] md:text-[26px] text-ink-900/85 leading-[1.45] max-w-2xl whitespace-pre-line">
-            {hero.mid}
+          <p className="mt-6 font-serif text-[20px] md:text-[26px] text-ink-900/85 leading-[1.45] max-w-2xl">
+            <span className="highlight">한국데이터사이언티스트협회</span>와 함께{'\n'}
+            변화하는 AX시대, <span className="highlight">개인과 조직의 역량</span>을 증폭시키세요.
           </p>
           <p className="mt-5 text-[15px] md:text-[17px] text-ink-700 max-w-2xl leading-relaxed">
             {hero.subtitle}
@@ -153,7 +154,7 @@ export default function Hero() {
               href={hero.ctaSecondary.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 md:px-7 py-3 md:py-3.5 rounded-full border border-ink-700/30 text-ink-800 text-sm md:text-base hover:border-clay-700 hover:text-clay-700 transition-colors"
+              className="btn-outline px-6 md:px-7 py-3 md:py-3.5 text-sm md:text-base"
             >
               {hero.ctaSecondary.label}
             </a>

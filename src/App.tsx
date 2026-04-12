@@ -11,17 +11,27 @@ import Institutions from './sections/Institutions'
 import CTA from './sections/CTA'
 import Footer from './sections/Footer'
 
+function SectionDots() {
+  return <div className="section-dots"><span /></div>
+}
+
 function App() {
   return (
     <div className="min-h-screen">
       <Nav />
       <Hero />
+      <SectionDots />
       <Mission />
+      <SectionDots />
       <Alleyway />
+      <SectionDots />
       <Tracks />
       <CurriculumSheet />
+      <SectionDots />
       <Showcase />
+      <SectionDots />
       <Videos />
+      <SectionDots />
       <Tutors />
       <Institutions />
       <CTA />

@@ -50,6 +50,28 @@
   .rule {
     @apply block h-px w-12 bg-ink-700/60;
   }
+  /* 키워드 하이라이트 — warm 형광펜 */
+  .highlight {
+    background: linear-gradient(to top, rgba(244,219,185,0.5) 0%, rgba(244,219,185,0.5) 40%, transparent 40%);
+    padding: 0 2px;
+  }
+  /* 아웃라인 버튼 강조 */
+  .btn-outline {
+    @apply inline-flex items-center gap-2 rounded-full border-2 border-clay-600/60 text-ink-800 font-medium transition-all duration-300;
+    @apply hover:bg-clay-600 hover:text-cream-50 hover:border-clay-600;
+  }
+  /* 섹션 구분 장식 도트 */
+  .section-dots {
+    @apply flex items-center justify-center gap-2 py-8;
+  }
+  .section-dots::before,
+  .section-dots::after {
+    content: '';
+    @apply block w-1 h-1 rounded-full bg-clay-500/50;
+  }
+  .section-dots span {
+    @apply block w-1.5 h-1.5 rounded-full bg-clay-500;
+  }
 }
 
 /* ----- Scroll reveal (카드 단위 스태거 애니메이션) ----- */

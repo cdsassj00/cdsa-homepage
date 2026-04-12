@@ -22,7 +22,8 @@ export default function Mission() {
                 <p key={i}>{p}</p>
               ))}
             </div>
-            <figure ref={quoteRef} className="scroll-reveal mt-12 pl-6 border-l-2 border-clay-500">
+            <figure ref={quoteRef} className="scroll-reveal mt-12 pl-6 border-l-2 border-clay-500 relative">
+              <span className="absolute -left-1 -top-6 font-serif text-[72px] text-clay-500/25 leading-none select-none" aria-hidden>"</span>
               <blockquote className="font-serif italic text-xl md:text-2xl text-ink-900 leading-relaxed">
                 "거시적 혁신이 고속도로라면, 우리는 골목길을 설계합니다.
                 <br />
