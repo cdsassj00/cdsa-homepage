@@ -74,6 +74,15 @@
   }
 }
 
+/* ----- Floating insights pulse ----- */
+.floating-pulse {
+  animation: fp-pulse 3s ease-in-out infinite;
+}
+@keyframes fp-pulse {
+  0%, 100% { box-shadow: 0 4px 14px rgba(43, 32, 24, 0.25); }
+  50% { box-shadow: 0 4px 24px rgba(193, 122, 59, 0.45); }
+}
+
 /* ----- Scroll reveal (카드 단위 스태거 애니메이션) ----- */
 .scroll-reveal {
   opacity: 0;

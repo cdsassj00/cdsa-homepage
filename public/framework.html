@@ -53,11 +53,74 @@ body::before {
 }
 
 /* LEFT SIDEBAR */
+/* ----- Top nav bar ----- */
+.top-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 48px;
+  background: var(--sidebar-bg);
+  border-bottom: 1px solid var(--border);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  font-size: 14px;
+}
+.top-nav-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.top-nav-left a {
+  color: var(--text);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.top-nav-left a:hover { color: var(--active); }
+.top-nav-left .nav-sep {
+  color: rgba(61,46,34,0.3);
+  font-size: 12px;
+}
+.top-nav-home {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: -0.5px;
+}
+.top-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.top-nav-right a {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 13px;
+  transition: color 0.2s;
+}
+.top-nav-right a:hover { color: var(--heading); }
+.top-nav-current {
+  font-weight: 600;
+  color: var(--heading) !important;
+  font-size: 13px !important;
+  position: relative;
+}
+.top-nav-current::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0; right: 0;
+  height: 2px;
+  background: var(--active);
+  border-radius: 1px;
+}
+
 .left-sidebar {
   position: fixed;
-  top: 0; left: 0;
+  top: 48px; left: 0;
   width: var(--left-w);
-  height: 100vh;
+  height: calc(100vh - 48px);
   background: var(--sidebar-bg);
   border-right: 1px solid var(--border);
   overflow-y: auto;
@@ -142,11 +205,27 @@ body::before {
 }
 
 /* CENTER CONTENT */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  font-size: 13px;
+}
+.breadcrumb a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.breadcrumb a:hover { color: var(--heading); }
+.bc-sep { color: rgba(61,46,34,0.3); }
+.bc-current { color: var(--text); font-weight: 500; }
+
 .content-area {
   margin-left: var(--left-w);
   margin-right: var(--right-w);
   max-width: 720px;
-  padding: 48px 48px 120px;
+  padding: 72px 48px 120px;
   margin-left: calc(var(--left-w) + max(0px, (100vw - var(--left-w) - var(--right-w) - 720px) / 2));
 }
 
@@ -303,10 +382,10 @@ body::before {
 /* RIGHT SIDEBAR */
 .right-sidebar {
   position: fixed;
-  top: 0; right: 0;
+  top: 48px; right: 0;
   width: var(--right-w);
-  height: 100vh;
-  padding: 48px 20px 40px 16px;
+  height: calc(100vh - 48px);
+  padding: 24px 20px 40px 16px;
   overflow-y: auto;
   z-index: 90;
 }
@@ -377,8 +456,8 @@ body::before {
 .hamburger {
   display: none;
   position: fixed;
-  top: 14px; left: 14px;
-  z-index: 200;
+  top: 56px; left: 14px;
+  z-index: 150;
   background: var(--sidebar-bg);
   border: 1px solid var(--border);
   border-radius: 6px;
@@ -417,6 +496,8 @@ body::before {
   .hamburger { display: flex; }
 
   .left-sidebar {
+    top: 48px;
+    height: calc(100vh - 48px);
     transform: translateX(-100%);
   }
 
@@ -429,8 +510,10 @@ body::before {
 
   .content-area {
     margin-left: 0;
-    padding: 68px 24px 100px;
+    padding: 72px 24px 100px;
   }
+
+  .top-nav-right { display: none; }
 
   .footer {
     margin-left: 0;
@@ -451,9 +534,21 @@ body::before {
 </button>
 <div class="overlay" id="overlay"></div>
 
+<!-- TOP NAV -->
+<header class="top-nav">
+  <div class="top-nav-left">
+    <a href="/" class="top-nav-home">CDSA</a>
+    <span class="nav-sep">|</span>
+    <a href="/">홈페이지</a>
+  </div>
+  <nav class="top-nav-right">
+    <a href="/framework.html" class="top-nav-current">AX 역량강화 프레임워크</a>
+    <!-- 새 글이 추가되면 여기에 <a href="/글경로.html">제목</a> 한 줄만 추가 -->
+  </nav>
+</header>
+
 <!-- LEFT SIDEBAR -->
 <nav class="left-sidebar" id="leftSidebar">
-  <a href="/" class="logo">CDSA</a>
 
   <div class="nav-part" id="navPart1">
     <div class="nav-part-title" onclick="togglePart('navPart1')">PART 1 &mdash; 철학</div>
@@ -488,6 +583,12 @@ body::before {
 
 <!-- CENTER CONTENT -->
 <main class="content-area">
+
+  <nav class="breadcrumb">
+    <a href="/">← CDSA 홈</a>
+    <span class="bc-sep">/</span>
+    <span class="bc-current">AX 역량강화 프레임워크</span>
+  </nav>
 
   <h1>AX 역량강화 프레임워크</h1>
   <div class="subtitle">한국데이터사이언티스트협회 (CDSA) &mdash; 공공부문 AI 전환을 위한 9단계 역량 체계</div>
@@ -693,6 +794,7 @@ body::before {
     </tbody>
   </table>
   </div>
+
 
 </main>
 
