@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { curriculum, site } from '../data/content'
 import { useInquiry } from './InquiryModal'
 
@@ -19,6 +19,23 @@ export default function Tracks() {
   const { openInquiry } = useInquiry()
   const [seed] = useState(() => Math.floor(Date.now() / 60000))
   const cards = useMemo(() => shuffled(curriculum, seed), [seed])
+  const gridRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const grid = gridRef.current
+    if (!grid || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((e) => {
+        if (e.isIntersecting) {
+          (e.target as HTMLElement).classList.add('revealed')
+          observer.unobserve(e.target)
+        }
+      }),
+      { threshold: 0.08 },
+    )
+    grid.querySelectorAll('.scroll-reveal').forEach((c) => observer.observe(c))
+    return () => observer.disconnect()
+  }, [cards])
 
   return (
     <section id="tracks" className="py-28 md:py-36">
@@ -41,11 +58,12 @@ export default function Tracks() {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-px bg-ink-700/10 border border-ink-700/10">
-          {cards.map((c) => (
+        <div ref={gridRef} className="grid md:grid-cols-2 gap-px bg-ink-700/10 border border-ink-700/10">
+          {cards.map((c, i) => (
             <article
               key={c.code}
-              className="bg-cream-50 p-8 md:p-10 hover:bg-cream-100 transition-colors group"
+              className="scroll-reveal bg-cream-50 p-8 md:p-10 hover:bg-cream-100 transition-colors group"
+              style={{ transitionDelay: `${(i % 4) * 120}ms` }}
             >
               <div className="flex items-start justify-between gap-4 mb-6">
                 <div className="flex items-center gap-3">

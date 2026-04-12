@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import { institutions } from '../data/content'
+import { useCountUp } from '../hooks/useScrollReveal'
 
 /**
  * Dense dynamic word cloud — 150+ institutions packed tight.
@@ -58,6 +59,7 @@ export default function Institutions() {
   const items = useMemo(() => shuffled(institutions, 20260412), [])
 
   const total = institutions.length
+  const countRef = useCountUp(total)
 
   return (
     <section className="py-24 md:py-32 bg-ink-900 text-cream-50 relative overflow-hidden">
@@ -76,7 +78,7 @@ export default function Institutions() {
           <div className="max-w-2xl">
             <span className="eyebrow !text-clay-300">WHERE WE'VE TAUGHT</span>
             <h2 className="font-serif font-semibold text-[36px] md:text-[58px] text-cream-50 mt-5 leading-[1.06] tracking-tightest">
-              함께한 <span className="text-clay-300">{total}+</span>개 기관.
+              함께한 <span ref={countRef} className="text-clay-300">{total}</span><span className="text-clay-300">+</span>개 기관.
             </h2>
             <p className="mt-5 text-cream-200/80 text-[17px] max-w-xl leading-relaxed">
               중앙정부·지자체·대기업·학계까지. 공공과 민간을 가리지 않고 현장에서

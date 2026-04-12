@@ -1,12 +1,22 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { site } from '../data/content'
 import { useInquiry } from './InquiryModal'
 
 export default function Nav() {
   const { openInquiry } = useInquiry()
   const [scrolled, setScrolled] = useState(false)
+  const progressRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20)
+    const onScroll = () => {
+      setScrolled(window.scrollY > 20)
+      // scroll progress bar
+      if (progressRef.current) {
+        const total = document.documentElement.scrollHeight - window.innerHeight
+        const pct = total > 0 ? Math.min(window.scrollY / total, 1) : 0
+        progressRef.current.style.transform = `scaleX(${pct})`
+      }
+    }
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
@@ -21,6 +31,8 @@ export default function Nav() {
   ]
 
   return (
+    <>
+    <div ref={progressRef} className="scroll-progress" style={{ transform: 'scaleX(0)' }} />
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
@@ -56,5 +68,6 @@ export default function Nav() {
         </button>
       </div>
     </header>
+    </>
   )
 }

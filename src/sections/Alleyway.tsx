@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { alleywayProblems } from '../data/content'
 import { useInquiry } from './InquiryModal'
 
@@ -7,6 +7,25 @@ export default function Alleyway() {
   const { openInquiry } = useInquiry()
   const initialCount = 6
   const [expanded, setExpanded] = useState(false)
+  const gridRef = useRef<HTMLDivElement>(null)
+
+  // 카드 단위 스태거 reveal
+  useEffect(() => {
+    const grid = gridRef.current
+    if (!grid || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((e) => {
+        if (e.isIntersecting) {
+          (e.target as HTMLElement).classList.add('revealed')
+          observer.unobserve(e.target)
+        }
+      }),
+      { threshold: 0.08, rootMargin: '0px 0px -20px 0px' },
+    )
+    const cards = grid.querySelectorAll('.scroll-reveal')
+    cards.forEach((c) => observer.observe(c))
+    return () => observer.disconnect()
+  }, [expanded])
 
   // 공공 먼저 3개, 민간 3개를 번갈아 배치한 뒤 나머지(both)를 뒤에
   const publicItems = alleywayProblems.filter((p) => p.sector === 'public')
@@ -63,12 +82,15 @@ export default function Alleyway() {
           </button>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-ink-700/10">
+        <div ref={gridRef} className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-ink-700/10">
           {visible.map((p, i) => (
             <article
               key={p.n}
-              className="bg-cream-50 p-8 hover:bg-cream-100 transition-colors group"
-              style={!expanded && i >= initialCount ? { display: 'none' } : undefined}
+              className="scroll-reveal bg-cream-50 p-8 hover:bg-cream-100 transition-colors group"
+              style={{
+                transitionDelay: `${(i % 6) * 100}ms`,
+                ...(!expanded && i >= initialCount ? { display: 'none' } : {}),
+              }}
             >
               <div className="flex items-start justify-between mb-6">
                 <div className="flex items-center gap-3">
