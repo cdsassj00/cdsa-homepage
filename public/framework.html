@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AX 역량강화 프레임워크 — 한국데이터사이언티스트협회</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #FAF7F1;
+  --text: #2B2018;
+  --heading: #1A1511;
+  --accent: #8B4A18;
+  --sidebar-bg: #F5F0E6;
+  --active: #A85F25;
+  --border: rgba(61,46,34,0.12);
+  --code-bg: #F5F0E6;
+  --left-w: 260px;
+  --right-w: 200px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.85;
+  font-size: 16px;
+  position: relative;
+}
+
+/* paper noise */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* LEFT SIDEBAR */
+.left-sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: var(--left-w);
+  height: 100vh;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  z-index: 100;
+  padding: 28px 0 40px;
+  transition: transform 0.3s ease;
+}
+
+.left-sidebar::-webkit-scrollbar { width: 4px; }
+.left-sidebar::-webkit-scrollbar-thumb { background: rgba(61,46,34,0.2); border-radius: 2px; }
+
+.logo {
+  display: block;
+  padding: 0 24px 24px;
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--heading);
+  text-decoration: none;
+  letter-spacing: -0.5px;
+}
+
+.nav-part {
+  margin-bottom: 8px;
+}
+
+.nav-part-title {
+  padding: 10px 24px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--accent);
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-part-title::before {
+  content: '';
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-right: 1.5px solid var(--accent);
+  border-bottom: 1.5px solid var(--accent);
+  transform: rotate(45deg);
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+
+.nav-part.collapsed .nav-part-title::before {
+  transform: rotate(-45deg);
+}
+
+.nav-part.collapsed .nav-items {
+  display: none;
+}
+
+.nav-items { list-style: none; }
+
+.nav-item a {
+  display: block;
+  padding: 6px 24px 6px 28px;
+  font-size: 13.5px;
+  color: var(--text);
+  text-decoration: none;
+  border-left: 3px solid transparent;
+  transition: all 0.15s;
+  line-height: 1.5;
+}
+
+.nav-item a:hover {
+  background: rgba(61,46,34,0.05);
+}
+
+.nav-item a.active {
+  border-left-color: var(--active);
+  color: var(--active);
+  font-weight: 600;
+  background: rgba(168,95,37,0.06);
+}
+
+/* CENTER CONTENT */
+.content-area {
+  margin-left: var(--left-w);
+  margin-right: var(--right-w);
+  max-width: 720px;
+  padding: 48px 48px 120px;
+  margin-left: calc(var(--left-w) + max(0px, (100vw - var(--left-w) - var(--right-w) - 720px) / 2));
+}
+
+.content-area h1 {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 700;
+  font-size: 32px;
+  color: var(--heading);
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.content-area .subtitle {
+  font-size: 15px;
+  color: var(--accent);
+  margin-bottom: 48px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--border);
+}
+
+.content-area h2 {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 600;
+  font-size: 22px;
+  color: var(--heading);
+  margin: 56px 0 12px;
+  padding-top: 24px;
+  line-height: 1.45;
+}
+
+.content-area h3 {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--heading);
+  margin: 40px 0 10px;
+  line-height: 1.5;
+}
+
+.content-area p {
+  margin-bottom: 20px;
+  text-align: justify;
+  word-break: keep-all;
+}
+
+.content-area .part-label {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--active);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.content-area .section-block {
+  scroll-margin-top: 32px;
+}
+
+/* blockquote style */
+.content-area blockquote {
+  border-left: 3px solid var(--active);
+  padding: 16px 20px;
+  margin: 24px 0;
+  background: rgba(168,95,37,0.04);
+  font-size: 15px;
+  color: var(--text);
+  line-height: 1.8;
+}
+
+/* summary table */
+.summary-table-wrap {
+  overflow-x: auto;
+  margin: 40px 0;
+}
+
+.summary-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+
+.summary-table th {
+  background: var(--sidebar-bg);
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 600;
+  color: var(--heading);
+  padding: 12px 14px;
+  text-align: left;
+  border-bottom: 2px solid var(--border);
+  white-space: nowrap;
+}
+
+.summary-table td {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.summary-table tr:hover td {
+  background: rgba(168,95,37,0.03);
+}
+
+.summary-table td:first-child {
+  font-weight: 600;
+  color: var(--active);
+  white-space: nowrap;
+}
+
+/* prev/next nav */
+.part-nav {
+  display: flex;
+  gap: 16px;
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+
+.part-nav a {
+  flex: 1;
+  display: block;
+  padding: 16px 20px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  text-decoration: none;
+  color: var(--text);
+  transition: all 0.15s;
+  font-size: 14px;
+}
+
+.part-nav a:hover {
+  border-color: var(--active);
+  background: rgba(168,95,37,0.03);
+}
+
+.part-nav a .label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.part-nav a .title {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.part-nav a.next { text-align: right; }
+
+/* RIGHT SIDEBAR */
+.right-sidebar {
+  position: fixed;
+  top: 0; right: 0;
+  width: var(--right-w);
+  height: 100vh;
+  padding: 48px 20px 40px 16px;
+  overflow-y: auto;
+  z-index: 90;
+}
+
+.right-sidebar::-webkit-scrollbar { width: 3px; }
+.right-sidebar::-webkit-scrollbar-thumb { background: rgba(61,46,34,0.15); border-radius: 2px; }
+
+.toc-title {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.toc-list { list-style: none; }
+
+.toc-list li a {
+  display: block;
+  padding: 4px 0 4px 12px;
+  font-size: 12.5px;
+  color: rgba(43,32,24,0.6);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  transition: all 0.15s;
+  line-height: 1.5;
+  word-break: keep-all;
+}
+
+.toc-list li a:hover {
+  color: var(--text);
+}
+
+.toc-list li a.active {
+  border-left-color: var(--active);
+  color: var(--active);
+  font-weight: 600;
+}
+
+.toc-list li.toc-h3 a {
+  padding-left: 22px;
+  font-size: 12px;
+}
+
+/* FOOTER */
+.footer {
+  margin-left: var(--left-w);
+  margin-right: var(--right-w);
+  padding: 32px 48px;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+  color: rgba(43,32,24,0.5);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.footer a {
+  color: var(--active);
+  text-decoration: none;
+}
+
+.footer a:hover { text-decoration: underline; }
+
+/* HAMBURGER */
+.hamburger {
+  display: none;
+  position: fixed;
+  top: 14px; left: 14px;
+  z-index: 200;
+  background: var(--sidebar-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  width: 40px; height: 40px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.hamburger span {
+  display: block;
+  width: 20px; height: 2px;
+  background: var(--heading);
+  border-radius: 1px;
+  transition: all 0.2s;
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(26,21,17,0.3);
+  z-index: 99;
+}
+
+/* MOBILE */
+@media (max-width: 1080px) {
+  .right-sidebar { display: none; }
+  .content-area { margin-right: 0; }
+  .footer { margin-right: 0; }
+}
+
+@media (max-width: 768px) {
+  .hamburger { display: flex; }
+
+  .left-sidebar {
+    transform: translateX(-100%);
+  }
+
+  .left-sidebar.open {
+    transform: translateX(0);
+    box-shadow: 4px 0 24px rgba(0,0,0,0.12);
+  }
+
+  .overlay.open { display: block; }
+
+  .content-area {
+    margin-left: 0;
+    padding: 68px 24px 100px;
+  }
+
+  .footer {
+    margin-left: 0;
+    padding: 24px;
+    flex-direction: column;
+  }
+
+  .content-area h1 { font-size: 26px; }
+  .content-area h2 { font-size: 19px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Hamburger -->
+<button class="hamburger" id="hamburger" aria-label="메뉴 열기">
+  <span></span><span></span><span></span>
+</button>
+<div class="overlay" id="overlay"></div>
+
+<!-- LEFT SIDEBAR -->
+<nav class="left-sidebar" id="leftSidebar">
+  <a href="/" class="logo">CDSA</a>
+
+  <div class="nav-part" id="navPart1">
+    <div class="nav-part-title" onclick="togglePart('navPart1')">PART 1 &mdash; 철학</div>
+    <ul class="nav-items">
+      <li class="nav-item"><a href="#s1-1" data-section="s1-1">1.1 현황</a></li>
+      <li class="nav-item"><a href="#s1-2" data-section="s1-2">1.2 문제인식</a></li>
+      <li class="nav-item"><a href="#s1-3" data-section="s1-3">1.3 철학</a></li>
+    </ul>
+  </div>
+
+  <div class="nav-part" id="navPart2">
+    <div class="nav-part-title" onclick="togglePart('navPart2')">PART 2 &mdash; 역량 체계</div>
+    <ul class="nav-items">
+      <li class="nav-item"><a href="#s2-0" data-section="s2-0">0단계: 연속선 이해</a></li>
+      <li class="nav-item"><a href="#s2-1" data-section="s2-1">1단계: 시야 확장</a></li>
+      <li class="nav-item"><a href="#s2-2" data-section="s2-2">2단계: 골목길 문제</a></li>
+      <li class="nav-item"><a href="#s2-3" data-section="s2-3">3단계: 기술 스펙트럼</a></li>
+      <li class="nav-item"><a href="#s2-4" data-section="s2-4">4단계: 역량 계단</a></li>
+      <li class="nav-item"><a href="#s2-5" data-section="s2-5">5단계: 바이브 코딩</a></li>
+      <li class="nav-item"><a href="#s2-6" data-section="s2-6">6단계: 공공 아카이브</a></li>
+      <li class="nav-item"><a href="#s2-7" data-section="s2-7">7단계: AI 윤리</a></li>
+      <li class="nav-item"><a href="#s2-8" data-section="s2-8">8단계: 관리자 리더십</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- RIGHT SIDEBAR -->
+<aside class="right-sidebar" id="rightSidebar">
+  <div class="toc-title">ON THIS PAGE</div>
+  <ul class="toc-list" id="tocList"></ul>
+</aside>
+
+<!-- CENTER CONTENT -->
+<main class="content-area">
+
+  <h1>AX 역량강화 프레임워크</h1>
+  <div class="subtitle">한국데이터사이언티스트협회 (CDSA) &mdash; 공공부문 AI 전환을 위한 9단계 역량 체계</div>
+
+  <!-- ===== PART 1 ===== -->
+  <div id="part1">
+  <span class="part-label">Part 1</span>
+  <h2 id="s1-1" class="section-block">1.1 현황: '고속도로' 위주의 국가 주도 AX</h2>
+
+  <p>현재 대한민국 공공부문의 AX 전략은 국가 차원의 초대형 프로젝트—소버린 AI, GPU 인프라 확보, 파운데이션 모델 개발, 공공 공통기반 구축 등—에 집중되고 있음. 이는 국가 경쟁력 강화를 위해 반드시 필요한 거시적 인프라 구축 사업이며, 비유하자면 "전국에 고속도로를 까는 작업"에 해당함. 그러나 이러한 탑다운(Top-down) 시스템이 실제 개별 공무원의 일상 업무와는 상당한 거리감을 지니고 있음.</p>
+
+  <p>대규모 시스템은 행정 전반의 균형적 효율을 추구하지만, 현장에서 반복적으로 발생하는 세밀한 불편과 불합리, 즉 '골목길 수준의 문제'에는 손이 닿지 못하고 있음.</p>
+
+  <h2 id="s1-2" class="section-block">1.2 문제 인식: 모두가 '초인재'가 될 필요는 없다</h2>
+
+  <p>이러한 흐름 속에서 공공 AI 교육이 종종 석·박사 수준의 기술—모델 구축, 파인튜닝, GPU 활용—을 가르쳐야 하는 것으로 오해되는 경우가 적지 않음. 또한 기관들은 어떤 역량체계를 만들어야 하는지조차 명확한 기준을 잡지 못한 채 혼선을 겪고 있음. 그러나 현실의 행정업무는 고도화된 모델 개발보다, 정작 아무도 해결해주지 못하는 작고 반복적인 미시적 비효율에서 더 큰 불편과 비용이 발생함. 즉, 공공부문이 필요한 것은 'AI 박사'를 양성하는 교육이 아니라, 현장의 문제를 스스로 해결할 수 있는 생활형·실무형 AI 역량임. 현재는 이 실무 기반 역량이 구조적으로 부재한 상황임.</p>
+
+  <h2 id="s1-3" class="section-block">1.3 철학: 시스템을 소비하는 존재에서 '도구를 만드는 주체'로</h2>
+
+  <p>공공AX의 혁신은 국가가 제공한 고속도로(인프라)를 그저 "사용"하는 데서 완성되지 않음. 진정한 혁신은 현장의 공무원 개개인이 자신의 업무에 맞는 도구를 직접 조립하고 만들어 쓰는 순간에 발생함. 따라서 공공 교육의 방향은 "거대 AI를 만드는 법"을 가르치는 것이 아니라, "이미 존재하는 AI 기술들을 레고 블록처럼 조합해 내 업무 문제를 해결하는 역량"을 길러주는 것으로 전환되어야 함. 즉, 공직자는 시스템의 수동적 소비자가 아니라 업무 문제를 정의하고, AI를 활용해 직접 해결하는 '창작자'이자 '설계자'가 되어야 함. 이 철학이 0~8단계의 역량체계를 관통하는 공공AX 역량강화의 핵심 기조가 됨.</p>
+
+  <blockquote>공직자는 시스템의 수동적 소비자가 아니라 업무 문제를 정의하고, AI를 활용해 직접 해결하는 '창작자'이자 '설계자'가 되어야 한다.</blockquote>
+
+  <!-- Part 1 Nav -->
+  <div class="part-nav">
+    <span style="flex:1"></span>
+    <a href="#s2-0" class="next">
+      <div class="label">다음</div>
+      <div class="title">Part 2: 역량 체계 &rarr;</div>
+    </a>
+  </div>
+  </div>
+
+  <!-- ===== PART 2 ===== -->
+  <div id="part2">
+  <span class="part-label" style="margin-top:64px; display:block;">Part 2</span>
+
+  <h2 id="s2-0" class="section-block">0단계: 전통적 AI와 생성형 AI를 '끊어진 것'이 아니라 '연속선'으로 이해해야 함</h2>
+
+  <p>공직자 AI 교육은 종종 생성형 AI만 떼어놓고 이야기되지만, 실제로는 그 이전에 존재해 온 전통적 AI와 데이터 기반 행정 위에서 이해되어야 함. AI 논의는 1950년대부터 시작되었고, 그동안 머신러닝·딥러닝을 중심으로 한 예측(Predictive)·최적화(Optimize) 모델이 꾸준히 발전해 왔음. 행정 영역에서도 이미 여러 지표·데이터를 바탕으로 패턴을 찾고, 그 결과를 정책 결정에 참고하는 데이터 기반 과학적 의사결정이 중요하게 다뤄져 왔음.</p>
+
+  <p>이 전통적 AI의 본질은, 사람이 일일이 계산하거나 직관만으로는 파악하기 어려운 대규모 데이터에서 패턴을 발견하고, 그 패턴을 바탕으로 "어떤 선택이 더 합리적인가"를 돕는 데 있음. 생성형 AI는 이와 전혀 별개의 것이 아니라, 이러한 패턴 활용 능력을 훨씬 편리하고 자동화된 방식으로 확장한 도구라고 보는 것이 타당함.</p>
+
+  <p>따라서 전통적 AI 자체를 무시하거나, 머신러닝·딥러닝의 기본 원리를 전혀 이해하지 못한 상태에서 "이제는 생성형 AI만 알면 된다"라고 생각하는 것은 데이터 기반 행정의 토대를 잃어버리는 것과 마찬가지임.</p>
+
+  <p>요약하면, 공공분야 AI 역량 강화는 "생성형 AI 사용법"만을 가르치는 것이 아니라, 전통적 AI와 생성형 AI를 하나의 연속선 위에서 이해하게 하고, 데이터 기반 행정의 토대 위에 생성형 AI를 '어시스트 도구'로 올려놓는 관점을 심어주는 것에서 출발해야 함.</p>
+
+  <h2 id="s2-1" class="section-block">1단계: 국가 AX 전략을 올바르게 제안·비판하기 위한 '시야 확장 교육'의 필요성</h2>
+
+  <p>공공부문 AI 교육의 출발점은 공무원들이 기술의 맥락과 흐름을 바라볼 수 있는 시야를 충분히 확보하도록 돕는 것임. 현재 정부는 소버린AI, GPU 인프라, KAI, 공공 공통기반, 파운데이션 모델 구축 등 여러 거시적 전략을 추진 중이며, 이는 국가 차원의 "고속도로형" AI 인프라 정책이라 할 수 있음.</p>
+
+  <p>그러나 이러한 거대 전략에 대해 현장 공무원들이 실질적인 의견을 제시하거나 건전한 비판을 수행하기 위해서는, 단순히 정책 설명을 듣는 수준을 넘어, 직접 다양한 AI 기술과 서비스들을 폭넓게 체험해보고 비교해볼 수 있는 경험적 기반이 필요함.</p>
+
+  <p>ChatGPT, Gemini, Claude 등 주요 빅테크 모델을 직접 사용해보고, 각 모델의 장단점, AI가 잘하는 일과 못하는 일, 환각 패턴, 데이터 흐름, 프라이버시 차이 등을 경험적으로 이해해야 국가가 구축하는 소버린AI나 공공 모델의 기능적 범위가 타당한지 판단할 수 있게 됨.</p>
+
+  <h2 id="s2-2" class="section-block">2단계: 거대 시스템이 해결하지 못하는 '골목길 문제'를 발견·정의하는 능력의 중요성</h2>
+
+  <p>실제 행정업무의 불편은 복잡한 엑셀 정리, 반복 입력, 보고서 편집, 시스템 간 데이터 불일치, 의미 없이 반복되는 절차 등과 같이 매우 작은 단위에서 발생함. 이러한 문제는 중앙에서 설계한 대규모 시스템으로는 포착되지 않으며, 결국 당사자인 공무원의 관찰과 정의 과정을 통해서만 드러나게 됨.</p>
+
+  <p>골목길 문제는 개인 혼자만의 경험으로 규정되기 어려우며, 동일 업무를 수행하는 여러 동료들과의 대화, 워크숍, 업무 프로세스 흐름도 분석 등을 통해 공통적으로 나타나는 불편의 구조를 발견하는 방식으로 도출됨.</p>
+
+  <p>즉, "어떤 AI를 쓸 수 있는가"보다 먼저 "무엇을 해결해야 하는가"를 정의할 수 있는 능력이 공공 조직의 혁신을 좌우함.</p>
+
+  <blockquote>"어떤 AI를 쓸 수 있는가"보다 먼저 "무엇을 해결해야 하는가"를 정의할 수 있는 능력이 공공 조직의 혁신을 좌우한다.</blockquote>
+
+  <h2 id="s2-3" class="section-block">3단계: 문제 해결을 위한 '기술 스펙트럼 이해'와 적절한 도구 선택 능력의 확보</h2>
+
+  <p>골목길 문제를 발견·정의한 이후에는 이를 해결하기 위한 적절한 기술 선택 능력이 요구됨. 현업에서 활용 가능한 기술들은 크게 생성형 AI 기반 에이전트·요약·작성 도구, 전통적 오피스 기반 자동화 도구(Excel, VBA, 한글 매크로), 데이터 분석 및 업무 자동화용 프로그래밍(Python, R), SQL, API를 활용한 시스템 간 연계, 로컬 SLM, RAG 기술 등이 있음.</p>
+
+  <p>기술 선택 능력은 단순한 기능 숙지가 아니라, 문제에 맞는 기술 조합을 설계할 수 있는 기획 역량의 핵심 요소이며, 이는 AX 교육에서 반드시 강화해야 하는 영역임.</p>
+
+  <h2 id="s2-4" class="section-block">4단계: 문제 해결을 위한 단계적 접근 — 프롬프트에서 에이전트 설계까지의 역량 계단</h2>
+
+  <p>문제를 정의하고 기술군별 특성을 이해하였다면, 다음 단계는 그 문제를 실제로 해결하기 위한 실행 전략을 단계적으로 구성하는 것임. 공공업무는 단일 기능으로 해결되는 경우가 드물기 때문에, 난이도와 목적에 따라 계단형 접근 방식을 적용하는 것이 가장 효과적임.</p>
+
+  <p>첫 단계는 프롬프트 기반 해결 전략, 두 번째는 맞춤형 에이전트 활용, 세 번째는 프롬프트 + 행정 도구 결합 워크플로우 자동화, 네 번째는 사용자가 직접 에이전트 구조를 설계하는 것, 다섯 번째는 프리트레인드 모델의 작동 원리와 한계에 대한 이해임.</p>
+
+  <p>이 역량이 갖춰질 때, 공무원은 단순 AI 사용자에서 실제 행정업무를 재설계할 수 있는 실무형 아키텍트로 성장하게 됨.</p>
+
+  <h2 id="s2-5" class="section-block">5단계: 미시적 업무자동화를 실현하는 '바이브 코딩' 역량의 중요성</h2>
+
+  <p>바이브 코딩은 전통적 의미의 프로그래밍 전문가 양성과는 완전히 다른 개념임. 이는 복잡한 개발 지식을 요구하는 것이 아니라, 업무 문제를 해결하기 위해 필요한 최소한의 코드·도구·자동화를 AI의 도움을 받아 조립하는 방식을 의미함.</p>
+
+  <p>바이브 코딩은 특정 언어나 도구에 국한되지 않음. Excel VBA, Python, R, HTML/CSS/JavaScript, Google Apps Script 이 모두가 바이브 코딩의 영역임. VS Code, Cursor, Antigravity와 같은 AI 통합 개발 환경이 등장하면서 비전공 공무원도 빠르게 자동화를 구현할 수 있음.</p>
+
+  <p>결론적으로, 바이브 코딩은 공무원을 개발자로 만드는 과정이 아니라, 공무원이 스스로 문제를 해결하는 힘을 갖게 하는 과정임.</p>
+
+  <blockquote>바이브 코딩은 공무원을 개발자로 만드는 과정이 아니라, 공무원이 스스로 문제를 해결하는 힘을 갖게 하는 과정이다.</blockquote>
+
+  <h2 id="s2-6" class="section-block">6단계: 공직자 자동화 산출물의 축적·활용을 위한 '공공 아카이브·마켓플레이스' 구축 필요성</h2>
+
+  <p>AX 역량 강화 교육을 통해 공무원들은 프롬프트 워크플로우, 문서 자동화 스크립트, Python·VBA 코드 등 다양한 실무 산출물을 직접 만들어내게 됨. 그러나 이러한 산출물들이 각 개인의 PC에 머무르거나 일회성 활용에 그치는 경우가 대부분임.</p>
+
+  <p>이 문제를 해결하기 위해서는 공공 AI·자동화 마켓플레이스(아카이브)를 구축할 필요가 있음. 이 아카이브는 골목길 문제와 해결 사례의 저장소, 프롬프트·워크플로우·코드의 공유·재사용 플랫폼, 살아있는 교과서, 국가 AX 전략 반영 데이터, 교육–활용–확산 순환 구조로 기능함.</p>
+
+  <p>공공 아카이브·마켓플레이스는 단순한 저장소가 아니라, 공무원들이 스스로 문제를 해결하고 그 해결 경험을 공유함으로써 공공 전체의 혁신 역량을 끌어올리는 집단 지능 인프라가 됨.</p>
+
+  <h2 id="s2-7" class="section-block">7단계: 실무 중심의 AI 윤리 — '비판적 검토'와 '인간 개입(Editing)'을 핵심으로</h2>
+
+  <p>AI 윤리는 공공부문에서 매우 중요한 원칙이지만, 현장 공무원 입장에서는 개념이 추상적으로 느껴지는 경우가 많음. 그 핵심은 AI의 결과를 비판적으로 읽고, 인간이 직접 검토·수정하는 Editing 과정을 필수 절차로 삼는 것임.</p>
+
+  <p>실무에서의 AI 윤리는 추상적 담론이 아니라 비판적 사고, 검토·수정(Editing) 절차, 정보보호, 투명성, 인간 최종 책임이라는 매우 구체적인 실천 행위로 구성됨.</p>
+
+  <h2 id="s2-8" class="section-block">8단계: 관리자 AI 리더십 — 기술 이해·문제 존중·보안 해소·확산 문화 구축의 역할</h2>
+
+  <p>AI 시대의 관리자 리더십은 단순히 "AI를 쓰라"고 지시하는 수준을 넘어, 앞서 제시된 0~7단계를 현장에서 실제로 작동하게 만드는 조정자 역할을 수행함.</p>
+
+  <p>관리자 AI 리더십은 기술 사용을 명령하는 리더십이 아니라, 기술 이해, 문제 존중, 보안 해소, 확산 문화 조성, 윤리적 책임을 기반으로 구성원이 스스로 혁신을 만들어낼 수 있도록 설계하는 행정 혁신 리더십임. 관리자가 이러한 역할을 수행할 때, 조직 전체는 탑다운 전략과 바텀업 혁신이 만나는 지속 가능한 AX 생태계를 갖추게 됨.</p>
+
+  <blockquote>관리자가 이러한 역할을 수행할 때, 조직 전체는 탑다운 전략과 바텀업 혁신이 만나는 지속 가능한 AX 생태계를 갖추게 된다.</blockquote>
+
+  <!-- Part 2 Nav -->
+  <div class="part-nav">
+    <a href="#s1-1">
+      <div class="label">이전</div>
+      <div class="title">&larr; Part 1: 철학</div>
+    </a>
+    <a href="#summary-table" class="next">
+      <div class="label">다음</div>
+      <div class="title">역량 체계 요약표 &rarr;</div>
+    </a>
+  </div>
+  </div>
+
+  <!-- ===== SUMMARY TABLE ===== -->
+  <h2 id="summary-table" class="section-block" style="margin-top:72px;">역량 체계 요약표</h2>
+
+  <div class="summary-table-wrap">
+  <table class="summary-table">
+    <thead>
+      <tr>
+        <th>단계</th>
+        <th>제목</th>
+        <th>핵심 목적</th>
+        <th>핵심 내용</th>
+        <th>다음 단계로 이어지는 이유</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>0단계</td>
+        <td>전통 AI와 생성형 AI의 연속선 이해</td>
+        <td>AI의 역사적·기술적 토대 확보</td>
+        <td>머신러닝·딥러닝의 예측·최적화 모델과 생성형 AI를 하나의 연속선 위에서 이해하고, 데이터 기반 행정의 토대를 확보</td>
+        <td>AI의 맥락을 이해해야 국가 전략의 방향성을 판단할 수 있음</td>
+      </tr>
+      <tr>
+        <td>1단계</td>
+        <td>시야 확장 교육</td>
+        <td>국가 AX 전략에 대한 비판적 시야 확보</td>
+        <td>다양한 AI 모델을 직접 체험하고 비교하여, 소버린AI·공공 모델의 타당성을 판단할 수 있는 경험적 기반 형성</td>
+        <td>시야가 확보되어야 현장의 실제 문제를 발견할 수 있음</td>
+      </tr>
+      <tr>
+        <td>2단계</td>
+        <td>골목길 문제 발견·정의</td>
+        <td>현장 미시적 비효율의 구조적 발견</td>
+        <td>거대 시스템이 포착하지 못하는 반복적 불편을 동료와의 대화·워크숍을 통해 공통적 불편의 구조로 도출</td>
+        <td>문제를 정의해야 적절한 기술을 선택할 수 있음</td>
+      </tr>
+      <tr>
+        <td>3단계</td>
+        <td>기술 스펙트럼 이해</td>
+        <td>문제에 맞는 도구 선택 능력 확보</td>
+        <td>생성형 AI, 오피스 자동화, 프로그래밍, SQL, API, SLM, RAG 등 기술 카탈로그를 이해하고 조합 설계</td>
+        <td>기술을 알아야 단계적 실행 전략을 세울 수 있음</td>
+      </tr>
+      <tr>
+        <td>4단계</td>
+        <td>역량 계단: 프롬프트에서 에이전트 설계까지</td>
+        <td>난이도별 단계적 해결 전략 수립</td>
+        <td>프롬프트 기반 해결 → 맞춤형 에이전트 → 워크플로우 자동화 → 에이전트 설계 → 모델 원리 이해의 5단계</td>
+        <td>실행 전략이 갖춰져야 실제 자동화 구현이 가능함</td>
+      </tr>
+      <tr>
+        <td>5단계</td>
+        <td>바이브 코딩</td>
+        <td>미시적 업무 자동화 실현</td>
+        <td>AI 도움으로 최소한의 코드·도구를 조립하여 업무 문제를 해결하는 방식. VBA, Python, Apps Script 등 모두 포함</td>
+        <td>개인이 만든 산출물을 축적·공유해야 조직 전체가 혁신됨</td>
+      </tr>
+      <tr>
+        <td>6단계</td>
+        <td>공공 아카이브·마켓플레이스</td>
+        <td>산출물의 축적·공유·재사용 체계 구축</td>
+        <td>골목길 문제 해결 사례, 프롬프트·코드의 공유 플랫폼, 교육–활용–확산 순환 구조 구축</td>
+        <td>공유 체계 위에서 윤리적 사용 원칙이 필수적임</td>
+      </tr>
+      <tr>
+        <td>7단계</td>
+        <td>실무 중심 AI 윤리</td>
+        <td>비판적 검토와 인간 개입의 제도화</td>
+        <td>비판적 사고, 검토·수정(Editing) 절차, 정보보호, 투명성, 인간 최종 책임을 구체적 실천 행위로 구성</td>
+        <td>실무자의 윤리 역량을 관리자가 조직 차원으로 확산시켜야 함</td>
+      </tr>
+      <tr>
+        <td>8단계</td>
+        <td>관리자 AI 리더십</td>
+        <td>AX 생태계의 지속 가능한 운영</td>
+        <td>기술 이해, 문제 존중, 보안 해소, 확산 문화 조성, 윤리적 책임을 기반으로 탑다운과 바텀업이 만나는 생태계 설계</td>
+        <td>0~8단계 전체가 순환하는 지속 가능한 혁신 체계 완성</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <span>&copy; 2026 <a href="https://cdsa.kr">한국데이터사이언티스트협회</a></span>
+  <a href="https://cdsapaper.lovable.app/inquiry/cdsa">이 프레임워크에 대해 문의하기</a>
+</footer>
+
+<script>
+// === Collapsible nav parts ===
+function togglePart(id) {
+  document.getElementById(id).classList.toggle('collapsed');
+}
+
+// === Hamburger ===
+const hamburger = document.getElementById('hamburger');
+const leftSidebar = document.getElementById('leftSidebar');
+const overlay = document.getElementById('overlay');
+
+hamburger.addEventListener('click', () => {
+  leftSidebar.classList.toggle('open');
+  overlay.classList.toggle('open');
+});
+
+overlay.addEventListener('click', () => {
+  leftSidebar.classList.remove('open');
+  overlay.classList.remove('open');
+});
+
+// Close sidebar on nav click (mobile)
+leftSidebar.querySelectorAll('.nav-item a').forEach(a => {
+  a.addEventListener('click', () => {
+    if (window.innerWidth <= 768) {
+      leftSidebar.classList.remove('open');
+      overlay.classList.remove('open');
+    }
+  });
+});
+
+// === Right TOC generation ===
+function buildTOC() {
+  const tocList = document.getElementById('tocList');
+  const headings = document.querySelectorAll('.content-area h2[id]');
+  tocList.innerHTML = '';
+  headings.forEach(h => {
+    const li = document.createElement('li');
+    li.className = 'toc-h2';
+    const a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    a.dataset.section = h.id;
+    li.appendChild(a);
+    tocList.appendChild(li);
+  });
+}
+buildTOC();
+
+// === IntersectionObserver scroll spy ===
+function setupScrollSpy() {
+  const sections = document.querySelectorAll('.content-area h2[id]');
+  const leftLinks = document.querySelectorAll('.left-sidebar .nav-item a');
+  const tocLinks = document.querySelectorAll('#tocList a');
+
+  let currentId = '';
+
+  const observer = new IntersectionObserver((entries) => {
+    // Find the topmost visible section
+    const visible = [];
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        visible.push(entry);
+      }
+    });
+
+    if (visible.length > 0) {
+      // pick the one closest to top
+      visible.sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+      currentId = visible[0].target.id;
+    }
+
+    // Update left sidebar
+    leftLinks.forEach(link => {
+      link.classList.toggle('active', link.dataset.section === currentId);
+    });
+
+    // Update right TOC
+    tocLinks.forEach(link => {
+      link.classList.toggle('active', link.dataset.section === currentId);
+    });
+  }, {
+    rootMargin: '-80px 0px -60% 0px',
+    threshold: 0
+  });
+
+  sections.forEach(s => observer.observe(s));
+
+  // Also handle scroll for cases observer misses
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        const scrollY = window.scrollY + 100;
+        let found = '';
+        sections.forEach(s => {
+          if (s.offsetTop <= scrollY) {
+            found = s.id;
+          }
+        });
+        if (found && found !== currentId) {
+          currentId = found;
+          leftLinks.forEach(link => {
+            link.classList.toggle('active', link.dataset.section === currentId);
+          });
+          tocLinks.forEach(link => {
+            link.classList.toggle('active', link.dataset.section === currentId);
+          });
+        }
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+}
+
+setupScrollSpy();
+</script>
+</body>
+</html>
