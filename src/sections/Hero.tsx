@@ -124,7 +124,7 @@ export default function Hero() {
       />
 
       {/* Main content */}
-      <div className="container-editorial relative z-10 pt-28 md:pt-36 pb-24">
+      <div className="container-editorial relative z-10 pt-36 md:pt-48 pb-32">
         <div className="max-w-[52rem]">
           <div className="flex items-center gap-3 mb-6">
             <span className="rule" />
