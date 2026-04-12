@@ -204,8 +204,7 @@ export default function CurriculumSheet() {
                   <th className="px-3 py-3 text-[10px] font-mono uppercase tracking-[0.2em] font-medium w-[70px]">조직</th>
                   <th className="px-3 py-3 text-[10px] font-mono uppercase tracking-[0.2em] font-medium w-[60px]">산업</th>
                   <th className="px-3 py-3 text-[10px] font-mono uppercase tracking-[0.2em] font-medium w-[70px]">카테고리</th>
-                  <th className="px-3 py-3 text-[10px] font-mono uppercase tracking-[0.2em] font-medium w-[180px]">모듈명</th>
-                  <th className="px-3 py-3 text-[10px] font-mono uppercase tracking-[0.2em] font-medium">워크플로우</th>
+                  <th className="px-3 py-3 text-[10px] font-mono uppercase tracking-[0.2em] font-medium">실습 내용 · 워크플로우</th>
                   <th className="px-3 py-3 text-[10px] font-mono uppercase tracking-[0.2em] font-medium w-[50px]">난이도</th>
                   <th className="px-3 py-3 text-[10px] font-mono uppercase tracking-[0.2em] font-medium w-[45px]">시간</th>
                 </tr>
@@ -251,12 +250,14 @@ export default function CurriculumSheet() {
                     </td>
                     <td className="px-3 py-2.5 text-[11px] text-ink-700">{row.industry}</td>
                     <td className="px-3 py-2.5 text-[11px] text-ink-500">{row.category}</td>
-                    <td className="px-3 py-2.5 text-[12px] text-ink-900 font-serif">{row.name}</td>
-                    <td className="px-3 py-2.5 text-[11px] text-ink-600">
+                    <td className="px-3 py-2.5 text-[12px]">
                       {row.workflow ? (
-                        <span className="text-clay-700">{row.workflow}</span>
+                        <div>
+                          <span className="text-ink-900 font-serif">{row.name}</span>
+                          <span className="block text-[11px] text-clay-700 mt-0.5">{row.workflow}</span>
+                        </div>
                       ) : (
-                        <span className="text-ink-400">—</span>
+                        <span className="text-ink-900 font-serif font-medium">{row.name}</span>
                       )}
                     </td>
                     <td className="px-3 py-2.5 text-[10px] font-mono text-clay-600">{row.difficulty}</td>

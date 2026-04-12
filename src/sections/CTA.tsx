@@ -10,12 +10,13 @@ export default function CTA() {
           <div className="rule !bg-cream-100/40 mx-auto mb-8" />
           <span className="eyebrow !text-clay-300">EDUCATION · CONSULTING</span>
           <h2 className="h-display text-[40px] md:text-[68px] mt-6 text-cream-50">
-            오늘 당신 책상 위의 <br />
-            <span className="text-clay-300">문제를 들려주세요.</span>
+            현장의 문제를 풀고, <br />
+            <span className="text-clay-300">AI 역량을 쌓는 곳.</span>
           </h2>
           <p className="mt-8 text-cream-200/80 text-lg max-w-2xl mx-auto leading-relaxed">
-            개인·기업·공공기관의 AI Transformation, AX 전환에 도움을 받고 싶은 분들은 자유롭게
-            문의해주세요. 가르치는 강사가 직접 교육을 설계하고, 컨설턴트가 직접 연락드립니다.
+            공공기관의 행정 혁신부터 기업의 업무 자동화까지.
+            조직과 개인의 AI 역량을 키우고 싶다면 자유롭게 문의해주세요.
+            가르치는 강사가 직접 교육을 설계하고, 컨설턴트가 직접 연락드립니다.
           </p>
           <div className="mt-12 flex flex-wrap items-center justify-center gap-4">
             <button
