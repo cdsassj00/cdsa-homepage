@@ -42,7 +42,7 @@ export default function Tracks() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-px bg-ink-700/10 border border-ink-700/10">
-          {cards.map((c, i) => (
+          {cards.map((c) => (
             <article
               key={c.code}
               className="bg-cream-50 p-8 md:p-10 hover:bg-cream-100 transition-colors group"

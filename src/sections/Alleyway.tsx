@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { alleywayProblems, site } from '../data/content'
+import { alleywayProblems } from '../data/content'
 import { useInquiry } from './InquiryModal'
 
 export default function Alleyway() {
