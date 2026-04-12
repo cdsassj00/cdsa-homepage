@@ -6,12 +6,15 @@ const CSV_URL =
 
 interface Row {
   level: string
+  parent_name: string
   organization_type: string
   industry: string
   job_role: string
   category: string
   name: string
   details: string
+  task_example: string
+  workflow: string
   difficulty: string
   duration: string
 }
@@ -26,12 +29,15 @@ function parseCSV(text: string): Row[] {
     if (vals.length < 7) continue
     rows.push({
       level: vals[headers.indexOf('level')]?.trim() || '',
+      parent_name: vals[headers.indexOf('parent_name')]?.trim() || '',
       organization_type: vals[headers.indexOf('organization_type')]?.trim() || '',
       industry: vals[headers.indexOf('industry')]?.trim() || '',
       job_role: vals[headers.indexOf('job_role')]?.trim() || '',
       category: vals[headers.indexOf('category')]?.trim() || '',
       name: vals[headers.indexOf('name')]?.trim() || '',
       details: vals[headers.indexOf('details')]?.trim() || '',
+      task_example: vals[headers.indexOf('task_example')]?.trim() || '',
+      workflow: vals[headers.indexOf('workflow')]?.trim() || '',
       difficulty: vals[headers.indexOf('difficulty')]?.trim() || '',
       duration: vals[headers.indexOf('duration')]?.trim() || '',
     })
@@ -190,17 +196,18 @@ export default function CurriculumSheet() {
         {/* Sheet table */}
         <div className="border border-ink-700/15 rounded-sm overflow-hidden bg-cream-50">
           <div className="overflow-x-auto overflow-y-auto max-h-[520px]" style={{ scrollbarWidth: 'thin' }}>
-            <table className="w-full text-left border-collapse min-w-[900px]">
+            <table className="w-full text-left border-collapse min-w-[1100px]">
               <thead className="sticky top-0 z-10">
                 <tr className="bg-ink-900 text-cream-50">
-                  <th className="px-4 py-3 text-[10px] font-mono uppercase tracking-[0.2em] font-medium w-[40px]">#</th>
-                  <th className="px-4 py-3 text-[10px] font-mono uppercase tracking-[0.2em] font-medium w-[90px]">조직</th>
-                  <th className="px-4 py-3 text-[10px] font-mono uppercase tracking-[0.2em] font-medium w-[80px]">산업</th>
-                  <th className="px-4 py-3 text-[10px] font-mono uppercase tracking-[0.2em] font-medium w-[90px]">직무</th>
-                  <th className="px-4 py-3 text-[10px] font-mono uppercase tracking-[0.2em] font-medium w-[100px]">카테고리</th>
-                  <th className="px-4 py-3 text-[10px] font-mono uppercase tracking-[0.2em] font-medium">과정명</th>
-                  <th className="px-4 py-3 text-[10px] font-mono uppercase tracking-[0.2em] font-medium w-[60px]">난이도</th>
-                  <th className="px-4 py-3 text-[10px] font-mono uppercase tracking-[0.2em] font-medium w-[60px]">시간</th>
+                  <th className="px-3 py-3 text-[10px] font-mono uppercase tracking-[0.2em] font-medium w-[36px]">#</th>
+                  <th className="px-3 py-3 text-[10px] font-mono uppercase tracking-[0.2em] font-medium w-[50px]">유형</th>
+                  <th className="px-3 py-3 text-[10px] font-mono uppercase tracking-[0.2em] font-medium w-[70px]">조직</th>
+                  <th className="px-3 py-3 text-[10px] font-mono uppercase tracking-[0.2em] font-medium w-[60px]">산업</th>
+                  <th className="px-3 py-3 text-[10px] font-mono uppercase tracking-[0.2em] font-medium w-[70px]">카테고리</th>
+                  <th className="px-3 py-3 text-[10px] font-mono uppercase tracking-[0.2em] font-medium w-[180px]">모듈명</th>
+                  <th className="px-3 py-3 text-[10px] font-mono uppercase tracking-[0.2em] font-medium">워크플로우</th>
+                  <th className="px-3 py-3 text-[10px] font-mono uppercase tracking-[0.2em] font-medium w-[50px]">난이도</th>
+                  <th className="px-3 py-3 text-[10px] font-mono uppercase tracking-[0.2em] font-medium w-[45px]">시간</th>
                 </tr>
               </thead>
               <tbody>
@@ -208,13 +215,28 @@ export default function CurriculumSheet() {
                   <tr
                     key={i}
                     className={`border-t border-ink-700/8 hover:bg-clay-50 transition-colors ${
-                      i % 2 === 0 ? 'bg-cream-50' : 'bg-cream-100/50'
+                      row.level === 'course'
+                        ? 'bg-clay-50/40 font-medium'
+                        : i % 2 === 0
+                        ? 'bg-cream-50'
+                        : 'bg-cream-100/50'
                     }`}
                   >
-                    <td className="px-4 py-2.5 text-[11px] font-mono text-ink-400">{i + 1}</td>
-                    <td className="px-4 py-2.5 text-[12px] text-ink-700">
+                    <td className="px-3 py-2.5 text-[11px] font-mono text-ink-400">{i + 1}</td>
+                    <td className="px-3 py-2.5 text-[11px]">
                       <span
-                        className={`inline-block px-1.5 py-0.5 rounded text-[10px] font-medium ${
+                        className={`inline-block px-1.5 py-0.5 rounded text-[9px] font-medium ${
+                          row.level === 'course'
+                            ? 'bg-clay-500 text-cream-50'
+                            : 'bg-cream-200 text-ink-600'
+                        }`}
+                      >
+                        {row.level === 'course' ? '과정' : '모듈'}
+                      </span>
+                    </td>
+                    <td className="px-3 py-2.5 text-[11px] text-ink-700">
+                      <span
+                        className={`inline-block px-1.5 py-0.5 rounded text-[9px] font-medium ${
                           row.organization_type === '공공기관'
                             ? 'bg-clay-100 text-clay-800'
                             : row.organization_type === '기업'
@@ -227,12 +249,18 @@ export default function CurriculumSheet() {
                         {row.organization_type}
                       </span>
                     </td>
-                    <td className="px-4 py-2.5 text-[12px] text-ink-700">{row.industry}</td>
-                    <td className="px-4 py-2.5 text-[12px] text-ink-700">{row.job_role}</td>
-                    <td className="px-4 py-2.5 text-[12px] text-ink-500">{row.category}</td>
-                    <td className="px-4 py-2.5 text-[13px] text-ink-900 font-serif">{row.name}</td>
-                    <td className="px-4 py-2.5 text-[11px] font-mono text-clay-600">{row.difficulty}</td>
-                    <td className="px-4 py-2.5 text-[11px] font-mono text-ink-500">
+                    <td className="px-3 py-2.5 text-[11px] text-ink-700">{row.industry}</td>
+                    <td className="px-3 py-2.5 text-[11px] text-ink-500">{row.category}</td>
+                    <td className="px-3 py-2.5 text-[12px] text-ink-900 font-serif">{row.name}</td>
+                    <td className="px-3 py-2.5 text-[11px] text-ink-600">
+                      {row.workflow ? (
+                        <span className="text-clay-700">{row.workflow}</span>
+                      ) : (
+                        <span className="text-ink-400">—</span>
+                      )}
+                    </td>
+                    <td className="px-3 py-2.5 text-[10px] font-mono text-clay-600">{row.difficulty}</td>
+                    <td className="px-3 py-2.5 text-[10px] font-mono text-ink-500">
                       {row.duration ? `${Math.round(Number(row.duration) / 60)}H` : ''}
                     </td>
                   </tr>
