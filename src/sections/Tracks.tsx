@@ -77,7 +77,7 @@ export default function Tracks() {
                 <span className="font-mono text-[11px] text-clay-600">{c.hours}</span>
               </div>
 
-              <h3 className="font-serif text-[26px] md:text-[30px] text-ink-900 leading-[1.15] mb-4 group-hover:text-clay-800 transition-colors">
+              <h3 className="font-serif text-[18px] md:text-[21px] text-ink-900 leading-[1.25] mb-4 group-hover:text-clay-800 transition-colors whitespace-nowrap">
                 {c.name}
               </h3>
               <p className="text-[15px] text-ink-700 leading-relaxed mb-6">{c.summary}</p>
