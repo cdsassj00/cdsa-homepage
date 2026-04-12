@@ -5,6 +5,7 @@ import { useInquiry } from './InquiryModal'
 export default function Nav() {
   const { openInquiry } = useInquiry()
   const [scrolled, setScrolled] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
   const progressRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -60,13 +61,48 @@ export default function Nav() {
             </a>
           ))}
         </nav>
-        <button
-          onClick={openInquiry}
-          className="text-sm font-medium px-4 py-2 rounded-full bg-ink-900 text-cream-50 hover:bg-clay-700 transition-colors"
-        >
-          교육 문의
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={openInquiry}
+            className="hidden md:inline-flex text-sm font-medium px-4 py-2 rounded-full bg-ink-900 text-cream-50 hover:bg-clay-700 transition-colors"
+          >
+            교육 문의
+          </button>
+          {/* Mobile hamburger */}
+          <button
+            onClick={() => setMenuOpen((v) => !v)}
+            className="md:hidden flex flex-col justify-center items-center w-9 h-9 gap-[5px]"
+            aria-label="메뉴 열기"
+          >
+            <span className={`block w-5 h-[2px] bg-ink-900 transition-all duration-300 ${menuOpen ? 'translate-y-[7px] rotate-45' : ''}`} />
+            <span className={`block w-5 h-[2px] bg-ink-900 transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`} />
+            <span className={`block w-5 h-[2px] bg-ink-900 transition-all duration-300 ${menuOpen ? '-translate-y-[7px] -rotate-45' : ''}`} />
+          </button>
+        </div>
       </div>
+      {/* Mobile dropdown */}
+      {menuOpen && (
+        <div className="md:hidden bg-cream-50 border-b border-ink-700/10">
+          <div className="container-editorial flex flex-col py-2">
+            {links.map((l) => (
+              <a
+                key={l.href}
+                href={l.href}
+                onClick={() => setMenuOpen(false)}
+                className="py-3 text-sm text-ink-700 hover:text-clay-700 transition-colors"
+              >
+                {l.label}
+              </a>
+            ))}
+            <button
+              onClick={() => { setMenuOpen(false); openInquiry() }}
+              className="mt-2 mb-2 text-sm font-medium px-4 py-2 rounded-full bg-ink-900 text-cream-50 hover:bg-clay-700 transition-colors w-full"
+            >
+              교육 문의
+            </button>
+          </div>
+        </div>
+      )}
     </header>
     </>
   )

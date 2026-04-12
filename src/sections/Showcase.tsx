@@ -1,5 +1,69 @@
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import { showcases, site } from '../data/content'
+
+/** Simple inline SVG icon+label thumbnails per showcase card */
+const cardIllustrations: Record<string, ReactNode> = {
+  바이브마켓: (
+    <svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-20 h-20">
+      {/* shopping bag */}
+      <rect x="28" y="38" width="64" height="52" rx="4" stroke="#8B4A18" strokeWidth="2.5" fill="#F5F0E8" />
+      <path d="M45 38V28a15 15 0 0 1 30 0v10" stroke="#8B4A18" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+      <circle cx="60" cy="60" r="6" fill="#C17A3B" opacity="0.5" />
+    </svg>
+  ),
+  커리큘럼빌더: (
+    <svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-20 h-20">
+      {/* grid layout */}
+      <rect x="22" y="18" width="32" height="26" rx="3" stroke="#8B4A18" strokeWidth="2.5" fill="#F5F0E8" />
+      <rect x="66" y="18" width="32" height="26" rx="3" stroke="#8B4A18" strokeWidth="2.5" fill="#F5F0E8" />
+      <rect x="22" y="56" width="32" height="26" rx="3" stroke="#8B4A18" strokeWidth="2.5" fill="#F5F0E8" />
+      <rect x="66" y="56" width="32" height="26" rx="3" stroke="#8B4A18" strokeWidth="2.5" fill="#F5F0E8" />
+      <line x1="38" y1="28" x2="38" y2="38" stroke="#C17A3B" strokeWidth="2" strokeLinecap="round" opacity="0.5" />
+      <line x1="82" y1="28" x2="82" y2="38" stroke="#C17A3B" strokeWidth="2" strokeLinecap="round" opacity="0.5" />
+    </svg>
+  ),
+  HWPX문서생성기: (
+    <svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-20 h-20">
+      {/* document with folded corner */}
+      <path d="M32 14h40l16 16v56a4 4 0 0 1-4 4H36a4 4 0 0 1-4-4V18a4 4 0 0 1 4-4z" stroke="#8B4A18" strokeWidth="2.5" fill="#F5F0E8" />
+      <path d="M72 14v16h16" stroke="#8B4A18" strokeWidth="2.5" strokeLinejoin="round" fill="none" />
+      <line x1="44" y1="44" x2="76" y2="44" stroke="#C17A3B" strokeWidth="2" strokeLinecap="round" opacity="0.5" />
+      <line x1="44" y1="54" x2="70" y2="54" stroke="#C17A3B" strokeWidth="2" strokeLinecap="round" opacity="0.5" />
+      <line x1="44" y1="64" x2="66" y2="64" stroke="#C17A3B" strokeWidth="2" strokeLinecap="round" opacity="0.5" />
+    </svg>
+  ),
+  AI역량진단: (
+    <svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-20 h-20">
+      {/* bar chart */}
+      <rect x="24" y="58" width="16" height="28" rx="2" stroke="#8B4A18" strokeWidth="2.5" fill="#F5F0E8" />
+      <rect x="52" y="38" width="16" height="48" rx="2" stroke="#8B4A18" strokeWidth="2.5" fill="#F5F0E8" />
+      <rect x="80" y="18" width="16" height="68" rx="2" stroke="#8B4A18" strokeWidth="2.5" fill="#F5F0E8" />
+      <line x1="18" y1="88" x2="102" y2="88" stroke="#8B4A18" strokeWidth="2.5" strokeLinecap="round" />
+      <path d="M28 52l28-18 28-16" stroke="#C17A3B" strokeWidth="2" strokeLinecap="round" strokeDasharray="4 3" opacity="0.5" fill="none" />
+    </svg>
+  ),
+  시험감독프로그램: (
+    <svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-20 h-20">
+      {/* shield with check */}
+      <path d="M60 10L28 26v28c0 20 14 34 32 40 18-6 32-20 32-40V26L60 10z" stroke="#8B4A18" strokeWidth="2.5" fill="#F5F0E8" />
+      <path d="M45 50l10 10 20-22" stroke="#C17A3B" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+    </svg>
+  ),
+  문서리드수집플랫폼: (
+    <svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-20 h-20">
+      {/* envelope / mail */}
+      <rect x="20" y="24" width="80" height="52" rx="4" stroke="#8B4A18" strokeWidth="2.5" fill="#F5F0E8" />
+      <path d="M20 28l40 26 40-26" stroke="#8B4A18" strokeWidth="2.5" strokeLinejoin="round" fill="none" />
+      <circle cx="60" cy="58" r="5" fill="#C17A3B" opacity="0.4" />
+    </svg>
+  ),
+}
+
+/** Look up illustration by title (strip spaces for key matching) */
+export function getIllustration(title: string): ReactNode {
+  const key = title.replace(/\s+/g, '')
+  return cardIllustrations[key] ?? null
+}
 
 export default function Showcase() {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
@@ -44,10 +108,11 @@ export default function Showcase() {
               onClick={() => openPreview(s.href, s.title)}
               className="group block bg-cream-50 border border-ink-700/15 rounded-sm overflow-hidden hover:border-clay-500 hover:shadow-[0_18px_40px_-20px_rgba(110,55,16,0.3)] transition-all text-left"
             >
-              <div className="aspect-[4/3] bg-gradient-to-br from-clay-50 via-cream-100 to-cream-200 flex items-center justify-center relative overflow-hidden">
+              <div className="aspect-[4/3] bg-gradient-to-br from-clay-50 via-cream-100 to-cream-200 flex flex-col items-center justify-center relative overflow-hidden">
                 <div className="absolute inset-0 bg-paper opacity-40" />
-                <div className="relative font-serif text-5xl text-clay-700 group-hover:scale-105 transition-transform">
-                  {s.title[0]}
+                <div className="relative group-hover:scale-105 transition-transform flex flex-col items-center gap-3">
+                  {getIllustration(s.title)}
+                  <span className="font-serif text-[13px] text-clay-700/70 tracking-wide">{s.title}</span>
                 </div>
                 <span className="absolute top-4 left-4 text-[10px] uppercase tracking-[0.18em] text-clay-700 border border-clay-500 px-2 py-1 rounded-full bg-cream-50">
                   {s.badge}

@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useRef, useEffect, useCallback } from 'react'
 import { institutions } from '../data/content'
 import { useCountUp } from '../hooks/useScrollReveal'
 
@@ -61,6 +61,74 @@ export default function Institutions() {
   const total = institutions.length
   const countRef = useCountUp(total)
 
+  const cloudRef = useRef<HTMLDivElement>(null)
+  const mouseRef = useRef({ x: -9999, y: -9999 })
+  const rafRef = useRef<number>(0)
+
+  const animate = useCallback(() => {
+    const container = cloudRef.current
+    if (!container) return
+    const words = container.querySelectorAll<HTMLSpanElement>('.cloud-word')
+    const { x: mx, y: my } = mouseRef.current
+    const containerRect = container.getBoundingClientRect()
+
+    words.forEach((el) => {
+      const rect = el.getBoundingClientRect()
+      const cx = rect.left + rect.width / 2 - containerRect.left
+      const cy = rect.top + rect.height / 2 - containerRect.top
+      const dx = cx - (mx - containerRect.left)
+      const dy = cy - (my - containerRect.top)
+      const dist = Math.sqrt(dx * dx + dy * dy)
+      const radius = 200
+
+      if (dist < radius && dist > 0) {
+        const force = (1 - dist / radius) * 0.25
+        const tx = dx / dist * force * radius
+        const ty = dy / dist * force * radius
+        el.style.translate = `${tx}px ${ty}px`
+        // slightly boost opacity for nearby words
+        const boost = Math.min(1, parseFloat(getComputedStyle(el).opacity) + (1 - dist / radius) * 0.3)
+        el.style.opacity = String(boost)
+      } else {
+        el.style.translate = '0px 0px'
+        el.style.opacity = ''
+      }
+    })
+
+    rafRef.current = requestAnimationFrame(animate)
+  }, [])
+
+  useEffect(() => {
+    // Respect prefers-reduced-motion
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    if (mq.matches) return
+
+    const container = cloudRef.current
+    if (!container) return
+
+    const onMove = (e: MouseEvent) => {
+      mouseRef.current = { x: e.clientX, y: e.clientY }
+    }
+    const onLeave = () => {
+      mouseRef.current = { x: -9999, y: -9999 }
+    }
+
+    container.addEventListener('mousemove', onMove)
+    container.addEventListener('mouseleave', onLeave)
+    rafRef.current = requestAnimationFrame(animate)
+
+    return () => {
+      container.removeEventListener('mousemove', onMove)
+      container.removeEventListener('mouseleave', onLeave)
+      cancelAnimationFrame(rafRef.current)
+      // reset all words
+      container.querySelectorAll<HTMLSpanElement>('.cloud-word').forEach((el) => {
+        el.style.translate = ''
+        el.style.opacity = ''
+      })
+    }
+  }, [animate])
+
   return (
     <section className="py-24 md:py-32 bg-ink-900 text-cream-50 relative overflow-hidden">
       <div className="absolute inset-0 bg-paper opacity-[0.07] pointer-events-none" />
@@ -93,7 +161,7 @@ export default function Institutions() {
       </div>
 
       <div className="relative px-6 md:px-10">
-        <div className="mx-auto max-w-[1240px] flex flex-wrap items-baseline justify-center gap-x-4 md:gap-x-7 gap-y-2 md:gap-y-4">
+        <div ref={cloudRef} className="mx-auto max-w-[1240px] flex flex-wrap items-baseline justify-center gap-x-4 md:gap-x-7 gap-y-2 md:gap-y-4">
           {items.map((item, i) => {
             const rot = ((i * 37) % 11) - 5
             const delay = (i % 24) * 180

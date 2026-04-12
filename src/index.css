@@ -235,6 +235,21 @@
   width: 100%;
 }
 
+/* ----- Tutor HTML Card 3D Flip ----- */
+.tutor-card-flip {
+  perspective: 1200px;
+  width: 100%;
+  max-width: 560px;
+}
+.tutor-card-inner {
+  transition: transform 0.3s cubic-bezier(0.66, 0, 0.34, 1);
+  transform-style: preserve-3d;
+  transform: rotateY(0deg);
+}
+.tutor-card-inner.flipping {
+  transform: rotateY(90deg);
+}
+
 /* Tutor hover panel (legacy — now used only for the card grid in TutorFlip card styling) */
 .tutor-card {
   position: relative;

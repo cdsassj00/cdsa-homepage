@@ -10,33 +10,6 @@ function escapeXml(s: string): string {
     .replace(/'/g, '&apos;')
 }
 
-// Wrap long bio text into multiple SVG lines
-function wrapText(text: string, maxCharsPerLine: number, maxLines = 10): string[] {
-  // 마침표(.) 기준으로 먼저 분리한 뒤 줄 길이로 재분할
-  const sentences = text.replace(/\n/g, ' ').split(/\.\s*/).filter(Boolean)
-  const words: string[] = []
-  for (const s of sentences) {
-    words.push(...s.split(/\s+/))
-    words.push('.') // 마침표 복원
-  }
-  const lines: string[] = []
-  let current = ''
-  for (const w of words) {
-    if (w === '.') {
-      current = current.trim() + '.'
-      continue
-    }
-    if ((current + ' ' + w).trim().length > maxCharsPerLine) {
-      if (current) lines.push(current.trim())
-      current = w
-    } else {
-      current = (current + ' ' + w).trim()
-    }
-  }
-  if (current) lines.push(current)
-  return lines.slice(0, maxLines)
-}
-
 interface Tutor {
   name: string
   role: string
@@ -44,69 +17,6 @@ interface Tutor {
   bio: string
   tags: string[]
   photo: string
-}
-
-/** Big editorial card — 600x600, 한글 기준 글자 폭 조정 */
-function tutorCardImage(t: Tutor, index: number): string {
-  // 한글은 영문 대비 ~1.6배 폭 → 한 줄 18자로 제한, 최대 9줄
-  const headlineLines = wrapText(t.headline, 22, 2)
-  const bio = wrapText(t.bio, 18, 9)
-
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" preserveAspectRatio="xMidYMid slice">
-<defs>
-<filter id="gt${index}">
-<feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="${index + 13}"/>
-<feColorMatrix values="0 0 0 0 0.16  0 0 0 0 0.12  0 0 0 0 0.08  0 0 0 0.07 0"/>
-</filter>
-<pattern id="pt${index}" x="0" y="0" width="22" height="22" patternUnits="userSpaceOnUse">
-<circle cx="1.2" cy="1.2" r="0.8" fill="#6E3710" fill-opacity="0.14"/>
-</pattern>
-<linearGradient id="pg${index}" x1="0%" y1="0%" x2="100%" y2="100%">
-<stop offset="0%" stop-color="#E4D7BC"/>
-<stop offset="55%" stop-color="#C17A3B"/>
-<stop offset="100%" stop-color="#6E3710"/>
-</linearGradient>
-</defs>
-<rect width="600" height="600" fill="#F5F0E6"/>
-<rect width="600" height="600" fill="url(#pt${index})"/>
-<rect width="600" height="600" filter="url(#gt${index})"/>
-
-<g stroke="#C17A3B" stroke-opacity="0.18" fill="none">
-<circle cx="510" cy="90" r="80"/>
-<circle cx="510" cy="90" r="50"/>
-</g>
-
-<!-- Header -->
-<text x="40" y="50" font-family="ui-monospace,monospace" font-size="10" letter-spacing="2" fill="#6E3710" fill-opacity="0.7">NETWORK · ${String(index + 1).padStart(2, '0')} / 09</text>
-<line x1="40" y1="62" x2="95" y2="62" stroke="#A85F25" stroke-width="1.5"/>
-<text x="560" y="50" font-family="ui-monospace,monospace" font-size="9" letter-spacing="1.5" fill="#8A7560" text-anchor="end">CDSA</text>
-
-<!-- Portrait circle -->
-<circle cx="90" cy="140" r="48" fill="url(#pg${index})"/>
-<text x="90" y="158" font-family="'Noto Serif KR','Georgia',serif" font-size="46" font-weight="600" fill="#FAF7F1" text-anchor="middle">${escapeXml(t.name[0])}</text>
-
-<!-- Name + role -->
-<text x="160" y="125" font-family="'Noto Serif KR','Georgia',serif" font-size="32" font-weight="600" fill="#1A1511" letter-spacing="-1">${escapeXml(t.name)}</text>
-<text x="160" y="150" font-family="ui-monospace,monospace" font-size="10" letter-spacing="1.5" fill="#A85F25">${escapeXml(t.role.toUpperCase())}</text>
-
-<!-- Headline (줄바꿈 지원) -->
-${headlineLines.map((line, i) => `<text x="160" y="${172 + i * 18}" font-family="'Noto Serif KR','Georgia',serif" font-size="13" fill="#3D2E22" font-weight="500">${escapeXml(line)}</text>`).join('')}
-
-<line x1="40" y1="218" x2="120" y2="218" stroke="#6E3710" stroke-opacity="0.35" stroke-width="1"/>
-<text x="40" y="238" font-family="ui-monospace,monospace" font-size="9" letter-spacing="1.5" fill="#8A7560">BIOGRAPHY</text>
-
-<!-- Bio lines (13px, 한글 18자/줄) -->
-${bio.map((line, i) => `<text x="40" y="${262 + i * 22}" font-family="'Noto Serif KR','Georgia',serif" font-size="13" fill="#3D2E22">${escapeXml(line)}</text>`).join('')}
-
-<!-- Tags -->
-<line x1="40" y1="478" x2="100" y2="478" stroke="#6E3710" stroke-opacity="0.35" stroke-width="1"/>
-<text x="40" y="498" font-family="ui-monospace,monospace" font-size="9" letter-spacing="1.2" fill="#8A7560">EXPERTISE</text>
-<text x="40" y="516" font-family="ui-monospace,monospace" font-size="9" letter-spacing="1" fill="#8A7560">${t.tags.map(tag => escapeXml(tag.toUpperCase())).join(' · ')}</text>
-
-<!-- Footer -->
-<text x="560" y="570" font-family="ui-monospace,monospace" font-size="9" letter-spacing="1.5" fill="#8A7560" text-anchor="end">VOL.2026</text>
-</svg>`
-  return `url("data:image/svg+xml;utf8,${encodeURIComponent(svg)}")`
 }
 
 /** Small thumb image — simplified for tiny sizes. */
@@ -139,82 +49,149 @@ function tutorThumbImage(t: Tutor, index: number): string {
   return `url("data:image/svg+xml;utf8,${encodeURIComponent(svg)}")`
 }
 
-const FLIP_SPEED = 720
+/** HTML-based tutor card content */
+function TutorCard({ tutor, index }: { tutor: Tutor; index: number }) {
+  return (
+    <div className="bg-cream-100 border border-ink-700/15 rounded-sm p-8 w-full max-w-[560px] min-h-[500px] flex flex-col relative overflow-hidden">
+      {/* Subtle grain overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-[0.04]"
+        style={{
+          backgroundImage: `url("data:image/svg+xml;utf8,${encodeURIComponent(
+            `<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='${index + 13}'/><feColorMatrix values='0 0 0 0 0.16 0 0 0 0 0.12 0 0 0 0 0.08 0 0 0 1 0'/></filter><rect width='200' height='200' filter='url(#g)'/></svg>`,
+          )}")`,
+        }}
+      />
 
-const topForward: Keyframe[] = [
-  { transform: 'rotateX(0deg)' },
-  { transform: 'rotateX(-90deg)' },
-  { transform: 'rotateX(-90deg)' },
-]
-const bottomForward: Keyframe[] = [
-  { transform: 'rotateX(90deg)' },
-  { transform: 'rotateX(90deg)' },
-  { transform: 'rotateX(0deg)' },
-]
-const topReverse: Keyframe[] = [
-  { transform: 'rotateX(-90deg)' },
-  { transform: 'rotateX(-90deg)' },
-  { transform: 'rotateX(0deg)' },
-]
-const bottomReverse: Keyframe[] = [
-  { transform: 'rotateX(0deg)' },
-  { transform: 'rotateX(90deg)' },
-  { transform: 'rotateX(90deg)' },
-]
+      {/* Decorative circles — top right */}
+      <div className="absolute top-4 right-6 pointer-events-none">
+        <svg width="160" height="160" viewBox="0 0 160 160" className="opacity-[0.12]">
+          <circle cx="80" cy="80" r="80" stroke="#C17A3B" strokeWidth="1" fill="none" />
+          <circle cx="80" cy="80" r="50" stroke="#C17A3B" strokeWidth="1" fill="none" />
+        </svg>
+      </div>
+
+      {/* Header: NETWORK label + CDSA */}
+      <div className="flex justify-between items-center mb-6 relative z-10">
+        <div>
+          <span className="font-mono text-[10px] tracking-[2px] text-clay-700/70">
+            NETWORK &middot; {String(index + 1).padStart(2, '0')} / {String(tutors.length).padStart(2, '0')}
+          </span>
+          <div className="mt-1.5 w-14 h-[1.5px] bg-clay-600" />
+        </div>
+        <span className="font-mono text-[9px] tracking-[1.5px] text-ink-500">CDSA</span>
+      </div>
+
+      {/* Portrait + Name + Role */}
+      <div className="flex items-center gap-5 mb-4 relative z-10">
+        {/* Portrait circle */}
+        <div className="w-24 h-24 rounded-full flex-shrink-0 overflow-hidden relative">
+          {tutor.photo ? (
+            <img
+              src={tutor.photo}
+              alt={tutor.name}
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <div
+              className="w-full h-full flex items-center justify-center"
+              style={{
+                background: `linear-gradient(135deg, #E4D7BC 0%, #C17A3B 55%, #6E3710 100%)`,
+              }}
+            >
+              <span className="font-serif text-[46px] font-semibold text-cream-50">
+                {tutor.name[0]}
+              </span>
+            </div>
+          )}
+        </div>
+        <div>
+          <h3 className="font-serif text-[28px] font-semibold text-ink-900 leading-tight tracking-tight">
+            {tutor.name}
+          </h3>
+          <span className="font-mono text-[10px] tracking-[1.5px] text-clay-600 uppercase">
+            {tutor.role}
+          </span>
+        </div>
+      </div>
+
+      {/* Headline */}
+      <p className="font-serif text-[14px] text-ink-800 font-medium leading-relaxed mb-4 relative z-10">
+        {tutor.headline}
+      </p>
+
+      {/* Divider */}
+      <div className="w-20 h-px bg-clay-700/35 mb-3 relative z-10" />
+
+      {/* BIOGRAPHY label */}
+      <span className="font-mono text-[9px] tracking-[1.5px] text-ink-500 mb-2 relative z-10">
+        BIOGRAPHY
+      </span>
+
+      {/* Bio text — auto-wrapping HTML, the whole point of this conversion */}
+      <p className="font-serif text-[13px] text-ink-800 leading-[1.7] mb-auto relative z-10">
+        {tutor.bio}
+      </p>
+
+      {/* Divider */}
+      <div className="w-16 h-px bg-clay-700/35 mt-4 mb-3 relative z-10" />
+
+      {/* EXPERTISE label + tags */}
+      <div className="relative z-10">
+        <span className="font-mono text-[9px] tracking-[1.2px] text-ink-500 block mb-2">
+          EXPERTISE
+        </span>
+        <div className="flex flex-wrap gap-1.5">
+          {tutor.tags.map((tag) => (
+            <span
+              key={tag}
+              className="font-mono text-[9px] tracking-[1px] text-ink-500 bg-cream-200/60 px-2 py-0.5 rounded-sm border border-ink-700/10"
+            >
+              {tag.toUpperCase()}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div className="flex justify-end mt-4 relative z-10">
+        <span className="font-mono text-[9px] tracking-[1.5px] text-ink-500">VOL.2026</span>
+      </div>
+    </div>
+  )
+}
 
 export default function TutorFlip() {
   const [index, setIndex] = useState(0)
-  const topRef = useRef<HTMLDivElement>(null)
-  const bottomRef = useRef<HTMLDivElement>(null)
-  const overlayTopRef = useRef<HTMLDivElement>(null)
-  const overlayBottomRef = useRef<HTMLDivElement>(null)
+  const [displayIndex, setDisplayIndex] = useState(0)
+  const [flipping, setFlipping] = useState(false)
   const busyRef = useRef(false)
 
-  const paint = useCallback((idx: number) => {
-    const img = tutorCardImage(tutors[idx], idx)
-    if (topRef.current) topRef.current.style.backgroundImage = img
-    if (bottomRef.current) bottomRef.current.style.backgroundImage = img
-    if (overlayTopRef.current) overlayTopRef.current.style.backgroundImage = img
-    if (overlayBottomRef.current) overlayBottomRef.current.style.backgroundImage = img
-  }, [])
-
+  // Initial paint
   useEffect(() => {
-    paint(0)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    setDisplayIndex(0)
   }, [])
 
-  const flipTo = useCallback((newIdx: number, reverse: boolean) => {
-    if (busyRef.current || newIdx === index) return
-    busyRef.current = true
-    const newImg = tutorCardImage(tutors[newIdx], newIdx)
-    const topAnim = reverse ? topReverse : topForward
-    const bottomAnim = reverse ? bottomReverse : bottomForward
+  const select = useCallback(
+    (newIdx: number) => {
+      if (busyRef.current || newIdx === index) return
+      busyRef.current = true
+      setFlipping(true)
+      setIndex(newIdx)
 
-    overlayTopRef.current?.animate(topAnim, {
-      duration: FLIP_SPEED,
-      easing: 'cubic-bezier(0.66, 0, 0.34, 1)',
-    })
-    overlayBottomRef.current?.animate(bottomAnim, {
-      duration: FLIP_SPEED,
-      easing: 'cubic-bezier(0.66, 0, 0.34, 1)',
-    })
+      // At 300ms (halfway through 600ms transition), swap content
+      window.setTimeout(() => {
+        setDisplayIndex(newIdx)
+        setFlipping(false)
+      }, 300)
 
-    const swapDelay = reverse ? 0 : FLIP_SPEED - 200
-    window.setTimeout(() => {
-      if (topRef.current) topRef.current.style.backgroundImage = newImg
-      if (bottomRef.current) bottomRef.current.style.backgroundImage = newImg
-    }, swapDelay)
-
-    window.setTimeout(() => {
-      if (overlayTopRef.current) overlayTopRef.current.style.backgroundImage = newImg
-      if (overlayBottomRef.current) overlayBottomRef.current.style.backgroundImage = newImg
-      busyRef.current = false
-    }, FLIP_SPEED + 20)
-
-    setIndex(newIdx)
-  }, [index])
-
-  const select = (i: number) => flipTo(i, i < index)
+      // Release lock after full animation completes
+      window.setTimeout(() => {
+        busyRef.current = false
+      }, 620)
+    },
+    [index],
+  )
 
   return (
     <div className="grid md:grid-cols-[260px_1fr] lg:grid-cols-[300px_1fr] gap-8 lg:gap-12">
@@ -254,13 +231,21 @@ export default function TutorFlip() {
         ))}
       </div>
 
-      {/* Right: flip gallery */}
+      {/* Right: HTML card with 3D flip transition */}
       <div className="flex flex-col items-center">
-        <div className="flip-gallery tutor-flip" aria-roledescription="carousel" aria-label="Selected tutor">
-          <div ref={topRef} className="top unite" />
-          <div ref={bottomRef} className="bottom unite" />
-          <div ref={overlayTopRef} className="overlay-top unite" />
-          <div ref={overlayBottomRef} className="overlay-bottom unite" />
+        <div
+          className="tutor-card-flip"
+          style={{ perspective: '1200px' }}
+        >
+          <div
+            className={`tutor-card-inner${flipping ? ' flipping' : ''}`}
+            style={{
+              transition: 'transform 0.3s cubic-bezier(0.66, 0, 0.34, 1)',
+              transformStyle: 'preserve-3d',
+            }}
+          >
+            <TutorCard tutor={tutors[displayIndex]} index={displayIndex} />
+          </div>
         </div>
         <p className="mt-5 text-xs text-ink-500 font-mono tracking-wider text-center">
           왼쪽 썸네일을 누르면 카드가 플립되며 해당 전문가를 보여줍니다
