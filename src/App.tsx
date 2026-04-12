@@ -10,6 +10,7 @@ import Tutors from './sections/Tutors'
 import Institutions from './sections/Institutions'
 import CTA from './sections/CTA'
 import Footer from './sections/Footer'
+import FloatingInsights from './sections/FloatingInsights'
 
 function SectionDots() {
   return <div className="section-dots"><span /></div>
@@ -36,6 +37,7 @@ function App() {
       <Institutions />
       <CTA />
       <Footer />
+      <FloatingInsights />
     </div>
   )
 }
