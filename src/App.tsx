@@ -10,6 +10,7 @@ import Tutors from './sections/Tutors'
 import Institutions from './sections/Institutions'
 import CTA from './sections/CTA'
 import Footer from './sections/Footer'
+import FullCourse from './sections/FullCourse'
 import FloatingInsights from './sections/FloatingInsights'
 
 function SectionDots() {
@@ -27,6 +28,8 @@ function App() {
       <Alleyway />
       <SectionDots />
       <Tracks />
+      <SectionDots />
+      <FullCourse />
       <CurriculumSheet />
       <SectionDots />
       <Showcase />
