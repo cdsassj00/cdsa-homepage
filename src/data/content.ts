@@ -508,7 +508,7 @@ export const tutors = [
   {
     name: '신성진',
     role: '대표이사',
-    headline: '행정안전부·과기정통부 자문위원 · 명지대 겸임교수',
+    headline: '경영지도사 · 행정안전부·과기정통부 데이터기반행정 자문위원',
     bio: '㈜한국데이터사이언티스트협회 대표이사. Google Appsheet Partner GMW Global 부사장. 중소벤처기업부 경영지도사(마케팅). 前 유한건강생활 경영지원실장(CFO). 한양대·동서울대 겸임교수. 한국야쿠르트, 대웅제약, 삼양식품, 매일유업.',
     tags: ['AI 업무활용', '데이터분석/전략', '바이브 코딩', '업무 자동화'],
     photo: '/tutors/shinsungjin.png',
