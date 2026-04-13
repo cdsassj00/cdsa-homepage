@@ -173,8 +173,11 @@ export default function Institutions() {
                 )} ${weightColorClass(item.w)}`}
                 style={{
                   transform: `rotate(${rot * 0.35}deg)`,
-                  animationDelay: `${delay}ms`,
-                }}
+                  '--float-dur': `${10 + (i % 7) * 2}s`,
+                  '--float-delay': `${-(i % 13) * 0.8}s`,
+                  '--float-x': `${((i * 7) % 15) - 7}px`,
+                  '--float-y': `${-6 - ((i * 11) % 10)}px`,
+                } as React.CSSProperties}
               >
                 {item.name}
               </span>
