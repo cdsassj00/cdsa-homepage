@@ -6,6 +6,11 @@ const articles = [
     description: '0~8단계 역량 체계와 교육 철학',
     href: '/framework.html',
   },
+  {
+    title: 'AX 전문인재 양성 Full Course',
+    description: '기획하는 리더를 위한 8주 AI 실전 여정',
+    href: '/fullcourse.html',
+  },
   // 앞으로 글이 추가되면 여기에 { title, description, href } 한 줄만 추가
 ]
 

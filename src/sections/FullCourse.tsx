@@ -311,18 +311,18 @@ export default function FullCourse() {
             조직 규모·수준·보안 환경에 맞춰 커리큘럼을 재설계합니다.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3">
-            <button
-              onClick={openInquiry}
+            <a
+              href="/fullcourse.html"
               className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-ink-900 text-cream-50 text-sm font-medium hover:bg-clay-700 transition-colors"
             >
-              Full Course 문의하기
-            </button>
-            <a
-              href="#tracks"
+              커리큘럼 상세 보기
+            </a>
+            <button
+              onClick={openInquiry}
               className="btn-outline inline-flex items-center gap-2 px-7 py-3 rounded-full text-sm"
             >
-              단과 과정 보기 ↑
-            </a>
+              Full Course 문의하기 →
+            </button>
           </div>
         </div>
       </div>
