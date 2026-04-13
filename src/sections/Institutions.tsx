@@ -164,7 +164,6 @@ export default function Institutions() {
         <div ref={cloudRef} className="mx-auto max-w-[1240px] flex flex-wrap items-baseline justify-center gap-x-4 md:gap-x-7 gap-y-2 md:gap-y-4">
           {items.map((item, i) => {
             const rot = ((i * 37) % 11) - 5
-            const delay = (i % 24) * 180
             return (
               <span
                 key={item.name}
