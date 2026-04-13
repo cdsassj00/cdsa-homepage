@@ -17,9 +17,6 @@ export default function Tutors() {
 
         <TutorFlip />
 
-        <p className="mt-10 text-xs text-ink-500 font-mono tracking-wider text-center">
-          * 9명 중 1명(대표)만 실명 공개 상태. 나머지 8명의 실명은 대표 확인 대기 중.
-        </p>
       </div>
     </section>
   )

@@ -502,7 +502,7 @@ export const tracks = [
   },
 ]
 
-// 9명 전문가 네트워크 — 실명 + 실제 이력 (대표 제공 2026-04-12)
+// 전문가 네트워크
 // photo: 향후 이미지 URL로 교체 (현재는 이니셜 SVG 사용)
 export const tutors = [
   {
