@@ -24,6 +24,13 @@
   // Single source of truth for blog posts. Sorted newest-first.
   const POSTS = [
     {
+      slug: 'working-governance',
+      title: '작동하는 거버넌스, 바닥에서 올라오는 AX',
+      date: '2026. 4. 14',
+      category: 'AX 거버넌스',
+      href: '/blog/working-governance.html',
+    },
+    {
       slug: 'multi-agent-patterns',
       title: '멀티 에이전트 7가지 유형, 쓸모 있게 정리하기',
       date: '2026. 4. 1',

@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>작동하는 거버넌스, 바닥에서 올라오는 AX · CDSA 블로그</title>
+<meta name="description" content="막는 정책에서 작동하는 거버넌스로. 폐쇄망에서 실제로 돌아가는 여덟 가지 증거, 골목길의 문제, 거버넌스 5층위의 3·4·5층을 채우는 이야기.">
+<meta property="og:title" content="작동하는 거버넌스, 바닥에서 올라오는 AX">
+<meta property="og:description" content="AX는 위에서 내려오는 선언이 아니라, 바닥에서 올라오는 실천이어야 한다.">
+<meta property="og:type" content="article">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NZL39P5EYZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NZL39P5EYZ');
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/blog/_layout.css">
+<style>
+  :root {
+    --cream: #faf9f5;
+    --cream-deep: #f3efe3;
+    --ink: #1a1a1a;
+    --ink-soft: #3d3d3a;
+    --ink-mute: #6b6b66;
+    --rule: #d9d6cc;
+    --clay: #cc785c;
+    --clay-deep: #a85a42;
+    --code-bg: #f2f0e8;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--cream); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  body { font-family: "Fraunces", "Noto Serif KR", Georgia, serif; font-weight: 300; font-size: 19px; line-height: 1.72; letter-spacing: -0.005em; }
+
+  .topnav { position: fixed; top: 0; left: 0; right: 0; height: 48px; background: rgba(250, 249, 245, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; }
+  .topnav-left { display: flex; align-items: center; gap: 18px; }
+  .topnav-left a { color: var(--ink-soft); text-decoration: none; transition: color 0.2s; }
+  .topnav-left a:hover { color: var(--clay-deep); }
+  .topnav-home { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 600; font-size: 16px; color: var(--ink) !important; letter-spacing: -0.3px; }
+  .topnav-sep { color: var(--rule); font-size: 11px; }
+  .topnav-right { display: flex; gap: 16px; }
+  .topnav-right a { color: var(--ink-mute); text-decoration: none; font-size: 12px; transition: color 0.2s; }
+  .topnav-right a:hover { color: var(--clay-deep); }
+  .topnav-current { color: var(--ink) !important; font-weight: 600; position: relative; }
+  .topnav-current::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 2px; background: var(--clay); border-radius: 1px; }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 116px 28px 120px; }
+  .breadcrumb { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; margin-bottom: 36px; display: flex; align-items: center; gap: 8px; color: var(--ink-mute); }
+  .breadcrumb a { color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--ink); }
+  .breadcrumb .bc-sep { color: var(--rule); }
+
+  .kicker { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay-deep); margin-bottom: 28px; }
+  h1 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 400; font-size: 44px; line-height: 1.18; letter-spacing: -0.02em; margin: 0 0 24px; color: var(--ink); }
+  h1 em { font-style: italic; color: var(--clay-deep); font-weight: 500; }
+  .dek { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 300; font-style: italic; font-size: 21px; line-height: 1.55; color: var(--ink-soft); margin: 0 0 40px; }
+  .byline { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); padding: 18px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-bottom: 56px; display: flex; justify-content: space-between; }
+  .byline strong { font-weight: 500; color: var(--ink-soft); }
+  .lede { font-size: 19px; line-height: 1.72; margin-bottom: 22px; }
+  .lede::first-letter { font-family: "Fraunces", serif; font-weight: 400; font-size: 68px; float: left; line-height: 0.88; padding: 8px 10px 0 0; color: var(--clay); }
+
+  h2 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 28px; line-height: 1.25; letter-spacing: -0.015em; margin: 64px 0 8px; color: var(--ink); scroll-margin-top: 80px; }
+  h2 .num { font-family: "Inter", sans-serif; font-size: 12px; font-weight: 600; color: var(--clay); letter-spacing: 0.1em; display: block; margin-bottom: 10px; }
+  h3 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 18px; margin: 28px 0 10px; color: var(--ink); letter-spacing: -0.01em; }
+  p { margin: 0 0 22px; }
+  p + p { margin-top: -6px; }
+  strong { font-weight: 500; color: var(--ink); }
+  em { font-style: italic; }
+  code { font-family: "JetBrains Mono", monospace; font-size: 0.88em; background: var(--code-bg); padding: 2px 6px; border-radius: 3px; color: var(--clay-deep); }
+
+  blockquote {
+    margin: 36px 0;
+    padding: 4px 0 4px 22px;
+    border-left: 2px solid var(--clay);
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-style: italic;
+    font-size: 20px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+
+  .pull {
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-size: 26px;
+    line-height: 1.5;
+    color: var(--ink);
+    font-weight: 500;
+    font-style: italic;
+    margin: 40px 0;
+    padding: 26px 0 26px 28px;
+    border-left: 3px solid var(--clay);
+    letter-spacing: -0.01em;
+  }
+  .pull small {
+    display: block;
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-style: normal;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--ink-mute);
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-top: 14px;
+  }
+
+  .evidence { margin: 24px 0 8px; display: grid; gap: 12px; }
+  .ev {
+    border: 1px solid var(--rule);
+    background: var(--code-bg);
+    padding: 22px 24px;
+    border-radius: 4px;
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    gap: 20px;
+  }
+  .ev .ex {
+    font-family: "Fraunces", serif;
+    font-size: 40px;
+    font-weight: 600;
+    color: var(--clay);
+    line-height: 1;
+    font-style: italic;
+  }
+  .ev h4 {
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0 0 6px;
+    color: var(--ink);
+    letter-spacing: -0.1px;
+  }
+  .ev .tag {
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--clay-deep);
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .ev p {
+    margin: 6px 0 0;
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 14px;
+    line-height: 1.68;
+    color: var(--ink-soft);
+  }
+  .ev p strong { color: var(--ink); }
+
+  .layer-box {
+    margin: 28px 0;
+    border: 1px solid var(--rule);
+    background: rgba(204, 120, 92, 0.05);
+    border-left: 3px solid var(--clay);
+    padding: 22px 26px;
+    border-radius: 0 4px 4px 0;
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+  }
+  .layer-box .label {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    font-weight: 700;
+    color: var(--clay-deep);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .layer-box .layer {
+    display: grid;
+    grid-template-columns: 110px 1fr 80px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: 14.5px;
+    line-height: 1.55;
+  }
+  .layer-box .layer:last-child { border-bottom: none; }
+  .layer-box .lname { font-weight: 600; color: var(--ink); }
+  .layer-box .ldesc { color: var(--ink-soft); }
+  .layer-box .lstate { text-align: right; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding-top: 3px; }
+  .layer-box .lstate.have { color: #6d8e4a; }
+  .layer-box .lstate.miss { color: var(--clay-deep); }
+
+  .rule { border: none; border-top: 1px solid var(--rule); margin: 56px 0; }
+  .footer { margin-top: 72px; padding-top: 28px; border-top: 1px solid var(--rule); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); line-height: 1.65; }
+  .footer strong { color: var(--ink-soft); font-weight: 600; }
+  .bottom-nav { margin-top: 72px; padding: 36px 0; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .bottom-nav a { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .bottom-nav a:hover { color: var(--ink); }
+  .bottom-nav-home { font-family: "Fraunces", "Noto Serif KR", serif !important; font-size: 16px !important; font-style: italic; font-weight: 400; }
+
+  @media (max-width: 640px) {
+    .wrap { padding: 92px 22px 80px; }
+    h1 { font-size: 34px; }
+    .dek { font-size: 18px; }
+    body { font-size: 17px; }
+    .pull { font-size: 21px; padding: 20px 0 20px 20px; }
+    .ev { grid-template-columns: 40px 1fr; gap: 14px; padding: 18px 18px; }
+    .ev .ex { font-size: 28px; }
+    .layer-box .layer { grid-template-columns: 1fr; gap: 4px; padding: 12px 0; }
+    .layer-box .lstate { text-align: left; }
+    .topnav-right { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="topnav-left">
+    <a href="/" class="topnav-home">CDSA</a>
+    <span class="topnav-sep">|</span>
+    <a href="/">홈페이지</a>
+    <a href="/blog/" class="topnav-current">블로그</a>
+  </div>
+  <nav class="topnav-right">
+    <a href="/framework.html">프레임워크</a>
+    <a href="/fullcourse.html">Full Course</a>
+  </nav>
+</header>
+
+<button class="blog-hamburger" aria-label="블로그 목록 열기"><span></span><span></span><span></span></button>
+<div class="blog-overlay"></div>
+<aside class="blog-left">
+  <div class="blog-left-title">Blog Posts</div>
+  <ol class="blog-left-list"></ol>
+</aside>
+<aside class="blog-right">
+  <div class="blog-right-title">On This Page</div>
+  <ul class="blog-toc"></ul>
+</aside>
+
+<article class="wrap">
+
+  <nav class="breadcrumb">
+    <a href="/">← CDSA 홈</a>
+    <span class="bc-sep">/</span>
+    <a href="/blog/">블로그</a>
+    <span class="bc-sep">/</span>
+    <span>작동하는 거버넌스</span>
+  </nav>
+
+  <div class="kicker">Editorial &middot; AX 거버넌스</div>
+
+  <h1>작동하는 거버넌스,<br><em>바닥에서 올라오는 AX</em></h1>
+
+  <p class="dek">막는 정책에서 작동하는 거버넌스로. 폐쇄망에서 실제로 돌아가는 여덟 가지 증거와 함께.</p>
+
+  <div class="byline">
+    <span><strong>신성진</strong> &nbsp;&middot;&nbsp; 한국데이터사이언티스트협회</span>
+    <span>2026. 4. 14</span>
+  </div>
+
+  <p class="lede">한국의 공공 AX 논의에서 오랫동안 놓쳐 온 질문이 있다. 거시적 AX의 큰 물결 — 소버린 AI, K-AI 파운데이션 모델, GPU 확보, 인공지능위원회 — 그 흐름 속에서 <strong>정작 소외되고 있는 작은 현장의 문제들</strong>을 어떻게 풀 것인가 하는 질문이다. 이 글의 메시지는 하나로 모아진다.</p>
+
+  <div class="pull">
+    AX는 위에서 내려오는 선언이 아니라, 바닥에서 올라오는 실천이어야 한다.
+    <small>— 단 하나의 메시지</small>
+  </div>
+
+  <h2 id="s01"><span class="num">01 &nbsp;/&nbsp; 두 축</span>AX 대전환의 거시와 미시</h2>
+
+  <p>AX 대전환에는 두 개의 축이 있다. 하나는 <strong>거시적 축</strong>이다. 소버린 AI, K-AI 파운데이션 모델, GPU 확보, 인공지능위원회 — 국가 차원의 전략적 흐름이다.</p>
+
+  <p>또 하나는 <strong>미시적 축</strong>이다. 직원 한 사람, 실무자 한 사람이 AX를 통해 자신의 일과 삶을 어떻게 바꿀 것인가 하는 문제다. 이 글이 집중하는 쪽은 두 번째 축 — <em>바닥에서 올라오는 AX</em>다. 거시적 축만으로는 결코 닿을 수 없는 <strong>골목길의 문제</strong>가 이 나라에 너무 많이 남아 있기 때문이다.</p>
+
+  <h2 id="s02"><span class="num">02 &nbsp;/&nbsp; 소버린</span>모델이 아니라 '꽂히는 자리'다</h2>
+
+  <p>거시적 축을 짧게 짚고 가자. '소버린 AI'라는 말이 유행처럼 번지고 있다. 그런데 소버린 AI는 GPU를 사 모으고 파운데이션 모델을 하나 만드는 것으로 끝나지 않는다.</p>
+
+  <p>진짜 소버린 AI는 우리가 이미 세계 최고 수준으로 가지고 있는 자산 — <strong>조선·제조·방산·식량 보안·공공 행정 데이터</strong> — 이 자산들과 AI가 결합될 때 비로소 완성된다. 모델 자체가 아니라, 그 모델이 <em>어디에 꽂히느냐</em>가 소버린 AI의 본질이다. 그리고 그 '어디'의 가장 밑바닥은 결국 현장 실무자의 책상이다.</p>
+
+  <h2 id="s03"><span class="num">03 &nbsp;/&nbsp; VIBE</span>이제는 스스로 만드는 시대다</h2>
+
+  <p>그러면 미시적 축은 어떻게 이루어지는가. 불과 1~2년 전만 해도 실무자 AI 교육의 초점은 "<code>ChatGPT</code>를 얼마나 잘 쓰는가"였다. 보고서 초안을 뽑고, 문장을 다듬고, 아이디어를 정리하는 수준이었다.</p>
+
+  <p>지금은 완전히 다른 시대가 열렸다. 그 이름이 <strong>VIBE 코딩</strong>이다. OpenAI 공동 창립자이자 Y Combinator에서 오랫동안 활약한 <strong>안드레이 카파시</strong>가 붙인 이름이다.</p>
+
+  <blockquote>내가 겪는 문제를 안다. 풀렸을 때의 모습을 상상할 수 있다. '어떻게' 푸는지는 — AI와 함께 찾는다.</blockquote>
+
+  <p>이 말의 무게를 다시 한번 생각해 볼 필요가 있다. 이제는 현장 실무자 한 사람이 자기가 필요한 소프트웨어를, 자기가 필요한 업무 자동화 도구를, <strong>스스로 만들어 쓸 수 있는 시대</strong>가 왔다는 뜻이다. 에이전트가 뭔지·하네스가 뭔지에 대한 기본 어휘는 이 블로그의 <a href="/blog/what-is-agent.html">앞선 글</a>에서 정리해 두었으니 필요하면 참고하기 바란다.</p>
+
+  <h2 id="s04"><span class="num">04 &nbsp;/&nbsp; 증거</span>폐쇄망에서도 돌아가는 여덟 가지</h2>
+
+  <p>"보안이 중요한 환경에서는 이 모든 것이 꿈 같은 이야기 아닌가"라는 질문이 자연스럽게 따라온다. 답은 "아니다"이다. 폐쇄망·행정망에서 <strong>오늘 당장 돌아가는</strong> 여덟 가지 방법을 정리해 본다. 모두 현장에서 검증된 것들이다.</p>
+
+  <div class="evidence">
+
+    <div class="ev">
+      <div class="ex">01</div>
+      <div>
+        <div class="tag">Browser &middot; Single File</div>
+        <h4>HTML·CSS·자바스크립트 단일 파일 도구</h4>
+        <p>브라우저만 있으면 동작한다. 자바스크립트 라이브러리는 파일 안에 그대로 심어 넣는다. 행정망에서도, 폐쇄망에서도, 더블클릭 한 번으로 돌아간다. 민원 <code>CSV</code>를 올리면 대시보드가 그려지고, 통계가 계산된다. CDN도 설치도 필요 없다.</p>
+      </div>
+    </div>
+
+    <div class="ev">
+      <div class="ex">02</div>
+      <div>
+        <div class="tag">Python &middot; Offline Packaging</div>
+        <h4>파이썬 오프라인 패키징</h4>
+        <p>파이썬은 기본 기능만으로도 엑셀·파워포인트·PDF·파일 시스템을 제어한다. 외부망에서 <code>ChatGPT</code>에게 코드를 받고, 내부망에서 실행한다. 라이브러리가 필요하면 <code>pip install --target</code> 한 줄로 폴더째 받아, 그 폴더째 폐쇄망으로 옮기면 끝이다. 보고서 자동 생성, PDF 텍스트 추출, 개인정보 일괄 마스킹 — 한 사람이 한 시간 안에 만들 수 있다.</p>
+      </div>
+    </div>
+
+    <div class="ev">
+      <div class="ex">03</div>
+      <div>
+        <div class="tag">Desktop &middot; Standalone Binary</div>
+        <h4>파이썬 데스크탑 앱 (EXE)</h4>
+        <p><code>PyInstaller</code>나 <code>Electron</code>으로 단일 실행 파일로 묶어낸다. 설치만 하면 독립적으로 동작한다. EXE에 대한 보안 우려가 있다는 것을 잘 알고 있다. 다만 한국 보안 당국의 실력이 이런 실행 파일 하나를 검증해 내지 못할 수준은 결코 아니다. <strong>Claude Code가 주어진다면, 한 자리에서 개인정보 마스킹·파일 통합·민원 분류 도구를 한 시간 안에 열 개 만들 수 있다.</strong></p>
+      </div>
+    </div>
+
+    <div class="ev">
+      <div class="ex">04</div>
+      <div>
+        <div class="tag">Node.js &middot; node_modules</div>
+        <h4>Node.js 오프라인 패키징</h4>
+        <p>자바스크립트를 브라우저 밖으로 꺼내는 기술이다. <code>node_modules</code> 폴더째 들고 들어가면, 내부망에서도 수천 개의 오픈소스 라이브러리를 그대로 쓸 수 있다. 파일 정리, 로그 파싱, 대량 변환 — 더 복잡한 자동화가 가능해진다.</p>
+      </div>
+    </div>
+
+    <div class="ev">
+      <div class="ex">05</div>
+      <div>
+        <div class="tag">Local LLM &middot; Ollama</div>
+        <h4>Ollama — 로컬 소형 언어모델</h4>
+        <p>1B·2B 크기의 모델이면 CPU만으로도 돌아간다. 민원 한 건을 유형별로 분류하고, 자연어 요약을 만들고, 짧은 질의응답을 수행한다. 전부 로컬에서, 외부 통신 한 번 없이. 폐쇄망 안의 공공 AI 어시스턴트가 이렇게 완성된다.</p>
+      </div>
+    </div>
+
+    <div class="ev">
+      <div class="ex">06</div>
+      <div>
+        <div class="tag">Legacy × LLM &middot; Excel VBA</div>
+        <h4>레거시와의 결합 — 엑셀 속의 AI</h4>
+        <p>허깅페이스에서 검증된 오픈소스 모델을 받아, 엑셀 <code>VBA</code>에서 AI 함수를 직접 호출한다. 셀 하나에 <code>=AI("이 민원을 3줄 요약")</code>이면 된다. "GPT for Sheets"의 공공 버전을 우리가 직접 만들 수 있다. 학습된 가중치 파일은 보안 당국이 충분히 정적 검증할 수 있다.</p>
+      </div>
+    </div>
+
+    <div class="ev">
+      <div class="ex">07</div>
+      <div>
+        <div class="tag">Agentic &middot; Harness</div>
+        <h4>에이전틱 AI와 '하네스'</h4>
+        <p><code>Claude Code</code>·<code>Codex</code>·<code>Antigravity</code>·<code>OpenCode</code> — 내 컴퓨터 안에 AI 에이전트가 들어와 파일을 읽고, 수정하고, 작업을 함께한다. 모델 성능도 중요하지만, 진짜 핵심은 그 모델을 둘러싼 <em>하네스</em> — 기억과 규칙, 반복 루틴, 검색 일관성이다. 이 구조만 잘 만들면, 보안 당국이 검증한 공공 기반 모델을 꽂는 순간 '공공형 AI 에이전트'가 완성된다. (하네스의 실체가 궁금하다면 이 블로그의 <a href="/blog/harness.html">하네스 글</a>에서 파일과 폴더 단위로 풀어 두었다.)</p>
+      </div>
+    </div>
+
+    <div class="ev">
+      <div class="ex">08</div>
+      <div>
+        <div class="tag">Ecosystem &middot; Public Repository</div>
+        <h4>오픈소스 생태계 — '공공 부품창고'라는 제안</h4>
+        <p>깃허브에는 매일 새로운 라이브러리·MCP 서버·스킬·API가 쏟아진다. 민간의 1인 프리랜서와 작은 기업들이 이 생태계를 키운다. 공공에서도 검증된 오픈소스만 모아 놓는 '공공 소스 저장소'를 만들면, 로컬 에이전트는 그 저장소에서 자유롭게 라이브러리를 가져와 HTML·파이썬·Node.js 도구를 순식간에 찍어낼 수 있다. 공공 <em>앱스토어</em>가 아닌, 공공 <em>부품창고</em>다.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <h2 id="s05"><span class="num">05 &nbsp;/&nbsp; 골목길</span>큰 예산이 결코 돌보지 않는 것들</h2>
+
+  <p>여기까지의 여덟 가지는, 거대한 시스템이 해결해 주지 못하는 <strong>작은 골목길의 문제들</strong>을 푸는 방법이다. 내가 지금 목마르고, 내가 지금 배고프고, 내가 지금 손을 쓰고 싶은 그 작은 문제 — 큰 예산 사업·큰 벤더·큰 컨설팅이 결코 돌봐 주지 않는 바로 그 문제들이다.</p>
+
+  <p>거시적 AX와 미시적 AX가 만나는 순간, 그때 비로소 AX의 'X' — Transformation을 당당히 말할 수 있게 된다. 모델의 크기가 아니라 닿는 깊이가 진짜 혁신의 지표다.</p>
+
+  <div class="pull">
+    거시적 AX × 미시적 AX = 진짜 주권.
+    <small>— Macro × Micro = Real Sovereignty</small>
+  </div>
+
+  <h2 id="s06"><span class="num">06 &nbsp;/&nbsp; 거버넌스</span>다섯 층위 — 3·4·5층이 비어 있다</h2>
+
+  <p>마지막으로 거버넌스 이야기다. '혁신과 규제'라는 시소가 있다. 지금 우리의 시소는 너무 규제 쪽으로 기울어져 있지 않은가 — 감히 던지고 싶은 질문이다.</p>
+
+  <p>많은 공무원들이 AI 교육을 받을 때, 머릿속에 계속 맴도는 질문이 있다고 한다. <em>"내가 이걸 배운들, 우리 기관에서 과연 쓸 수 있을까?"</em> 이 막막함, 이 병목 — 역량 강화가 실무로 이어지지 못하게 만드는 이 벽. 이것을 걷어내는 것이 <strong>거버넌스의 실체</strong>다.</p>
+
+  <div class="layer-box">
+    <div class="label">Five Layers of Governance</div>
+    <div class="layer">
+      <div class="lname">1층 — 법·제도</div>
+      <div class="ldesc">AI 기본법, 개인정보보호, 정보보안 — 국가 차원의 법적 기반.</div>
+      <div class="lstate have">있다</div>
+    </div>
+    <div class="layer">
+      <div class="lname">2층 — 원칙·윤리</div>
+      <div class="ldesc">공공 AI 윤리 원칙, 신뢰 가능한 AI 가이드라인.</div>
+      <div class="lstate have">있다</div>
+    </div>
+    <div class="layer">
+      <div class="lname">3층 — 정책·절차</div>
+      <div class="ldesc">기관 내부에서 어떤 AI 도구를 어떻게 도입·사용·검증할지에 대한 구체적 절차.</div>
+      <div class="lstate miss">비어 있다</div>
+    </div>
+    <div class="layer">
+      <div class="lname">4층 — 기술적 통제</div>
+      <div class="ldesc">폐쇄망 환경에서의 모델 검증, 샌드박스, 로그, 권한 관리.</div>
+      <div class="lstate miss">비어 있다</div>
+    </div>
+    <div class="layer">
+      <div class="lname">5층 — 조직문화·역량</div>
+      <div class="ldesc">실무자가 실제로 AI를 만들어 쓸 수 있는 역량과, 그것을 허용·장려하는 문화.</div>
+      <div class="lstate miss">비어 있다</div>
+    </div>
+  </div>
+
+  <p>1층과 2층 — 법·제도와 원칙·윤리 — 은 한국 공공기관에 '있다.' 3·4·5층 — 정책·절차, 기술적 통제, 조직문화·역량 — 이 '비어 있다.' 그래서 거버넌스가 문서 속에만 머문다. 3·4·5층을 채우는 일, 그것이 이 글의 제언이다.</p>
+
+  <hr class="rule">
+
+  <h2 id="s07"><span class="num">07 &nbsp;/&nbsp; 맺음</span>막는 정책에서 작동하는 거버넌스로</h2>
+
+  <p>공공을 진심으로 아끼는 사람들이 모여 있다면, 이 여덟 가지 증거는 <strong>여덟 가지 현장</strong>이 되고, 여덟 가지 현장은 <strong>수백 개의 일상</strong>이 된다. 아주 먼 이야기가 아니다. 이 글에 담긴 여덟 가지는 지금 당장, 오늘 오후에라도, 한 실무자의 책상에서 시작될 수 있는 것들이다.</p>
+
+  <p>거버넌스는 이 시작을 가로막지 않는 것에서 출발한다. 막는 정책이 아니라 작동하는 거버넌스. 위에서 내려오는 선언이 아니라 바닥에서 올라오는 실천. 이 두 방향이 만나는 어딘가에서, 우리는 비로소 한국형 AX의 첫 모양을 잡을 수 있다.</p>
+
+  <blockquote>모델의 크기가 아니라 닿는 깊이가 혁신의 진짜 지표다. 그리고 그 깊이는 늘 작은 책상에서부터 시작한다.</blockquote>
+
+  <p>이 글은 2026년 4월 14일 공공 정책·보안 실무자·위원 대상으로 발표한 키노트의 내용을 블로그 형태로 정리한 것이다. 함께 고민할 분들이 많아지기를 바란다.</p>
+
+  <div class="footer">
+    <strong>신성진 (Shinsungjin)</strong><br>
+    한국데이터사이언티스트협회 대표 &middot; CDSA<br>
+    개인·조직 AX 변화관리 컨설턴트 &middot; AX/DX 교육 설계 &middot; 공공기관 커리큘럼 설계<br>
+    YouTube @workbyax
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="/" class="bottom-nav-home">← CDSA 홈으로</a>
+    <a href="/blog/">블로그 목록 →</a>
+  </nav>
+
+</article>
+
+<script src="/blog/_posts.js" defer></script>
+</body>
+</html>

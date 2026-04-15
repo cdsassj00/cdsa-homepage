@@ -41,6 +41,11 @@ const articles = [
     description: '프롬프팅·워크플로우·에이전트·하네스 — 운전 비유로 정리한 기초 어휘',
     href: '/blog/what-is-agent.html',
   },
+  {
+    title: '작동하는 거버넌스, 바닥에서 올라오는 AX',
+    description: '폐쇄망에서 돌아가는 여덟 가지 증거와 거버넌스 5층위 제언',
+    href: '/blog/working-governance.html',
+  },
   // 앞으로 글이 추가되면 여기에 { title, description, href } 한 줄만 추가
 ]
 
