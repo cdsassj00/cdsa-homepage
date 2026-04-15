@@ -21,6 +21,11 @@ const articles = [
     description: '채팅창이 아니라 함수 호출 흐름 제어기가 핵심. 기능을 네 가지 유형으로',
     href: '/blog/mcp-client.html',
   },
+  {
+    title: 'MCP 서버·클라이언트·에이전트 서버 입문 가이드',
+    description: '식당 비유로 풀어 본 MCP 입문 지도. 처음 만들 때 어디서부터 시작할까',
+    href: '/blog/mcp-guide.html',
+  },
   // 앞으로 글이 추가되면 여기에 { title, description, href } 한 줄만 추가
 ]
 
