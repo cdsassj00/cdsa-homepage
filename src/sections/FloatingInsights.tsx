@@ -11,6 +11,11 @@ const articles = [
     description: '기획하는 리더를 위한 8주 AI 실전 여정',
     href: '/fullcourse.html',
   },
+  {
+    title: '하네스라는 단어, 한 걸음 더 들어가 보기',
+    description: '모델을 실제로 돌리는 바깥 껍데기. 60줄 파이썬부터 Claude Code까지',
+    href: '/blog/harness.html',
+  },
   // 앞으로 글이 추가되면 여기에 { title, description, href } 한 줄만 추가
 ]
 

@@ -30,6 +30,7 @@ export default function Nav() {
     { label: '쇼케이스', href: '#showcase' },
     { label: '전문가', href: '#tutors' },
     { label: '프레임워크', href: '/framework.html' },
+    { label: '블로그', href: '/blog/' },
   ]
 
   return (
