@@ -58,6 +58,13 @@
       category: 'MCP 입문',
       href: '/blog/mcp-guide.html',
     },
+    {
+      slug: 'what-is-agent',
+      title: 'ChatGPT에 코드 물어보는 것도 AI 에이전트일까?',
+      date: '2026. 3. 4',
+      category: '에이전트 개념',
+      href: '/blog/what-is-agent.html',
+    },
   ];
 
   function getCurrentSlug() {

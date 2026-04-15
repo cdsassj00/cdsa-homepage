@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChatGPT에 코드 물어보는 것도 AI 에이전트일까? · CDSA 블로그</title>
+<meta name="description" content="프롬프팅, 워크플로우, 에이전트, 에이전틱 AI, 하네스 — 섞여 쓰이는 이 단어들을 운전 비유로 한 번에 정리한다.">
+<meta property="og:title" content="ChatGPT에 코드 물어보는 것도 AI 에이전트일까?">
+<meta property="og:description" content="AI를 활용하는 네 가지 방식을 자율주행차 비유로 구분한다. 진짜 구분선은 'AI가 다음에 뭘 할지 누가 정하는가'다.">
+<meta property="og:type" content="article">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NZL39P5EYZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NZL39P5EYZ');
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/blog/_layout.css">
+<style>
+  :root {
+    --cream: #faf9f5;
+    --cream-deep: #f3efe3;
+    --ink: #1a1a1a;
+    --ink-soft: #3d3d3a;
+    --ink-mute: #6b6b66;
+    --rule: #d9d6cc;
+    --clay: #cc785c;
+    --clay-deep: #a85a42;
+    --code-bg: #f2f0e8;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--cream); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  body { font-family: "Fraunces", "Noto Serif KR", Georgia, serif; font-weight: 300; font-size: 19px; line-height: 1.72; letter-spacing: -0.005em; }
+
+  .topnav { position: fixed; top: 0; left: 0; right: 0; height: 48px; background: rgba(250, 249, 245, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; }
+  .topnav-left { display: flex; align-items: center; gap: 18px; }
+  .topnav-left a { color: var(--ink-soft); text-decoration: none; transition: color 0.2s; }
+  .topnav-left a:hover { color: var(--clay-deep); }
+  .topnav-home { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 600; font-size: 16px; color: var(--ink) !important; letter-spacing: -0.3px; }
+  .topnav-sep { color: var(--rule); font-size: 11px; }
+  .topnav-right { display: flex; gap: 16px; }
+  .topnav-right a { color: var(--ink-mute); text-decoration: none; font-size: 12px; transition: color 0.2s; }
+  .topnav-right a:hover { color: var(--clay-deep); }
+  .topnav-current { color: var(--ink) !important; font-weight: 600; position: relative; }
+  .topnav-current::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 2px; background: var(--clay); border-radius: 1px; }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 116px 28px 120px; }
+  .breadcrumb { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; margin-bottom: 36px; display: flex; align-items: center; gap: 8px; color: var(--ink-mute); }
+  .breadcrumb a { color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--ink); }
+  .breadcrumb .bc-sep { color: var(--rule); }
+
+  .kicker { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay-deep); margin-bottom: 28px; }
+  h1 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 400; font-size: 44px; line-height: 1.18; letter-spacing: -0.02em; margin: 0 0 24px; color: var(--ink); }
+  .dek { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 300; font-style: italic; font-size: 21px; line-height: 1.55; color: var(--ink-soft); margin: 0 0 40px; }
+  .byline { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); padding: 18px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-bottom: 56px; display: flex; justify-content: space-between; }
+  .byline strong { font-weight: 500; color: var(--ink-soft); }
+
+  .lede { font-size: 19px; line-height: 1.72; margin-bottom: 22px; }
+  .lede::first-letter { font-family: "Fraunces", serif; font-weight: 400; font-size: 68px; float: left; line-height: 0.88; padding: 8px 10px 0 0; color: var(--clay); }
+
+  h2 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 28px; line-height: 1.25; letter-spacing: -0.015em; margin: 64px 0 8px; color: var(--ink); scroll-margin-top: 80px; }
+  h2 .num { font-family: "Inter", sans-serif; font-size: 12px; font-weight: 600; color: var(--clay); letter-spacing: 0.1em; display: block; margin-bottom: 10px; }
+  h3 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 18px; margin: 28px 0 10px; color: var(--ink); letter-spacing: -0.01em; }
+  p { margin: 0 0 22px; }
+  p + p { margin-top: -6px; }
+  strong { font-weight: 500; color: var(--ink); }
+  em { font-style: italic; }
+  code { font-family: "JetBrains Mono", monospace; font-size: 0.88em; background: var(--code-bg); padding: 2px 6px; border-radius: 3px; color: var(--clay-deep); }
+
+  blockquote {
+    margin: 32px 0;
+    padding: 4px 0 4px 22px;
+    border-left: 2px solid var(--clay);
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-style: italic;
+    font-size: 20px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+
+  .scenario-quote {
+    background: var(--code-bg);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 20px 24px;
+    margin: 20px 0 24px;
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-style: italic;
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
+  .key-box {
+    margin: 20px 0 26px;
+    padding: 14px 18px;
+    border-left: 2px solid var(--clay);
+    background: rgba(204, 120, 92, 0.06);
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .key-box .label {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--clay-deep);
+    margin-right: 8px;
+  }
+
+  ul.flow {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0 24px;
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 15.5px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    border-left: 2px solid var(--rule);
+    padding-left: 20px;
+  }
+  ul.flow li { margin-bottom: 5px; }
+  ul.flow li::before { content: "·"; color: var(--clay); font-weight: 700; margin-right: 8px; }
+
+  pre.diagram {
+    background: var(--code-bg);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 18px 22px;
+    font-family: "JetBrains Mono", "Menlo", monospace;
+    font-size: 11.5px;
+    line-height: 1.6;
+    overflow-x: auto;
+    margin: 24px 0 28px;
+    color: var(--ink-soft);
+    white-space: pre;
+  }
+
+  .summary-table {
+    margin: 28px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 14.5px;
+  }
+  .summary-table .row {
+    display: grid;
+    grid-template-columns: 120px 1fr 160px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--rule);
+    line-height: 1.55;
+  }
+  .summary-table .row:last-child { border-bottom: none; }
+  .summary-table .row.head {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    padding: 10px 0;
+  }
+  .summary-table .name { font-weight: 600; color: var(--ink); }
+  .summary-table .def { color: var(--ink-soft); padding-right: 12px; }
+  .summary-table .example { color: var(--ink-mute); font-style: italic; }
+
+  .rule { border: none; border-top: 1px solid var(--rule); margin: 56px 0; }
+  .footer { margin-top: 72px; padding-top: 28px; border-top: 1px solid var(--rule); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); line-height: 1.65; }
+  .footer strong { color: var(--ink-soft); font-weight: 600; }
+  .bottom-nav { margin-top: 72px; padding: 36px 0; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .bottom-nav a { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .bottom-nav a:hover { color: var(--ink); }
+  .bottom-nav-home { font-family: "Fraunces", "Noto Serif KR", serif !important; font-size: 16px !important; font-style: italic; font-weight: 400; }
+
+  @media (max-width: 560px) {
+    .wrap { padding: 92px 22px 80px; }
+    h1 { font-size: 34px; }
+    .dek { font-size: 18px; }
+    body { font-size: 17px; }
+    .summary-table .row { grid-template-columns: 1fr; gap: 4px; padding: 14px 0; }
+    .summary-table .row.head { display: none; }
+    .topnav-right { display: none; }
+    pre.diagram { font-size: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="topnav-left">
+    <a href="/" class="topnav-home">CDSA</a>
+    <span class="topnav-sep">|</span>
+    <a href="/">홈페이지</a>
+    <a href="/blog/" class="topnav-current">블로그</a>
+  </div>
+  <nav class="topnav-right">
+    <a href="/framework.html">프레임워크</a>
+    <a href="/fullcourse.html">Full Course</a>
+  </nav>
+</header>
+
+<button class="blog-hamburger" aria-label="블로그 목록 열기"><span></span><span></span><span></span></button>
+<div class="blog-overlay"></div>
+<aside class="blog-left">
+  <div class="blog-left-title">Blog Posts</div>
+  <ol class="blog-left-list"></ol>
+</aside>
+<aside class="blog-right">
+  <div class="blog-right-title">On This Page</div>
+  <ul class="blog-toc"></ul>
+</aside>
+
+<article class="wrap">
+
+  <nav class="breadcrumb">
+    <a href="/">← CDSA 홈</a>
+    <span class="bc-sep">/</span>
+    <a href="/blog/">블로그</a>
+    <span class="bc-sep">/</span>
+    <span>에이전트 어휘 정리</span>
+  </nav>
+
+  <div class="kicker">Editorial &middot; 에이전트 개념</div>
+
+  <h1>ChatGPT에 코드 물어보는 것도<br>AI 에이전트일까?</h1>
+
+  <p class="dek">프롬프팅, 워크플로우, 에이전트, 에이전틱 AI, 하네스 — 섞여 쓰이는 이 단어들을 운전 비유 하나로 한 번에 정리해 본다.</p>
+
+  <div class="byline">
+    <span><strong>신성진</strong> &nbsp;&middot;&nbsp; 한국데이터사이언티스트협회</span>
+    <span>2026. 3. 4</span>
+  </div>
+
+  <p class="lede">요즘 AI 관련 뉴스를 보면 "AI 에이전트", "에이전틱 AI"라는 말이 빠지지 않습니다. 그런데 이 단어들이 정확히 뭘 뜻하는지, 서로 어떻게 다른지 명확하게 설명해 주는 곳은 의외로 드뭅니다. 심지어 전문가들 사이에서도 용어가 혼용되고 있어서, 일반인이 혼란스러운 건 당연합니다.</p>
+
+  <p>이 글에서는 AI를 활용하는 네 가지 방식을 <strong>운전</strong>에 비유해서 구분해 보겠습니다. 이 구분을 알고 나면, 지금 내가 AI를 어떤 수준으로 쓰고 있는지, 그리고 다음 단계는 뭔지가 보이기 시작합니다.</p>
+
+  <h2 id="s01"><span class="num">01 &nbsp;/&nbsp; 시나리오</span>하나의 장면으로 시작해 보자</h2>
+
+  <p>여러분이 간단한 웹페이지를 만들고 싶다고 가정해 보겠습니다. ChatGPT에게 이렇게 묻습니다.</p>
+
+  <div class="scenario-quote">"회사 소개 웹페이지 HTML 코드 만들어 줘"</div>
+
+  <p>ChatGPT가 코드를 줍니다. 여러분은 그 코드를 복사해서 메모장에 붙여 넣고, <code>index.html</code>로 저장하고, 브라우저에서 열어 보고, 잘 나오면 Netlify에 드래그앤드롭으로 올려서 배포합니다.</p>
+
+  <p><strong>이게 AI 에이전트일까요?</strong></p>
+
+  <p>아닙니다. 이건 <strong>프롬프팅</strong>입니다. 이유는 지금부터 풀어 보겠습니다.</p>
+
+  <h2 id="s02"><span class="num">02 &nbsp;/&nbsp; 프롬프팅</span>길을 물어보는 것</h2>
+
+  <p>"강남역 어떻게 가요?" 물어보고, 답을 듣고, 운전은 내가 합니다. AI는 조언자일 뿐입니다.</p>
+
+  <p>앞의 ChatGPT 시나리오가 바로 여기에 해당합니다. AI에게 코드를 받았지만, 그 코드를 복사하고, 저장하고, 브라우저에서 확인하고, Netlify에 업로드하는 모든 행동은 <strong>사람이 직접</strong> 합니다. AI는 한 번 대답하고 끝입니다. 내 코드가 어디로 갔는지, 제대로 배포됐는지 AI는 알지 못합니다.</p>
+
+  <div class="key-box">
+    <span class="label">핵심 특징</span>AI에게 물어보고, 내가 행동한다.
+  </div>
+
+  <h2 id="s03"><span class="num">03 &nbsp;/&nbsp; 워크플로우</span>내비게이션을 따라 운전하는 것</h2>
+
+  <p>경로는 사람이 미리 정해 놨습니다. AI는 그 정해진 자리에서 정해진 일만 합니다.</p>
+
+  <p>예를 들어, Zapier나 Make 같은 자동화 도구로 이런 흐름을 만들 수 있습니다.</p>
+
+  <div class="scenario-quote">이메일이 오면 → AI가 내용을 요약하고 → 요약을 Slack에 전송한다</div>
+
+  <p>여기서 AI가 "오늘은 Slack 말고 이메일로 보내는 게 낫겠다"고 판단하지 못합니다. 길이 고정돼 있으니까요. AI가 일은 하지만, 어떤 일을 할지는 <em>사람이 미리 결정해 둔 것</em>입니다.</p>
+
+  <div class="key-box">
+    <span class="label">핵심 특징</span>내가 짠 길 위에서 AI가 한 칸씩 일한다.
+  </div>
+
+  <h2 id="s04"><span class="num">04 &nbsp;/&nbsp; 에이전트</span>자율주행차</h2>
+
+  <p>목적지만 말하면, 차가 알아서 경로를 정하고, 공사 구간을 만나면 돌아가고, 주유가 필요하면 주유소에 들르고, 실패하면 다시 시도합니다.</p>
+
+  <p>같은 웹사이트 배포를 예로 들면, Claude Code에 이렇게 말합니다.</p>
+
+  <div class="scenario-quote">"회사 소개 웹사이트 만들어서 Netlify에 배포해 줘"</div>
+
+  <p>그러면 AI가 스스로 다음 과정을 진행합니다.</p>
+
+  <ul class="flow">
+    <li>파일 구조를 설계한다</li>
+    <li>HTML, CSS, JavaScript 코드를 작성한다</li>
+    <li>파일을 저장한다</li>
+    <li>브라우저에서 확인한다</li>
+    <li>에러가 나면 원인을 분석하고 수정한다</li>
+    <li>Netlify CLI를 이용해 배포한다</li>
+    <li>배포된 URL을 확인하고 보고한다</li>
+  </ul>
+
+  <p>이 전 과정을 <strong>AI가 판단하면서</strong> 진행합니다. 사람은 "해 줘" 한마디만 하면 됩니다. 프롬프팅에서 사람이 하던 복사, 붙여 넣기, 저장, 업로드를 전부 AI가 대신하는 셈입니다.</p>
+
+  <div class="key-box">
+    <span class="label">핵심 특징</span>목표만 주면 AI가 길을 정하고 행동한다.
+  </div>
+
+  <h2 id="s05"><span class="num">05 &nbsp;/&nbsp; 하네스</span>자율주행을 가능하게 하는 자동차</h2>
+
+  <p>자율주행차에는 LiDAR, 카메라, 브레이크, 핸들, 제어 컴퓨터가 필요합니다. 아무리 똑똑한 AI 운전자라도 이것들 없이는 도로에 나갈 수 없습니다.</p>
+
+  <p>마찬가지로, ChatGPT든 Claude든 LLM(대규모 언어모델) 자체는 <strong>텍스트를 생성하는 능력</strong>만 가지고 있습니다. 여기에 도구 인터페이스(파일 저장, 웹 검색, 코드 실행 등), 루프 제어(언제 다시 시도할지), 컨텍스트 관리(뭘 기억하고 뭘 버릴지) 같은 바깥 인프라를 씌워야 비로소 에이전트처럼 움직일 수 있습니다. 이 바깥 인프라를 <strong>하네스(harness)</strong>라고 부릅니다.</p>
+
+  <blockquote>LLM(운전자) + 하네스(자동차) = 에이전틱 시스템(자율주행차)</blockquote>
+
+  <p>Claude Code, Cursor, Devin 같은 서비스들은 각자 다른 "자동차"를 만든 것입니다. 운전자(LLM)는 비슷할 수 있지만, 차가 다르면 성능이 달라집니다. 같은 Claude 모델이라도 Cursor 위에서 쓸 때와 Claude Code에서 쓸 때 체감이 다른 이유가 바로 여기에 있습니다. 하네스의 내부 구조를 더 자세히 보고 싶다면 별도 글 <a href="/blog/harness.html">하네스라는 단어, 한 걸음 더 들어가 보기</a>에서 파일과 폴더 단위로 내려가 두었습니다.</p>
+
+  <div class="key-box">
+    <span class="label">핵심 특징</span>AI가 행동할 수 있게 해 주는 도구·루프·환경의 총체.
+  </div>
+
+  <h2 id="s06"><span class="num">06 &nbsp;/&nbsp; 분류</span>그래서 Manus, Genspark 같은 건 뭔가요</h2>
+
+  <p>최근 주목받는 서비스들을 위의 기준으로 분류해 보겠습니다.</p>
+
+  <p><strong>Manus</strong> — "이 회사 조사해서 보고서 만들어 줘" 한마디 던지면, 스스로 검색 계획을 세우고, 웹사이트를 돌아다니고, 데이터를 정리하고, 문서를 만듭니다. 심지어 백그라운드에서 알아서 돌아가게 두고 다른 일을 할 수도 있습니다. 전형적인 <em>에이전틱 서비스</em>입니다.</p>
+
+  <p><strong>Genspark</strong> — AI 검색엔진으로 시작했지만, 지금은 Super Agent 기능을 통해 여행 일정을 짜고 예약까지 시도하는 수준으로 확장됐습니다. 이것도 에이전틱에 해당합니다.</p>
+
+  <p><strong>ChatGPT 기본 채팅</strong> — 질문에 대답하는 수준입니다. 프롬프팅입니다.</p>
+
+  <p>사실 현실은 칼로 자르듯 나뉘지 않습니다. 스펙트럼에 가깝습니다.</p>
+
+<pre class="diagram">프롬프팅 ─── 워크플로우 ─── 반자율 에이전트 ─── 완전자율 에이전틱
+ChatGPT      Zapier+AI       ChatGPT Agent 모드     Manus, Claude Code
+(질문→답변)  (정해진 길)     (확인받으며 진행)       (알아서 끝까지)</pre>
+
+  <h2 id="s07"><span class="num">07 &nbsp;/&nbsp; 판별</span>가장 많이 하는 오해</h2>
+
+  <p>"ChatGPT 쓰는 것도 에이전트 아닌가요?"</p>
+
+  <p>아닙니다. 진짜 구분선은 이 질문 하나로 판별됩니다.</p>
+
+  <blockquote>AI가 다음에 뭘 할지 스스로 정하는가, 내가 정해 주는가?</blockquote>
+
+  <ul class="flow">
+    <li>내가 정해 주면 → 프롬프팅 또는 워크플로우</li>
+    <li>AI가 정하면 → 에이전틱</li>
+  </ul>
+
+  <p>ChatGPT에 코드를 물어보고 Netlify에 올리는 그 시나리오에서, "이제 Netlify에 올려야지"라고 결정한 건 <strong>여러분</strong>이었습니다. ChatGPT는 그 결정에 관여하지 않았습니다. 그래서 에이전트가 아닙니다.</p>
+
+  <h2 id="s08"><span class="num">08 &nbsp;/&nbsp; 혼용</span>전문가마다 정의가 다른 이유</h2>
+
+  <p>뉴스나 강연에서 "AI Agent와 Agentic AI는 다른 개념"이라는 설명을 들으셨을 수도 있습니다. 틀린 말은 아닙니다. <strong>학술적 프레이밍</strong>에서는 이렇게 나눕니다.</p>
+
+  <ul class="flow">
+    <li><strong>AI Agent</strong>: 단일 LLM이 하나의 과제를 수행하는 시스템</li>
+    <li><strong>Agentic AI</strong>: 여러 에이전트가 협업하며 복합 목표를 달성하는 시스템</li>
+  </ul>
+
+  <p>반면 Anthropic, OpenAI 같은 <strong>실무 프레이밍</strong>에서는 다음처럼 나눕니다.</p>
+
+  <ul class="flow">
+    <li><strong>Workflow</strong>: 사람이 경로를 고정한 자동화</li>
+    <li><strong>Agentic</strong>: LLM이 자율적으로 판단·실행·수정 루프를 도는 시스템</li>
+  </ul>
+
+  <p>이 두 프레이밍은 <em>같은 코끼리의 다른 부위를 만지고 있는 것</em>과 같습니다. 업계에 아직 합의된 단일 정의가 없기 때문에 여러 관점이 공존하는 상태입니다. 어떤 프레임을 쓰든, 핵심은 <strong>"AI가 얼마나 자율적으로 판단하고 행동하느냐"</strong>입니다.</p>
+
+  <hr class="rule">
+
+  <h2 id="s09"><span class="num">09 &nbsp;/&nbsp; 요약</span>한 줄로 네 개</h2>
+
+  <div class="summary-table">
+    <div class="row head">
+      <div class="name">구분</div>
+      <div class="def">한마디 정의</div>
+      <div class="example">대표 예시</div>
+    </div>
+    <div class="row">
+      <div class="name">프롬프팅</div>
+      <div class="def">AI에게 물어보고 내가 행동한다</div>
+      <div class="example">ChatGPT 기본 채팅</div>
+    </div>
+    <div class="row">
+      <div class="name">워크플로우</div>
+      <div class="def">내가 짠 길 위에서 AI가 일한다</div>
+      <div class="example">Zapier, n8n, Make</div>
+    </div>
+    <div class="row">
+      <div class="name">에이전트 / 에이전틱</div>
+      <div class="def">목표만 주면 AI가 알아서 한다</div>
+      <div class="example">Manus, Claude Code, Devin</div>
+    </div>
+    <div class="row">
+      <div class="name">하네스</div>
+      <div class="def">AI가 행동할 수 있게 해 주는 환경</div>
+      <div class="example">도구 + 루프 + 컨텍스트 관리</div>
+    </div>
+  </div>
+
+  <p>지금 여러분이 AI를 쓰는 방식은 이 중 어디에 해당하나요? 그리고 다음 단계로 올라가려면 무엇이 필요할까요?</p>
+
+  <blockquote>AI 시대에 중요한 질문은 더 이상 "프롬프트를 어떻게 잘 쓸까"가 아니다. "어떤 목표를 AI에게 위임할 것인가"로 바뀌고 있다.</blockquote>
+
+  <p>다음 글부터는 이 지도를 전제로 한 걸음씩 더 들어갑니다. MCP가 무엇이고 왜 등장했는지, 하네스는 실제로 어떤 파일과 폴더로 구성되어 있는지, 여러 에이전트를 묶는 패턴에는 어떤 것들이 있는지를 차례로 다룰 예정입니다. 첫 출발점인 이 글에서는 용어의 안개만 걷어 두면 충분합니다.</p>
+
+  <div class="footer">
+    <strong>신성진 (Shinsungjin)</strong><br>
+    한국데이터사이언티스트협회 대표 &middot; CDSA<br>
+    개인·조직 AX 변화관리 컨설턴트 &middot; AX/DX 교육 설계 &middot; 공공기관 커리큘럼 설계<br>
+    YouTube @workbyax
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="/" class="bottom-nav-home">← CDSA 홈으로</a>
+    <a href="/blog/">블로그 목록 →</a>
+  </nav>
+
+</article>
+
+<script src="/blog/_posts.js" defer></script>
+</body>
+</html>

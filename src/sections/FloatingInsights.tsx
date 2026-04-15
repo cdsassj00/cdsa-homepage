@@ -36,6 +36,11 @@ const articles = [
     description: 'SNS에서 도는 7가지 패턴을 실무 기준으로. 본질은 두 축이다',
     href: '/blog/multi-agent-patterns.html',
   },
+  {
+    title: 'ChatGPT에 코드 물어보는 것도 AI 에이전트일까?',
+    description: '프롬프팅·워크플로우·에이전트·하네스 — 운전 비유로 정리한 기초 어휘',
+    href: '/blog/what-is-agent.html',
+  },
   // 앞으로 글이 추가되면 여기에 { title, description, href } 한 줄만 추가
 ]
 
