@@ -17,6 +17,7 @@
   gtag('config', 'G-NZL39P5EYZ');
 </script>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/blog/_layout.css">
 <style>
   :root {
     --cream: #faf9f5;
@@ -261,6 +262,17 @@
     <a href="/fullcourse.html">Full Course</a>
   </nav>
 </header>
+
+<button class="blog-hamburger" aria-label="블로그 목록 열기"><span></span><span></span><span></span></button>
+<div class="blog-overlay"></div>
+<aside class="blog-left">
+  <div class="blog-left-title">Blog Posts</div>
+  <ol class="blog-left-list"></ol>
+</aside>
+<aside class="blog-right">
+  <div class="blog-right-title">On This Page</div>
+  <ul class="blog-toc"></ul>
+</aside>
 
 <article class="wrap">
 
@@ -513,5 +525,7 @@
   </nav>
 
 </article>
+
+<script src="/blog/_posts.js" defer></script>
 </body>
 </html>
