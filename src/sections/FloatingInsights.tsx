@@ -16,6 +16,11 @@ const articles = [
     description: '모델을 실제로 돌리는 바깥 껍데기. 60줄 파이썬부터 Claude Code까지',
     href: '/blog/harness.html',
   },
+  {
+    title: 'MCP 클라이언트를 직접 만들 때 왜 에이전트 서버가 핵심인가',
+    description: '채팅창이 아니라 함수 호출 흐름 제어기가 핵심. 기능을 네 가지 유형으로',
+    href: '/blog/mcp-client.html',
+  },
   // 앞으로 글이 추가되면 여기에 { title, description, href } 한 줄만 추가
 ]
 

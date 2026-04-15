@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCP 클라이언트를 직접 만들 때 왜 에이전트 서버가 핵심인가 · CDSA 블로그</title>
+<meta name="description" content="도구라는 말은 편하지만 손에 잘 잡히지 않는다. 채팅창 뒤에 무엇이 있어야 MCP 클라이언트가 제대로 작동하는가.">
+<meta property="og:title" content="MCP 클라이언트를 직접 만들 때 왜 에이전트 서버가 핵심인가">
+<meta property="og:description" content="MCP 클라이언트를 직접 만들면 채팅창이 아니라 함수 호출 흐름 제어기(에이전트 서버)가 핵심이다.">
+<meta property="og:type" content="article">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NZL39P5EYZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NZL39P5EYZ');
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #faf9f5;
+    --cream-deep: #f3efe3;
+    --ink: #1a1a1a;
+    --ink-soft: #3d3d3a;
+    --ink-mute: #6b6b66;
+    --rule: #d9d6cc;
+    --clay: #cc785c;
+    --clay-deep: #a85a42;
+    --code-bg: #f2f0e8;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--cream);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    font-family: "Fraunces", "Noto Serif KR", Georgia, serif;
+    font-weight: 300;
+    font-size: 19px;
+    line-height: 1.72;
+    letter-spacing: -0.005em;
+  }
+
+  /* ===== TOP NAV ===== */
+  .topnav {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: 48px; background: rgba(250, 249, 245, 0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--rule);
+    z-index: 100; display: flex; align-items: center;
+    justify-content: space-between;
+    padding: 0 24px; font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 13px;
+  }
+  .topnav-left { display: flex; align-items: center; gap: 18px; }
+  .topnav-left a { color: var(--ink-soft); text-decoration: none; transition: color 0.2s; }
+  .topnav-left a:hover { color: var(--clay-deep); }
+  .topnav-home {
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-weight: 600; font-size: 16px;
+    color: var(--ink) !important; letter-spacing: -0.3px;
+  }
+  .topnav-sep { color: var(--rule); font-size: 11px; }
+  .topnav-right { display: flex; gap: 16px; }
+  .topnav-right a {
+    color: var(--ink-mute); text-decoration: none;
+    font-size: 12px; transition: color 0.2s;
+  }
+  .topnav-right a:hover { color: var(--clay-deep); }
+  .topnav-current {
+    color: var(--ink) !important; font-weight: 600;
+    position: relative;
+  }
+  .topnav-current::after {
+    content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
+    height: 2px; background: var(--clay); border-radius: 1px;
+  }
+
+  /* ===== ARTICLE WRAP ===== */
+  .wrap {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 116px 28px 120px;
+  }
+
+  /* ===== BREADCRUMB ===== */
+  .breadcrumb {
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 12px;
+    margin-bottom: 36px;
+    display: flex; align-items: center; gap: 8px;
+    color: var(--ink-mute);
+  }
+  .breadcrumb a { color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--ink); }
+  .breadcrumb .bc-sep { color: var(--rule); }
+
+  .kicker {
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--clay-deep);
+    margin-bottom: 28px;
+  }
+  h1 {
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-weight: 400;
+    font-size: 44px;
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+    margin: 0 0 24px;
+    color: var(--ink);
+  }
+  .dek {
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: 21px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0 0 40px;
+  }
+  .byline {
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 13px;
+    color: var(--ink-mute);
+    padding: 18px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 56px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .byline strong { font-weight: 500; color: var(--ink-soft); }
+  .lede {
+    font-size: 19px;
+    line-height: 1.72;
+    margin-bottom: 22px;
+  }
+  .lede::first-letter {
+    font-family: "Fraunces", serif;
+    font-weight: 400;
+    font-size: 68px;
+    float: left;
+    line-height: 0.88;
+    padding: 8px 10px 0 0;
+    color: var(--clay);
+  }
+  h2 {
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    margin: 64px 0 8px;
+    color: var(--ink);
+    scroll-margin-top: 80px;
+  }
+  h2 .num {
+    font-family: "Inter", sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--clay);
+    letter-spacing: 0.1em;
+    display: block;
+    margin-bottom: 10px;
+  }
+  h3 {
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-weight: 500;
+    font-size: 20px;
+    margin: 36px 0 10px;
+    color: var(--ink);
+  }
+  p { margin: 0 0 22px; }
+  p + p { margin-top: -6px; }
+  strong { font-weight: 500; color: var(--ink); }
+  em { font-style: italic; }
+  code {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.88em;
+    background: var(--code-bg);
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: var(--clay-deep);
+  }
+  ul.flow {
+    list-style: none;
+    padding: 0;
+    margin: 18px 0 28px;
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 15.5px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    border-left: 2px solid var(--rule);
+    padding-left: 20px;
+  }
+  ul.flow li {
+    margin-bottom: 6px;
+    position: relative;
+  }
+  ul.flow li::before {
+    content: "·";
+    color: var(--clay);
+    font-weight: 700;
+    margin-right: 8px;
+  }
+  ul.fns {
+    list-style: none;
+    padding: 0;
+    margin: 18px 0 24px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 13px;
+    line-height: 1.8;
+  }
+  ul.fns li {
+    padding: 4px 0;
+    color: var(--clay-deep);
+  }
+  blockquote {
+    margin: 36px 0;
+    padding: 4px 0 4px 22px;
+    border-left: 2px solid var(--clay);
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-style: italic;
+    font-size: 20px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+  .rule { border: none; border-top: 1px solid var(--rule); margin: 56px 0; }
+  .footer {
+    margin-top: 72px; padding-top: 28px;
+    border-top: 1px solid var(--rule);
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 13px; color: var(--ink-mute); line-height: 1.65;
+  }
+  .footer strong { color: var(--ink-soft); font-weight: 600; }
+
+  /* ===== BOTTOM NAVIGATION ===== */
+  .bottom-nav {
+    margin-top: 72px;
+    padding: 36px 0;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .bottom-nav a {
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 13px; color: var(--clay-deep);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .bottom-nav a:hover { color: var(--ink); }
+  .bottom-nav-home {
+    font-family: "Fraunces", "Noto Serif KR", serif !important;
+    font-size: 16px !important;
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  @media (max-width: 560px) {
+    .wrap { padding: 92px 22px 80px; }
+    h1 { font-size: 34px; }
+    .dek { font-size: 18px; }
+    body { font-size: 17px; }
+    .topnav-right { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<header class="topnav">
+  <div class="topnav-left">
+    <a href="/" class="topnav-home">CDSA</a>
+    <span class="topnav-sep">|</span>
+    <a href="/">홈페이지</a>
+    <a href="/blog/" class="topnav-current">블로그</a>
+  </div>
+  <nav class="topnav-right">
+    <a href="/framework.html">프레임워크</a>
+    <a href="/fullcourse.html">Full Course</a>
+  </nav>
+</header>
+
+<article class="wrap">
+
+  <nav class="breadcrumb">
+    <a href="/">← CDSA 홈</a>
+    <span class="bc-sep">/</span>
+    <a href="/blog/">블로그</a>
+    <span class="bc-sep">/</span>
+    <span>MCP 클라이언트와 에이전트 서버</span>
+  </nav>
+
+  <div class="kicker">Editorial &middot; MCP 실무</div>
+
+  <h1>MCP 클라이언트를 직접 만들 때<br>왜 에이전트 서버가 핵심인가</h1>
+
+  <p class="dek">도구라는 말은 편하지만 손에 잘 잡히지 않는다. 채팅창 뒤에 무엇이 있어야 MCP 클라이언트가 제대로 작동하는가.</p>
+
+  <div class="byline">
+    <span><strong>신성진</strong> &nbsp;&middot;&nbsp; 한국데이터사이언티스트협회</span>
+    <span>2026. 4. 1</span>
+  </div>
+
+  <p class="lede">도구라는 표현은 편하지만 초보자에게는 너무 뭉뚱그려져 있어서 손에 잘 안 잡힙니다. 그래서 여기서는 도구라는 말을 가능한 한 기능 단위로 풀어서 설명하겠습니다. MCP를 이해할 때 중요한 것은 추상적인 도구 개념이 아니라, 실제로 어떤 입력이 들어가고 어떤 처리가 일어나며 어떤 결과가 돌아오는지입니다.</p>
+
+  <p>예를 들어 사용자가 "김민수 과장 이메일 알려줘"라고 물었다고 하겠습니다. 이때 시스템 안에서 일어나는 일은 막연한 도구 사용이 아닙니다. 실제로는 다음 같은 처리가 일어납니다.</p>
+
+  <ul class="flow">
+    <li>직원정보 테이블에서 이름이 김민수인 행을 찾습니다.</li>
+    <li>그 행의 직급이 과장인지 확인합니다.</li>
+    <li>이메일 컬럼 값을 꺼냅니다.</li>
+    <li>찾은 값을 모델에게 다시 넘깁니다.</li>
+  </ul>
+
+  <p>즉, 여기서 말하는 기능은 "주소록 검색"이라는 추상 단어가 아니라, 더 구체적으로는 <code>employee_name="김민수"</code>를 입력으로 받아 직원 DB를 조회하고, 결과로 <code>email="..."</code> 값을 돌려주는 실행 단위입니다.</p>
+
+  <p>사용자가 "지난달 매출 감소 원인을 요약해줘"라고 물으면 마찬가지입니다. 여기서도 실제 내부 동작은 막연한 도구 호출이 아닙니다.</p>
+
+  <ul class="flow">
+    <li>매출 테이블에서 지난달 데이터를 조회합니다.</li>
+    <li>전달 데이터와 비교합니다.</li>
+    <li>감소한 항목을 정렬합니다.</li>
+    <li>관련 회의록이나 메모를 찾습니다.</li>
+    <li>그 결과를 바탕으로 요약 문장을 생성합니다.</li>
+  </ul>
+
+  <p>이처럼 MCP에서 말하는 것은 사실상 작은 기능 API들의 묶음이라고 보는 편이 더 정확합니다. 파일 목록 가져오기, 특정 문서 본문 읽기, 특정 기간의 매출 데이터 조회, 고객 ID로 주문 내역 조회, 노션 페이지 새로 생성하기, 이메일 초안 저장하기 같은 것들이 전부 여기에 들어갑니다.</p>
+
+  <p>따라서 MCP 서버를 만든다는 말은 거창한 무언가를 만든다는 뜻이 아니라, 이런 실행 가능한 기능들을 모델이 일정한 방식으로 호출할 수 있게 정리해 놓는다는 뜻입니다.</p>
+
+  <h2 id="s01"><span class="num">01 &nbsp;/&nbsp; 기능의 네 가지 유형</span>직접 보이는 형태로 다시 설명하면</h2>
+
+  <p>직접 만드는 MCP 시스템에서 모델이 사용할 수 있는 것은 대개 아래처럼 생긴 기능들입니다. 뭉뚱그린 "도구"가 아니라, 입력과 처리와 출력이 분명한 네 가지 결의 실행 단위로 나누어 보면 훨씬 또렷하게 보입니다.</p>
+
+  <h3>1. 조회형 기능</h3>
+  <p>이 종류는 어딘가에 이미 들어 있는 값을 읽어오는 기능입니다. 예를 들면 이런 것들입니다.</p>
+
+  <ul class="fns">
+    <li>get_employee_email(name)</li>
+    <li>find_sales_data(month)</li>
+    <li>read_file(path)</li>
+    <li>search_notion(keyword)</li>
+    <li>get_customer_orders(customer_id)</li>
+  </ul>
+
+  <p>이 기능들은 입력값이 들어오면 저장소나 외부 시스템에서 값을 읽어서 반환합니다. 예를 들어 <code>read_file(path)</code>는 입력이 파일 경로이고, 출력은 파일 본문입니다. <code>get_customer_orders(customer_id)</code>는 입력이 고객번호이고, 출력은 주문 목록입니다.</p>
+
+  <h3>2. 생성형 기능</h3>
+  <p>이 종류는 새로운 결과물을 만드는 기능입니다. 예를 들면 이런 것들입니다.</p>
+
+  <ul class="fns">
+    <li>create_notion_page(title, content)</li>
+    <li>draft_email(to, subject, body)</li>
+    <li>generate_report(data)</li>
+    <li>summarize_meeting_notes(text)</li>
+  </ul>
+
+  <p>이 기능들은 단순 조회가 아니라 새 문서나 새 텍스트를 만듭니다. 예를 들어 <code>create_notion_page</code>는 제목과 본문을 입력받아 노션에 새 페이지를 생성합니다. <code>draft_email</code>은 받는 사람, 제목, 본문을 받아 이메일 초안을 저장합니다.</p>
+
+  <h3>3. 실행형 기능</h3>
+  <p>이 종류는 실제로 어떤 행동을 일으키는 기능입니다. 예를 들면 이런 것들입니다.</p>
+
+  <ul class="fns">
+    <li>send_email(draft_id)</li>
+    <li>create_calendar_event(date, title)</li>
+    <li>approve_request(id)</li>
+    <li>run_python_code(code)</li>
+    <li>start_batch_job(job_name)</li>
+  </ul>
+
+  <p>이 기능들은 결과를 읽어오는 수준이 아니라 시스템 상태를 바꿉니다. 그래서 권한과 승인 통제가 중요합니다.</p>
+
+  <h3>4. 변환형 기능</h3>
+  <p>이 종류는 입력 데이터를 다른 형태로 바꾸는 기능입니다. 예를 들면 이런 것들입니다.</p>
+
+  <ul class="fns">
+    <li>extract_text_from_pdf(file)</li>
+    <li>convert_excel_to_json(file)</li>
+    <li>translate_text(text, lang)</li>
+    <li>classify_document(text)</li>
+    <li>extract_table_from_image(image)</li>
+  </ul>
+
+  <p>이 기능들은 입력을 받아 가공한 뒤 새로운 구조의 결과를 돌려줍니다.</p>
+
+  <p>즉, MCP에서 모델이 다루는 것은 추상적인 마법 상자가 아니라, 실제로는 이런 개별 기능들입니다. <strong>입력이 있고, 내부 처리 로직이 있고, 출력이 있는 아주 구체적인 실행 단위들</strong>입니다.</p>
+
+  <h2 id="s02"><span class="num">02 &nbsp;/&nbsp; 핵심</span>그러면 왜 에이전트 서버가 핵심인가</h2>
+
+  <p>이제 여기서 핵심이 보입니다. 사용자가 직접 MCP 클라이언트를 만든다고 했을 때, 실제 어려운 부분은 이 기능들을 화면에 예쁘게 보여주는 것이 아닙니다. 더 중요한 것은 <strong>사용자의 질문을 보고 어떤 기능을 언제 어떤 순서로 호출할지 결정하고, 그 결과를 다시 모델에게 넣어 최종 답을 완성하는 흐름을 통제하는 것</strong>입니다.</p>
+
+  <p>예를 들어 사용자가 "지난달 매출 감소 원인 정리해서 노션에 회의자료 초안까지 만들어줘"라고 말하면, 실제 내부 흐름은 대략 이렇게 됩니다.</p>
+
+  <ul class="flow">
+    <li><code>find_sales_data("지난달")</code> 실행</li>
+    <li>전달 비교 데이터 조회 실행</li>
+    <li>감소 폭 큰 항목 정리</li>
+    <li>관련 회의록 검색 실행</li>
+    <li>검색 결과와 매출 결과를 합쳐 요약 생성</li>
+    <li><code>create_notion_page(title, content)</code> 실행</li>
+    <li>생성된 페이지 주소를 사용자에게 반환</li>
+  </ul>
+
+  <p>여기서 중요한 것은 어느 한 기능이 아니라 이 <em>전체 호출 흐름</em>입니다. 이 흐름을 누가 관리하느냐가 핵심인데, 그 역할을 맡는 것이 에이전트 서버입니다.</p>
+
+  <p>즉, 직접 만드는 MCP 클라이언트에서 본질은 채팅창이 아니라 다음을 처리하는 서버입니다.</p>
+
+  <ul class="flow">
+    <li>어떤 기능 목록을 현재 사용할 수 있는지 알고 있습니다.</li>
+    <li>사용자의 질문을 보고 필요한 기능 후보를 좁힙니다.</li>
+    <li>기능 호출에 필요한 입력값을 정리합니다.</li>
+    <li>여러 기능을 순서대로 실행합니다.</li>
+    <li>실패 시 재시도하거나 다른 경로로 우회합니다.</li>
+    <li>민감한 기능은 차단하거나 승인 절차를 거치게 합니다.</li>
+    <li>최종 결과를 사용자 문장으로 정리합니다.</li>
+  </ul>
+
+  <p>이것이 없으면 화면은 있어도 제대로 동작하는 MCP 클라이언트가 되지 않습니다.</p>
+
+  <h2 id="s03"><span class="num">03 &nbsp;/&nbsp; 착시</span>유명한 MCP 클라이언트가 왜 쉬워 보이는가</h2>
+
+  <p>Claude Desktop이나 Cursor 같은 이미 완성된 제품은 이 중간 조정 계층이 이미 안에 들어 있습니다. 그래서 사용자는 마치 모델이 바로 MCP 기능을 쓰는 것처럼 느낍니다.</p>
+
+  <p>하지만 직접 만들 때는 다릅니다. 브라우저에 채팅창을 하나 띄운다고 끝나지 않습니다. 채팅창 뒤에서 다음을 담당하는 서버가 반드시 있어야 합니다.</p>
+
+  <ul class="flow">
+    <li>연결된 MCP 서버 목록 관리</li>
+    <li>각 기능의 이름, 설명, 입력 형식 관리</li>
+    <li>모델 호출과 기능 호출 사이의 왕복 처리</li>
+    <li>대화 세션 저장</li>
+    <li>사용자별 권한 확인</li>
+    <li>호출 로그 저장</li>
+    <li>실패 상황 대응</li>
+  </ul>
+
+  <p>이 계층이 바로 에이전트 서버입니다. 그래서 직접 만드는 MCP 클라이언트는 정확히 말하면 클라이언트를 만드는 작업이 아니라, <strong>MCP 기능들을 안전하고 순서 있게 실행시키는 에이전트 서버를 만들고 그 위에 화면을 얹는 작업</strong>에 가깝습니다.</p>
+
+  <h2 id="s04"><span class="num">04 &nbsp;/&nbsp; 정리</span>아주 현실적인 기준으로 다시</h2>
+
+  <p>직접 만드는 MCP 시스템에서 모델이 쓰는 것은 추상적인 도구가 아니라 아래 같은 실행 함수들입니다.</p>
+
+  <ul class="flow">
+    <li>직원 이름으로 이메일 찾기</li>
+    <li>특정 월 매출 데이터 가져오기</li>
+    <li>파일 경로로 문서 본문 읽기</li>
+    <li>고객번호로 주문내역 조회하기</li>
+    <li>회의록 본문 요약하기</li>
+    <li>노션 페이지 만들기</li>
+    <li>이메일 초안 저장하기</li>
+    <li>일정 등록하기</li>
+  </ul>
+
+  <p>그리고 에이전트 서버는 이 함수들을 적절한 순서로 조합해서 하나의 업무 흐름으로 만드는 계층입니다.</p>
+
+  <p>즉, 직접 만드는 MCP 클라이언트의 핵심은 채팅창이 아니라 <strong>함수 호출 흐름 제어기</strong>라고 이해하는 편이 훨씬 손에 잡힙니다.</p>
+
+  <hr class="rule">
+
+  <h2 id="s05"><span class="num">05 &nbsp;/&nbsp; 한 줄 결론</span>흐름 제어기가 먼저다</h2>
+
+  <blockquote>유명한 MCP 클라이언트는 이미 내부에 함수 호출 흐름 제어기가 들어 있어서 편해 보이는 것이고, 사용자가 생짜로 직접 만들 MCP 클라이언트는 결국 그 함수 호출 흐름 제어기 — 즉 에이전트 서버를 먼저 만들어야 제대로 작동합니다.</blockquote>
+
+  <p>화면은 그다음입니다.</p>
+
+  <div class="footer">
+    <strong>신성진 (Shinsungjin)</strong><br>
+    한국데이터사이언티스트협회 대표 &middot; CDSA<br>
+    개인·조직 AX 변화관리 컨설턴트 &middot; AX/DX 교육 설계 &middot; 공공기관 커리큘럼 설계<br>
+    YouTube @workbyax
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+    <a href="/" class="bottom-nav-home">← CDSA 홈으로</a>
+    <a href="/blog/">블로그 목록 →</a>
+  </nav>
+
+</article>
+</body>
+</html>
