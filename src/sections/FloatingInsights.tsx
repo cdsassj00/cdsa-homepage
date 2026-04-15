@@ -31,6 +31,11 @@ const articles = [
     description: '기능 목록·입력 형식·실행 코드·결과 반환 — MCP 서버의 네 가지 뼈대',
     href: '/blog/mcp-server.html',
   },
+  {
+    title: '멀티 에이전트 7가지 유형, 쓸모 있게 정리하기',
+    description: 'SNS에서 도는 7가지 패턴을 실무 기준으로. 본질은 두 축이다',
+    href: '/blog/multi-agent-patterns.html',
+  },
   // 앞으로 글이 추가되면 여기에 { title, description, href } 한 줄만 추가
 ]
 

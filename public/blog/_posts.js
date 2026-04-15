@@ -24,6 +24,13 @@
   // Single source of truth for blog posts. Sorted newest-first.
   const POSTS = [
     {
+      slug: 'multi-agent-patterns',
+      title: '멀티 에이전트 7가지 유형, 쓸모 있게 정리하기',
+      date: '2026. 4. 1',
+      category: '에이전트 아키텍처',
+      href: '/blog/multi-agent-patterns.html',
+    },
+    {
       slug: 'mcp-client',
       title: 'MCP 클라이언트를 직접 만들 때 왜 에이전트 서버가 핵심인가',
       date: '2026. 4. 1',
