@@ -33,14 +33,21 @@
     {
       slug: 'harness',
       title: '하네스라는 단어, 한 걸음 더 들어가 보기',
-      date: '2026. 4. 1',
+      date: '2026. 3. 25',
       category: 'AI 도구론',
       href: '/blog/harness.html',
     },
     {
+      slug: 'mcp-server',
+      title: 'MCP 서버의 원리, 전문기술이지만 쉽게 이해하기',
+      date: '2026. 3. 18',
+      category: 'MCP 심화',
+      href: '/blog/mcp-server.html',
+    },
+    {
       slug: 'mcp-guide',
       title: 'MCP 서버·클라이언트·에이전트 서버 입문 가이드',
-      date: '2026. 3. 24',
+      date: '2026. 3. 11',
       category: 'MCP 입문',
       href: '/blog/mcp-guide.html',
     },

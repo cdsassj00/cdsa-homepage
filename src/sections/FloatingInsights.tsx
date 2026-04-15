@@ -26,6 +26,11 @@ const articles = [
     description: '식당 비유로 풀어 본 MCP 입문 지도. 처음 만들 때 어디서부터 시작할까',
     href: '/blog/mcp-guide.html',
   },
+  {
+    title: 'MCP 서버의 원리, 전문기술이지만 쉽게 이해하기',
+    description: '기능 목록·입력 형식·실행 코드·결과 반환 — MCP 서버의 네 가지 뼈대',
+    href: '/blog/mcp-server.html',
+  },
   // 앞으로 글이 추가되면 여기에 { title, description, href } 한 줄만 추가
 ]
 

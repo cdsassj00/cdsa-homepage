@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCP 서버의 원리, 전문기술이지만 쉽게 이해하기 · CDSA 블로그</title>
+<meta name="description" content="MCP 서버의 원리를 눈에 보이는 실행 흐름 기준으로 풀어 본 글. 기능 목록, 입력 형식, 실행 코드, 결과 반환이라는 네 가지 뼈대로.">
+<meta property="og:title" content="MCP 서버의 원리, 전문기술이지만 쉽게 이해하기">
+<meta property="og:description" content="MCP 서버는 복잡한 외부 시스템을 모델이 이해할 수 있는 기능 목록으로 정리하고, 모델이 요청하면 그 기능을 대신 실행한 뒤 결과를 다시 돌려주는 것이다.">
+<meta property="og:type" content="article">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NZL39P5EYZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NZL39P5EYZ');
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/blog/_layout.css">
+<style>
+  :root {
+    --cream: #faf9f5;
+    --cream-deep: #f3efe3;
+    --ink: #1a1a1a;
+    --ink-soft: #3d3d3a;
+    --ink-mute: #6b6b66;
+    --rule: #d9d6cc;
+    --clay: #cc785c;
+    --clay-deep: #a85a42;
+    --code-bg: #f2f0e8;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--cream); color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    font-family: "Fraunces", "Noto Serif KR", Georgia, serif;
+    font-weight: 300; font-size: 19px;
+    line-height: 1.72; letter-spacing: -0.005em;
+  }
+  .topnav {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: 48px; background: rgba(250, 249, 245, 0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--rule);
+    z-index: 100; display: flex; align-items: center;
+    justify-content: space-between;
+    padding: 0 24px; font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 13px;
+  }
+  .topnav-left { display: flex; align-items: center; gap: 18px; }
+  .topnav-left a { color: var(--ink-soft); text-decoration: none; transition: color 0.2s; }
+  .topnav-left a:hover { color: var(--clay-deep); }
+  .topnav-home {
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-weight: 600; font-size: 16px;
+    color: var(--ink) !important; letter-spacing: -0.3px;
+  }
+  .topnav-sep { color: var(--rule); font-size: 11px; }
+  .topnav-right { display: flex; gap: 16px; }
+  .topnav-right a {
+    color: var(--ink-mute); text-decoration: none;
+    font-size: 12px; transition: color 0.2s;
+  }
+  .topnav-right a:hover { color: var(--clay-deep); }
+  .topnav-current {
+    color: var(--ink) !important; font-weight: 600; position: relative;
+  }
+  .topnav-current::after {
+    content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
+    height: 2px; background: var(--clay); border-radius: 1px;
+  }
+  .wrap {
+    max-width: 680px; margin: 0 auto;
+    padding: 116px 28px 120px;
+  }
+  .breadcrumb {
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 12px; margin-bottom: 36px;
+    display: flex; align-items: center; gap: 8px;
+    color: var(--ink-mute);
+  }
+  .breadcrumb a { color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--ink); }
+  .breadcrumb .bc-sep { color: var(--rule); }
+  .kicker {
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 12px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--clay-deep); margin-bottom: 28px;
+  }
+  h1 {
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-weight: 400; font-size: 44px;
+    line-height: 1.18; letter-spacing: -0.02em;
+    margin: 0 0 24px; color: var(--ink);
+  }
+  .dek {
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-weight: 300; font-style: italic;
+    font-size: 21px; line-height: 1.55;
+    color: var(--ink-soft); margin: 0 0 40px;
+  }
+  .byline {
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 13px; color: var(--ink-mute);
+    padding: 18px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 56px;
+    display: flex; justify-content: space-between;
+  }
+  .byline strong { font-weight: 500; color: var(--ink-soft); }
+  .lede { font-size: 19px; line-height: 1.72; margin-bottom: 22px; }
+  .lede::first-letter {
+    font-family: "Fraunces", serif; font-weight: 400;
+    font-size: 68px; float: left; line-height: 0.88;
+    padding: 8px 10px 0 0; color: var(--clay);
+  }
+  h2 {
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-weight: 500; font-size: 28px;
+    line-height: 1.25; letter-spacing: -0.015em;
+    margin: 64px 0 8px; color: var(--ink);
+    scroll-margin-top: 80px;
+  }
+  h2 .num {
+    font-family: "Inter", sans-serif;
+    font-size: 12px; font-weight: 600;
+    color: var(--clay); letter-spacing: 0.1em;
+    display: block; margin-bottom: 10px;
+  }
+  h3 {
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-weight: 500; font-size: 20px;
+    margin: 36px 0 10px; color: var(--ink);
+  }
+  p { margin: 0 0 22px; }
+  p + p { margin-top: -6px; }
+  strong { font-weight: 500; color: var(--ink); }
+  em { font-style: italic; }
+  code {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.88em; background: var(--code-bg);
+    padding: 2px 6px; border-radius: 3px;
+    color: var(--clay-deep);
+  }
+  ul.flow {
+    list-style: none; padding: 0;
+    margin: 18px 0 28px;
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 15.5px; line-height: 1.7;
+    color: var(--ink-soft);
+    border-left: 2px solid var(--rule);
+    padding-left: 20px;
+  }
+  ul.flow li { margin-bottom: 6px; }
+  ul.flow li::before {
+    content: "·"; color: var(--clay);
+    font-weight: 700; margin-right: 8px;
+  }
+  ol.steps {
+    list-style: none; padding: 0;
+    margin: 18px 0 28px;
+    counter-reset: step;
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 15.5px; line-height: 1.7;
+    color: var(--ink-soft);
+  }
+  ol.steps li {
+    counter-increment: step;
+    padding: 10px 0 10px 46px;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+  }
+  ol.steps li:first-child { border-top: 1px solid var(--rule); }
+  ol.steps li::before {
+    content: counter(step, decimal-leading-zero);
+    position: absolute; left: 0; top: 12px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px; font-weight: 600;
+    color: var(--clay); letter-spacing: 0.04em;
+  }
+  blockquote {
+    margin: 36px 0;
+    padding: 4px 0 4px 22px;
+    border-left: 2px solid var(--clay);
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-style: italic; font-size: 20px;
+    line-height: 1.55; color: var(--ink-soft);
+  }
+  .rule { border: none; border-top: 1px solid var(--rule); margin: 56px 0; }
+  .footer {
+    margin-top: 72px; padding-top: 28px;
+    border-top: 1px solid var(--rule);
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 13px; color: var(--ink-mute); line-height: 1.65;
+  }
+  .footer strong { color: var(--ink-soft); font-weight: 600; }
+  .bottom-nav {
+    margin-top: 72px; padding: 36px 0;
+    border-top: 1px solid var(--rule);
+    display: flex; justify-content: space-between;
+    align-items: center; flex-wrap: wrap; gap: 16px;
+  }
+  .bottom-nav a {
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 13px; color: var(--clay-deep);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .bottom-nav a:hover { color: var(--ink); }
+  .bottom-nav-home {
+    font-family: "Fraunces", "Noto Serif KR", serif !important;
+    font-size: 16px !important;
+    font-style: italic; font-weight: 400;
+  }
+  @media (max-width: 560px) {
+    .wrap { padding: 92px 22px 80px; }
+    h1 { font-size: 34px; }
+    .dek { font-size: 18px; }
+    body { font-size: 17px; }
+    .topnav-right { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="topnav-left">
+    <a href="/" class="topnav-home">CDSA</a>
+    <span class="topnav-sep">|</span>
+    <a href="/">홈페이지</a>
+    <a href="/blog/" class="topnav-current">블로그</a>
+  </div>
+  <nav class="topnav-right">
+    <a href="/framework.html">프레임워크</a>
+    <a href="/fullcourse.html">Full Course</a>
+  </nav>
+</header>
+
+<button class="blog-hamburger" aria-label="블로그 목록 열기"><span></span><span></span><span></span></button>
+<div class="blog-overlay"></div>
+<aside class="blog-left">
+  <div class="blog-left-title">Blog Posts</div>
+  <ol class="blog-left-list"></ol>
+</aside>
+<aside class="blog-right">
+  <div class="blog-right-title">On This Page</div>
+  <ul class="blog-toc"></ul>
+</aside>
+
+<article class="wrap">
+
+  <nav class="breadcrumb">
+    <a href="/">← CDSA 홈</a>
+    <span class="bc-sep">/</span>
+    <a href="/blog/">블로그</a>
+    <span class="bc-sep">/</span>
+    <span>MCP 서버의 원리</span>
+  </nav>
+
+  <div class="kicker">Editorial &middot; MCP 심화</div>
+
+  <h1>MCP 서버의 원리,<br>전문기술이지만 쉽게 이해하기</h1>
+
+  <p class="dek">어렵게 말하면 모델이 외부 기능을 표준 방식으로 발견하고 호출할 수 있게 해 주는 인터페이스 계층이다. 눈에 보이는 실행 흐름 기준으로 풀어 보자.</p>
+
+  <div class="byline">
+    <span><strong>신성진</strong> &nbsp;&middot;&nbsp; 한국데이터사이언티스트협회</span>
+    <span>2026. 3. 18</span>
+  </div>
+
+  <p class="lede">MCP 서버의 원리를 어렵게 말하면, 모델이 외부 기능을 표준 방식으로 발견하고 호출할 수 있게 해 주는 인터페이스 계층입니다. 그런데 이렇게 말하면 초보자에게는 거의 안 와닿습니다. 그래서 여기서는 <strong>눈에 보이는 실행 흐름</strong> 기준으로 설명하겠습니다.</p>
+
+  <p>핵심부터 말하면, MCP 서버는 AI가 어떤 기능을 쓸 수 있는지 목록으로 보여 주고, 그 기능을 어떤 형식으로 호출해야 하는지 알려 주고, 실제 호출이 들어오면 대신 실행해서 결과를 돌려주는 프로그램입니다. 즉, MCP 서버가 하는 일은 세 가지입니다.</p>
+
+  <ul class="flow">
+    <li>사용할 수 있는 기능 목록을 공개한다.</li>
+    <li>각 기능의 입력 형식을 설명한다.</li>
+    <li>호출이 들어오면 실제 처리를 하고 결과를 반환한다.</li>
+  </ul>
+
+  <p>이 세 가지가 MCP 서버의 원리입니다. 이제 하나씩 풀어 보겠습니다.</p>
+
+  <h2 id="s01"><span class="num">01 &nbsp;/&nbsp; 차이</span>그냥 API 서버와 뭐가 다른가</h2>
+
+  <p>보통 API 서버는 <strong>사람이 문서를 읽고 직접 붙입니다.</strong> 개발자가 API 문서를 보고 URL, 파라미터, 인증 방식, 응답 형식을 맞춰서 코드를 짭니다. 반면 MCP 서버는 <strong>모델이 읽고 쓰기 좋은 방식으로 기능을 정리해 둡니다.</strong> 즉, 사람이 API 문서를 해석하는 대신 모델이 기능 설명을 읽고 어떤 기능을 쓸지 판단할 수 있게 구조를 맞춰 둔 것입니다.</p>
+
+  <p>예를 들어 일반 API 서버라면 개발자가 이런 것을 직접 알아야 합니다.</p>
+
+  <ul class="flow">
+    <li>어느 URL로 요청해야 하는지</li>
+    <li>GET인지 POST인지</li>
+    <li>헤더에 무엇을 넣어야 하는지</li>
+    <li>응답 JSON에서 어떤 필드를 읽어야 하는지</li>
+  </ul>
+
+  <p>그런데 MCP 서버를 붙여 놓으면 모델 입장에서는 훨씬 단순해집니다. 모델은 그냥 이런 식으로 이해합니다.</p>
+
+  <ul class="flow">
+    <li>직원 이메일 찾기 기능 있음</li>
+    <li>입력값은 이름 문자열 하나</li>
+    <li>결과는 이메일 문자열</li>
+  </ul>
+
+  <p>즉, 복잡한 API 구조를 모델이 바로 다루는 대신, <strong>MCP 서버가 그 복잡함을 감춥니다.</strong></p>
+
+  <h2 id="s02"><span class="num">02 &nbsp;/&nbsp; 내부</span>MCP 서버 안에는 실제로 뭐가 들어 있나</h2>
+
+  <p>MCP 서버 안에는 거창한 마법이 있는 것이 아닙니다. 보통은 아래 네 가지가 들어 있습니다.</p>
+
+  <h3>기능 목록</h3>
+  <p>MCP 서버는 내가 제공할 수 있는 기능이 무엇인지 들고 있습니다. 예를 들면 이런 목록입니다.</p>
+
+  <ul class="flow">
+    <li>직원 이메일 찾기</li>
+    <li>파일 본문 읽기</li>
+    <li>특정 월 매출 조회</li>
+    <li>노션 페이지 생성</li>
+    <li>회의록 요약</li>
+  </ul>
+
+  <p>이 목록은 그냥 제목만 있는 것이 아니라, 각각의 기능이 무슨 용도인지 <em>설명</em>도 같이 붙습니다.</p>
+
+  <h3>입력 형식 정의</h3>
+  <p>각 기능은 아무렇게나 호출되는 것이 아니라, 어떤 값을 받아야 하는지 정해져 있습니다. 예를 들어 직원 이메일 찾기 기능은 이런 입력 형식을 가질 수 있습니다 — <code>name: 문자열</code>. 특정 월 매출 조회 기능은 <code>month: 문자열</code>, <code>region: 문자열(선택값)</code>처럼 될 수 있습니다. 즉, MCP 서버는 이 기능이 무엇을 입력으로 받아야 정상 동작하는지 미리 정의해 둡니다.</p>
+
+  <h3>실제 실행 코드</h3>
+  <p>이 부분이 본체입니다. 기능 설명만 있으면 아무 일도 안 일어납니다. 실제로는 뒤에서 코드가 돌아야 합니다. 예를 들어 직원 이메일 찾기 기능의 실행 코드는 이런 작업을 할 수 있습니다 — 데이터베이스 연결 → employees 테이블 조회 → 이름이 일치하는 행 찾기 → 이메일 반환. 파일 읽기 기능은 지정 폴더 접근 → 파일 존재 여부 확인 → 파일 열기 → 본문 읽기 → 텍스트 반환으로 동작할 수 있습니다. 즉, MCP 서버는 겉으로는 깔끔한 기능 하나처럼 보이지만, 안에서는 <strong>평범한 코드가 실제 작업을 수행합니다.</strong></p>
+
+  <h3>결과 반환 형식</h3>
+  <p>실행이 끝나면 결과를 다시 돌려줘야 합니다. 이 결과도 <strong>모델이 읽기 좋게 정리</strong>되어야 합니다. 예를 들어 결과는 <code>email: kim@company.com</code>, <code>found: true</code>처럼 올 수 있습니다. 혹은 파일 읽기 결과라면 <code>filename: report.txt</code>, <code>content: 본문 전체 텍스트</code>처럼 올 수 있습니다. 즉, MCP 서버는 단순히 일을 하는 것에서 끝나는 것이 아니라, 그 결과를 다시 모델이 쓸 수 있는 구조로 정리해서 반환합니다.</p>
+
+  <h2 id="s03"><span class="num">03 &nbsp;/&nbsp; 흐름</span>실제로는 어떻게 돌아가는가</h2>
+
+  <p>사용자가 "김민수 과장 이메일 알려 줘"라고 입력했다고 가정하겠습니다. 그때 내부에서는 대략 이런 순서로 흐릅니다.</p>
+
+  <ol class="steps">
+    <li>모델이 현재 사용할 수 있는 기능 목록을 본다.</li>
+    <li>그중에서 <em>직원 이메일 찾기</em> 기능이 적절하다고 판단한다.</li>
+    <li>이 기능의 입력 형식을 확인한다. <code>name</code>이라는 문자열이 필요하다는 것을 안다.</li>
+    <li><code>name</code>에 "김민수"를 넣어 호출한다.</li>
+    <li>MCP 서버는 실제 코드로 직원정보 저장소를 조회한다.</li>
+    <li>찾은 이메일 값을 구조화해서 반환한다.</li>
+    <li>모델은 그 값을 이용해 자연어 답변을 만든다.</li>
+  </ol>
+
+  <p>여기서 중요한 점은 <strong>모델이 DB에 직접 붙은 것이 아니라는 점</strong>입니다. 모델은 직원 DB의 테이블 구조도 모르고, SQL도 직접 실행하지 않습니다. 대신 MCP 서버가 중간에서 실제 실행을 담당합니다.</p>
+
+  <blockquote>모델은 기능 이름과 입력 형식만 보고 요청하고, 실제 시스템 접근과 실행은 MCP 서버가 대신 처리한다.</blockquote>
+
+  <h2 id="s04"><span class="num">04 &nbsp;/&nbsp; 필요성</span>왜 MCP 서버가 필요한가</h2>
+
+  <p>이 질문이 중요합니다. "그냥 모델이 API 직접 호출하면 되지 않나"라고 생각할 수 있습니다. 그런데 실제로는 그렇게 하면 복잡도가 바로 올라갑니다.</p>
+
+  <p><strong>첫째, 외부 시스템마다 형식이 다릅니다.</strong> 어떤 것은 REST API이고, 어떤 것은 DB이고, 어떤 것은 로컬 파일이고, 어떤 것은 사내 그룹웨어입니다.</p>
+
+  <p><strong>둘째, 인증 방식도 다릅니다.</strong> API 키, 세션, OAuth, 내부망 접근 권한 등 제각각입니다.</p>
+
+  <p><strong>셋째, 응답 형식도 제각각입니다.</strong> 어떤 것은 JSON이 복잡하고, 어떤 것은 HTML이고, 어떤 것은 CSV일 수 있습니다.</p>
+
+  <p><strong>넷째, 모델이 그런 차이를 전부 직접 다루게 하면 안정성이 떨어집니다.</strong></p>
+
+  <p>그래서 MCP 서버가 중간에서 이질적인 시스템들을 <em>일정한 형태의 기능 목록</em>으로 정리합니다. 그러면 모델은 각각의 시스템 차이를 몰라도 됩니다.</p>
+
+  <h2 id="s05"><span class="num">05 &nbsp;/&nbsp; 구조</span>기술적으로 보자면</h2>
+
+  <p>조금만 더 기술적으로 말하면, MCP 서버는 <strong>기능 레지스트리</strong>와 <strong>실행 엔진</strong>을 함께 가진 프로그램입니다.</p>
+
+  <p>기능 레지스트리라는 말은 서버가 제공 가능한 기능들의 <em>이름·설명·입력 형식</em>을 보관하고 있다는 뜻입니다. 실행 엔진이라는 말은 실제 호출이 왔을 때, 그 기능에 연결된 코드를 실행해서 결과를 만드는 부분이 있다는 뜻입니다. 즉, MCP 서버는 단순 문서가 아니라 <strong>살아 있는 실행 서버</strong>입니다.</p>
+
+  <p>정리하면 내부 구조는 이렇게 생각하면 됩니다.</p>
+
+  <ul class="flow">
+    <li>기능 목록 보관</li>
+    <li>기능별 입력 형식 정의</li>
+    <li>기능별 실행 코드 연결</li>
+    <li>실행 결과 반환</li>
+  </ul>
+
+  <h2 id="s06"><span class="num">06 &nbsp;/&nbsp; 정리</span>가장 손에 잡히는 방식으로 다시</h2>
+
+  <p>MCP 서버를 이해할 때는 이렇게 생각하는 것이 가장 손에 잡힙니다.</p>
+
+  <blockquote>MCP 서버는 AI에게 "네가 쓸 수 있는 기능은 이것들이고, 이 기능을 쓰려면 이런 값을 넣으면 되고, 실제 실행은 내가 대신 해 줄게"라고 말하는 프로그램이다.</blockquote>
+
+  <p>예를 들어 MCP 서버 안에는 이런 실행 가능한 기능들이 있을 수 있습니다.</p>
+
+  <ul class="flow">
+    <li><code>get_employee_email(name)</code></li>
+    <li><code>read_file(path)</code></li>
+    <li><code>get_sales_data(month)</code></li>
+    <li><code>create_notion_page(title, content)</code></li>
+    <li><code>draft_email(to, subject, body)</code></li>
+  </ul>
+
+  <p>이 함수들은 전부 <strong>입력이 있고, 실제 실행 코드가 있고, 결과가 있습니다.</strong> MCP 서버는 이 함수들을 모델이 일정한 규칙으로 사용할 수 있게 정리해 놓은 서버입니다.</p>
+
+  <hr class="rule">
+
+  <h2 id="s07"><span class="num">07 &nbsp;/&nbsp; 핵심</span>실무에서 기억해야 할 네 줄</h2>
+
+  <p>MCP 서버는 새로운 인공지능 두뇌가 아닙니다. 스스로 생각하는 존재도 아닙니다. 실제 역할은 <strong>실행 대행자</strong>에 가깝습니다.</p>
+
+  <ul class="flow">
+    <li>무엇을 할 수 있는지 알려 준다</li>
+    <li>어떤 값을 넣어야 하는지 알려 준다</li>
+    <li>실제 처리는 대신 해 준다</li>
+    <li>결과를 다시 넘겨 준다</li>
+  </ul>
+
+  <p>이 네 줄이 MCP 서버의 원리입니다. 한 줄로 더 줄이면, MCP 서버의 원리는 <em>복잡한 외부 시스템을 모델이 이해할 수 있는 기능 목록으로 정리하고, 모델이 요청하면 그 기능을 대신 실행한 뒤 결과를 다시 돌려주는 것</em>입니다.</p>
+
+  <div class="footer">
+    <strong>신성진 (Shinsungjin)</strong><br>
+    한국데이터사이언티스트협회 대표 &middot; CDSA<br>
+    개인·조직 AX 변화관리 컨설턴트 &middot; AX/DX 교육 설계 &middot; 공공기관 커리큘럼 설계<br>
+    YouTube @workbyax
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="/" class="bottom-nav-home">← CDSA 홈으로</a>
+    <a href="/blog/">블로그 목록 →</a>
+  </nav>
+
+</article>
+
+<script src="/blog/_posts.js" defer></script>
+</body>
+</html>
