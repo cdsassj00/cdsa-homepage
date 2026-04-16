@@ -13,8 +13,6 @@ interface Row {
   category: string
   name: string
   details: string
-  task_example: string
-  workflow: string
   difficulty: string
   duration: string
 }
@@ -36,8 +34,6 @@ function parseCSV(text: string): Row[] {
       category: vals[headers.indexOf('category')]?.trim() || '',
       name: vals[headers.indexOf('name')]?.trim() || '',
       details: vals[headers.indexOf('details')]?.trim() || '',
-      task_example: vals[headers.indexOf('task_example')]?.trim() || '',
-      workflow: vals[headers.indexOf('workflow')]?.trim() || '',
       difficulty: vals[headers.indexOf('difficulty')]?.trim() || '',
       duration: vals[headers.indexOf('duration')]?.trim() || '',
     })
@@ -47,6 +43,30 @@ function parseCSV(text: string): Row[] {
 
 function unique(rows: Row[], key: keyof Row): string[] {
   return [...new Set(rows.map((r) => r[key]).filter(Boolean))].sort()
+}
+
+/* ── Tag badge component ── */
+const orgColors: Record<string, string> = {
+  '공공기관': 'bg-clay-100 text-clay-800 border-clay-200',
+  '기업': 'bg-cream-200 text-ink-800 border-cream-300',
+  '중소기업': 'bg-cream-200 text-ink-700 border-cream-300',
+  '스타트업': 'bg-[#e8f0e0] text-moss-600 border-[#c8d8b8]',
+}
+
+function Badge({ label, variant }: { label: string; variant?: string }) {
+  const cls = variant || 'bg-cream-100 text-ink-600 border-ink-700/10'
+  return (
+    <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium border ${cls}`}>
+      {label}
+    </span>
+  )
+}
+
+/* ── Course group: a course + its module count ── */
+interface CourseGroup {
+  course: Row
+  moduleCount: number
+  modules: Row[]
 }
 
 export default function CurriculumSheet() {
@@ -61,6 +81,7 @@ export default function CurriculumSheet() {
   const [roleFilter, setRoleFilter] = useState('')
   const [catFilter, setCatFilter] = useState('')
   const [search, setSearch] = useState('')
+  const [expanded, setExpanded] = useState<Set<number>>(new Set())
 
   useEffect(() => {
     fetch(CSV_URL)
@@ -75,26 +96,79 @@ export default function CurriculumSheet() {
       })
   }, [])
 
+  // Build course groups
+  const { courses, totalModules } = useMemo(() => {
+    const groups: CourseGroup[] = []
+    let currentCourse: Row | null = null
+    let currentModules: Row[] = []
+
+    for (const row of data) {
+      if (row.level === 'course') {
+        if (currentCourse) {
+          groups.push({ course: currentCourse, moduleCount: currentModules.length, modules: currentModules })
+        }
+        currentCourse = row
+        currentModules = []
+      } else {
+        currentModules.push(row)
+      }
+    }
+    if (currentCourse) {
+      groups.push({ course: currentCourse, moduleCount: currentModules.length, modules: currentModules })
+    }
+
+    // If no course-level rows, treat every row as a course
+    if (groups.length === 0 && data.length > 0) {
+      return {
+        courses: data.map((r) => ({ course: r, moduleCount: 0, modules: [] })),
+        totalModules: 0,
+      }
+    }
+
+    return {
+      courses: groups,
+      totalModules: groups.reduce((sum, g) => sum + g.moduleCount, 0),
+    }
+  }, [data])
+
+  // Apply filters to courses
   const filtered = useMemo(() => {
-    let rows = data
-    if (orgFilter) rows = rows.filter((r) => r.organization_type === orgFilter)
-    if (industryFilter) rows = rows.filter((r) => r.industry === industryFilter)
-    if (roleFilter) rows = rows.filter((r) => r.job_role === roleFilter)
-    if (catFilter) rows = rows.filter((r) => r.category === catFilter)
+    let groups = courses
+    if (orgFilter) groups = groups.filter((g) => g.course.organization_type === orgFilter)
+    if (industryFilter) groups = groups.filter((g) => g.course.industry === industryFilter)
+    if (roleFilter) groups = groups.filter((g) => g.course.job_role === roleFilter)
+    if (catFilter) groups = groups.filter((g) => g.course.category === catFilter)
     if (search) {
       const q = search.toLowerCase()
-      rows = rows.filter(
-        (r) =>
-          r.name.toLowerCase().includes(q) ||
-          r.details.toLowerCase().includes(q) ||
-          r.category.toLowerCase().includes(q),
+      groups = groups.filter(
+        (g) =>
+          g.course.name.toLowerCase().includes(q) ||
+          g.course.category.toLowerCase().includes(q) ||
+          g.course.industry.toLowerCase().includes(q) ||
+          g.modules.some((m) => m.name.toLowerCase().includes(q)),
       )
     }
-    return rows
-  }, [data, orgFilter, industryFilter, roleFilter, catFilter, search])
+    return groups
+  }, [courses, orgFilter, industryFilter, roleFilter, catFilter, search])
+
+  const filteredModuleCount = useMemo(
+    () => filtered.reduce((sum, g) => sum + g.moduleCount, 0),
+    [filtered],
+  )
+
+  const hasFilters = orgFilter || industryFilter || roleFilter || catFilter || search
+
+  const toggleExpand = (idx: number) => {
+    setExpanded((prev) => {
+      const next = new Set(prev)
+      if (next.has(idx)) next.delete(idx)
+      else next.add(idx)
+      return next
+    })
+  }
 
   const selectClass =
-    'bg-cream-50 border border-ink-700/15 rounded-sm px-3 py-2 text-[13px] text-ink-800 font-sans focus:outline-none focus:border-clay-500 appearance-none cursor-pointer'
+    'bg-cream-50 border border-ink-700/15 rounded-sm px-3 py-2.5 text-[13px] text-ink-800 font-sans focus:outline-none focus:border-clay-500 appearance-none cursor-pointer'
 
   if (loading) {
     return (
@@ -116,9 +190,10 @@ export default function CurriculumSheet() {
   return (
     <section id="curriculum-sheet" className="py-28 md:py-36 border-y border-ink-700/10">
       <div className="container-editorial">
+        {/* Header */}
         <div className="flex items-end justify-between flex-wrap gap-6 mb-10">
           <div className="max-w-2xl">
-            <span className="eyebrow">CURRICULUM DATABASE</span>
+            <span className="eyebrow">CURRICULUM CATALOG</span>
             <h2 className="h-display text-[36px] md:text-[56px] mt-5">
               <span className="text-clay-700">{data.length.toLocaleString()}</span>개의 실습 모듈.
             </h2>
@@ -127,15 +202,10 @@ export default function CurriculumSheet() {
               필터를 조합하면 우리 조직에 맞는 과정을 바로 찾을 수 있습니다.
             </p>
           </div>
-          <div className="font-mono text-[11px] tracking-[0.18em] text-ink-500">
-            {filtered.length === data.length
-              ? `${data.length.toLocaleString()} MODULES`
-              : `${filtered.length.toLocaleString()} / ${data.length.toLocaleString()} FILTERED`}
-          </div>
         </div>
 
         {/* Filters */}
-        <div className="flex flex-wrap gap-3 mb-6">
+        <div className="flex flex-wrap gap-3 mb-4">
           <select className={selectClass} value={orgFilter} onChange={(e) => setOrgFilter(e.target.value)}>
             <option value="">조직 유형 전체</option>
             {unique(data, 'organization_type').map((v) => (
@@ -160,13 +230,13 @@ export default function CurriculumSheet() {
               <option key={v}>{v}</option>
             ))}
           </select>
-          <div className="relative flex-1 min-w-[200px]">
+          <div className="relative flex-1 min-w-[180px]">
             <input
               type="text"
-              placeholder="과정명·설명 검색…"
+              placeholder="과정명 검색…"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full bg-cream-50 border border-ink-700/15 rounded-sm px-3 py-2 text-[13px] text-ink-800 placeholder:text-ink-400 focus:outline-none focus:border-clay-500"
+              className="w-full bg-cream-50 border border-ink-700/15 rounded-sm px-3 py-2.5 text-[13px] text-ink-800 placeholder:text-ink-400 focus:outline-none focus:border-clay-500"
             />
             {search && (
               <button
@@ -177,7 +247,26 @@ export default function CurriculumSheet() {
               </button>
             )}
           </div>
-          {(orgFilter || industryFilter || roleFilter || catFilter || search) && (
+        </div>
+
+        {/* Stats bar */}
+        <div className="flex items-center justify-between flex-wrap gap-3 mb-6">
+          <div className="font-mono text-[11px] tracking-[0.15em] text-ink-500">
+            {hasFilters ? (
+              <>
+                <span className="text-clay-700 font-semibold">{filtered.length}</span>
+                <span>개 과정 · </span>
+                <span className="text-clay-700 font-semibold">{filteredModuleCount.toLocaleString()}</span>
+                <span>개 모듈 매칭</span>
+                <span className="text-ink-400"> / 전체 {courses.length}개 과정 · {totalModules.toLocaleString()}개 모듈</span>
+              </>
+            ) : (
+              <>
+                <span>{courses.length}개 과정 · {totalModules.toLocaleString()}개 모듈</span>
+              </>
+            )}
+          </div>
+          {hasFilters && (
             <button
               onClick={() => {
                 setOrgFilter('')
@@ -185,6 +274,7 @@ export default function CurriculumSheet() {
                 setRoleFilter('')
                 setCatFilter('')
                 setSearch('')
+                setExpanded(new Set())
               }}
               className="text-xs text-clay-700 hover:text-clay-800 underline underline-offset-2"
             >
@@ -193,92 +283,102 @@ export default function CurriculumSheet() {
           )}
         </div>
 
-        {/* Sheet table */}
-        <div className="border border-ink-700/15 rounded-sm overflow-hidden bg-cream-50">
-          <div className="overflow-x-auto overflow-y-auto max-h-[520px]" style={{ scrollbarWidth: 'thin' }}>
-            <table className="w-full text-left border-collapse min-w-[1100px]">
-              <thead className="sticky top-0 z-10">
-                <tr className="bg-ink-900 text-cream-50">
-                  <th className="px-3 py-3 text-[10px] font-mono uppercase tracking-[0.2em] font-medium w-[36px]">#</th>
-                  <th className="px-3 py-3 text-[10px] font-mono uppercase tracking-[0.2em] font-medium w-[50px]">유형</th>
-                  <th className="px-3 py-3 text-[10px] font-mono uppercase tracking-[0.2em] font-medium w-[70px]">조직</th>
-                  <th className="px-3 py-3 text-[10px] font-mono uppercase tracking-[0.2em] font-medium w-[60px]">산업</th>
-                  <th className="px-3 py-3 text-[10px] font-mono uppercase tracking-[0.2em] font-medium w-[70px]">카테고리</th>
-                  <th className="px-3 py-3 text-[10px] font-mono uppercase tracking-[0.2em] font-medium">실습 내용</th>
-                  <th className="px-3 py-3 text-[10px] font-mono uppercase tracking-[0.2em] font-medium w-[50px]">난이도</th>
-                  <th className="px-3 py-3 text-[10px] font-mono uppercase tracking-[0.2em] font-medium w-[45px]">시간</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filtered.slice(0, 500).map((row, i) => (
-                  <tr
-                    key={i}
-                    className={`border-t border-ink-700/8 hover:bg-clay-50 transition-colors ${
-                      row.level === 'course'
-                        ? 'bg-clay-50/40 font-medium'
-                        : i % 2 === 0
-                        ? 'bg-cream-50'
-                        : 'bg-cream-100/50'
+        {/* Course cards */}
+        <div className="border border-ink-700/12 rounded-sm overflow-hidden bg-cream-50">
+          <div className="overflow-y-auto max-h-[600px]" style={{ scrollbarWidth: 'thin' }}>
+            {filtered.slice(0, 200).map((group, idx) => {
+              const c = group.course
+              const isExpanded = expanded.has(idx)
+              return (
+                <div key={idx} className="border-b border-ink-700/8 last:border-0">
+                  {/* Course row */}
+                  <div
+                    className={`flex items-center gap-3 px-4 py-3.5 hover:bg-clay-50/40 transition-colors cursor-pointer ${
+                      isExpanded ? 'bg-clay-50/30' : ''
                     }`}
+                    onClick={() => group.moduleCount > 0 && toggleExpand(idx)}
                   >
-                    <td className="px-3 py-2.5 text-[11px] font-mono text-ink-400">{i + 1}</td>
-                    <td className="px-3 py-2.5 text-[11px]">
-                      <span
-                        className={`inline-block px-1.5 py-0.5 rounded text-[9px] font-medium ${
-                          row.level === 'course'
-                            ? 'bg-clay-500 text-cream-50'
-                            : 'bg-cream-200 text-ink-600'
-                        }`}
-                      >
-                        {row.level === 'course' ? '과정' : '모듈'}
-                      </span>
-                    </td>
-                    <td className="px-3 py-2.5 text-[11px] text-ink-700">
-                      <span
-                        className={`inline-block px-1.5 py-0.5 rounded text-[9px] font-medium ${
-                          row.organization_type === '공공기관'
-                            ? 'bg-clay-100 text-clay-800'
-                            : row.organization_type === '기업'
-                            ? 'bg-cream-300 text-ink-800'
-                            : row.organization_type === '스타트업'
-                            ? 'bg-moss-500/20 text-moss-600'
-                            : 'bg-cream-200 text-ink-700'
-                        }`}
-                      >
-                        {row.organization_type}
-                      </span>
-                    </td>
-                    <td className="px-3 py-2.5 text-[11px] text-ink-700">{row.industry}</td>
-                    <td className="px-3 py-2.5 text-[11px] text-ink-500">{row.category}</td>
-                    <td className="px-3 py-2.5 text-[12px]">
-                      {row.details ? (
-                        <div>
-                          <span className="text-ink-900 font-serif">{row.name}</span>
-                          <span className="block text-[11px] text-ink-500 mt-0.5">{row.details}</span>
-                        </div>
-                      ) : (
-                        <span className="text-ink-900 font-serif font-medium">{row.name}</span>
+                    {/* Expand arrow */}
+                    <span className={`text-[10px] text-ink-400 w-4 flex-shrink-0 transition-transform ${
+                      group.moduleCount === 0 ? 'invisible' : isExpanded ? 'rotate-90' : ''
+                    }`}>
+                      ▶
+                    </span>
+
+                    {/* Course name */}
+                    <span className="font-serif text-[14px] text-ink-900 leading-tight flex-1 min-w-0">
+                      {c.name}
+                    </span>
+
+                    {/* Tags */}
+                    <div className="hidden md:flex items-center gap-1.5 flex-shrink-0">
+                      <Badge label={c.organization_type} variant={orgColors[c.organization_type]} />
+                      <Badge label={c.industry} />
+                      {c.job_role && <Badge label={c.job_role} />}
+                      <Badge label={c.category} variant="bg-clay-50 text-clay-700 border-clay-200" />
+                    </div>
+
+                    {/* Difficulty + module count */}
+                    <div className="flex items-center gap-3 flex-shrink-0">
+                      <span className="font-mono text-[10px] text-clay-600">{c.difficulty}</span>
+                      {group.moduleCount > 0 && (
+                        <span className="font-mono text-[10px] text-ink-400 bg-cream-200 px-1.5 py-0.5 rounded">
+                          {group.moduleCount}개 모듈
+                        </span>
                       )}
-                    </td>
-                    <td className="px-3 py-2.5 text-[10px] font-mono text-clay-600">{row.difficulty}</td>
-                    <td className="px-3 py-2.5 text-[10px] font-mono text-ink-500">
-                      {row.duration ? `${Math.round(Number(row.duration) / 60)}H` : ''}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                    </div>
+                  </div>
+
+                  {/* Mobile tags (shown below course name on small screens) */}
+                  <div className="md:hidden flex flex-wrap gap-1 px-4 pb-2 -mt-1">
+                    <Badge label={c.organization_type} variant={orgColors[c.organization_type]} />
+                    <Badge label={c.industry} />
+                    <Badge label={c.category} variant="bg-clay-50 text-clay-700 border-clay-200" />
+                  </div>
+
+                  {/* Expanded modules */}
+                  {isExpanded && group.modules.length > 0 && (
+                    <div className="bg-cream-100/50 border-t border-ink-700/6">
+                      {group.modules.slice(0, 50).map((m, mi) => (
+                        <div
+                          key={mi}
+                          className="flex items-center gap-3 px-4 py-2 pl-12 border-b border-ink-700/4 last:border-0 text-[12px]"
+                        >
+                          <span className="font-mono text-[9px] text-ink-300 w-6 flex-shrink-0 text-right">
+                            {mi + 1}
+                          </span>
+                          <span className="text-ink-700 flex-1">{m.name}</span>
+                          {m.difficulty && (
+                            <span className="font-mono text-[9px] text-ink-400 flex-shrink-0">{m.difficulty}</span>
+                          )}
+                        </div>
+                      ))}
+                      {group.modules.length > 50 && (
+                        <div className="px-4 py-2 pl-12 text-[11px] text-ink-400 font-mono">
+                          외 {group.modules.length - 50}개 모듈…
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )
+            })}
           </div>
-          {filtered.length > 500 && (
+          {filtered.length > 200 && (
             <div className="px-4 py-3 border-t border-ink-700/10 text-center text-[11px] font-mono text-ink-500 tracking-wider">
-              상위 500개 표시 중 · 필터를 적용하면 더 정확한 결과를 볼 수 있습니다
+              상위 200개 과정 표시 중 · 필터를 적용하면 더 정확한 결과를 볼 수 있습니다
+            </div>
+          )}
+          {filtered.length === 0 && (
+            <div className="px-4 py-12 text-center text-[13px] text-ink-400">
+              조건에 맞는 과정이 없습니다. 필터를 조정해 보세요.
             </div>
           )}
         </div>
 
         <div className="mt-8 flex items-center justify-between flex-wrap gap-4">
           <p className="text-xs text-ink-500">
-            구글 시트 원본에서 실시간 동기화 · 시트 수정 시 자동 반영
+            구글 시트 원본에서 실시간 동기화 · 과정 클릭 시 하위 모듈 펼침
           </p>
           <button
             onClick={openInquiry}
