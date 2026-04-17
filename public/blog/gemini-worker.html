@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 시대, 직장인의 일은 어떻게 바뀌는가 · CDSA 블로그</title>
+<meta name="description" content="직접 생산하는 사람에서 설계와 검수를 하는 사람으로. 회의·이메일·보고서가 재배치되는 지점, 그리고 Gemini가 업무 흐름 속으로 들어오는 방법.">
+<meta property="og:title" content="AI 시대, 직장인의 일은 어떻게 바뀌는가">
+<meta property="og:description" content="Part 1. 왜 직장인은 Gemini를 써야 하는가 — 1장. 일의 중심이 직접 생산에서 설계와 검수로 이동한다.">
+<meta property="og:type" content="article">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NZL39P5EYZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NZL39P5EYZ');
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/blog/_layout.css">
+<style>
+  :root {
+    --cream: #faf9f5;
+    --cream-deep: #f3efe3;
+    --ink: #1a1a1a;
+    --ink-soft: #3d3d3a;
+    --ink-mute: #6b6b66;
+    --rule: #d9d6cc;
+    --clay: #cc785c;
+    --clay-deep: #a85a42;
+    --code-bg: #f2f0e8;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--cream); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  body { font-family: "Fraunces", "Noto Serif KR", Georgia, serif; font-weight: 300; font-size: 19px; line-height: 1.72; letter-spacing: -0.005em; }
+
+  .topnav { position: fixed; top: 0; left: 0; right: 0; height: 48px; background: rgba(250, 249, 245, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; }
+  .topnav-left { display: flex; align-items: center; gap: 18px; }
+  .topnav-left a { color: var(--ink-soft); text-decoration: none; transition: color 0.2s; }
+  .topnav-left a:hover { color: var(--clay-deep); }
+  .topnav-home { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 600; font-size: 16px; color: var(--ink) !important; letter-spacing: -0.3px; }
+  .topnav-sep { color: var(--rule); font-size: 11px; }
+  .topnav-right { display: flex; gap: 16px; }
+  .topnav-right a { color: var(--ink-mute); text-decoration: none; font-size: 12px; transition: color 0.2s; }
+  .topnav-right a:hover { color: var(--clay-deep); }
+  .topnav-current { color: var(--ink) !important; font-weight: 600; position: relative; }
+  .topnav-current::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 2px; background: var(--clay); border-radius: 1px; }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 116px 28px 120px; }
+  .breadcrumb { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; margin-bottom: 36px; display: flex; align-items: center; gap: 8px; color: var(--ink-mute); }
+  .breadcrumb a { color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--ink); }
+  .breadcrumb .bc-sep { color: var(--rule); }
+
+  .kicker { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay-deep); margin-bottom: 28px; }
+  h1 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 400; font-size: 44px; line-height: 1.18; letter-spacing: -0.02em; margin: 0 0 24px; color: var(--ink); }
+  .dek { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 300; font-style: italic; font-size: 21px; line-height: 1.55; color: var(--ink-soft); margin: 0 0 40px; }
+  .byline { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); padding: 18px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-bottom: 56px; display: flex; justify-content: space-between; }
+  .byline strong { font-weight: 500; color: var(--ink-soft); }
+
+  .lede { font-size: 19px; line-height: 1.72; margin-bottom: 22px; }
+  .lede::first-letter { font-family: "Fraunces", serif; font-weight: 400; font-size: 68px; float: left; line-height: 0.88; padding: 8px 10px 0 0; color: var(--clay); }
+
+  h2 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 28px; line-height: 1.25; letter-spacing: -0.015em; margin: 64px 0 16px; color: var(--ink); scroll-margin-top: 80px; }
+  h2 .num { font-family: "Inter", sans-serif; font-size: 12px; font-weight: 600; color: var(--clay); letter-spacing: 0.1em; display: block; margin-bottom: 10px; }
+  p { margin: 0 0 22px; }
+  p + p { margin-top: -6px; }
+  strong { font-weight: 500; color: var(--ink); }
+  em { font-style: italic; }
+
+  .pull {
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-size: 26px;
+    line-height: 1.5;
+    color: var(--ink);
+    font-weight: 500;
+    font-style: italic;
+    margin: 40px 0;
+    padding: 26px 0 26px 28px;
+    border-left: 3px solid var(--clay);
+    letter-spacing: -0.01em;
+  }
+
+  .footer { margin-top: 72px; padding-top: 28px; border-top: 1px solid var(--rule); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); line-height: 1.65; }
+  .footer strong { color: var(--ink-soft); font-weight: 600; }
+
+  .bottom-nav { margin-top: 72px; padding: 36px 0; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .bottom-nav a { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .bottom-nav a:hover { color: var(--ink); }
+  .bottom-nav-home { font-family: "Fraunces", "Noto Serif KR", serif !important; font-size: 16px !important; font-style: italic; font-weight: 400; }
+
+  @media (max-width: 560px) {
+    .wrap { padding: 92px 22px 80px; }
+    h1 { font-size: 34px; }
+    .dek { font-size: 18px; }
+    body { font-size: 17px; }
+    .topnav-right { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="topnav-left">
+    <a href="/" class="topnav-home">CDSA</a>
+    <span class="topnav-sep">|</span>
+    <a href="/">홈페이지</a>
+    <a href="/blog/" class="topnav-current">블로그</a>
+  </div>
+  <nav class="topnav-right">
+    <a href="/framework.html">프레임워크</a>
+    <a href="/fullcourse.html">Full Course</a>
+  </nav>
+</header>
+
+<button class="blog-hamburger" aria-label="블로그 목록 열기"><span></span><span></span><span></span></button>
+<div class="blog-overlay"></div>
+<aside class="blog-left">
+  <div class="blog-left-title">Blog Posts</div>
+  <ol class="blog-left-list"></ol>
+</aside>
+<aside class="blog-right">
+  <div class="blog-right-title">On This Page</div>
+  <ul class="blog-toc"></ul>
+</aside>
+
+<article class="wrap">
+
+  <nav class="breadcrumb">
+    <a href="/">← CDSA 홈</a>
+    <span class="bc-sep">/</span>
+    <a href="/blog/">블로그</a>
+    <span class="bc-sep">/</span>
+    <span>AI 시대 직장인의 일</span>
+  </nav>
+
+  <div class="kicker">Part 1 · 왜 직장인은 Gemini를 써야 하는가</div>
+
+  <h1>AI 시대, 직장인의 일은<br>어떻게 바뀌는가</h1>
+
+  <p class="dek">
+    직접 생산하는 사람에서 설계하고 검수하는 사람으로.
+    회의·이메일·보고서가 재배치되는 자리, 그리고 Gemini가 업무 흐름 속으로 들어오는 방법.
+  </p>
+
+  <div class="byline">
+    <span><strong>김태유</strong> &nbsp;&middot;&nbsp; 한국데이터사이언티스트협회</span>
+    <span>2026. 4. 18</span>
+  </div>
+
+  <p class="lede">직장인의 일은 예전보다 훨씬 빨라졌지만, 아이러니하게도 여전히 많은 시간이 반복 작업에 쓰입니다. 하루를 돌아보면 중요한 의사결정이나 창의적 기획보다 이메일을 읽고, 회의 내용을 정리하고, 보고서 초안을 만들고, 여러 자료를 찾아 요약하는 데 시간을 더 많이 쓰는 경우가 적지 않습니다. 겉으로 보기에는 모두 다른 일처럼 보이지만, 실제로는 '읽기-정리하기-요약하기-초안 만들기-다듬기'라는 비슷한 패턴이 반복됩니다. AI가 직장인의 업무를 바꾸는 지점은 바로 여기에 있습니다.</p>
+
+  <p>많은 사람이 AI를 처음 접할 때 '질문을 하면 답을 해주는 똑똑한 챗봇' 정도로 이해합니다. 물론 그것도 맞는 설명입니다. 하지만 업무 현장에서 중요한 것은 단순한 질의응답 기능이 아닙니다. 진짜 변화는 AI가 직장인의 반복적인 인지 노동을 대신해 주기 시작했다는 점에서 나옵니다. 이제 직장인은 모든 문장을 처음부터 직접 쓰는 사람이 아니라, AI가 만든 초안을 검토하고 다듬고 판단하는 사람으로 바뀌고 있습니다. 다시 말해, 일의 중심이 <strong>'직접 생산'에서 '설계와 검수'로 이동</strong>하는 것입니다.</p>
+
+  <h2 id="s01"><span class="num">01 / 이동</span>회의·이메일·보고서의 자리 바꾸기</h2>
+
+  <p>예를 들어 회의가 끝난 뒤 해야 하는 일을 떠올려 보겠습니다. 예전에는 녹취나 메모를 바탕으로 회의 내용을 다시 읽고, 핵심 논점을 추리고, 담당자별 액션아이템을 정리한 뒤, 필요한 경우 팀에 공유할 문장으로 다듬어야 했습니다. 이 과정은 단순해 보이지만 의외로 많은 집중력을 요구합니다. 하지만 이제는 회의 기록을 Gemini에 넣고 원하는 형식을 명확히 지시하면 핵심 요약, 결정사항, 후속 조치 항목까지 훨씬 빠르게 정리할 수 있습니다. 직장인의 역할은 이 결과가 실제 맥락에 맞는지 확인하고, 빠진 맥락이나 민감한 표현을 수정하는 쪽으로 이동합니다.</p>
+
+  <p>이 변화는 이메일 업무에서도 뚜렷하게 나타납니다. 많은 직장인은 하루 중 상당한 시간을 받은 메일을 읽고, 중요도를 판단하고, 관련 자료를 확인하고, 회신 초안을 작성하는 데 씁니다. 특히 여러 이해관계자가 얽힌 메일일수록 문장을 조심스럽게 다듬어야 하므로 시간이 오래 걸립니다. AI는 이런 작업에서 큰 힘을 발휘합니다. 긴 메일 스레드를 요약하고, 핵심 질문을 추려 주고, 상황에 맞는 회신 초안을 제시할 수 있기 때문입니다. 덕분에 직장인은 '무엇을 써야 할지' 고민하는 데 에너지를 모두 쓰기보다 '이 답장이 적절한가, 빠진 이해관계는 없는가, 톤은 맞는가'를 판단하는 데 더 집중할 수 있습니다.</p>
+
+  <p>보고서와 자료조사 업무도 마찬가지입니다. 예전에는 자료를 찾고, 내용을 읽고, 중요한 부분을 표시하고, 다시 정리해 구조를 잡는 데 많은 시간이 들었습니다. 이제는 AI를 통해 자료를 빠르게 요약하고, 여러 문서를 비교하고, 보고서의 개요를 먼저 세울 수 있습니다. 여기서 중요한 점은 AI가 최종 판단까지 대신하지는 않는다는 사실입니다. AI는 초안을 빠르게 만들고 다양한 가능성을 제시하지만, 무엇을 강조할지, 어떤 근거를 채택할지, 어떤 표현이 조직 문화에 맞는지는 여전히 사람이 결정해야 합니다. 결국 AI가 들어온 뒤에도 사람의 역할은 사라지지 않습니다. <em>다만 역할의 무게중심이 바뀔 뿐입니다.</em></p>
+
+  <h2 id="s02"><span class="num">02 / 감각</span>일을 잘게 나누는 새 경쟁력</h2>
+
+  <p>그래서 AI 시대에 직장인에게 가장 필요한 능력은 '모든 것을 직접 해내는 능력'이 아니라 <strong>'업무를 구조화하고 AI에게 적절히 맡길 부분을 구분하는 능력'</strong>입니다. 예전에는 부지런함이 곧 경쟁력이 되는 경우가 많았다면, 이제는 무엇을 직접 하고 무엇을 자동화할지 판단하는 능력이 더 중요해지고 있습니다. 같은 한 시간을 써도 모든 자료를 직접 읽고 정리하는 사람보다, AI를 활용해 초안을 빠르게 만들고 핵심 판단에 시간을 집중하는 사람이 더 높은 생산성을 낼 가능성이 큽니다.</p>
+
+  <p class="pull">
+    AI를 잘 쓴다는 것은 복잡한 프롬프트를 외우는 것이 아니라,
+    자신의 업무를 반복 가능한 단위로 나눠 보는 습관이다.
+  </p>
+
+  <p>이때 많은 직장인이 오해하는 부분이 있습니다. AI를 잘 쓴다는 것은 특별히 복잡한 프롬프트를 외우거나 최신 기능을 누구보다 빨리 익히는 것이 아니라는 점입니다. 진짜 중요한 것은 자신의 업무를 반복 가능한 단위로 나눠 보는 습관입니다. 예를 들어 '보고서를 써야 한다'는 막연한 과제를 그대로 붙잡으면 AI도 제대로 활용하기 어렵습니다. 대신 이를 '배경 자료 정리', '핵심 메시지 3개 도출', '목차 초안 만들기', '문체 다듬기', '상사 보고용 한 장 요약 만들기'처럼 쪼개면 어떤 부분을 Gemini에게 맡기고 어떤 부분을 직접 해야 할지가 훨씬 선명해집니다. AI 시대에 강한 직장인은 일을 더 잘게 보고, 더 명확하게 지시하고, 더 빠르게 검수하는 사람입니다.</p>
+
+  <h2 id="s03"><span class="num">03 / 자리</span>왜 하필 Gemini인가</h2>
+
+  <p>특히 Gemini가 직장인에게 의미 있는 이유는 단순히 글을 생성하는 도구를 넘어 문서와 정보 흐름 속에 자연스럽게 들어올 수 있기 때문입니다. 직장인의 일은 대개 메일, 문서, 스프레드시트, 메모, 회의 기록처럼 여러 형태의 정보가 이어지는 과정으로 이루어집니다. 따라서 업무용 AI의 가치는 '얼마나 그럴듯한 문장을 쓰는가'보다 <strong>'이 흐름 속에서 얼마나 자연스럽게 연결되는가'</strong>에 달려 있습니다. Gemini를 Google Workspace와 함께 활용하면 메일을 읽고, 문서를 정리하고, 자료를 표 형태로 다듬는 식의 실제 업무 흐름에 AI를 붙이기가 쉬워집니다. 이 책이 Gemini를 중심에 놓는 이유도 여기에 있습니다.</p>
+
+  <p>물론 AI가 도입된다고 해서 모든 업무가 자동으로 쉬워지는 것은 아닙니다. 오히려 잘못 쓰면 더 많은 시간이 들 수도 있습니다. 모호한 지시를 하면 엉뚱한 답을 받고, 검수 없이 복사해 쓰면 부정확한 문장이 들어가며, 민감한 정보를 무심코 입력하면 보안 문제가 생길 수 있습니다. 그래서 AI 시대의 생산성은 'AI를 쓰느냐 안 쓰느냐'보다 '어떻게 쓰느냐'에서 갈립니다. 무턱대고 맡기는 것이 아니라 초안을 맡기고 사람이 검수하는 구조를 만드는 것이 핵심입니다. 이 원칙을 이해하면 AI는 불안한 기술이 아니라 든든한 업무 보조 도구가 됩니다.</p>
+
+  <h2 id="s04"><span class="num">04 / 방향</span>두 갈래로 갈라지는 일</h2>
+
+  <p>결국 AI 시대에 직장인의 일은 두 방향으로 바뀝니다. 첫째, <strong>반복적이고 정형적인 작업은 점점 더 AI가 맡게</strong> 됩니다. 둘째, <strong>사람은 판단, 맥락 이해, 우선순위 조정, 대인 커뮤니케이션, 최종 책임 같은 영역에 더 집중</strong>하게 됩니다. 즉 AI는 직장인을 대체하는 존재라기보다, 직장인의 일에서 '시간을 많이 먹지만 꼭 직접 할 필요는 없는 부분'을 흡수하는 존재에 가깝습니다. 이 변화에 적응하는 사람은 더 적은 시간으로 더 나은 결과를 만들 수 있고, 적응하지 못하는 사람은 여전히 많은 시간을 들이고도 속도와 품질에서 밀리게 됩니다.</p>
+
+  <p>이 책은 바로 그 변화에 적응하는 방법을 다룹니다. Gemini를 단순히 신기한 기능으로 소비하는 것이 아니라, 매일 반복되는 실무 흐름 속에 넣어 실제로 시간을 줄이고 결과물의 품질을 높이는 방법을 함께 살펴볼 것입니다. 중요한 것은 AI를 잘 아는 사람이 되는 것이 아니라, <em>AI를 이용해 더 잘 일하는 사람이 되는 것입니다.</em> 그리고 그 변화는 거창한 혁신보다 오늘 내가 쓰는 이메일 한 통, 회의록 한 장, 보고서 초안 하나를 더 빠르고 정확하게 만드는 데서 시작됩니다.</p>
+
+  <div class="footer">
+    <p><strong>김태유</strong> — KPMG AX전략 이사 · 한국데이터사이언티스트협회 AI 전문교수. 폐쇄망 LLM 솔루션, 엔터프라이즈 AI 도입, Gemini·Copilot 업무 적용 컨설팅을 수행합니다.</p>
+    <p>이 글은 집필 중인 단행본 <em>「직장인을 위한 Gemini 업무 활용법」</em>의 1장 초고입니다. 의견·오류 제보는 <a href="mailto:sjshin@cdsa.or.kr" style="color: var(--clay-deep); text-decoration: none;">sjshin@cdsa.or.kr</a>로 보내주세요.</p>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="/blog/" class="bottom-nav-home">← 블로그 목록</a>
+    <a href="/">CDSA 홈페이지 →</a>
+  </nav>
+
+</article>
+
+<script src="/blog/_posts.js" defer></script>
+
+</body>
+</html>

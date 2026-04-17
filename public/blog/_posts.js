@@ -24,6 +24,13 @@
   // Single source of truth for blog posts. Sorted newest-first.
   const POSTS = [
     {
+      slug: 'gemini-worker',
+      title: 'AI 시대, 직장인의 일은 어떻게 바뀌는가',
+      date: '2026. 4. 18',
+      category: 'Gemini 업무론',
+      href: '/blog/gemini-worker.html',
+    },
+    {
       slug: 'working-governance',
       title: '작동하는 거버넌스, 바닥에서 올라오는 AX',
       date: '2026. 4. 14',
