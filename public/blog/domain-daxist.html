@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>시민데이터과학자에서 Domain-DAXist로 진화 · CDSA 블로그</title>
+<meta name="description" content="생성형 AI 시대, 기획·디자인·개발의 경계가 '묽어지고' 있다. 자신의 도메인을 깊이 이해하고 DX·AX를 스스로 주도하는 새로운 인재상, Domain-DAXist에 대한 첫 기록.">
+<meta property="og:title" content="시민데이터과학자에서 Domain-DAXist로 진화">
+<meta property="og:description" content="알파고 이후 데이터 석유의 시대, 시민 데이터 과학자, 그리고 LLM 이후 — 우리에게 요구되는 새 인재상의 네 가지 본질.">
+<meta property="og:type" content="article">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NZL39P5EYZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NZL39P5EYZ');
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/blog/_layout.css">
+<style>
+  :root {
+    --cream: #faf9f5;
+    --cream-deep: #f3efe3;
+    --ink: #1a1a1a;
+    --ink-soft: #3d3d3a;
+    --ink-mute: #6b6b66;
+    --rule: #d9d6cc;
+    --clay: #cc785c;
+    --clay-deep: #a85a42;
+    --code-bg: #f2f0e8;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--cream); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  body { font-family: "Fraunces", "Noto Serif KR", Georgia, serif; font-weight: 300; font-size: 19px; line-height: 1.72; letter-spacing: -0.005em; }
+
+  .topnav { position: fixed; top: 0; left: 0; right: 0; height: 48px; background: rgba(250, 249, 245, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; }
+  .topnav-left { display: flex; align-items: center; gap: 18px; }
+  .topnav-left a { color: var(--ink-soft); text-decoration: none; transition: color 0.2s; }
+  .topnav-left a:hover { color: var(--clay-deep); }
+  .topnav-home { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 600; font-size: 16px; color: var(--ink) !important; letter-spacing: -0.3px; }
+  .topnav-sep { color: var(--rule); font-size: 11px; }
+  .topnav-right { display: flex; gap: 16px; }
+  .topnav-right a { color: var(--ink-mute); text-decoration: none; font-size: 12px; transition: color 0.2s; }
+  .topnav-right a:hover { color: var(--clay-deep); }
+  .topnav-current { color: var(--ink) !important; font-weight: 600; position: relative; }
+  .topnav-current::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 2px; background: var(--clay); border-radius: 1px; }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 116px 28px 120px; }
+  .breadcrumb { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; margin-bottom: 36px; display: flex; align-items: center; gap: 8px; color: var(--ink-mute); }
+  .breadcrumb a { color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--ink); }
+  .breadcrumb .bc-sep { color: var(--rule); }
+
+  .kicker { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay-deep); margin-bottom: 28px; }
+  h1 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 400; font-size: 44px; line-height: 1.18; letter-spacing: -0.02em; margin: 0 0 24px; color: var(--ink); }
+  .dek { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 300; font-style: italic; font-size: 21px; line-height: 1.55; color: var(--ink-soft); margin: 0 0 40px; }
+  .byline { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); padding: 18px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-bottom: 56px; display: flex; justify-content: space-between; }
+  .byline strong { font-weight: 500; color: var(--ink-soft); }
+
+  .lede { font-size: 19px; line-height: 1.72; margin-bottom: 22px; }
+  .lede::first-letter { font-family: "Fraunces", serif; font-weight: 400; font-size: 68px; float: left; line-height: 0.88; padding: 8px 10px 0 0; color: var(--clay); }
+
+  h2 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 28px; line-height: 1.25; letter-spacing: -0.015em; margin: 64px 0 16px; color: var(--ink); scroll-margin-top: 80px; }
+  h2 .num { font-family: "Inter", sans-serif; font-size: 12px; font-weight: 600; color: var(--clay); letter-spacing: 0.1em; display: block; margin-bottom: 10px; }
+  h3 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 20px; margin: 36px 0 10px; color: var(--ink); letter-spacing: -0.01em; }
+  h3 .trait-num {
+    font-family: "Inter", sans-serif;
+    font-size: 10px; font-weight: 700;
+    color: var(--clay); letter-spacing: 0.18em;
+    margin-right: 10px;
+    vertical-align: 0.15em;
+  }
+  p { margin: 0 0 22px; }
+  p + p { margin-top: -6px; }
+  strong { font-weight: 500; color: var(--ink); }
+  em { font-style: italic; }
+
+  .pull {
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-size: 26px;
+    line-height: 1.5;
+    color: var(--ink);
+    font-weight: 500;
+    font-style: italic;
+    margin: 40px 0;
+    padding: 26px 0 26px 28px;
+    border-left: 3px solid var(--clay);
+    letter-spacing: -0.01em;
+  }
+
+  .hashtags {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 12px;
+    color: var(--ink-mute);
+    letter-spacing: 0.02em;
+    display: flex; flex-wrap: wrap; gap: 14px;
+  }
+
+  .footer { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--rule); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); line-height: 1.65; }
+  .footer strong { color: var(--ink-soft); font-weight: 600; }
+
+  .bottom-nav { margin-top: 72px; padding: 36px 0; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .bottom-nav a { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .bottom-nav a:hover { color: var(--ink); }
+  .bottom-nav-home { font-family: "Fraunces", "Noto Serif KR", serif !important; font-size: 16px !important; font-style: italic; font-weight: 400; }
+
+  @media (max-width: 560px) {
+    .wrap { padding: 92px 22px 80px; }
+    h1 { font-size: 34px; }
+    .dek { font-size: 18px; }
+    body { font-size: 17px; }
+    .topnav-right { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="topnav-left">
+    <a href="/" class="topnav-home">CDSA</a>
+    <span class="topnav-sep">|</span>
+    <a href="/">홈페이지</a>
+    <a href="/blog/" class="topnav-current">블로그</a>
+  </div>
+  <nav class="topnav-right">
+    <a href="/framework.html">프레임워크</a>
+    <a href="/fullcourse.html">Full Course</a>
+  </nav>
+</header>
+
+<button class="blog-hamburger" aria-label="블로그 목록 열기"><span></span><span></span><span></span></button>
+<div class="blog-overlay"></div>
+<aside class="blog-left">
+  <div class="blog-left-title">Blog Posts</div>
+  <ol class="blog-left-list"></ol>
+</aside>
+<aside class="blog-right">
+  <div class="blog-right-title">On This Page</div>
+  <ul class="blog-toc"></ul>
+</aside>
+
+<article class="wrap">
+
+  <nav class="breadcrumb">
+    <a href="/">← CDSA 홈</a>
+    <span class="bc-sep">/</span>
+    <a href="/blog/">블로그</a>
+    <span class="bc-sep">/</span>
+    <span>Domain-DAXist</span>
+  </nav>
+
+  <div class="kicker">Series 01 · Domain-DAXist</div>
+
+  <h1>시민데이터과학자에서<br>Domain-DAXist로 진화</h1>
+
+  <p class="dek">
+    생성형 AI 시대, 기획·디자인·개발의 경계가 '묽어지고' 있다.
+    자신의 도메인을 바탕으로 DX·AX를 스스로 주도하는 새 인재상에 대한 연재의 첫 편.
+  </p>
+
+  <div class="byline">
+    <span><strong>현중균</strong> &nbsp;&middot;&nbsp; 한국데이터사이언티스트협회</span>
+    <span>2026. 4. 18</span>
+  </div>
+
+  <p class="lede">빛의 속도로 진화하는 생성형 AI 시대다. ChatGPT, Gemini, Claude와 같은 거대언어모델(LLM)이 일상과 산업 전반으로 깊숙이 스며들면서, 산업혁명 이후 수백 년간 견고하게 유지되었던 직무의 경계가 뿌리째 흔들리고 있다. 과거에는 기획, 디자인, 개발이 각각 독립된 섬처럼 존재했다면, 이제는 개발자가 비즈니스 모델을 기획하고, 기획자가 AI를 활용해 시안을 디자인하며, 디자이너가 코드의 구조를 이해하며 개발을 고민하는 시대가 왔다.</p>
+
+  <p>나는 이 현상을 경계가 무너진다는 말보다 <em>'묽어진다'</em>고 표현하고 싶다. 서로 다른 색의 물감이 캔버스 위에서 섞이듯, 우리의 역량도 고유의 색을 유지한 채 서로의 영역으로 유연하게 스며들고 있기 때문이다.</p>
+
+  <h2 id="s01"><span class="num">01 / 이전 시대</span>뱀처럼 정복하기 힘들었던 데이터의 시대</h2>
+
+  <p>인공지능을 향한 사회적 열망은 2016년 알파고 쇼크로부터 본격화되었다. 그때부터 세상에는 인공지능에 대한 요구가 마치 안개처럼 스멀스멀 피어올랐다. 주요 대학에는 인공지능 학과와 대학원이 우후죽순 생겨났고, 기업들은 생존을 위해 인공지능 도입에 사활을 걸었다. 업계는 입을 모아 <strong>'데이터가 곧 석유'</strong>라고 강조했으며, 정부는 이에 응답하듯 AI 허브(aihub.or.kr)와 같은 대규모 데이터 구축 사업을 공격적으로 수행했다. 당시 정부 과제에서 '인공지능'이라는 키워드가 빠지면 선정조차 기대하기 어려울 정도였다.</p>
+
+  <p>이러한 격변 속에서 데이터 사이언티스트는 모든 직장인의 선망 대상이 되었다. 소프트웨어 개발자의 가치는 천정부지로 솟았고, "초봉 1억은 줘야 인재를 모셔온다"는 이야기가 심심치 않게 들려왔다. 그들의 핵심 무기인 'Python'은 성공을 보장하는 필수 언어로 추앙받았다. 모든 교육 과정에 Python이 포함되었고(심지어 모 학교는 무용과 학생들에게도 필수교과목으로 정했다), 수많은 이들이 데이터 사이언티스트라는 꿈을 품고 코딩에 뛰어들었다. 하지만 Python은 그 이름(비단뱀)처럼 결코 호락호락하게 길들여지는 언어가 아니었다. 단순한 문법 습득을 넘어 복잡한 라이브러리와 알고리즘을 이해해야 하는 과정에서 <em>많은 이들이 좌절의 쓴맛을 보아야 했다.</em></p>
+
+  <h2 id="s02"><span class="num">02 / 전환</span>시민 데이터 과학자에서 LLM의 시대로</h2>
+
+  <p>높은 코딩의 벽을 넘기 위해 Orange3 같은 노코드(No-code) 도구나 Power BI 같은 데이터 시각화 도구가 대안으로 떠올랐다. 전문 개발자가 아니더라도 스스로 데이터를 분석해 문제를 해결하려는 <strong>'시민 데이터 과학자(Citizen Data Scientist)'</strong>들의 등장이었다. 그러나 기술의 발전은 이들에게 머무를 시간을 길게 허용하지 않았다.</p>
+
+  <p>2022년 11월, OpenAI의 ChatGPT 출시는 판도를 완전히 뒤흔들었다. 과거의 데이터 분석 도구가 기업 내 소수의 분석가(10~20%)를 위한 전문 도구였다면, 이제 LLM은 조직 구성원 99%가 매일 사용해야 하는 <strong>'보편-필수적'</strong> 도구가 되었다.</p>
+
+  <p>데이터과학은 노코드 도구로 장벽의 높이를 어느 정도 낮출 수 있었으나 완전히 허물기는 역부족이었고, 프로그래밍 영역은 여전히 일반인에게 높은 성벽과 같았다. 하지만 LLM은 이 높은 장벽을 낮추는 것이 아니라 <em>허물어뜨렸다.</em> 초기에 언급되었던 고질적 문제인 할루시네이션(환각 현상)은 모델 업데이트마다 눈에 띄게 줄어들고 있으며, 텍스트를 넘어 이미지와 영상 생성, 그리고 고도화된 코딩 실력까지 갖추게 되었다. 이제는 복잡한 코딩 언어를 마스터하지 않아도 통합개발환경(IDE)의 흐름만 이해한다면, 자신의 도메인 지식을 바탕으로 개발자의 손을 빌리지 않고도 문제를 직접 해결할 수 있는 환경이 우리 의지와 상관없이 눈앞에 펼쳐졌다.</p>
+
+  <h2 id="s03"><span class="num">03 / 인재상</span>새로운 인재상: Domain-DAXist의 등장</h2>
+
+  <p>하지만 어떤 기술이 세상에 선보일 때 있었던 현상처럼, ChatGPT를 검색 수준에서 사용하는 사람이 대다수이고, 자신의 주요 시간을 잡아먹는 수작업 위주의 반복 업무(일명 NGD 스타일)는 여전히 과거의 익숙함에 의존해 처리하고 있다.</p>
+
+  <p>지금의 세상은 우리에게 단순히 도구를 다루는 기술과 익숙함을 넘어서는 기술, 그리고 현업을 완전히 결합하는 새로운 존재감을 요구한다.</p>
+
+  <p class="pull">
+    나는 이를 'Domain-DAXist'라고 정의한다. 자신의 전문 분야에 대한 깊은 이해를 바탕으로
+    디지털 전환(DX)은 물론, 인공지능 전환(AX)까지 스스로 주도하여 결과물을 만들어내는 사람.
+  </p>
+
+  <p>그렇다면 이 격동의 시대가 요구하는 Domain-DAXist의 핵심 자질은 무엇일까? 나는 다음의 네 가지를 그 본질로 꼽는다.</p>
+
+  <h3><span class="trait-num">01</span>자신의 도메인에 대한 깊은 전문성</h3>
+  <p>AI가 <strong>'방법(How)'</strong>을 제시한다면, 무엇이 <strong>'문제(Problem)'</strong>인지를 정의하는 것은 여전히 인간의 몫이다. 자신의 분야에서 뼈가 굵은 전문가만이 AI에게 날카로운 질문을 던질 수 있다.</p>
+
+  <h3><span class="trait-num">02</span>새로운 시각의 마인드세트</h3>
+  <p>"원래 그렇게 해왔다"는 관성을 버려야 한다. 아날로그적인 업무 방식이나 익숙함으로 견뎌온 반복 업무를 AI의 시각으로 재해석하고, 이를 자동화·효율화하려는 혁신적 사고가 필수적이다.</p>
+
+  <h3><span class="trait-num">03</span>이론보다 실천하는 습관</h3>
+  <p>거창한 이론 학습에 매몰되어 시간을 허비하기보다, 일단 프롬프트를 입력하고 작은 결과물이라도 직접 만들어보는 <strong>'실행력'</strong>이 곧 실력이 되는 시대다. 실패하더라도 즉각적으로 수정하는 민첩함이 중요하다.</p>
+
+  <h3><span class="trait-num">04</span>주변을 변화시키는 인간적인 매력</h3>
+  <p>기술이 고도화될수록 기계가 대체할 수 없는 <strong>'공감'</strong>과 <strong>'설득'</strong>의 가치는 더욱 커진다. 혼자만의 성과에 그치지 않고 자신의 혁신 사례를 동료들과 공유하며, 조직 전체의 변화를 전염시키는 따뜻한 리더십이야말로 Domain-DAXist를 완성하는 진정한 핵심 역량이다.</p>
+
+  <p style="margin-top: 48px;">앞으로 이어질 글들을 통해 이 네 가지 요건에 담긴 나의 구체적인 경험과 생각을 하나씩 풀어보고자 한다. 변화의 거대한 파도 위에서 휩쓸리지 않고, <em>파도를 타는 Domain-DAXist로 거듭나는 여정</em>을 독자들과 함께 시작해보고 싶다.</p>
+
+  <div class="hashtags">
+    <span>#도메인덱시스트</span>
+    <span>#DomainDAXist</span>
+    <span>#DX와AX를스스로해내는사람</span>
+  </div>
+
+  <div class="footer">
+    <p><strong>현중균</strong> — 한국데이터사이언티스트협회 사내이사. Intel AI4FW Facilitator, 가톨릭대 의료AI 대학원 박사과정. Power BI·데이터 분석 프로세스·AI 비즈니스모델을 가르치며 의료·제조 도메인의 AX를 연구한다.</p>
+    <p>Domain-DAXist 연재는 앞으로 네 가지 본질을 한 편씩 풀어갑니다. 의견·질문은 <a href="mailto:sjshin@cdsa.or.kr" style="color: var(--clay-deep); text-decoration: none;">sjshin@cdsa.or.kr</a>로 보내주세요.</p>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="/blog/" class="bottom-nav-home">← 블로그 목록</a>
+    <a href="/">CDSA 홈페이지 →</a>
+  </nav>
+
+</article>
+
+<script src="/blog/_posts.js" defer></script>
+
+</body>
+</html>

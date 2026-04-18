@@ -24,6 +24,13 @@
   // Single source of truth for blog posts. Sorted newest-first.
   const POSTS = [
     {
+      slug: 'domain-daxist',
+      title: '시민데이터과학자에서 Domain-DAXist로 진화',
+      date: '2026. 4. 18',
+      category: 'Domain-DAXist',
+      href: '/blog/domain-daxist.html',
+    },
+    {
       slug: 'gemini-worker',
       title: 'AI 시대, 직장인의 일은 어떻게 바뀌는가',
       date: '2026. 4. 18',
