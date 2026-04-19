@@ -64,7 +64,8 @@ a{color:inherit;text-decoration:none}
 .cover{min-height:calc(100vh - 64px);display:grid;grid-template-rows:auto 1fr auto;padding:60px 40px 50px;position:relative;overflow:hidden}
 .cover .wm-1{top:18%;left:-4%;font-size:clamp(110px,28vw,420px)}
 .cover .wm-2{bottom:10%;right:-5%;font-size:clamp(90px,13vw,190px);opacity:.9;color:var(--watermark);-webkit-text-stroke:0;letter-spacing:-2px}
-.cover > *{position:relative;z-index:2}
+.cover > *:not(.watermark){position:relative;z-index:2}
+.cover > .watermark{position:absolute;z-index:0}
 
 .cover .cover-top{display:flex;align-items:center;gap:20px;margin-top:20px}
 .cover .cover-top .seal{width:56px;height:56px;border:1px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Noto Serif KR',serif;font-weight:700;color:var(--gold);font-size:18px}
