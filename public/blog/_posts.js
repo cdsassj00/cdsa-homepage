@@ -24,6 +24,13 @@
   // Single source of truth for blog posts. Sorted newest-first.
   const POSTS = [
     {
+      slug: 'agent-as-workflow',
+      title: 'AI Agent는 챗봇이 아니라 일하는 방식입니다',
+      date: '2026. 4. 19',
+      category: '에이전트 운영론',
+      href: '/blog/agent-as-workflow.html',
+    },
+    {
       slug: 'domain-daxist',
       title: '시민데이터과학자에서 Domain-DAXist로 진화',
       date: '2026. 4. 18',
