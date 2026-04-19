@@ -43,15 +43,28 @@ export default function Nav() {
           : 'bg-cream-50/60 backdrop-blur-sm md:bg-transparent md:backdrop-blur-0'
       }`}
     >
-      <div className="container-editorial flex items-center justify-between h-16">
-        <a href="#top" className="flex items-center gap-2">
-          <span className="font-serif text-lg font-semibold tracking-tight text-ink-900">
-            CDSA
-          </span>
-          <span className="hidden md:inline text-[11px] tracking-[0.18em] text-ink-500 uppercase">
-            {site.short}
-          </span>
-        </a>
+      <div className="mx-auto max-w-6xl px-3 md:px-10 flex items-center justify-between h-12 md:h-16">
+        {/* Left cluster: hamburger (mobile) + logo */}
+        <div className="flex items-center gap-2 md:gap-3 min-w-0">
+          <button
+            onClick={() => setMenuOpen((v) => !v)}
+            className="md:hidden flex flex-col justify-center items-center w-8 h-8 gap-[5px] shrink-0"
+            aria-label="메뉴 열기"
+          >
+            <span className={`block w-5 h-[2px] bg-ink-900 transition-all duration-300 ${menuOpen ? 'translate-y-[7px] rotate-45' : ''}`} />
+            <span className={`block w-5 h-[2px] bg-ink-900 transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`} />
+            <span className={`block w-5 h-[2px] bg-ink-900 transition-all duration-300 ${menuOpen ? '-translate-y-[7px] -rotate-45' : ''}`} />
+          </button>
+          <a href="#top" className="flex items-center gap-2 min-w-0">
+            <span className="font-serif text-base md:text-lg font-semibold tracking-tight text-ink-900">
+              CDSA
+            </span>
+            <span className="hidden md:inline text-[11px] tracking-[0.18em] text-ink-500 uppercase truncate">
+              {site.short}
+            </span>
+          </a>
+        </div>
+
         <nav className="hidden md:flex items-center gap-7">
           {links.map((l) => (
             <a
@@ -63,6 +76,7 @@ export default function Nav() {
             </a>
           ))}
         </nav>
+
         <div className="flex items-center gap-3">
           <a
             href="/executive-lounge.html"
@@ -78,16 +92,6 @@ export default function Nav() {
             className="hidden md:inline-flex text-sm font-medium px-4 py-2 rounded-full bg-ink-900 text-cream-50 hover:bg-clay-700 transition-colors"
           >
             교육 문의
-          </button>
-          {/* Mobile hamburger */}
-          <button
-            onClick={() => setMenuOpen((v) => !v)}
-            className="md:hidden flex flex-col justify-center items-center w-9 h-9 gap-[5px]"
-            aria-label="메뉴 열기"
-          >
-            <span className={`block w-5 h-[2px] bg-ink-900 transition-all duration-300 ${menuOpen ? 'translate-y-[7px] rotate-45' : ''}`} />
-            <span className={`block w-5 h-[2px] bg-ink-900 transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`} />
-            <span className={`block w-5 h-[2px] bg-ink-900 transition-all duration-300 ${menuOpen ? '-translate-y-[7px] -rotate-45' : ''}`} />
           </button>
         </div>
       </div>
