@@ -79,20 +79,22 @@ a{color:inherit;text-decoration:none}
 .cover h1{
   font-family:'Noto Serif KR',serif;
   font-weight:700;
-  font-size:clamp(32px,7vw,100px);
-  line-height:1.12;
-  letter-spacing:-2.5px;
+  font-size:clamp(26px,5.2vw,64px);
+  line-height:1.18;
+  letter-spacing:-1.4px;
   color:var(--ink);
-  margin-bottom:24px;
-word-break:keep-all;overflow-wrap:break-word;}
+  margin-bottom:22px;
+  word-break:keep-all;
+  overflow-wrap:break-word;
+}
 .cover h1 .ai-word{color:var(--gold);font-weight:900;display:inline-block;position:relative}
 .cover h1 .ai-word::after{content:"";position:absolute;left:-2px;right:-2px;bottom:6%;height:14%;background:rgba(201,169,106,.14);z-index:-1;border-radius:2px}
 .cover h1 .line{display:block}
 
-.cover .sub-ko{font-family:'Noto Serif KR',serif;font-size:clamp(15px,1.8vw,22px);font-weight:500;color:var(--ink-soft);letter-spacing:-.3px;margin-top:10px;line-height:1.55;padding-left:3px;word-break:keep-all;overflow-wrap:break-word;}
+.cover .sub-ko{font-family:'Noto Serif KR',serif;font-size:clamp(13px,1.2vw,16px);font-weight:500;color:var(--ink-soft);letter-spacing:-.2px;margin-top:10px;line-height:1.55;padding-left:2px;word-break:keep-all;overflow-wrap:break-word;}
 
 .cover .quote-block{margin:48px 0 0;padding-left:28px;border-left:2px solid var(--gold);max-width:720px}
-.cover .quote-block .quote{font-family:'Noto Serif KR',serif;font-size:clamp(17px,2.2vw,27px);font-weight:500;line-height:1.6;color:var(--ink);letter-spacing:-.5px;word-break:keep-all;overflow-wrap:break-word;}
+.cover .quote-block .quote{font-family:'Noto Serif KR',serif;font-size:clamp(14px,1.5vw,19px);font-weight:500;line-height:1.6;color:var(--ink);letter-spacing:-.35px;word-break:keep-all;overflow-wrap:break-word;}
 .cover .quote-block .quote em{color:var(--gold);font-style:normal;font-weight:700}
 .cover .quote-block .attrib{font-family:'Noto Serif KR',serif;font-size:12.5px;letter-spacing:.5px;color:var(--ink-mute);margin-top:14px;font-weight:400}
 .cover .quote-block .attrib .en{font-family:'Cormorant Garamond',serif;font-style:italic;margin-left:6px;letter-spacing:1.5px}
@@ -344,6 +346,66 @@ word-break:keep-all;overflow-wrap:break-word;}
   .watermark{display:none}
   .course,.philosophy,.index-sec,.instructor,.footer{page-break-inside:avoid;break-inside:avoid}
   body{background:#fff}
+}
+
+/* ============ EDITORIAL ANIMATIONS ============ */
+@keyframes lounge-fade-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes lounge-breathe {
+  0%, 100% { opacity: 0.55; }
+  50%      { opacity: 1; }
+}
+@keyframes lounge-breathe-filled {
+  0%, 100% { opacity: 0.6; }
+  50%      { opacity: 1; }
+}
+
+/* Cover load cascade */
+.cover .cover-top,
+.cover .en-label,
+.cover h1,
+.cover .sub-ko,
+.cover .quote-block,
+.cover .cover-foot {
+  animation: lounge-fade-up 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.cover .cover-top    { animation-delay: 0.05s; }
+.cover .en-label     { animation-delay: 0.22s; }
+.cover h1            { animation-delay: 0.38s; }
+.cover .sub-ko       { animation-delay: 0.62s; }
+.cover .quote-block  { animation-delay: 0.82s; }
+.cover .cover-foot   { animation-delay: 1.05s; }
+
+/* Watermarks breathing (8~9s, offset) */
+.cover .wm-1 { animation: lounge-breathe 8s ease-in-out infinite; }
+.cover .wm-2 { animation: lounge-breathe-filled 9s ease-in-out infinite 1.2s; }
+
+/* AI word gold underline — subtle pulse */
+@keyframes ai-underline-pulse {
+  0%, 100% { background: rgba(201,169,106,.12); }
+  50%      { background: rgba(201,169,106,.28); }
+}
+.cover h1 .ai-word::after { animation: ai-underline-pulse 4s ease-in-out infinite; }
+
+/* Section scroll reveal */
+.philosophy, .index-sec, .course, .instructor, .footer {
+  transition: opacity .9s cubic-bezier(0.16, 1, 0.3, 1), transform .9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-pending { opacity: 0; transform: translateY(26px); }
+.reveal-in      { opacity: 1; transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .cover .cover-top,
+  .cover .en-label,
+  .cover h1,
+  .cover .sub-ko,
+  .cover .quote-block,
+  .cover .cover-foot { animation: none !important; }
+  .cover .wm-1, .cover .wm-2 { animation: none !important; }
+  .cover h1 .ai-word::after { animation: none !important; }
+  .reveal-pending { opacity: 1 !important; transform: none !important; }
 }
 </style>
 </head>
@@ -1128,5 +1190,27 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
 });
 </script>
 
+
+<script>
+(function(){
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var targets = document.querySelectorAll('.philosophy, .index-sec, .course, .instructor, .footer');
+  targets.forEach(function(el){ el.classList.add('reveal-pending'); });
+  if (!('IntersectionObserver' in window)) {
+    targets.forEach(function(el){ el.classList.remove('reveal-pending'); el.classList.add('reveal-in'); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) {
+        e.target.classList.remove('reveal-pending');
+        e.target.classList.add('reveal-in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+  targets.forEach(function(el){ io.observe(el); });
+})();
+</script>
 </body>
 </html>
