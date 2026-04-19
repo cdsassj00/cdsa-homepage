@@ -61,7 +61,7 @@ a{color:inherit;text-decoration:none}
 }
 
 /* ============ COVER ============ */
-.cover{min-height:calc(100vh - 64px);display:flex;flex-direction:column;justify-content:space-between;padding:60px 40px 50px;position:relative;overflow:hidden}
+.cover{min-height:calc(100vh - 64px);display:grid;grid-template-rows:auto 1fr auto;padding:60px 40px 50px;position:relative;overflow:hidden}
 .cover .wm-1{top:18%;left:-4%;font-size:clamp(110px,28vw,420px)}
 .cover .wm-2{bottom:10%;right:-5%;font-size:clamp(90px,13vw,190px);opacity:.9;color:var(--watermark);-webkit-text-stroke:0;letter-spacing:-2px}
 .cover > *{position:relative;z-index:2}
@@ -71,7 +71,7 @@ a{color:inherit;text-decoration:none}
 .cover .cover-top .kicker{font-family:'Noto Serif KR',serif;font-size:13px;letter-spacing:3px;font-weight:600;color:var(--gold)}
 .cover .cover-top .kicker .yr{color:var(--ink-mute);margin-left:10px;padding-left:10px;border-left:1px solid var(--line-warm);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;letter-spacing:2px;font-weight:400}
 
-.cover .cover-main{margin:40px 0 30px;max-width:1000px}
+.cover .cover-main{max-width:1000px;display:flex;flex-direction:column;justify-content:center;padding:24px 0}
 .cover .en-label{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;color:var(--gold);letter-spacing:3px;font-weight:400;margin-bottom:24px}
 .cover .en-label::before{content:"— ";color:var(--gold-soft)}
 
