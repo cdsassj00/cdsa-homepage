@@ -12,7 +12,7 @@ import CTA from './sections/CTA'
 import Footer from './sections/Footer'
 import FullCourse from './sections/FullCourse'
 import FloatingInsights from './sections/FloatingInsights'
-import FloatingLounge from './sections/FloatingLounge'
+import ExecutiveLoungeStrip from './sections/FloatingLounge'
 
 function SectionDots() {
   return <div className="section-dots"><span /></div>
@@ -23,6 +23,7 @@ function App() {
     <div className="min-h-screen">
       <Nav />
       <Hero />
+      <ExecutiveLoungeStrip />
       <SectionDots />
       <Mission />
       <SectionDots />
@@ -42,7 +43,6 @@ function App() {
       <CTA />
       <Footer />
       <FloatingInsights />
-      <FloatingLounge />
     </div>
   )
 }

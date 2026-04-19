@@ -6,6 +6,11 @@
 @tailwind utilities;
 
 @layer base {
+  /* Prevent mid-syllable breaks in Korean headings across the React app */
+  h1, h2, h3, h4 {
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
   html, body {
     height: 100%;
   }
@@ -46,6 +51,8 @@
   }
   .h-display {
     @apply font-serif font-semibold leading-[1.08] tracking-tightest text-ink-900;
+    word-break: keep-all;
+    overflow-wrap: break-word;
   }
   .rule {
     @apply block h-px w-12 bg-ink-700/60;
