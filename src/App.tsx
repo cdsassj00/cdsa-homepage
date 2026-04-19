@@ -12,6 +12,7 @@ import CTA from './sections/CTA'
 import Footer from './sections/Footer'
 import FullCourse from './sections/FullCourse'
 import FloatingInsights from './sections/FloatingInsights'
+import FloatingLounge from './sections/FloatingLounge'
 
 function SectionDots() {
   return <div className="section-dots"><span /></div>
@@ -41,6 +42,7 @@ function App() {
       <CTA />
       <Footer />
       <FloatingInsights />
+      <FloatingLounge />
     </div>
   )
 }

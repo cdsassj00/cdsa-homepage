@@ -109,19 +109,9 @@ export default function Nav() {
                 {l.label}
               </a>
             ))}
-            <a
-              href="/executive-lounge.html"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setMenuOpen(false)}
-              className="mt-2.5 inline-flex items-center justify-center gap-1.5 text-[12px] tracking-[0.08em] font-serif font-semibold px-4 py-2 rounded-sm bg-ink-900 text-[#C9A96A] border border-[#C9A96A]/50 w-full"
-            >
-              <span className="w-1 h-1 rounded-full bg-[#C9A96A]" />
-              경영자 AI 라운지
-            </a>
             <button
               onClick={() => { setMenuOpen(false); openInquiry() }}
-              className="mt-1.5 mb-2 text-sm font-medium px-4 py-1.5 rounded-full bg-ink-900 text-cream-50 hover:bg-clay-700 transition-colors w-full"
+              className="mt-2.5 mb-2 text-sm font-medium px-4 py-1.5 rounded-full bg-ink-900 text-cream-50 hover:bg-clay-700 transition-colors w-full"
             >
               교육 문의
             </button>

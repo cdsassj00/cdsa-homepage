@@ -124,6 +124,30 @@
   }
 }
 
+/* ----- Floating Lounge premium shimmer ----- */
+.floating-lounge-shimmer {
+  background: linear-gradient(
+    110deg,
+    #1A1511 0%,
+    #1A1511 38%,
+    rgba(201, 169, 106, 0.30) 50%,
+    #1A1511 62%,
+    #1A1511 100%
+  );
+  background-size: 300% 100%;
+  animation: lounge-shimmer 6s ease-in-out infinite;
+}
+@keyframes lounge-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .floating-lounge-shimmer {
+    animation: none;
+    background: #1A1511;
+  }
+}
+
 /* Nav scroll progress bar */
 .scroll-progress {
   position: fixed;
