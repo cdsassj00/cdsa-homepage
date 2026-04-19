@@ -21,9 +21,9 @@ function SectionDots() {
 function App() {
   return (
     <div className="min-h-screen">
+      <ExecutiveLoungeStrip />
       <Nav />
       <Hero />
-      <ExecutiveLoungeStrip />
       <SectionDots />
       <Mission />
       <SectionDots />

@@ -37,7 +37,7 @@ export default function Nav() {
     <>
     <div ref={progressRef} className="scroll-progress" style={{ transform: 'scaleX(0)' }} />
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-8 md:top-9 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
           ? 'bg-cream-50/85 backdrop-blur-md border-b border-ink-700/10'
           : 'bg-cream-50/60 backdrop-blur-sm md:bg-transparent md:backdrop-blur-0'

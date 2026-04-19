@@ -155,16 +155,19 @@
   }
 }
 
-/* Nav scroll progress bar */
+/* Nav scroll progress bar — sits just below the top lounge ribbon */
 .scroll-progress {
   position: fixed;
-  top: 0;
+  top: 32px;
   left: 0;
   height: 2px;
   background: #A85F25;
   z-index: 60;
   transform-origin: left;
   transition: none;
+}
+@media (min-width: 768px) {
+  .scroll-progress { top: 36px; }
 }
 
 /* ----- Institution cloud subtle float ----- */
