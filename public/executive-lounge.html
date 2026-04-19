@@ -187,29 +187,43 @@ a{color:inherit;text-decoration:none}
 .outcome h4{font-family:'Noto Serif KR',serif;font-size:20px;color:var(--ink);font-weight:700;margin-bottom:10px;letter-spacing:-.4px}
 .outcome p{font-size:14.5px;color:var(--ink-soft);line-height:1.75}
 
-/* ============ INSTRUCTOR ============ */
+.custom-note{margin:24px 0 34px;padding:20px 26px;background:var(--bg-2);border-left:2px solid var(--gold-soft);border-radius:2px;position:relative}
+.custom-note::before{content:"";position:absolute;top:-1px;left:22px;width:36px;height:2px;background:var(--gold-soft)}
+.custom-note .cn-label{font-family:'Noto Serif KR',serif;font-size:12px;color:var(--gold);font-weight:700;margin-bottom:10px;letter-spacing:.5px}
+.custom-note .cn-label .en{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:400;color:var(--gold-soft);margin-left:6px;letter-spacing:1.5px;font-size:11.5px}
+.custom-note p{font-size:13.5px;color:var(--ink-soft);line-height:1.85;font-weight:400}
+.custom-note p strong{color:var(--ink);font-weight:700}
+.custom-note .cn-tools{margin-top:12px;display:flex;flex-wrap:wrap;gap:5px}
+.custom-note .cn-tools .tool{display:inline-block;font-family:'Inter',sans-serif;font-size:10px;color:var(--gold);background:var(--bg-3);padding:3px 9px;border:1px solid var(--line-warm);border-radius:1px;font-weight:500;letter-spacing:.3px;opacity:.85}
+
+/* ============ CURATORS ============ */
 .instructor{padding:130px 40px;background:var(--bg-1);border-top:1px solid var(--line);position:relative;overflow:hidden}
 .instructor .wm-1{top:8%;right:-4%;font-size:clamp(120px,16vw,240px)}
-.instructor .inner{max-width:1100px;margin:0 auto;position:relative;z-index:2}
+.instructor .inner{max-width:1180px;margin:0 auto;position:relative;z-index:2}
 .instructor .en-label{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:var(--gold);letter-spacing:2px;margin-bottom:20px;font-weight:400}
-.instructor h2{font-family:'Noto Serif KR',serif;font-weight:700;font-size:clamp(32px,4.5vw,52px);line-height:1.2;letter-spacing:-1.5px;color:var(--ink);margin-bottom:56px}
+.instructor h2{font-family:'Noto Serif KR',serif;font-weight:700;font-size:clamp(32px,4.5vw,52px);line-height:1.2;letter-spacing:-1.5px;color:var(--ink);margin-bottom:18px}
 .instructor h2 .gold{color:var(--gold)}
+.curator-intro{font-family:'Noto Serif KR',serif;font-size:16.5px;line-height:1.75;color:var(--ink-soft);max-width:780px;margin-bottom:64px;font-weight:500}
+.curators{display:grid;grid-template-columns:repeat(2,1fr);gap:36px;border-top:1px solid var(--line-warm);padding-top:52px}
+.curator{padding:32px 36px;background:var(--bg);border:1px solid var(--line-warm);border-radius:2px;position:relative;transition:border-color .25s ease,transform .25s ease}
+.curator::before{content:"";position:absolute;top:-1px;left:36px;width:48px;height:2px;background:var(--gold)}
+.curator:hover{border-color:var(--gold);transform:translateY(-2px)}
+.curator .cnum{position:absolute;top:24px;right:28px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:38px;color:var(--gold);font-weight:300;line-height:1}
+.curator .cname{font-family:'Noto Serif KR',serif;font-size:30px;font-weight:700;color:var(--ink);letter-spacing:-.7px;margin-bottom:2px}
+.curator .cname-en{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:var(--gold-soft);letter-spacing:1.5px;margin-bottom:18px;font-weight:400}
+.curator .ctitle{font-family:'Noto Serif KR',serif;font-size:15.5px;color:var(--gold);font-weight:700;line-height:1.5;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.curator .ccreds{list-style:none;padding:0;margin:0}
+.curator .ccreds li{font-family:'Noto Serif KR',serif;font-size:13.5px;color:var(--ink-soft);line-height:1.65;padding:5px 0 5px 18px;position:relative;font-weight:500}
+.curator .ccreds li::before{content:"";position:absolute;left:0;top:12px;width:8px;height:1px;background:var(--gold-soft)}
+.curator .cnet{margin-top:18px;padding-top:16px;border-top:1px dashed var(--line);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:11.5px;color:var(--ink-mute);letter-spacing:1.5px}
+.curator .cnet::before{content:"— "}
 
-.instructor-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:70px;align-items:start}
-.instr-profile .name{font-family:'Noto Serif KR',serif;font-size:38px;font-weight:700;color:var(--ink);letter-spacing:-.8px;margin-bottom:4px}
-.instr-profile .name-en{font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:var(--gold);margin-bottom:24px;font-weight:400;letter-spacing:1.5px}
-.instr-profile .title{font-family:'Noto Serif KR',serif;font-size:14.5px;color:var(--ink-soft);line-height:1.9;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid var(--line-warm);font-weight:500}
-.instr-profile .title .sub{font-size:12.5px;color:var(--ink-mute);font-weight:400}
-.instr-profile .credo{font-family:'Noto Serif KR',serif;font-size:17.5px;color:var(--ink);line-height:1.65;letter-spacing:-.3px;font-weight:500;padding-left:18px;border-left:2px solid var(--gold)}
-
-.instr-refs .ref-block{margin-bottom:32px}
-.instr-refs .ref-block:last-child{margin-bottom:0}
-.instr-refs .rl{font-family:'Noto Serif KR',serif;font-size:14px;color:var(--gold);margin-bottom:14px;font-weight:700;padding-bottom:10px;border-bottom:1px solid var(--line)}
-.instr-refs .rl .en{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12px;color:var(--gold-soft);margin-left:8px;font-weight:400;letter-spacing:1.5px}
-.instr-refs .rl-count{color:var(--ink-mute);margin-left:6px;font-weight:400;font-size:12px;font-family:'Pretendard',sans-serif}
-.instr-refs ul{list-style:none;columns:2;column-gap:28px}
-.instr-refs ul li{font-size:13.5px;color:var(--ink-soft);padding:5px 0;break-inside:avoid;line-height:1.55;font-weight:500}
-.instr-refs ul li::before{content:"·";color:var(--gold);margin-right:8px;font-weight:700}
+@media(max-width:900px){
+  .curators{grid-template-columns:1fr;gap:22px}
+  .curator{padding:26px 26px}
+  .curator .cname{font-size:24px}
+  .curator .cnum{font-size:30px}
+}
 
 /* ============ FOOTER ============ */
 .footer{padding:90px 40px 50px;background:var(--bg);border-top:1px solid var(--line-warm);position:relative;overflow:hidden}
@@ -433,6 +447,12 @@ a{color:inherit;text-decoration:none}
         "어디까지 맡길 수 있는가", "우리 회사 자료를 넣어도 되는가"—가 이 서재에서 다뤄집니다.
       </p>
 
+            <div class="custom-note">
+        <div class="cn-label">맞춤 옵션<span class="en">On Request</span></div>
+        <p><strong>세션 시간</strong>은 경영자의 일정에 맞춰 오전 · 오후 · 주말 자유 구성. <strong>다룰 AI 모델</strong>(ChatGPT · Claude · Gemini · Copilot · Perplexity · Grok 등)은 사전 인터뷰에서 주력 업무에 따라 맞춤 선정됩니다.</p>
+        <div class="cn-tools"><span class="tool">ChatGPT</span><span class="tool">Claude</span><span class="tool">Gemini</span><span class="tool">Copilot</span><span class="tool">Perplexity</span><span class="tool">NotebookLM</span></div>
+      </div>
+
       <div class="pullquote">
         "모르는 것을 묻는 일이, 조직에서 가장 비싼 질문이 되었습니다.<br>
         그 질문을 안전하게 꺼낼 수 있는 유일한 자리가 필요합니다."
@@ -507,6 +527,12 @@ a{color:inherit;text-decoration:none}
         본 프로그램은 '코딩 교육'이 아닙니다. 경영자의 언어로 AI에게 도구를 주문 제작하는 실습입니다.
       </p>
 
+            <div class="custom-note">
+        <div class="cn-label">맞춤 옵션<span class="en">On Request</span></div>
+        <p><strong>실습 시간</strong>은 4시간 기본에서 1~2일 심화까지 자유 조정. <strong>빌드 플랫폼</strong>(Lovable · Replit · v0 · Bolt · Gemini Canvas · Cursor 등)은 자사의 스택 · 보안 수준에 맞춰 맞춤 선정합니다.</p>
+        <div class="cn-tools"><span class="tool">Lovable</span><span class="tool">Replit</span><span class="tool">v0</span><span class="tool">Bolt</span><span class="tool">Cursor</span><span class="tool">Gemini Canvas</span><span class="tool">Claude Artifacts</span></div>
+      </div>
+
       <div class="pullquote">
         "20년차 개발자를 부를 필요가 없어지는 것이 아닙니다.<br>
         경영자가 프로토타입을 짓고, 개발팀이 상용화하는 — 새로운 속도의 조직이 만들어집니다."
@@ -528,6 +554,7 @@ a{color:inherit;text-decoration:none}
           <div class="md">
             월간 인건비 · KPI · 예산 집행 — 몇 시간짜리 엑셀 반복 업무를 수 초의 AI 자동화로 전환.
             VBA · Python 지식 없이도, 문장만으로 완성됩니다.
+            <div><span class="tool">Claude</span><span class="tool">Gemini</span><span class="tool">Copilot for Excel</span><span class="tool">Python</span><span class="tool">VBA</span></div>
           </div>
         </div>
         <div class="module">
@@ -544,6 +571,7 @@ a{color:inherit;text-decoration:none}
           <div class="md">
             사내 규정 · 제품 카탈로그 · 매뉴얼을 읽고 답하는 전용 챗봇을 당일 완성.
             RAG 구조의 핵심을 체감하는 구간.
+            <div><span class="tool">RAG</span><span class="tool">NotebookLM</span><span class="tool">Claude Projects</span><span class="tool">Custom GPTs</span></div>
           </div>
         </div>
       </div>
@@ -587,6 +615,12 @@ a{color:inherit;text-decoration:none}
         본 프로그램은 '우리 조직에서는 어느 자리에, 어떤 권한으로 배치할 것인가'를 설계하는 자리입니다.
       </p>
 
+            <div class="custom-note">
+        <div class="cn-label">맞춤 옵션<span class="en">On Request</span></div>
+        <p><strong>워크숍 시간</strong>은 3시간 기본, 이틀 합숙형 확장 가능. <strong>에이전트 플랫폼</strong>(Claude Code · Codex · Copilot Studio · OpenAI Agents · LangChain · n8n · MCP 생태계 등)은 자사의 IT 정책과 파일럿 과제에 맞춰 맞춤 구성합니다.</p>
+        <div class="cn-tools"><span class="tool">Claude Code</span><span class="tool">Codex</span><span class="tool">Copilot Studio</span><span class="tool">OpenAI Agents</span><span class="tool">LangChain</span><span class="tool">n8n</span><span class="tool">MCP</span></div>
+      </div>
+
       <div class="pullquote">
         "도입 여부의 문제가 아니라, 배치의 문제입니다.<br>
         AI 에이전트는 이미 다음 세 자리를 기다리고 있습니다 — 우리 조직의 어느 자리인가."
@@ -600,6 +634,7 @@ a{color:inherit;text-decoration:none}
           <div class="md">
             Tool · Copilot · Agent · Workflow — 혼용되는 네 개념의 엄밀한 구분.
             경영자가 '인력'으로 간주할 수 있는 지점은 어디부터인가.
+            <div><span class="tool">Claude Code</span><span class="tool">Codex</span><span class="tool">Copilot Studio</span><span class="tool">OpenAI Agents</span><span class="tool">MCP</span></div>
           </div>
         </div>
         <div class="module">
@@ -614,6 +649,7 @@ a{color:inherit;text-decoration:none}
           <div class="mt">자사 AI 파일럿 설계 워크숍<small>Module 3 · 1시간</small></div>
           <div class="md">
             CBM(Component Business Model) 기반 자사 업무 분해 → AI 에이전트 배치 적합도 평가 → 1호 파일럿 과제 선정.
+            <div><span class="tool">LangChain</span><span class="tool">n8n</span><span class="tool">Zapier</span><span class="tool">Notion AI</span></div>
           </div>
         </div>
         <div class="module">
@@ -664,6 +700,12 @@ a{color:inherit;text-decoration:none}
         본 브리핑은 한 달의 흐름 중 '경영자의 판단에 직접 영향을 주는 세 가지'만 선별합니다.
       </p>
 
+            <div class="custom-note">
+        <div class="cn-label">맞춤 옵션<span class="en">On Request</span></div>
+        <p><strong>브리핑 시간</strong>은 조찬 · 석찬 선택. <strong>그 달의 주제</strong>(새 AI 모델 · 생태계 움직임 · 규제 · 보안)는 경영자의 관심 업종과 의사결정 앞 과제에 맞춰 우선순위를 조정합니다.</p>
+        <div class="cn-tools"><span class="tool">GPT-5</span><span class="tool">Claude Opus</span><span class="tool">Gemini Pro</span><span class="tool">Llama</span><span class="tool">Sora</span><span class="tool">Veo</span><span class="tool">Perplexity</span></div>
+      </div>
+
       <div class="pullquote">
         "타사 경영자 테이블에서 낯선 단어가 나왔을 때,<br>이미 한 달 전에 듣고 정리해둔 자리."
       </div>
@@ -676,6 +718,7 @@ a{color:inherit;text-decoration:none}
           <div class="md">
             새로 등장한 AI 기반 모델 · 서비스 · 도구 중, 경영자가 반드시 인지해야 할 것만 선별.
             실제 시연을 통한 체감 중심으로 진행.
+            <div><span class="tool">GPT-5</span><span class="tool">Claude Opus</span><span class="tool">Gemini Pro</span><span class="tool">Llama</span><span class="tool">Sora</span><span class="tool">Veo</span></div>
           </div>
         </div>
         <div class="module">
@@ -733,6 +776,12 @@ a{color:inherit;text-decoration:none}
         본 프로그램은 의사결정자 · 중간 리더 · 실무진의 세 층위가, 같은 방향을 바라보되 다른 깊이로 AI를 체득하도록 설계됩니다.
       </p>
 
+            <div class="custom-note">
+        <div class="cn-label">맞춤 옵션<span class="en">On Request</span></div>
+        <p><strong>프로그램 기간 · 각 계층 시간</strong>은 3~6개월 범위에서 자유 설계. <strong>전환에 쓰일 AI 도구 스택</strong>(ChatGPT Team · Copilot M365 · Gemini · Claude · Notion AI · Power BI Copilot · 사내 폐쇄망 LLM 등)은 업종 · 보안 등급 · 레거시 환경에 맞춰 맞춤 설계합니다.</p>
+        <div class="cn-tools"><span class="tool">ChatGPT Team</span><span class="tool">Copilot M365</span><span class="tool">Gemini</span><span class="tool">Claude</span><span class="tool">Notion AI</span><span class="tool">Power BI Copilot</span><span class="tool">Ollama</span></div>
+      </div>
+
       <div class="pullquote">
         "AI 전환은 하나의 교육으로 완성되지 않습니다.<br>
         세 층의 교육이 같은 시점에, 같은 언어로 작동해야 비로소 조직이 움직입니다."
@@ -753,6 +802,7 @@ a{color:inherit;text-decoration:none}
           <div class="md">
             팀 KPI의 AI 자동 관리, 부서 대시보드 설계, 팀원 산출물 검수, 부서 단위 AI 워크플로우 자동화.
             실행 책임자의 눈높이에 맞춘 8~16시간 과정.
+            <div><span class="tool">Power BI Copilot</span><span class="tool">M365 Copilot</span><span class="tool">Notion AI</span><span class="tool">ChatGPT Team</span></div>
           </div>
         </div>
         <div class="module">
@@ -761,6 +811,7 @@ a{color:inherit;text-decoration:none}
           <div class="md">
             ChatGPT · Gemini · Claude 기반 문서 · 리서치 · 보고서 AI 자동화.
             업종별(제조 · 유통 · 서비스 · 금융) 실습 시나리오로 커스터마이징.
+            <div><span class="tool">ChatGPT</span><span class="tool">Gemini</span><span class="tool">Claude</span><span class="tool">Gamma</span><span class="tool">Perplexity</span></div>
           </div>
         </div>
       </div>
@@ -805,6 +856,12 @@ a{color:inherit;text-decoration:none}
         AI가 초안을 짓고 경영자가 검수 · 구술로 다듬는 동반 집필 구조. 원고가 완성되면 편집 · 디자인 · ISBN 발급 · 유통까지 이어집니다.
       </p>
 
+            <div class="custom-note">
+        <div class="cn-label">맞춤 옵션<span class="en">On Request</span></div>
+        <p><strong>집필 · 면담 시간</strong>은 경영자 일정에 맞춰 주 1~2회, 온라인 · 대면 혼합으로 자유 구성. <strong>활용 AI 도구</strong>(Claude · Gemini · NotebookLM · Whisper · Perplexity · Midjourney 등)는 집필 장르와 독자 타겟에 따라 맞춤 선택합니다.</p>
+        <div class="cn-tools"><span class="tool">Claude</span><span class="tool">Gemini</span><span class="tool">NotebookLM</span><span class="tool">Whisper</span><span class="tool">Perplexity</span><span class="tool">Midjourney</span></div>
+      </div>
+
       <div class="pullquote">
         "조직은 대표의 문장을 갖고 있어야 합니다.<br>
         그 문장을 한 권으로 엮어내는 과정입니다."
@@ -841,6 +898,7 @@ a{color:inherit;text-decoration:none}
           <div class="mt">편집 · 디자인 · 출판<small>Module 4 · 약 1개월</small></div>
           <div class="md">
             출판사 연결, 교정 · 편집, 표지 · 내지 디자인, ISBN 발급, 교보 · 예스24 · 알라딘 유통, 런칭 홍보 계획까지 일괄 동반합니다.
+            <div><span class="tool">Midjourney</span><span class="tool">DALL·E</span><span class="tool">ChatGPT</span><span class="tool">Affinity</span></div>
           </div>
         </div>
       </div>
@@ -854,87 +912,94 @@ a{color:inherit;text-decoration:none}
   </div>
 </section>
 
-<!-- ============ INSTRUCTOR ============ -->
-<section class="instructor">
-  <div class="watermark wm-1">Curator</div>
+<!-- ============ CURATORS ============ -->
+<section class="instructor" id="curators">
+  <div class="watermark wm-1">Curators</div>
 
   <div class="inner">
-    <div class="en-label">— The Curator</div>
-    <h2>기획 · 진행 <span class="gold">신성진 대표</span></h2>
+    <div class="en-label">— The Curators</div>
+    <h2>기획 · 진행 <span class="gold">다섯 큐레이터</span></h2>
+    <p class="curator-intro">
+      공공 · 대기업 · 학계 · 글로벌 현장을 가로지른 다섯 전문가가 각 프로그램을 공동 설계하고 동반합니다.
+      정부 부처 자문위원 · 글로벌 기업 출신 데이터센터장 · Intel Global Facilitator · 제조 AI 박사 · 국가공인 AI 전임강사 —
+      각 분야에서 정제된 이력이 한 테이블 위에 모였습니다.
+    </p>
 
-    <div class="instructor-grid">
-      <div class="instr-profile">
-        <div class="name">신성진</div>
-        <div class="name-en">Shin Sung-Jin</div>
-        <div class="title">
-          한국데이터사이언티스트협회 대표이사 (CDSA)<br>
-          행정안전부 AI · 데이터기반행정 자문위원<br>
-          과학기술정보통신부 데이터기반행정 위원회 전문위원<br>
-          명지대학교 융합소프트웨어학부 겸임교수<br>
-          <span class="sub">aSSIST AI · 빅데이터경영학 석사</span>
-        </div>
-        <div class="credo">
-          "교육은 개념을 전달하는 자리가 아니라,<br>
-          참여자의 손에 결과물을 남기는 자리여야 합니다."
-        </div>
-      </div>
-
-      <div class="instr-refs">
-        <div class="ref-block">
-          <div class="rl">주요 기업 AI 교육<span class="en">Corporate · Group</span><span class="rl-count">선별</span></div>
-          <ul>
-            <li>LG에너지솔루션</li>
-            <li>한진그룹</li>
-            <li>한솔그룹</li>
-            <li>풍산그룹</li>
-            <li>CJ올리브네트웍스</li>
-            <li>GS엠비즈</li>
-            <li>KCC</li>
-            <li>카카오엔터테인먼트</li>
-            <li>올리브영</li>
-            <li>NS홈쇼핑</li>
-            <li>GS홈쇼핑</li>
-            <li>SKT</li>
-            <li>아모레퍼시픽</li>
-            <li>유한양행</li>
-            <li>유한건강생활</li>
-            <li>풀무원</li>
-            <li>대웅제약</li>
-            <li>한국야쿠르트</li>
+    <div class="curators">
+        <div class="curator">
+          <div class="cnum">I.</div>
+          <div class="cname">신성진</div>
+          <div class="cname-en">Shin Sung-Jin</div>
+          <div class="ctitle">행정안전부 · 과학기술정보통신부 자문위원</div>
+          <ul class="ccreds">
+            <li>행정안전부 AI · 데이터활용 전문위원</li>
+            <li>과학기술정보통신부 데이터기반행정 위원회 자문위원</li>
+            <li>식품의약품안전처 식의약 위해예방 자문위원</li>
+            <li>명지대학교 응용소프트웨어학부 겸임교수</li>
+            <li>CJ올리브네트웍스 · 한국경제 DT 과정 주임교수</li>
+            <li>aSSIST AI · 빅데이터경영학 석사</li>
           </ul>
+          <div class="cnet">CDSA 전문가 네트워크</div>
         </div>
-
-        <div class="ref-block">
-          <div class="rl">공공 · 기관 AI 교육<span class="en">Public · Institutional</span><span class="rl-count">선별</span></div>
-          <ul>
-            <li>행정안전부</li>
-            <li>과학기술정보통신부</li>
-            <li>식품의약품안전처</li>
-            <li>인사혁신처</li>
-            <li>국민권익위원회</li>
-            <li>방위사업청</li>
-            <li>한국지능정보사회진흥원 (NIA)</li>
-            <li>한국방송통신전파진흥원</li>
-            <li>농촌진흥청</li>
-            <li>한국환경공단</li>
-            <li>국가과학기술연구회</li>
-            <li>국가생명윤리정책원</li>
+        <div class="curator">
+          <div class="cnum">II.</div>
+          <div class="cname">이중균</div>
+          <div class="cname-en">Lee Jung-Kyun</div>
+          <div class="ctitle">前 한국야쿠르트 데이터센터장 · 인재개발원장</div>
+          <ul class="ccreds">
+            <li>데이터기반 지능행정 역량강화 컨설턴트</li>
+            <li>과학기술정보통신부 AI성과 심사위원</li>
+            <li>식품안전관리인증원 플랫폼 고도화 자문위원</li>
+            <li>前 국민권익위원회 데이터기반행정 자문위원</li>
+            <li>前 LG텔레콤 CRM 기획 · 운영팀장</li>
+            <li>연세대학교 IT경영전략 석사</li>
           </ul>
+          <div class="cnet">CDSA 전문가 네트워크</div>
         </div>
-
-        <div class="ref-block">
-          <div class="rl">학계<span class="en">Academic</span><span class="rl-count">선별</span></div>
-          <ul>
-            <li>KAIST K-DATA 분석과정 멘토</li>
-            <li>연세대학교</li>
-            <li>한국외국어대학교</li>
-            <li>강원대학교</li>
-            <li>아주대학교</li>
-            <li>가천대학교</li>
-            <li>수원대학교</li>
+        <div class="curator">
+          <div class="cnum">III.</div>
+          <div class="cname">현중균</div>
+          <div class="cname-en">Hyun Jung-Kyun</div>
+          <div class="ctitle">Intel AI4FW Global Facilitator</div>
+          <ul class="ccreds">
+            <li>가톨릭대학교 의료인공지능대학원 박사과정</li>
+            <li>이패스코리아 Power BI 전임강사</li>
+            <li>고용노동부 내일배움카드 Power BI 과정 강사</li>
+            <li>前 명지대 · 연성대 · 한양여자대학교 겸임교수</li>
+            <li>前 의료AI 스타트업 슈파스 미래사업총괄</li>
+            <li>aSSIST AI · 빅데이터 MBA</li>
           </ul>
+          <div class="cnet">CDSA 전문가 네트워크</div>
         </div>
-      </div>
+        <div class="curator">
+          <div class="cnum">IV.</div>
+          <div class="cname">고우주</div>
+          <div class="cname-en">Ko Woo-Ju</div>
+          <div class="ctitle">산업통상자원부 AI 신산업정책 전문위원</div>
+          <ul class="ccreds">
+            <li>스마트제조혁신추진단 AI 마스터</li>
+            <li>행정안전부 데이터 전문가 과정 평가위원</li>
+            <li>성남시 산업진흥원 ICT 기술 경영 자문 전문가</li>
+            <li>명지대학교 ICT융합 AI 겸임교수</li>
+            <li>라우드AI 대표</li>
+            <li>Swiss School of Business AI · 빅데이터 박사</li>
+          </ul>
+          <div class="cnet">CDSA 전문가 네트워크</div>
+        </div>
+        <div class="curator">
+          <div class="cnum">V.</div>
+          <div class="cname">김용재</div>
+          <div class="cname-en">Kim Yong-Jae</div>
+          <div class="ctitle">국가공인 AICE 전임강사</div>
+          <ul class="ccreds">
+            <li>前 행정안전부 데이터분석 전문가 과정 교수</li>
+            <li>前 CJ올리브네트웍스 · 한국경제 DT 과정 주임교수</li>
+            <li>前 서일대학교 AI 겸임교수</li>
+            <li>前 이글루코퍼레이션 AI 연구원</li>
+            <li>국민대 BIT대학원 비즈니스IT 박사과정</li>
+          </ul>
+          <div class="cnet">CDSA 전문가 네트워크</div>
+        </div>
     </div>
   </div>
 </section>
