@@ -110,17 +110,17 @@
   .breadcrumb .bc-sep { color: var(--rule); }
 
   .kicker { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay-deep); margin-bottom: 28px; }
-  h1 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 400; font-size: 44px; line-height: 1.18; letter-spacing: -0.02em; margin: 0 0 24px; color: var(--ink); }
-  .dek { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 300; font-style: italic; font-size: 21px; line-height: 1.55; color: var(--ink-soft); margin: 0 0 40px; }
+  h1 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 400; font-size: 44px; line-height: 1.18; letter-spacing: -0.02em; margin: 0 0 24px; color: var(--ink); word-break:keep-all;overflow-wrap:break-word;}
+  .dek { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 300; font-style: italic; font-size: 21px; line-height: 1.55; color: var(--ink-soft); margin: 0 0 40px; word-break:keep-all;overflow-wrap:break-word;}
   .byline { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); padding: 18px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-bottom: 56px; display: flex; justify-content: space-between; }
   .byline strong { font-weight: 500; color: var(--ink-soft); }
 
-  .lede { font-size: 19px; line-height: 1.72; margin-bottom: 22px; }
+  .lede { font-size: 19px; line-height: 1.72; margin-bottom: 22px; word-break:keep-all;overflow-wrap:break-word;}
   .lede::first-letter { font-family: "Fraunces", serif; font-weight: 400; font-size: 68px; float: left; line-height: 0.88; padding: 8px 10px 0 0; color: var(--clay); }
 
-  h2 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 28px; line-height: 1.25; letter-spacing: -0.015em; margin: 64px 0 16px; color: var(--ink); scroll-margin-top: 80px; }
+  h2 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 28px; line-height: 1.25; letter-spacing: -0.015em; margin: 64px 0 16px; color: var(--ink); scroll-margin-top: 80px; word-break:keep-all;overflow-wrap:break-word;}
   h2 .num { font-family: "Inter", sans-serif; font-size: 12px; font-weight: 600; color: var(--clay); letter-spacing: 0.1em; display: block; margin-bottom: 10px; }
-  h3 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 20px; margin: 36px 0 10px; color: var(--ink); letter-spacing: -0.01em; }
+  h3 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 20px; margin: 36px 0 10px; color: var(--ink); letter-spacing: -0.01em; word-break:keep-all;overflow-wrap:break-word;}
   h3 .trait-num {
     font-family: "Inter", sans-serif;
     font-size: 10px; font-weight: 700;
@@ -167,10 +167,18 @@
 
   @media (max-width: 560px) {
     .wrap { padding: 92px 22px 80px; }
-    h1 { font-size: 34px; }
-    .dek { font-size: 18px; }
+    h1 { font-size: 34px; word-break:keep-all;overflow-wrap:break-word;}
+    .dek { font-size: 18px; word-break:keep-all;overflow-wrap:break-word;}
     body { font-size: 17px; }
     .topnav-right { display: none; }
+  }
+
+  @media (max-width: 400px) {
+    h1 { font-size: 26px !important; line-height: 1.22; }
+    .dek { font-size: 16px !important; }
+    h2 { font-size: 22px !important; }
+    .post-title { font-size: 20px !important; }
+    .title { font-size: 30px !important; }
   }
 </style>
 </head>

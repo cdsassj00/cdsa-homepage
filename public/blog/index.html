@@ -106,7 +106,7 @@
     font-weight: 400; font-size: 56px;
     line-height: 1.1; letter-spacing: -0.025em;
     margin: 0 0 24px; color: var(--ink);
-  }
+  word-break:keep-all;overflow-wrap:break-word;}
   .lede {
     font-family: "Fraunces", "Noto Serif KR", serif;
     font-weight: 300; font-style: italic;
@@ -114,7 +114,7 @@
     color: var(--ink-soft);
     max-width: 620px;
     margin: 0 0 72px;
-  }
+  word-break:keep-all;overflow-wrap:break-word;}
 
   /* ===== POST LIST ===== */
   .posts {
@@ -150,14 +150,14 @@
     line-height: 1.25; letter-spacing: -0.015em;
     margin: 0 0 12px; color: var(--ink);
     transition: color 0.2s;
-  }
-  .post-body a:hover .post-title { color: var(--clay-deep); }
+  word-break:keep-all;overflow-wrap:break-word;}
+  .post-body a:hover .post-title { color: var(--clay-deep); word-break:keep-all;overflow-wrap:break-word;}
   .post-dek {
     font-family: "Fraunces", "Noto Serif KR", serif;
     font-weight: 300; font-style: italic;
     font-size: 17px; line-height: 1.6;
     color: var(--ink-soft); margin: 0 0 16px;
-  }
+  word-break:keep-all;overflow-wrap:break-word;}
   .post-readmore {
     font-family: "Inter", "Noto Sans KR", sans-serif;
     font-size: 12px; font-weight: 500;
@@ -181,16 +181,24 @@
 
   @media (max-width: 640px) {
     .wrap { padding: 92px 22px 80px; }
-    .title { font-size: 38px; }
-    .lede { font-size: 17px; margin-bottom: 48px; }
+    .title { font-size: 38px; word-break:keep-all;overflow-wrap:break-word;}
+    .lede { font-size: 17px; margin-bottom: 48px; word-break:keep-all;overflow-wrap:break-word;}
     .post {
       grid-template-columns: 1fr;
       gap: 12px;
       padding: 32px 0;
     }
     .post-meta { padding-top: 0; }
-    .post-title { font-size: 24px; }
+    .post-title { font-size: 24px; word-break:keep-all;overflow-wrap:break-word;}
     .topnav-right { display: none; }
+  }
+
+  @media (max-width: 400px) {
+    h1 { font-size: 26px !important; line-height: 1.22; }
+    .dek { font-size: 16px !important; }
+    h2 { font-size: 22px !important; }
+    .post-title { font-size: 20px !important; }
+    .title { font-size: 30px !important; }
   }
 </style>
 

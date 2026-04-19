@@ -173,7 +173,7 @@
     letter-spacing: -0.02em;
     margin: 0 0 24px;
     color: var(--ink);
-  }
+  word-break:keep-all;overflow-wrap:break-word;}
   .dek {
     font-family: "Fraunces", "Noto Serif KR", serif;
     font-weight: 300;
@@ -182,7 +182,7 @@
     line-height: 1.55;
     color: var(--ink-soft);
     margin: 0 0 40px;
-  }
+  word-break:keep-all;overflow-wrap:break-word;}
   .byline {
     font-family: "Inter", "Noto Sans KR", sans-serif;
     font-size: 13px;
@@ -199,7 +199,7 @@
     font-size: 19px;
     line-height: 1.72;
     margin-bottom: 22px;
-  }
+  word-break:keep-all;overflow-wrap:break-word;}
   .lede::first-letter {
     font-family: "Fraunces", serif;
     font-weight: 400;
@@ -218,7 +218,7 @@
     margin: 64px 0 8px;
     color: var(--ink);
     scroll-margin-top: 80px;
-  }
+  word-break:keep-all;overflow-wrap:break-word;}
   h2 .num {
     font-family: "Inter", sans-serif;
     font-size: 12px;
@@ -234,7 +234,7 @@
     font-size: 20px;
     margin: 36px 0 10px;
     color: var(--ink);
-  }
+  word-break:keep-all;overflow-wrap:break-word;}
   p { margin: 0 0 22px; }
   p + p { margin-top: -6px; }
   strong { font-weight: 500; color: var(--ink); }
@@ -370,13 +370,21 @@
 
   @media (max-width: 560px) {
     .wrap { padding: 92px 22px 80px; }
-    h1 { font-size: 34px; }
-    .dek { font-size: 18px; }
+    h1 { font-size: 34px; word-break:keep-all;overflow-wrap:break-word;}
+    .dek { font-size: 18px; word-break:keep-all;overflow-wrap:break-word;}
     body { font-size: 17px; }
     .compare .row { grid-template-columns: 1fr; gap: 4px; }
     .layer-list li { grid-template-columns: 1fr; gap: 4px; }
     .builds li { grid-template-columns: 1fr; gap: 6px; }
     .topnav-right { display: none; }
+  }
+
+  @media (max-width: 400px) {
+    h1 { font-size: 26px !important; line-height: 1.22; }
+    .dek { font-size: 16px !important; }
+    h2 { font-size: 22px !important; }
+    .post-title { font-size: 20px !important; }
+    .title { font-size: 30px !important; }
   }
 </style>
 </head>
