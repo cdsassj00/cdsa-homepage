@@ -64,6 +64,15 @@ export default function Nav() {
           ))}
         </nav>
         <div className="flex items-center gap-3">
+          <a
+            href="/executive-lounge.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden md:inline-flex items-center gap-1.5 text-[11px] tracking-[0.08em] font-serif font-semibold px-3.5 py-2 rounded-sm bg-ink-900 text-[#C9A96A] border border-[#C9A96A]/50 hover:bg-black hover:border-[#C9A96A] hover:shadow-[0_0_12px_rgba(201,169,106,0.25)] transition-all"
+          >
+            <span className="w-1 h-1 rounded-full bg-[#C9A96A]" />
+            경영자 AI 라운지
+          </a>
           <button
             onClick={openInquiry}
             className="hidden md:inline-flex text-sm font-medium px-4 py-2 rounded-full bg-ink-900 text-cream-50 hover:bg-clay-700 transition-colors"
@@ -96,6 +105,16 @@ export default function Nav() {
                 {l.label}
               </a>
             ))}
+            <a
+              href="/executive-lounge.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMenuOpen(false)}
+              className="mt-3 inline-flex items-center justify-center gap-1.5 text-[12px] tracking-[0.08em] font-serif font-semibold px-4 py-2.5 rounded-sm bg-ink-900 text-[#C9A96A] border border-[#C9A96A]/50 w-full"
+            >
+              <span className="w-1 h-1 rounded-full bg-[#C9A96A]" />
+              경영자 AI 라운지
+            </a>
             <button
               onClick={() => { setMenuOpen(false); openInquiry() }}
               className="mt-2 mb-2 text-sm font-medium px-4 py-2 rounded-full bg-ink-900 text-cream-50 hover:bg-clay-700 transition-colors w-full"
