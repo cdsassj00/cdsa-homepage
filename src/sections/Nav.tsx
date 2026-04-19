@@ -43,7 +43,7 @@ export default function Nav() {
           : 'bg-cream-50/60 backdrop-blur-sm md:bg-transparent md:backdrop-blur-0'
       }`}
     >
-      <div className="mx-auto max-w-6xl px-3 md:px-10 flex items-center justify-between h-12 md:h-16">
+      <div className="mx-auto max-w-6xl px-3 md:px-10 flex items-center justify-between h-11 md:h-16">
         {/* Left cluster: hamburger (mobile) + logo */}
         <div className="flex items-center gap-2 md:gap-3 min-w-0">
           <button
@@ -98,13 +98,13 @@ export default function Nav() {
       {/* Mobile dropdown */}
       {menuOpen && (
         <div className="md:hidden bg-cream-50 border-b border-ink-700/10">
-          <div className="container-editorial flex flex-col py-2">
+          <div className="px-4 flex flex-col py-1.5">
             {links.map((l) => (
               <a
                 key={l.href}
                 href={l.href}
                 onClick={() => setMenuOpen(false)}
-                className="py-3 text-sm text-ink-700 hover:text-clay-700 transition-colors"
+                className="py-2.5 text-sm text-ink-700 hover:text-clay-700 transition-colors"
               >
                 {l.label}
               </a>
@@ -114,14 +114,14 @@ export default function Nav() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setMenuOpen(false)}
-              className="mt-3 inline-flex items-center justify-center gap-1.5 text-[12px] tracking-[0.08em] font-serif font-semibold px-4 py-2.5 rounded-sm bg-ink-900 text-[#C9A96A] border border-[#C9A96A]/50 w-full"
+              className="mt-2.5 inline-flex items-center justify-center gap-1.5 text-[12px] tracking-[0.08em] font-serif font-semibold px-4 py-2 rounded-sm bg-ink-900 text-[#C9A96A] border border-[#C9A96A]/50 w-full"
             >
               <span className="w-1 h-1 rounded-full bg-[#C9A96A]" />
               경영자 AI 라운지
             </a>
             <button
               onClick={() => { setMenuOpen(false); openInquiry() }}
-              className="mt-2 mb-2 text-sm font-medium px-4 py-2 rounded-full bg-ink-900 text-cream-50 hover:bg-clay-700 transition-colors w-full"
+              className="mt-1.5 mb-2 text-sm font-medium px-4 py-1.5 rounded-full bg-ink-900 text-cream-50 hover:bg-clay-700 transition-colors w-full"
             >
               교육 문의
             </button>
