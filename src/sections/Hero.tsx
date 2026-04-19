@@ -91,10 +91,10 @@ export default function Hero() {
         }}
       />
 
-      {/* Three.js geometric background — watermark opacity */}
+      {/* Three.js geometric background — watermark opacity (dimmer on mobile) */}
       <div
-        className="absolute inset-0 pointer-events-none"
-        style={{ opacity: 0.32, mixBlendMode: 'multiply' }}
+        className="absolute inset-0 pointer-events-none opacity-[0.18] md:opacity-[0.32]"
+        style={{ mixBlendMode: 'multiply' }}
       >
         <Canvas
           camera={{ position: [0, 0, 6], fov: 48 }}
@@ -114,12 +114,21 @@ export default function Hero() {
         </Canvas>
       </div>
 
-      {/* soft overlay to protect text legibility */}
+      {/* soft overlay to protect text legibility (desktop) */}
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 pointer-events-none hidden md:block"
         style={{
           background:
             'linear-gradient(to right, rgba(250,247,241,0.55) 0%, rgba(250,247,241,0.35) 45%, rgba(250,247,241,0.08) 72%, transparent 100%)',
+        }}
+      />
+
+      {/* stronger overlay for mobile readability */}
+      <div
+        className="absolute inset-0 pointer-events-none md:hidden"
+        style={{
+          background:
+            'linear-gradient(to bottom, rgba(250,247,241,0.75) 0%, rgba(250,247,241,0.55) 35%, rgba(250,247,241,0.35) 70%, rgba(250,247,241,0.55) 100%)',
         }}
       />
 

@@ -40,7 +40,7 @@ export default function Nav() {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
           ? 'bg-cream-50/85 backdrop-blur-md border-b border-ink-700/10'
-          : 'bg-transparent'
+          : 'bg-cream-50/60 backdrop-blur-sm md:bg-transparent md:backdrop-blur-0'
       }`}
     >
       <div className="container-editorial flex items-center justify-between h-16">
