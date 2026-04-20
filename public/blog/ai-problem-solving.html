@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI가 똑똑해져도 당신의 업무가 안 바뀌는 이유 · CDSA 블로그</title>
+<meta name="description" content="문제는 기술이 아니다. AI를 '도구'로 보는 순간, 우리는 가장 중요한 질문을 놓친다. 어떤 문제를, 어떤 순서로, 어떻게 쪼갤 것인가.">
+<meta property="og:title" content="AI가 똑똑해져도 당신의 업무가 안 바뀌는 이유">
+<meta property="og:description" content="AI를 활용한다는 것은 새로운 기술을 쓰는 것이 아니라 문제 해결 프로세스를 바꾸는 것. 문서·데이터·바이브코딩 세 톱니바퀴의 구조.">
+<meta property="og:type" content="article">
+<!-- BEGIN SEO -->
+<meta name="keywords" content="AI 문제 해결, AI 활용, 문서 작성, 데이터 분석, 바이브 코딩, 업무 자동화, 판단의 언어, 이중균">
+<link rel="canonical" href="https://cdsa.kr/blog/ai-problem-solving.html">
+<meta property="og:url" content="https://cdsa.kr/blog/ai-problem-solving.html">
+<meta property="og:site_name" content="한국데이터사이언티스트협회">
+<meta property="og:image" content="https://cdsa.kr/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta property="article:published_time" content="2026-04-20T09:00:00+09:00">
+<meta property="article:modified_time" content="2026-04-20T09:00:00+09:00">
+<meta property="article:author" content="이중균">
+<meta property="article:section" content="AI 문제해결론">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI가 똑똑해져도 당신의 업무가 안 바뀌는 이유">
+<meta name="twitter:description" content="AI를 활용한다는 것은 새로운 기술을 쓰는 것이 아니라 문제 해결 프로세스를 바꾸는 것. 문서·데이터·바이브코딩 세 톱니바퀴의 구조.">
+<meta name="twitter:image" content="https://cdsa.kr/og-image.png">
+<meta name="author" content="이중균">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "AI가 똑똑해져도 당신의 업무가 안 바뀌는 이유",
+  "description": "AI를 활용한다는 것은 새로운 기술을 쓰는 것이 아니라 문제 해결 프로세스를 바꾸는 것. 문서·데이터·바이브코딩 세 톱니바퀴의 구조.",
+  "datePublished": "2026-04-20T09:00:00+09:00",
+  "dateModified": "2026-04-20T09:00:00+09:00",
+  "author": {
+    "@type": "Person",
+    "name": "이중균",
+    "affiliation": {
+      "@type": "Organization",
+      "name": "한국데이터사이언티스트협회",
+      "url": "https://cdsa.kr"
+    }
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "한국데이터사이언티스트협회",
+    "url": "https://cdsa.kr",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://cdsa.kr/og-image.png"
+    }
+  },
+  "image": ["https://cdsa.kr/og-image.png"],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://cdsa.kr/blog/ai-problem-solving.html"
+  },
+  "articleSection": "AI 문제해결론",
+  "inLanguage": "ko-KR"
+}
+</script>
+<!-- END SEO -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NZL39P5EYZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NZL39P5EYZ');
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/blog/_layout.css">
+<style>
+  :root {
+    --cream: #faf9f5;
+    --cream-deep: #f3efe3;
+    --ink: #1a1a1a;
+    --ink-soft: #3d3d3a;
+    --ink-mute: #6b6b66;
+    --rule: #d9d6cc;
+    --clay: #cc785c;
+    --clay-deep: #a85a42;
+    --code-bg: #f2f0e8;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--cream); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  body { font-family: "Fraunces", "Noto Serif KR", Georgia, serif; font-weight: 300; font-size: 19px; line-height: 1.72; letter-spacing: -0.005em; }
+
+  .topnav { position: fixed; top: 0; left: 0; right: 0; height: 48px; background: rgba(250, 249, 245, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; }
+  .topnav-left { display: flex; align-items: center; gap: 18px; }
+  .topnav-left a { color: var(--ink-soft); text-decoration: none; transition: color 0.2s; }
+  .topnav-left a:hover { color: var(--clay-deep); }
+  .topnav-home { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 600; font-size: 16px; color: var(--ink) !important; letter-spacing: -0.3px; }
+  .topnav-sep { color: var(--rule); font-size: 11px; }
+  .topnav-right { display: flex; gap: 16px; }
+  .topnav-right a { color: var(--ink-mute); text-decoration: none; font-size: 12px; transition: color 0.2s; }
+  .topnav-right a:hover { color: var(--clay-deep); }
+  .topnav-current { color: var(--ink) !important; font-weight: 600; position: relative; }
+  .topnav-current::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 2px; background: var(--clay); border-radius: 1px; }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 116px 28px 120px; }
+  .breadcrumb { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; margin-bottom: 36px; display: flex; align-items: center; gap: 8px; color: var(--ink-mute); }
+  .breadcrumb a { color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--ink); }
+  .breadcrumb .bc-sep { color: var(--rule); }
+
+  .kicker { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay-deep); margin-bottom: 28px; }
+  h1 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 400; font-size: 42px; line-height: 1.18; letter-spacing: -0.02em; margin: 0 0 24px; color: var(--ink); word-break:keep-all; overflow-wrap:break-word; }
+  .dek { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 300; font-style: italic; font-size: 21px; line-height: 1.55; color: var(--ink-soft); margin: 0 0 40px; word-break:keep-all; overflow-wrap:break-word; }
+  .byline { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); padding: 18px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-bottom: 56px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .byline strong { font-weight: 500; color: var(--ink-soft); }
+
+  .lede { font-size: 19px; line-height: 1.72; margin-bottom: 22px; word-break:keep-all; overflow-wrap:break-word; }
+  .lede::first-letter { font-family: "Fraunces", serif; font-weight: 400; font-size: 68px; float: left; line-height: 0.88; padding: 8px 10px 0 0; color: var(--clay); }
+
+  h2 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 28px; line-height: 1.25; letter-spacing: -0.015em; margin: 64px 0 16px; color: var(--ink); scroll-margin-top: 80px; word-break:keep-all; overflow-wrap:break-word; }
+  h2 .num { font-family: "Inter", sans-serif; font-size: 12px; font-weight: 600; color: var(--clay); letter-spacing: 0.1em; display: block; margin-bottom: 10px; }
+  h3 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 20px; margin: 36px 0 10px; color: var(--ink); word-break:keep-all; overflow-wrap:break-word; }
+  p { margin: 0 0 22px; }
+  p + p { margin-top: -6px; }
+  strong { font-weight: 500; color: var(--ink); }
+  em { font-style: italic; }
+
+  blockquote {
+    margin: 36px 0;
+    padding: 4px 0 4px 22px;
+    border-left: 2px solid var(--clay);
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-style: italic;
+    font-size: 20px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+
+  /* ── 저자 고유 구성 요소 ── */
+  .compare { margin: 32px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .compare .row { display: grid; grid-template-columns: 130px 1fr; padding: 16px 0; border-bottom: 1px solid var(--rule); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 15px; line-height: 1.55; }
+  .compare .row:last-child { border-bottom: none; }
+  .compare .label { font-weight: 600; color: var(--clay-deep); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; padding-top: 3px; }
+  .compare .body { color: var(--ink-soft); }
+
+  .layer-list { list-style: none; padding: 0; margin: 24px 0 32px; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 15px; }
+  .layer-list li { padding: 14px 0; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: 110px 1fr; gap: 16px; }
+  .layer-list li:first-child { border-top: 1px solid var(--rule); }
+  .layer-list .tag { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--clay); padding-top: 3px; }
+  .layer-list .desc { color: var(--ink-soft); line-height: 1.55; }
+
+  .chain { margin: 40px 0; font-family: "Inter", "Noto Sans KR", sans-serif; }
+  .chain-step { display: grid; grid-template-columns: 48px 1fr; gap: 16px; padding: 20px 0; border-bottom: 1px solid var(--rule); }
+  .chain-step:first-child { border-top: 1px solid var(--rule); }
+  .chain-num { width: 48px; height: 48px; background: var(--ink); color: var(--cream); font-family: "Inter", sans-serif; font-size: 20px; font-weight: 600; display: flex; align-items: center; justify-content: center; border-radius: 50%; flex-shrink: 0; }
+  .chain-title { font-size: 17px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+  .chain-sub { font-size: 13px; color: var(--ink-mute); letter-spacing: 0.05em; text-transform: uppercase; font-weight: 500; margin-bottom: 6px; }
+  .chain-body { font-size: 15px; color: var(--ink-soft); line-height: 1.65; }
+  .chain-warn { font-size: 13px; color: var(--clay-deep); font-weight: 500; margin-top: 8px; padding-left: 12px; border-left: 2px solid var(--clay); }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--rule); margin: 32px 0; border: 1px solid var(--rule); }
+  .two-col .cell { background: var(--cream); padding: 20px 22px; }
+  .two-col .cell-h { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 11px; font-weight: 600; color: var(--clay); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
+  .two-col .cell-body { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 14px; color: var(--ink-soft); line-height: 1.6; }
+  .two-col .cell-body strong { color: var(--ink); }
+
+  .footer { margin-top: 72px; padding-top: 28px; border-top: 1px solid var(--rule); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); line-height: 1.65; }
+  .footer strong { color: var(--ink-soft); font-weight: 600; }
+
+  .bottom-nav { margin-top: 72px; padding: 36px 0; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .bottom-nav a { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .bottom-nav a:hover { color: var(--ink); }
+  .bottom-nav-home { font-family: "Fraunces", "Noto Serif KR", serif !important; font-size: 16px !important; font-style: italic; font-weight: 400; }
+
+  @media (max-width: 560px) {
+    .wrap { padding: 92px 22px 80px; }
+    h1 { font-size: 30px; line-height: 1.24; }
+    .dek { font-size: 17.5px; }
+    body { font-size: 17px; }
+    h2 { font-size: 23px; margin-top: 52px; }
+    .topnav-right { display: none; }
+    .compare .row { grid-template-columns: 1fr; gap: 4px; }
+    .layer-list li { grid-template-columns: 1fr; gap: 4px; }
+    .chain-step { grid-template-columns: 40px 1fr; }
+    .chain-num { width: 40px; height: 40px; font-size: 17px; }
+    .two-col { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 400px) {
+    h1 { font-size: 26px !important; line-height: 1.25; }
+    .dek { font-size: 16px !important; }
+    h2 { font-size: 21px !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="topnav-left">
+    <a href="/" class="topnav-home">CDSA</a>
+    <span class="topnav-sep">|</span>
+    <a href="/">홈페이지</a>
+    <a href="/blog/" class="topnav-current">블로그</a>
+  </div>
+  <nav class="topnav-right">
+    <a href="/framework.html">프레임워크</a>
+    <a href="/fullcourse.html">Full Course</a>
+  </nav>
+</header>
+
+<button class="blog-hamburger" aria-label="블로그 목록 열기"><span></span><span></span><span></span></button>
+<div class="blog-overlay"></div>
+<aside class="blog-left">
+  <div class="blog-left-title">Blog Posts</div>
+  <ol class="blog-left-list"></ol>
+</aside>
+<aside class="blog-right">
+  <div class="blog-right-title">On This Page</div>
+  <ul class="blog-toc"></ul>
+</aside>
+
+<article class="wrap">
+
+  <nav class="breadcrumb">
+    <a href="/">← CDSA 홈</a>
+    <span class="bc-sep">/</span>
+    <a href="/blog/">블로그</a>
+    <span class="bc-sep">/</span>
+    <span>AI 문제해결론</span>
+  </nav>
+
+  <div class="kicker">Editorial · AI 문제해결론</div>
+
+  <h1>AI가 똑똑해져도<br>당신의 업무가 안 바뀌는 이유</h1>
+
+  <p class="dek">
+    문제는 기술이 아니다. AI를 '도구'로 보는 순간, 우리는 가장 중요한 질문을 놓친다.
+    어떤 문제를, 어떤 순서로, 어떻게 쪼갤 것인가.
+  </p>
+
+  <div class="byline">
+    <span><strong>이중균</strong> &nbsp;·&nbsp; AI·데이터 분석 &amp; 바이브코딩 전문가</span>
+    <span>2026. 4. 20</span>
+  </div>
+
+  <p class="lede">조직마다 AI를 도입하고 있다. 챗GPT 라이선스를 배포하고, 프롬프트 교육을 열고, 생성형 AI 활용 사례집을 돌린다. 그런데 석 달 뒤에 물어보면 대부분 같은 말을 한다. "처음엔 신기했는데, 지금은 잘 안 쓰게 됐어요." 왜일까. 도구가 나쁜 것이 아니다. 도구를 쓰는 방식이 바뀌지 않았기 때문이다. 우리는 AI에게 "이거 해줘"라고 말하는 데는 능숙해졌지만, "내가 지금 풀어야 하는 문제가 뭔지"를 먼저 정리하는 데는 여전히 서툴다.</p>
+
+  <p>AI를 활용한다는 것은 새로운 기술을 쓰는 것이 아니다. <strong>문제 해결 프로세스를 바꾸는 것이다.</strong> 이 차이를 이해하지 못하면, 어떤 모델이 나와도 업무는 바뀌지 않는다.</p>
+
+  <h2 id="s01"><span class="num">01 / 오해</span>AI 기술이 문제를 해결해 줄 거라는 착각</h2>
+
+  <p>가장 흔한 오해부터 짚어야 한다. "AI 기술이 우리의 문제를 해결하고 업무를 수월하게 해 줄 것이다." 많은 조직이 이 전제 위에서 출발한다. 그리고 이 전제가 틀렸다.</p>
+
+  <p>AI는 혼자서 일을 하지 않는다. 절대로. AI가 하는 일은 사람이 구조화한 질문에 대해 결과를 내놓는 것이다. 질문이 구조화되지 않으면 결과도 구조화되지 않는다. "보고서 써줘"라고 던지면 그럴듯한 문장이 돌아오지만, 그 문장이 지금 내가 풀어야 하는 문제를 정확히 겨냥하고 있을 확률은 낮다.</p>
+
+  <p>실제 업무에서 중요한 건 AI 기술 자체가 아니다. <strong>문제를 어떻게 구조화하고, 어떤 질문을 던지는가</strong>가 중요하다. 같은 AI를 쓰더라도, 문제를 잘 쪼개는 사람의 결과물과 그렇지 않은 사람의 결과물 사이에는 하늘과 땅만큼의 차이가 난다. 이건 프롬프트를 잘 쓰느냐의 문제가 아니다. 자기 업무를 얼마나 명확하게 이해하고 있느냐의 문제다.</p>
+
+  <blockquote>AI가 대신해 주는 건 실행이다. 하지만 "무엇을 실행할지"를 정하는 건 여전히 사람의 몫이다. 그리고 대부분의 조직에서 병목은 실행이 아니라 정의에 있다.</blockquote>
+
+  <h2 id="s02"><span class="num">02 / 구조</span>문서, 데이터, 코딩 — 세 개의 톱니바퀴</h2>
+
+  <p>그렇다면 AI를 활용한 문제 해결은 실제로 어떤 모양일까. 나는 이것을 세 개의 톱니바퀴로 설명한다. 하나가 돌아야 다음이 돌고, 세 개가 맞물려야 비로소 조직이 움직인다.</p>
+
+  <div class="chain">
+    <div class="chain-step">
+      <div class="chain-num">1</div>
+      <div>
+        <div class="chain-sub">사고 정리</div>
+        <div class="chain-title">문서 작성 — 파편을 가설로 바꾸는 영역</div>
+        <div class="chain-body">머릿속에 흩어진 생각을 글로 옮기는 순간, 사고가 정리된다. AI를 활용한 문서 작성은 "예쁜 문장을 만드는 일"이 아니다. <strong>파편 상태의 아이디어를 검증 가능한 가설로 구조화하는 과정</strong>이다. 회의에서 나온 다섯 가지 의견을 AI에게 "이걸 논리 순서로 정리해 줘"라고 맡기는 순간, 우리는 사고의 빈틈을 발견한다. 빠진 전제, 순서가 뒤바뀐 논리, 근거 없는 주장 — 글로 옮기지 않으면 보이지 않던 것들이 보이기 시작한다.</div>
+        <div class="chain-warn">생각을 정리하지 못하면 판단도 없다</div>
+      </div>
+    </div>
+    <div class="chain-step">
+      <div class="chain-num">2</div>
+      <div>
+        <div class="chain-sub">판단의 근거</div>
+        <div class="chain-title">데이터 분석 — 복잡한 숫자를 판단의 언어로 바꾸는 영역</div>
+        <div class="chain-body">데이터 분석의 목적은 그래프를 예쁘게 그리는 것이 아니다. <strong>선택지를 비교하고, 리스크를 보고하고, 판단의 근거를 만드는 것</strong>이다. AI에게 "이 데이터 분석해 줘"라고 하면 평균과 추이를 보여준다. 하지만 의사결정에 필요한 건 평균이 아니라 "A안과 B안 중 어느 쪽의 리스크가 더 낮은가"라는 질문에 대한 근거다. 복잡한 데이터를 '판단 가능한 언어'로 번역하는 것 — 이것이 데이터 분석의 진짜 역할이다.</div>
+        <div class="chain-warn">판단 근거가 없으면 결정은 감에 의존한다</div>
+      </div>
+    </div>
+    <div class="chain-step">
+      <div class="chain-num">3</div>
+      <div>
+        <div class="chain-sub">실행의 촉진</div>
+        <div class="chain-title">바이브 코딩 — 아이디어를 실제 도구로 구현하는 영역</div>
+        <div class="chain-body">가설이 정리되고 판단 근거가 생겼다면, 다음은 실행이다. 바이브 코딩은 개발자만의 영역이 아니다. <strong>아이디어가 실제 도구로 구현되는 과정을 이해하고, AI와 함께 그 도구를 직접 만들어 보는 것</strong>이다. 한글 파일 표를 자동으로 합치는 도구, 민원 데이터를 자동 분류하는 스크립트, 반복 보고서를 한 번의 클릭으로 생성하는 시스템 — 이런 것들이 "프로그래밍을 배웠다"가 아니라 "문제 해결을 실체화했다"의 결과물이다.</div>
+        <div class="chain-warn">결정이 실체(도구)로 연결되지 않으면 조직은 변하지 않는다</div>
+      </div>
+    </div>
+  </div>
+
+  <p>이 세 단계는 순서가 있다. 사고가 정리되지 않으면 분석할 방향을 모르고, 분석 없이 만든 도구는 엉뚱한 문제를 푼다. 반대로, 세 개가 맞물리면 한 사람이 낼 수 있는 결과물의 규모가 극적으로 달라진다.</p>
+
+  <h2 id="s03"><span class="num">03 / 분석</span>"분석이 부족해서" 문제가 생긴 게 아니다</h2>
+
+  <p>여기서 데이터 분석에 대해 조금 더 들어가 보자. 이 영역에 대한 오해가 특히 깊기 때문이다.</p>
+
+  <p>데이터 분석이 부족해서 문제가 생긴 조직은 사실 많지 않다. 대부분의 조직은 이미 충분히 분석하고 있다. 월간 보고서에 그래프가 빠지지 않고, 분기마다 트렌드 리포트를 만들고, 대시보드에는 숫자가 실시간으로 올라간다. 문제는 그 분석을 <strong>'판단의 언어'로 바꾸지 못한다</strong>는 데 있다.</p>
+
+  <div class="two-col">
+    <div class="cell">
+      <div class="cell-h">설명용 분석</div>
+      <div class="cell-body">"지난달 매출이 12% 하락했습니다"<br>"민원 건수가 전년 대비 23% 증가했습니다"<br><br><strong>과거에 무슨 일이 있었는지</strong>를 기술한다. 사실의 나열. 보고서의 대부분이 여기에 속한다.</div>
+    </div>
+    <div class="cell">
+      <div class="cell-h">판단용 분석</div>
+      <div class="cell-body">"A안은 비용 리스크가 높지만 3분기까지 효과가 나타납니다. B안은 안전하지만 효과가 내년입니다"<br><br><strong>어떤 선택을 해야 하는지</strong>의 근거를 제시한다. 의사결정을 위한 언어.</div>
+    </div>
+  </div>
+
+  <p>AI가 데이터 분석에서 진짜 힘을 발휘하는 건, 숫자를 예쁘게 정리해 주는 것이 아니라, 사람이 "이 두 가지 옵션 중 뭐가 나아?"라고 물을 수 있게 데이터를 재구성해 주는 것이다. 이를 위해 사람이 알아야 할 건 네 가지다.</p>
+
+  <ul class="layer-list">
+    <li><span class="tag">역할 인식</span><span class="desc">AI가 어떤 분석을 대신할 수 있는지 이해한다. 단순 집계는 AI가 하고, 맥락 해석은 사람이 한다.</span></li>
+    <li><span class="tag">결과 해석</span><span class="desc">AI가 내놓은 결과를 어떻게 읽어야 하는지 안다. 숫자 뒤에 숨은 전제와 한계를 파악한다.</span></li>
+    <li><span class="tag">질문 설계</span><span class="desc">어떤 질문을 던져야 의사결정에 도움이 되는지 안다. "매출이 얼마야?"가 아니라 "매출 하락의 주 원인 세 가지를 영향도 순으로 보여줘".</span></li>
+    <li><span class="tag">신뢰 판단</span><span class="desc">이 분석을 믿어도 되는지, 언제 멈춰야 하는지 판단한다. 데이터가 불충분하면 분석을 중단하는 것도 역량이다.</span></li>
+  </ul>
+
+  <p>이 네 가지는 전부 AI의 능력이 아니라 <em>사람의 역량</em>이다. AI는 분석을 자동화해 주지만, 분석의 방향을 정하고 결과를 판단에 연결하는 건 사람의 몫이다. 이 역량이 없으면 AI가 아무리 정교한 분석을 내놓아도 보고서 안에서 잠을 잔다.</p>
+
+  <h2 id="s04"><span class="num">04 / 연결</span>세 톱니바퀴가 맞물리는 순간</h2>
+
+  <p>다시 전체 그림으로 돌아오자. 문서, 데이터, 바이브 코딩 — 이 세 영역이 따로 도는 것이 아니라 하나의 흐름으로 연결될 때, AI 활용은 비로소 '문제 해결'의 형태를 갖추게 된다.</p>
+
+  <p>구체적인 예를 하나 들어보겠다. 공공기관에서 민원 데이터를 분석하는 업무를 상상해 보자.</p>
+
+  <div class="compare">
+    <div class="row">
+      <div class="label">기존 방식</div>
+      <div class="body">엑셀에서 민원 건수를 월별로 정리한다 → 그래프를 그린다 → "민원이 증가 추세입니다"라고 보고한다 → 보고서가 공유 폴더에 들어간다 → 아무 일도 일어나지 않는다.</div>
+    </div>
+    <div class="row">
+      <div class="label">바뀐 방식</div>
+      <div class="body"><strong>문서:</strong> "민원 급증의 원인을 세 가지 가설로 정리해 줘" → AI가 구조화 → 팀이 검토하며 가설을 다듬는다.<br><strong>데이터:</strong> "각 가설을 뒷받침하는 데이터를 뽑아 줘. A안과 B안의 예상 효과를 비교해 줘" → AI가 분석 → 판단 근거가 만들어진다.<br><strong>코딩:</strong> "민원 유형을 자동 분류하는 도구를 만들어 줘" → AI와 함께 구현 → 다음 분기부터 수작업이 사라진다.</div>
+    </div>
+  </div>
+
+  <p>차이가 보이는가. 기존 방식은 "설명"에서 끝난다. 바뀐 방식은 "가설 → 근거 → 실행"으로 이어진다. AI가 달라진 게 아니다. 문제를 대하는 프로세스가 달라진 것이다.</p>
+
+  <h2 id="s05"><span class="num">05 / 전환</span>질문을 바꾸면 결과가 바뀐다</h2>
+
+  <p>이 글에서 전하고 싶은 핵심을 한 문장으로 압축하면 이렇다.</p>
+
+  <blockquote>AI를 활용한다는 것은 "문제 해결 프로세스"를 바꾸는 것이다.</blockquote>
+
+  <p>더 좋은 모델이 나오기를 기다리는 것이 아니다. 더 그럴듯한 프롬프트를 외우는 것이 아니다. 내가 지금 풀어야 하는 문제를 명확하게 정의하고, 그 문제를 단계로 쪼개고, 각 단계에서 AI에게 적절한 역할을 맡기는 것이다.</p>
+
+  <p>생각이 정리되지 않으면 판단도 없다. 판단 근거가 없으면 결정은 감에 의존한다. 결정이 실체로 연결되지 않으면 조직은 변하지 않는다. 이 세 문장이 AI 활용의 전부다. 세 문장 안에 기술 이야기는 단 한 글자도 없다. 있는 건 오직 <strong>문제를 대하는 태도</strong>뿐이다.</p>
+
+  <p>AI를 쓰는 사람은 많아졌다. 하지만 AI로 문제를 푸는 사람은 아직 드물다. 그 차이는 도구의 숙련도에서 오지 않는다. "지금 내가 풀어야 하는 문제가 뭔지"를 먼저 묻는 습관에서 온다.</p>
+
+  <p>오늘 업무를 시작하기 전에, AI에게 물어보기 전에, 먼저 스스로에게 물어보자. <em>내가 지금 정리해야 하는 생각은 무엇인가. 판단에 필요한 근거는 무엇인가. 이 결정을 실행으로 옮기려면 무엇이 필요한가.</em> 이 질문에 답할 수 있다면, AI는 그때부터 진짜로 일하기 시작한다.</p>
+
+  <div class="footer">
+    <p><strong>이중균</strong> — 한국데이터사이언티스트협회 파트너이사 · AI·데이터 분석 &amp; 바이브코딩 전문가. 前 한국야쿠르트 데이터센터장·인재개발원장, 前 LG텔레콤 CRM 기획/운영팀장. 데이터기반 지능행정 역량강화 컨설턴트, 과학기술정보통신부 AI성과 심사위원, 식품안전관리인증원 자문위원.</p>
+    <p>질문·협업 제안은 <a href="mailto:jklee@cdsa.or.kr" style="color: var(--clay-deep); text-decoration: none;">jklee@cdsa.or.kr</a>, 개인 워크샵 <a href="https://ai-jklee.lovable.app" target="_blank" rel="noopener noreferrer" style="color: var(--clay-deep); text-decoration: none;">ai-jklee.lovable.app</a>.</p>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="/blog/" class="bottom-nav-home">← 블로그 목록</a>
+    <a href="/">CDSA 홈페이지 →</a>
+  </nav>
+
+</article>
+
+<script src="/blog/_posts.js" defer></script>
+
+</body>
+</html>

@@ -24,6 +24,13 @@
   // Single source of truth for blog posts. Sorted newest-first.
   const POSTS = [
     {
+      slug: 'ai-problem-solving',
+      title: 'AI가 똑똑해져도 당신의 업무가 안 바뀌는 이유',
+      date: '2026. 4. 20',
+      category: 'AI 문제해결론',
+      href: '/blog/ai-problem-solving.html',
+    },
+    {
       slug: 'agent-as-workflow',
       title: 'AI Agent는 챗봇이 아니라 일하는 방식입니다',
       date: '2026. 4. 19',
