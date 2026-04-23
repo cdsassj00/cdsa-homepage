@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 생성형 AI 가치 격차 — 88%가 도입했는데 왜 6%만 이익을 보는가 · CDSA 블로그</title>
+<meta name="description" content="맥킨지·PwC·BCG·가트너가 2026년 1분기에 쏟아낸 리서치가 같은 결론으로 수렴한다. 실험의 해는 끝났고, 결산이 시작됐다. 누가 이기고 누가 비용만 치르는가.">
+<meta property="og:title" content="2026 생성형 AI 가치 격차 — 88%가 도입했는데 왜 6%만 이익을 보는가">
+<meta property="og:description" content="월스트리트 은행들의 이번 분기 결산이 가장 결정적인 증거를 내놓았다. 이익 470억 달러 · 감원 1만 5천 명 · 모든 CEO가 AI를 근거로 들었다.">
+<meta property="og:type" content="article">
+<!-- BEGIN SEO -->
+<meta name="keywords" content="생성형 AI, AI 가치 격차, AI ROI, 워크플로 재설계, 에이전틱 AI, McKinsey State of AI, PwC CEO Survey, BCG AI Radar, 월스트리트 은행 AI, 한국 AI 도입, 신성진">
+<link rel="canonical" href="https://cdsa.kr/blog/ai-value-gap-2026.html">
+<meta property="og:url" content="https://cdsa.kr/blog/ai-value-gap-2026.html">
+<meta property="og:site_name" content="한국데이터사이언티스트협회">
+<meta property="og:image" content="https://cdsa.kr/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta property="article:published_time" content="2026-04-23T09:00:00+09:00">
+<meta property="article:modified_time" content="2026-04-23T09:00:00+09:00">
+<meta property="article:author" content="신성진">
+<meta property="article:section" content="AI 경영 리포트">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="2026 생성형 AI 가치 격차 — 88%가 도입했는데 왜 6%만 이익을 보는가">
+<meta name="twitter:description" content="월스트리트 6대 은행, 470억 달러 이익과 1만 5천 명 감원. 실험의 해는 끝났고 결산이 시작됐다. 맥킨지·PwC·BCG 2026 Q1 리서치 종합.">
+<meta name="twitter:image" content="https://cdsa.kr/og-image.png">
+<meta name="author" content="신성진">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "2026 생성형 AI 가치 격차 — 88%가 도입했는데 왜 6%만 이익을 보는가",
+  "description": "월스트리트 은행들의 이번 분기 결산이 가장 결정적인 증거를 내놓았다. 이익 470억 달러 · 감원 1만 5천 명 · 모든 CEO가 AI를 근거로 들었다. 맥킨지·PwC·BCG·가트너 2026 Q1 리서치 종합.",
+  "datePublished": "2026-04-23T09:00:00+09:00",
+  "dateModified": "2026-04-23T09:00:00+09:00",
+  "author": {
+    "@type": "Person",
+    "name": "신성진",
+    "affiliation": {
+      "@type": "Organization",
+      "name": "한국데이터사이언티스트협회",
+      "url": "https://cdsa.kr"
+    }
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "한국데이터사이언티스트협회",
+    "url": "https://cdsa.kr",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://cdsa.kr/og-image.png"
+    }
+  },
+  "image": ["https://cdsa.kr/og-image.png"],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://cdsa.kr/blog/ai-value-gap-2026.html"
+  },
+  "articleSection": "AI 경영 리포트",
+  "inLanguage": "ko-KR"
+}
+</script>
+<!-- END SEO -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NZL39P5EYZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NZL39P5EYZ');
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700&family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/blog/_layout.css">
+<style>
+  :root {
+    --cream: #faf9f5; --cream-deep: #f3efe3; --ink: #1a1a1a; --ink-soft: #3d3d3a;
+    --ink-mute: #6b6b66; --rule: #d9d6cc; --clay: #cc785c; --clay-deep: #a85a42;
+    --clay-light: #f0ddd4; --code-bg: #f2f0e8; --teal: #2a7d6e; --teal-light: #e0f0ec;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--cream); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  body { font-family: "Fraunces", "Noto Serif KR", Georgia, serif; font-weight: 300; font-size: 19px; line-height: 1.72; letter-spacing: -0.005em; }
+
+  .topnav { position: fixed; top: 0; left: 0; right: 0; height: 48px; background: rgba(250, 249, 245, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; }
+  .topnav-left { display: flex; align-items: center; gap: 18px; }
+  .topnav-left a { color: var(--ink-soft); text-decoration: none; transition: color 0.2s; }
+  .topnav-left a:hover { color: var(--clay-deep); }
+  .topnav-home { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 600; font-size: 16px; color: var(--ink) !important; letter-spacing: -0.3px; }
+  .topnav-sep { color: var(--rule); font-size: 11px; }
+  .topnav-right { display: flex; gap: 16px; }
+  .topnav-right a { color: var(--ink-mute); text-decoration: none; font-size: 12px; transition: color 0.2s; }
+  .topnav-right a:hover { color: var(--clay-deep); }
+  .topnav-current { color: var(--ink) !important; font-weight: 600; position: relative; }
+  .topnav-current::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 2px; background: var(--clay); border-radius: 1px; }
+
+  .wrap { max-width: 720px; margin: 0 auto; padding: 116px 28px 120px; }
+  .breadcrumb { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; margin-bottom: 36px; display: flex; align-items: center; gap: 8px; color: var(--ink-mute); }
+  .breadcrumb a { color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--ink); }
+  .breadcrumb .bc-sep { color: var(--rule); }
+
+  .kicker { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay-deep); margin-bottom: 28px; }
+  h1 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 400; font-size: 42px; line-height: 1.2; letter-spacing: -0.02em; margin: 0 0 24px; color: var(--ink); word-break:keep-all; overflow-wrap:break-word; }
+  .dek { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 300; font-style: italic; font-size: 21px; line-height: 1.55; color: var(--ink-soft); margin: 0 0 40px; word-break:keep-all; overflow-wrap:break-word; }
+  .byline { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); padding: 18px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-bottom: 56px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .byline strong { font-weight: 500; color: var(--ink-soft); }
+
+  .lede { font-size: 19px; line-height: 1.72; margin-bottom: 22px; word-break:keep-all; overflow-wrap:break-word; }
+  .lede::first-letter { font-family: "Fraunces", serif; font-weight: 400; font-size: 68px; float: left; line-height: 0.88; padding: 8px 10px 0 0; color: var(--clay); }
+
+  h2 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 28px; line-height: 1.3; letter-spacing: -0.015em; margin: 68px 0 18px; color: var(--ink); scroll-margin-top: 80px; word-break:keep-all; overflow-wrap:break-word; }
+  h2 .num { font-family: "Inter", sans-serif; font-size: 12px; font-weight: 600; color: var(--clay); letter-spacing: 0.1em; display: block; margin-bottom: 10px; }
+  h3 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 20px; margin: 36px 0 10px; color: var(--ink); word-break:keep-all; overflow-wrap:break-word; }
+  p { margin: 0 0 22px; }
+  p + p { margin-top: -6px; }
+  strong { font-weight: 500; color: var(--ink); }
+  em { font-style: italic; }
+
+  blockquote { margin: 36px 0; padding: 4px 0 4px 22px; border-left: 2px solid var(--clay); font-family: "Fraunces", "Noto Serif KR", serif; font-style: italic; font-size: 20px; line-height: 1.55; color: var(--ink-soft); word-break:keep-all; overflow-wrap:break-word; }
+  blockquote cite { display: block; font-family: "Inter", "Noto Sans KR", sans-serif; font-style: normal; font-size: 12px; color: var(--ink-mute); margin-top: 10px; letter-spacing: 0.02em; }
+  blockquote cite::before { content: "— "; }
+
+  .compare { margin: 32px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .compare .row { display: grid; grid-template-columns: 140px 1fr; padding: 16px 0; border-bottom: 1px solid var(--rule); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 15px; line-height: 1.6; }
+  .compare .row:last-child { border-bottom: none; }
+  .compare .label { font-weight: 600; color: var(--clay-deep); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; padding-top: 3px; }
+  .compare .body { color: var(--ink-soft); }
+
+  .data-table { width: 100%; margin: 28px 0; border-collapse: collapse; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 14.5px; line-height: 1.55; }
+  .data-table thead th { text-align: left; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--clay-deep); padding: 12px 14px; border-bottom: 2px solid var(--clay); background: var(--code-bg); }
+  .data-table tbody td { padding: 12px 14px; border-bottom: 1px solid var(--rule); color: var(--ink-soft); vertical-align: top; }
+  .data-table tbody tr:last-child td { border-bottom: 2px solid var(--rule); }
+  .data-table .highlight { color: var(--teal); font-weight: 600; }
+  .data-table .model-name { color: var(--ink); font-weight: 500; }
+
+  .layer-list { list-style: none; padding: 0; margin: 24px 0 32px; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 15px; }
+  .layer-list li { padding: 16px 0; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: 130px 1fr; gap: 16px; }
+  .layer-list li:first-child { border-top: 1px solid var(--rule); }
+  .layer-list .tag { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--clay); padding-top: 3px; }
+  .layer-list .desc { color: var(--ink-soft); line-height: 1.65; }
+  .layer-list .desc strong { color: var(--ink); }
+
+  .metric-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 28px 0; }
+  .metric-card { background: var(--code-bg); border: 1px solid var(--rule); border-radius: 6px; padding: 22px 18px; text-align: center; }
+  .metric-card .metric-value { font-family: "Fraunces", serif; font-size: 36px; font-weight: 500; color: var(--clay-deep); line-height: 1.1; }
+  .metric-card .metric-label { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; color: var(--ink-mute); margin-top: 10px; letter-spacing: 0.02em; line-height: 1.5; }
+  .metric-card .metric-label strong { color: var(--ink-soft); }
+
+  .rule-hr { border: none; border-top: 1px solid var(--rule); margin: 56px 0; }
+
+  .footer { margin-top: 72px; padding-top: 28px; border-top: 1px solid var(--rule); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); line-height: 1.7; }
+  .footer strong { color: var(--ink-soft); font-weight: 600; }
+  .footer .co-author { margin-top: 16px; padding: 14px 18px; background: var(--code-bg); border-left: 2px solid var(--clay-light); border-radius: 2px; font-size: 12.5px; }
+
+  .bottom-nav { margin-top: 72px; padding: 36px 0; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .bottom-nav a { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .bottom-nav a:hover { color: var(--ink); }
+  .bottom-nav-home { font-family: "Fraunces", "Noto Serif KR", serif !important; font-size: 16px !important; font-style: italic; font-weight: 400; }
+
+  @media (max-width: 680px) {
+    .wrap { padding: 92px 22px 80px; }
+    h1 { font-size: 30px; line-height: 1.24; }
+    .dek { font-size: 17.5px; }
+    body { font-size: 17px; }
+    h2 { font-size: 22px; margin-top: 52px; }
+    .topnav-right { display: none; }
+    .compare .row { grid-template-columns: 1fr; gap: 4px; }
+    .layer-list li { grid-template-columns: 1fr; gap: 4px; }
+    .metric-row { grid-template-columns: 1fr; }
+    .data-table { font-size: 13px; }
+    .data-table thead th, .data-table tbody td { padding: 10px 8px; }
+  }
+  @media (max-width: 400px) {
+    h1 { font-size: 26px !important; line-height: 1.25; }
+    .dek { font-size: 16px !important; }
+    h2 { font-size: 20px !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="topnav-left">
+    <a href="/" class="topnav-home">CDSA</a>
+    <span class="topnav-sep">|</span>
+    <a href="/">홈페이지</a>
+    <a href="/blog/" class="topnav-current">블로그</a>
+  </div>
+  <nav class="topnav-right">
+    <a href="/framework.html">프레임워크</a>
+    <a href="/fullcourse.html">Full Course</a>
+  </nav>
+</header>
+
+<button class="blog-hamburger" aria-label="블로그 목록 열기"><span></span><span></span><span></span></button>
+<div class="blog-overlay"></div>
+<aside class="blog-left">
+  <div class="blog-left-title">Blog Posts</div>
+  <ol class="blog-left-list"></ol>
+</aside>
+<aside class="blog-right">
+  <div class="blog-right-title">On This Page</div>
+  <ul class="blog-toc"></ul>
+</aside>
+
+<article class="wrap">
+
+  <nav class="breadcrumb">
+    <a href="/">← CDSA 홈</a>
+    <span class="bc-sep">/</span>
+    <a href="/blog/">블로그</a>
+    <span class="bc-sep">/</span>
+    <span>AI 경영 리포트</span>
+  </nav>
+
+  <div class="kicker">Editorial · AI 경영 리포트</div>
+
+  <h1>2026 생성형 AI 가치 격차<br>88%가 도입했는데<br>왜 6%만 이익을 보는가</h1>
+
+  <p class="dek">
+    맥킨지·PwC·BCG·가트너가 2026년 1분기에 쏟아낸 리서치는 같은 결론으로 수렴한다.
+    실험의 해는 끝났고, 결산이 시작됐다. 누가 이기고 누가 비용만 치르는가.
+  </p>
+
+  <div class="byline">
+    <span><strong>신성진</strong> &nbsp;·&nbsp; 한국데이터사이언티스트협회 대표이사</span>
+    <span>2026. 4. 23</span>
+  </div>
+
+  <p class="lede">AI를 도입하지 않은 기업을 찾기가 오히려 어려워졌다. 그런데 AI로 이익을 본 기업을 찾기는 여전히 어렵다. 이 두 문장이 2026년의 기업 AI 현황을 가장 짧게 요약한다. 맥킨지가 2025년 11월 발표한 『2025 AI 현황』(105개국 1,993명 조사)에 따르면 기업의 <strong>88%가 최소 하나의 사업 부문에서 AI를 쓰고 있다</strong>. 그런데 <strong>AI가 영업이익(EBIT)의 5% 이상을 만들어낸 "AI 고성과 기업"은 6%에 불과하다</strong>. PwC가 2026년 1월 발표한 제29차 글로벌 CEO 서베이(4,454명)는 이 격차를 더 날카롭게 잘라 보여준다.</p>
+
+  <div class="metric-row">
+    <div class="metric-card">
+      <div class="metric-value">88%</div>
+      <div class="metric-label"><strong>AI 도입률</strong><br>최소 한 부문 이상<br>McKinsey 2025</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">6%</div>
+      <div class="metric-label"><strong>AI 고성과 기업</strong><br>EBIT 5%+ 기여<br>McKinsey 2025</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">+4%p</div>
+      <div class="metric-label"><strong>이익률 격차</strong><br>폭넓게 적용한 기업<br>PwC CEO Survey</div>
+    </div>
+  </div>
+
+  <p>PwC 조사에서 <strong>비용 절감과 매출 증대 양쪽 모두에서 AI 효과를 봤다고 답한 CEO는 12%에 불과했다</strong>. 반면 <strong>56%는 AI에서 어떤 재무 효과도 보지 못했다</strong>고 답했다. 제품과 고객 경험에 AI를 폭넓게 적용한 기업은 동종 업계 대비 이익률이 약 4%p 높았다. 이 4%p가 지금의 승자와 패자를 가르는 경계다. 그리고 그 경계가 2026년 1~4월 90일 동안 컨설팅 보고서와 실적 발표, 그리고 한국 기업의 공시를 통해 뚜렷해졌다.</p>
+
+  <h2 id="s01"><span class="num">01 / 전환점</span>2026년은 결산의 해 — 전문가들이 한목소리로 말한 것</h2>
+
+  <p>1분기에 주요 리서치 기관들은 거의 같은 문장을 내놓았다. 실험의 시간이 끝났다는 것이다. 가트너의 크리스 반 리퍼는 2026 CIO 서베이를 발표하며 이렇게 말했다.</p>
+
+  <blockquote>
+    2025년은 AI 파일럿과 탐색, 실험의 해였다. 2026년은 에이전틱 AI의 ROI를 실제로 만들어내는 해가 될 것이다.
+    <cite>Kris van Riper, Gartner · 2026 CIO Survey</cite>
+  </blockquote>
+
+  <p>전 세계 CIO의 <strong>89%가 2026년 AI 지출을 늘릴 계획</strong>이고, 글로벌 AI 지출은 <strong>2026년 2조 달러를 돌파해 전체 IT 지출의 약 3분의 1</strong>을 차지할 전망이다. 반대 방향의 경고도 있다. 포레스터의 2026 예측은 "AI의 과열이 식으면서 기업들이 계획된 AI 지출의 25%를 2027년으로 미룰 것"이라며, "의사결정자 중 AI 가치를 조직의 재무 성장과 연결할 수 있는 사람은 3분의 1도 안 된다"고 지적했다. MIT Sloan의 Thomas Davenport와 Randy Bean이 이 분위기를 가장 간결하게 정리했다.</p>
+
+  <blockquote>
+    2025년이 생성형 AI의 가치 실현 문제를 깨달은 해였다면, 2026년은 그 문제에 대해 뭔가를 하는 해가 될 것이다.
+    <cite>Thomas Davenport &amp; Randy Bean, MIT Sloan</cite>
+  </blockquote>
+
+  <p>경고에도 불구하고 투자는 오히려 가속된다. BCG AI Radar 2026(임원 2,360명·CEO 640명 조사)에 따르면 기업들은 2026년 AI 지출을 두 배로 늘려 매출의 약 1.7% 수준으로 끌어올리고, <strong>CEO의 94%는 1년 내 투자 회수가 되지 않더라도 AI 투자를 계속하겠다</strong>고 답했다. Stanford HAI의 『2026 AI Index』는 2025년 글로벌 기업 AI 투자가 <strong>5,817억 달러로 전년 대비 130% 증가</strong>했다고 기록했다.</p>
+
+  <h2 id="s02"><span class="num">02 / 결정적 증거</span>이번 분기, 가장 강력한 증거는 월스트리트에서 나왔다</h2>
+
+  <p>컨설팅 보고서는 흔히 수사로 흐른다. 그런데 2026년 1분기는 달랐다. 수사가 아니라 실적 발표에서 증거가 나왔다. 뉴욕타임스 Rob Copeland 기자가 4월 21일 보도한 바에 따르면, JPMorgan·Citi·Bank of America·Goldman Sachs·Morgan Stanley·Wells Fargo 등 <strong>월스트리트 6대 은행은 2026년 1분기에 합계 470억 달러 이익을 냈고(전년 대비 18% 증가), 동시에 1만 5천 명을 감원했다</strong>. 여섯 은행 모두 인력 감축의 근거로 AI를 들었다.</p>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>은행</th>
+        <th>2026 Q1 구체 공시</th>
+        <th>근거</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="model-name">Bank of America</td>
+        <td>AI로 코딩 작업 30% 감소 ≈ <span class="highlight">약 2,000 포지션</span>. 21.3만 명 중 90%가 사내 AI 어시스턴트 Erica 사용</td>
+        <td>Banking Dive 2026-01-15</td>
+      </tr>
+      <tr>
+        <td class="model-name">Citi</td>
+        <td>50개 이상 프로세스에 AI 배치. 2026년 말까지 <span class="highlight">25억 달러 절감 · 2만 명 감축 목표</span></td>
+        <td>Jane Fraser CEO 실적 발표</td>
+      </tr>
+      <tr>
+        <td class="model-name">JPMorgan</td>
+        <td>2026년 기술 지출 200억 달러(+20억). <span class="highlight">운영 생산성 향상률이 연 6%로 2배 증가</span></td>
+        <td>Motley Fool transcript 2026-04</td>
+      </tr>
+      <tr>
+        <td class="model-name">Goldman Sachs</td>
+        <td>GS AI Assistant로 <span class="highlight">46,000 직원 생산성 약 20% 향상</span></td>
+        <td>Reuters / AI Street</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>특히 주목할 발언은 Bank of America의 Brian Moynihan CEO다. 2025년 12월까지만 해도 그는 "AI로 감원할 걱정은 없다"는 입장이었다. 그런데 2026년 1분기 실적 발표 후 태도가 완전히 바뀌었다.</p>
+
+  <blockquote>
+    업무를 없애는 것과 기술을 적용하는 것. 그것이 이번 분기 개선의 원인이다. AI는 우리가 가본 적 없는 곳까지 데려가 준다.
+    <cite>Brian Moynihan, Bank of America CEO</cite>
+  </blockquote>
+
+  <p>기업이 "AI로 일자리 줄일 계획 없다"에서 "AI로 여기까지 왔다"로 공개적으로 선회하는 데 넉 달이 걸렸다는 뜻이다. 이 속도가 지금의 분위기다.</p>
+
+  <h2 id="s03"><span class="num">03 / 비용 절감</span>10~30%라는 구간의 비밀</h2>
+
+  <p>이번 분기 가장 많이 인용된 비용 절감 벤치마크는 좁은 구간에 몰려 있다. 맥킨지의 『State of AI 2025』는 소프트웨어 엔지니어링과 IT 부문에서 <strong>10~20% 비용 감소</strong>를 보고한다. 그런데 여기에 베인의 Chuck Whitten이 결정적인 뉘앙스를 덧붙였다. 같은 AI를 써도 결과는 두 배 차이가 난다는 것이다.</p>
+
+  <div class="compare">
+    <div class="row">
+      <div class="label">도구만 도입</div>
+      <div class="body">코딩 어시스턴트나 GPT 라이선스만 배포 → 생산성 향상 <strong>10~15%</strong>에 머문다</div>
+    </div>
+    <div class="row">
+      <div class="label">엔드-투-엔드 재설계</div>
+      <div class="body">생성형 AI + 프로세스 전환을 함께 진행 → 생산성 향상 <strong>25~30%</strong>에 도달한다</div>
+    </div>
+  </div>
+
+  <p>같은 기술을 썼는데 왜 두 배 차이가 날까. Whitten의 답이 이번 분기에 가장 인용 가치가 높다.</p>
+
+  <blockquote>
+    우리 고객 성공 사례에서, 데이터·프로세스·변화관리가 아마 3분의 2이고, 기술이 3분의 1이다.
+    <cite>Chuck Whitten, Bain &amp; Company</cite>
+  </blockquote>
+
+  <p>이 공식은 AI 프로젝트 예산을 짜는 기업에게 그대로 뒤집힌 시사점을 준다. 대부분 기업은 정확히 반대로 예산을 편성한다. 기술에 3분의 2, 데이터·프로세스·변화관리에 3분의 1. 같은 기술을 써도 결과가 두 배 차이 나는 이유가 여기에 있다.</p>
+
+  <p>은행 바깥에서도 구체적인 숫자가 쏟아졌다. <strong>Snap</strong>은 약 1,000명 감원을 통해 2026년 하반기까지 5억 달러 이상 절감을 전망했다. Evan Spiegel CEO는 "AI 발전으로 반복 작업의 자동화가 가능해졌다"고 설명했다. <strong>Angi Inc.</strong>는 350명 감원으로 연 7,000만~8,000만 달러 절감을 발표했다. <strong>P&amp;G</strong>의 Andre Schulten CFO는 Morgan Stanley 컨퍼런스에서 공급망 AI가 "당분간 20억 달러 생산성 향상의 여지"를 만들어냈다고 말했다. <strong>Nestlé</strong>의 AI 기반 컨셉 생성기는 1,300개 제품을 만들어내며 신제품 개발 기간을 <strong>3개월에서 3주로 단축</strong>했다. 디지털 트윈 마케팅은 비용 55%, 시간 65%를 줄였다.</p>
+
+  <h2 id="s04"><span class="num">04 / 매출의 벽</span>매출 증가는 왜 이렇게 어려운가</h2>
+
+  <p>Deloitte가 1월 다보스에서 발표한 『State of AI in the Enterprise』(24개국 3,235명 조사)는 가장 중요한 비대칭을 드러냈다.</p>
+
+  <div class="metric-row">
+    <div class="metric-card">
+      <div class="metric-value">66%</div>
+      <div class="metric-label"><strong>생산성·효율</strong> 향상을<br>보고한 조직 비율<br>Deloitte 2026</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">20%</div>
+      <div class="metric-label"><strong>매출 증가</strong>를<br>보고한 조직 비율<br>Deloitte 2026</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">74%</div>
+      <div class="metric-label"><strong>매출 증가</strong>를<br>목표로 하는 비율<br>Deloitte 2026</div>
+    </div>
+  </div>
+
+  <p>74%가 매출 증가를 목표로 삼았는데 실제로 달성한 곳은 20%밖에 안 된다. 이 3배의 격차가 바로 이번 분기 모든 CEO가 몰래 들여다보는 숫자다. 왜 매출은 비용보다 어려울까. 비용 절감은 내부 프로세스 개선으로 끝나지만, 매출 증가는 고객 경험·상품 설계·영업 모델 전체가 함께 움직여야 하기 때문이다. 운영 모델과 상업적 역량을 훨씬 더 깊게 건드린다.</p>
+
+  <p>그래서 매출 성과를 내는 곳은 소수지만, 그 소수는 수치가 매우 뚜렷하다. 맥킨지는 <strong>마케팅과 제품 개발에서 10% 이상의 매출 상승</strong>이 나타났다고 보고한다. Stanford HAI 2026 AI Index는 매출 증대 상위 기능으로 <strong>마케팅·세일즈(67%), 전략·기업재무(65%), 제품 개발(62%)</strong>을 꼽았다.</p>
+
+  <p>가장 명확한 엔터프라이즈 소프트웨어 증거는 <strong>ServiceNow</strong>의 1분기 실적에서 나왔다. Bill McDermott CEO는 2026년 AI 매출 목표를 상향하며 이렇게 말했다.</p>
+
+  <blockquote>
+    15억 달러를 훌쩍 넘길 것이다. 5억 달러 이상을 추가로 올려야 한다. 비현실적일 정도다.
+    <cite>Bill McDermott, ServiceNow CEO</cite>
+  </blockquote>
+
+  <p>Now Assist의 연간 계약액 100만 달러 이상 고객이 <strong>전년 대비 130% 이상 증가</strong>했고, 500만 달러 이상 대형 딜만 16건이 체결됐다. <strong>Accenture</strong>의 1분기 실적에서는 고급 AI 수주가 1년 만에 <strong>12억 달러에서 22억 달러로 거의 두 배</strong>가 됐다. Julie Sweet CEO는 "고급 AI가 우리가 하는 거의 모든 일에 내재화되는 지점에 도달했다"고 선언했다.</p>
+
+  <p>소비자 서비스에서는 <strong>Duolingo</strong>의 스토리가 가장 선명하다. Luis von Ahn CEO의 말이다.</p>
+
+  <blockquote>
+    같은 인원으로 같은 시간에 4~5배의 콘텐츠를 만들 수 있다. 목표는 돈을 아끼는 것이 아니다. 사람을 대체하는 것도 아니다. 훨씬 더 많은 일을 하는 것이다.
+    <cite>Luis von Ahn, Duolingo CEO</cite>
+  </blockquote>
+
+  <p>Duolingo는 AI로 <strong>1년 만에 148개 언어 코스</strong>를 만들었다. 지난 12년간 만든 것보다 많은 수다. 2025년 매출 가이던스는 10억 2천만 달러로 상향 조정됐다. 핵심은 "같은 인원으로 더 많이"다. 감원이 아니라 증폭이다.</p>
+
+  <h2 id="s05"><span class="num">05 / 생산성</span>시간 단위로 측정되는 증폭 효과</h2>
+
+  <p>생산성 증거는 구체적이고 인용 가능한 수치로 굳어졌다. Stanford HAI 2026 AI Index는 분야별로 이렇게 정리한다. <strong>고객 지원 14~15%, 소프트웨어 개발 26%, 마케팅 산출물 73% 증가</strong>. 그러나 "깊은 추론을 요하는 업무에서는 증가폭이 작으며, 과도한 AI 의존이 장기적 학습 페널티를 동반할 수 있다"는 경고도 함께 붙였다.</p>
+
+  <p>Microsoft의 1분기 실적 발표(2025년 10월 29일)는 가장 많이 인용되는 구체 사례를 쏟아냈다. Satya Nadella CEO는 Microsoft AI 기능 월간 활성 사용자 9억 명과 1st-party Copilot 월간 활성 사용자 1억 5천만 명 이상을 공개했다.</p>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>기업</th>
+        <th>결과</th>
+        <th>출처</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="model-name">Lloyds Banking Group</td>
+        <td><span class="highlight">직원 1인당 하루 46분 절감</span> · Copilot 30,000석</td>
+        <td>Microsoft Q1 FY26</td>
+      </tr>
+      <tr>
+        <td class="model-name">PwC</td>
+        <td>Copilot 20만 석 · 6개월 동안 <span class="highlight">3,000만+ 상호작용</span></td>
+        <td>Microsoft Q1 FY26</td>
+      </tr>
+      <tr>
+        <td class="model-name">Vodafone</td>
+        <td>직원 1인당 <span class="highlight">주당 3시간 절감</span>(주간 근무의 약 10%)</td>
+        <td>Microsoft Customer Stories</td>
+      </tr>
+      <tr>
+        <td class="model-name">Commercial Bank of Dubai</td>
+        <td>연간 <span class="highlight">39,000시간 절감</span></td>
+        <td>Forrester TEI</td>
+      </tr>
+      <tr>
+        <td class="model-name">Mass General Hospital</td>
+        <td>임상 문서 작성 시간 <span class="highlight">60% 감소</span></td>
+        <td>MIT IDE 2026</td>
+      </tr>
+      <tr>
+        <td class="model-name">Salesforce (Agentforce)</td>
+        <td>지원 인력 9,000 → 5,000명 · 고객사 <span class="highlight">분기대비 50% 성장</span></td>
+        <td>Business Insider 2026-02</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>직원 수준에서도 시간이 선명하게 측정된다. BCG의 AI at Work 2025 연구(11개국 10,635명 조사)는 <strong>생성형 AI 정기 사용자의 58%가 주당 5시간 이상 절감</strong>을 보고한다고 밝혔다. 핵심 조건은 교육이었다. <strong>최소 5시간의 AI 교육을 받은 직원의 정기 사용률이 유의미하게 높았다</strong>. 이 숫자가 의미하는 바는 뚜렷하다. 라이선스만 뿌리고 교육을 건너뛰면 ROI는 오지 않는다.</p>
+
+  <p>Anthropic의 Economic Index(2026년 1월·3월 리포트)는 200만 건 대화 분석을 통해 <strong>약 49%의 직업에서 최소 4분의 1의 업무가 Claude로 수행된 적이 있다</strong>고 결론지었다. 엔터프라이즈 API 사용은 <strong>75%가 자동화(사람이 시키고 AI가 실행)</strong>인 반면, Claude.ai 일반 사용은 <strong>52%가 증강(사람이 AI와 함께 작업)</strong>이었다. 기업용 환경에서는 AI가 대신 해주는 비중이 더 크고, 개인용 환경에서는 함께 하는 비중이 더 크다는 뜻이다.</p>
+
+  <h2 id="s06"><span class="num">06 / 한국의 기울기</span>도입은 세계 최고 속도, 실행은 고르지 않다</h2>
+
+  <p>한국의 헤드라인 수치는 세계에서 가장 빠른 도입 속도를 시사한다. 한국은행의 2025년 8월 이슈노트 2025-22(올해의 기준 보고서)는 이렇게 밝혔다.</p>
+
+  <div class="metric-row">
+    <div class="metric-card">
+      <div class="metric-value">63.5%</div>
+      <div class="metric-label"><strong>한국 근로자</strong><br>생성형 AI 사용률<br>한국은행 2025</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">26.5%</div>
+      <div class="metric-label"><strong>미국 근로자</strong><br>생성형 AI 사용률<br>(한국의 약 1/2)</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">8배</div>
+      <div class="metric-label"><strong>확산 속도</strong><br>인터넷 초창기 대비<br>한국은행 2025</div>
+    </div>
+  </div>
+
+  <p>한국 헤비 유저(하루 60분 이상)는 <strong>일일 사용자의 78.6%</strong>로, 미국의 31.8%를 압도한다. 한국은행의 거시 시뮬레이션은 "AI 도입이 한국 생산성을 1.1~3.2%, GDP를 4.2~12.6% 끌어올려 고령화와 노동 공급 감소에서 오는 성장 둔화를 상당 부분 상쇄할 수 있다"는 결론이었다.</p>
+
+  <p>개인 확산과 기업 확산이 다른 속도로 움직이는 것도 특징이다. 과기정통부의 2025 인터넷이용실태조사(2026년 3월 발표, 50,750명 대상)는 전체 인구의 <strong>44.5%가 생성형 AI를 사용해봤고, 사무직은 71.9%</strong>에 달한다고 밝혔다. 1년 전 33.3%에서 11.2%p 상승이다. 기업 쪽은 메가존클라우드·IDG 조사(749명)에서 확인된다. <strong>한국 기업의 55.7%가 생성형 AI를 사용 중이며(전사 22.4% + 일부 부서 33.2%), 2026년에는 85%를 돌파할 전망</strong>이다. 대기업 전사 도입률은 35.1%로 중소기업의 두 배 이상이다.</p>
+
+  <p>실제 사례도 이번 분기에 가시화됐다. <strong>한국은행의 BOKI</strong>(2026년 1월 21일 론칭)는 중앙은행 최초의 소버린 AI로, 네이버 HyperClova X 위에서 <strong>140만 건의 내부 문서</strong>를 학습했다. 이창용 총재의 발언이 협회 리포트에 인용하기 좋다.</p>
+
+  <blockquote>
+    한국은행이 소버린 AI 구축과 망 개선을 동시에 추진하는 최초 기관이자, 망분리 정책 변화를 시도하는 첫 번째 공공기관이 됐다. 업무 효율성이 제고될 뿐 아니라, 조직 문화 전반에도 상당한 변화가 뒤따를 것이다.
+    <cite>이창용, 한국은행 총재</cite>
+  </blockquote>
+
+  <p>기업 쪽에서는 <strong>LG전자 한국영업본부</strong>가 가장 날카로운 국내 수치를 내놓았다. ChatInsight라는 에이전틱 AI 시스템이 <strong>데이터 분석 업무를 3일에서 30분으로, 288배 단축</strong>했다. 선형적·반응적 워크플로를 병렬적·능동적 전략 수립으로 전환한 사례다. <strong>삼성SDS</strong>는 4월 컨퍼런스에서 <strong>80분 업무를 10분으로 단축(8배)</strong>, 한 은행 레거시 현대화 프로젝트에서 <strong>코드 변환 성공률 98.8%, 개발 비용 68% 감소</strong>를 발표했다. 2031년까지 AI 및 관련 M&amp;A에 <strong>10조 원 투자</strong> 계획도 공개했다.</p>
+
+  <p>조직 문화 관점에서 주목할 곳은 <strong>현대카드</strong>다. 정태영 부회장이 직접 LLM 교육에 참석했고, 드물게도 <strong>실무자보다 리더를 먼저 LLM 실습에 투입</strong>하기로 결정했다. "생성형 AI는 도입 여부가 아니라 조직에 얼마나 깊게 뿌리 내리느냐가 경쟁력을 좌우한다"는 것이 회사 내부 입장이다. <strong>KB금융</strong>은 3년간 39개 업무영역에 AI 에이전트 250개 이상을 단계 배치하고, 8개 계열사를 KB GenAI 포털로 통합한다. LG CNS AI센터장 진요한이 한 문장을 남겼다.</p>
+
+  <blockquote>
+    지난 1년의 변화가 그 이전 20년보다 더 컸다.
+    <cite>진요한, LG CNS AI센터장</cite>
+  </blockquote>
+
+  <h2 id="s07"><span class="num">07 / 교훈</span>경영진을 위한 다섯 가지 교훈</h2>
+
+  <p>2026년 1분기부터 4월까지의 90일. 이 창구에서 나온 다섯 가지 교훈을 정리하면 이렇다.</p>
+
+  <ul class="layer-list">
+    <li><span class="tag">교훈 1</span><span class="desc"><strong>도구 배포가 아니라 워크플로 재설계가 결정적 레버다.</strong> 맥킨지는 25개 조직 속성 중 워크플로 재설계가 EBIT 임팩트에 가장 큰 영향을 준다고 밝혔지만, 실제로 근본적 재설계를 한 기업은 21%에 불과하다. Bain의 공식 — 기술 3분의 1, 데이터·프로세스·변화관리 3분의 2 — 이 예산 편성의 기준점이 되어야 한다.</span></li>
+    <li><span class="tag">교훈 2</span><span class="desc"><strong>비용-매출 격차는 경고음이다.</strong> 생산성 66% vs 매출 20%(Deloitte), 양방향 혜택 CEO 12% vs 무혜택 56%(PwC), AI가 유의미한 성과를 낸다는 응답 64% vs ROI를 확립한 8%(KPMG). 세 기관이 같은 메시지를 보낸다. 비용 이익은 빨리 쌓이지만 성장 이익은 운영 모델과 상업적 작업을 훨씬 더 많이 요구한다.</span></li>
+    <li><span class="tag">교훈 3</span><span class="desc"><strong>에이전틱 AI는 2026년의 격전지이지만 거버넌스가 배치를 따라잡지 못하고 있다.</strong> 에이전트 배치율은 기업의 33~52%, 기술 임원 64%가 24개월 내 배치 예정이지만, 성숙한 거버넌스 모델을 가진 조직은 21%에 불과하다. KPMG는 63%가 AI 에이전트 출력에 인간 검증을 요구한다고 보고했다. 1년 전 22%에서 세 배 가까이 올랐다. 배치를 앞지른 기업은 섀도우 AI 데이터 유출 문제를 겪고 있다.</span></li>
+    <li><span class="tag">교훈 4</span><span class="desc"><strong>한국의 도입 심도는 독특한 경쟁 창구다.</strong> 근로자 63.5% 침투율(미국의 약 2배), 기업 79%가 예산 증액 계획. 운영 모델 재설계 단계를 먼저 완료한 한국 기업이 큰 이득을 포착할 가능성이 높다. LG전자의 288배 분석 가속화와 삼성SDS의 8배 업무 압축이 초기 증거다. 구광모 회장의 "완벽한 계획보다 빠른 실행이 중요하다"는 지침이 올바른 자세다.</span></li>
+    <li><span class="tag">교훈 5</span><span class="desc"><strong>전략과 무관하게 문화 전환은 이미 도착하고 있다.</strong> Microsoft가 명명한 Frontier Firm, HBR의 "AI는 업무를 강화한다"는 반론, Walmart 대 Salesforce의 인력 처우 분기점. 모두 일하는 방식의 진짜 재조직화를 가리키는 표지다. AI를 문화 변화로 다루는 임원들(리더 직접 교육, 인력 교육 투자, 워크플로 오너십 명확화)이 고성과자 집단에 남는다.</span></li>
+  </ul>
+
+  <hr class="rule-hr">
+
+  <h2 id="s08"><span class="num">08 / 맺으며</span>결산은 이미 진행 중이다</h2>
+
+  <p>이번 90일의 리서치가 일관되게 보내는 메시지는 하나다. 질문이 바뀌었다는 것이다. 2024~2025년까지 CEO들은 "AI가 진짜 되는가"를 물었다. 2026년 1분기부터는 "누가 가치를 포착하고 있는가"를 묻는다. 전자는 기술에 대한 질문이었고, 후자는 경영에 대한 질문이다.</p>
+
+  <p>88%의 기업이 AI를 쓰는데 6%만 이익을 본다는 사실을 경영 격차로 읽어야 한다. 그 격차는 모델의 성능이나 예산의 크기가 아니라, 일을 설계하는 방식, 데이터를 다루는 습관, 그리고 조직이 변화에 얼마나 열려 있는가에서 갈린다. 베인의 Whitten이 말한 "기술은 3분의 1, 나머지는 데이터·프로세스·변화관리"는 2026년 내내 인용될 문장이다. MIT Sloan이 말한 "뭔가를 하는 해"가 시작됐다.</p>
+
+  <p>월스트리트 6대 은행이 넉 달 사이 입장을 바꾼 것, 맥킨지·Deloitte·BCG·KPMG가 같은 결론으로 수렴한 것, 한국은행과 LG전자·삼성SDS가 나란히 구체 수치를 공개한 것. 이 모든 장면이 한 방향을 가리킨다. 결산은 2027년에 오는 것이 아니다. 이미 2026년 4월의 실적 발표장에서 진행되고 있다.</p>
+
+  <div class="footer">
+    <p><strong>신성진</strong> — 한국데이터사이언티스트협회 대표이사. 행정안전부 AI·데이터활용 전문위원, 과학기술정보통신부 데이터기반행정 자문위원, 식품의약품안전처 식의약 위해예방 자문위원. 명지대학교 응용소프트웨어학부 겸임교수. CJ올리브네트웍스·한국경제 DT 과정 주임교수. 중앙정부·공공 80여 곳, 대기업 30여 곳에서 AI·데이터 교육을 직접 설계하고 실행해 왔다.</p>
+    <div class="co-author">
+      이 리포트는 <strong>Claude Deep Research</strong>와 함께 작성했다. 맥킨지 『2025 AI 현황』, PwC 29차 Global CEO Survey, BCG AI Radar 2026, KPMG Global AI Pulse, Deloitte State of AI, Gartner CIO Survey, Forrester 2026 Predictions, Stanford HAI 2026 AI Index, Microsoft·Anthropic·Google Cloud 실적 및 연구, 월스트리트 6대 은행의 2026 Q1 실적 발표, 한국은행 이슈노트 2025-22, 과기정통부 2025 인터넷이용실태조사, 메가존클라우드·IDG 한국 기업 IT 의사결정자 조사 등 2026년 1~4월 공개된 1차 자료를 종합했다.
+    </div>
+    <p>의견·자문 문의 <a href="mailto:sjshin@cdsa.or.kr" style="color: var(--clay-deep); text-decoration: none;">sjshin@cdsa.or.kr</a></p>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="/blog/" class="bottom-nav-home">← 블로그 목록</a>
+    <a href="/">CDSA 홈페이지 →</a>
+  </nav>
+
+</article>
+
+<script src="/blog/_posts.js" defer></script>
+
+</body>
+</html>

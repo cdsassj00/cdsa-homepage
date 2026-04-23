@@ -24,6 +24,13 @@
   // Single source of truth for blog posts. Sorted newest-first.
   const POSTS = [
     {
+      slug: 'ai-value-gap-2026',
+      title: '2026 생성형 AI 가치 격차 — 88%가 도입했는데 왜 6%만 이익을 보는가',
+      date: '2026. 4. 23',
+      category: 'AI 경영 리포트',
+      href: '/blog/ai-value-gap-2026.html',
+    },
+    {
       slug: 'search-vs-delegate',
       title: 'AI를 써도 업무가 빨라지지 않는 진짜 이유',
       date: '2026. 4. 22',
