@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>단계별 사고가 사람과 AI 모두에게 더 좋은 결과를 맺는다 · CDSA 블로그</title>
+<meta name="description" content="&quot;한 번에 답하라&quot;는 습관이 사람에게도 모델에게도 가장 큰 병목이다. 문제를 쪼개고, 순서를 밟고, 중간 결과를 점검하는 일 — 그 평범한 절차가 결과의 질을 결정적으로 바꾼다.">
+<meta property="og:title" content="단계별 사고가 사람과 AI 모두에게 더 좋은 결과를 맺는다">
+<meta property="og:description" content="Chain-of-Thought 프롬프팅부터 추론 모델의 시대까지. 인지과학과 LLM 연구가 똑같이 말하는 한 가지 — 단계를 밟아라.">
+<meta property="og:type" content="article">
+<!-- BEGIN SEO -->
+<meta name="keywords" content="단계별 사고, Chain-of-Thought, CoT 프롬프팅, 추론 모델, test-time compute, 인지과학, 위계적 추론, 이중균">
+<link rel="canonical" href="https://cdsa.kr/blog/step-by-step-thinking.html">
+<meta property="og:url" content="https://cdsa.kr/blog/step-by-step-thinking.html">
+<meta property="og:site_name" content="한국데이터사이언티스트협회">
+<meta property="og:image" content="https://cdsa.kr/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta property="article:published_time" content="2026-04-21T09:00:00+09:00">
+<meta property="article:modified_time" content="2026-04-21T09:00:00+09:00">
+<meta property="article:author" content="이중균">
+<meta property="article:section" content="AI 사고론">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="단계별 사고가 사람과 AI 모두에게 더 좋은 결과를 맺는다">
+<meta name="twitter:description" content="Chain-of-Thought 프롬프팅부터 추론 모델의 시대까지. 인지과학과 LLM 연구가 똑같이 말하는 한 가지 — 단계를 밟아라.">
+<meta name="twitter:image" content="https://cdsa.kr/og-image.png">
+<meta name="author" content="이중균">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "단계별 사고가 사람과 AI 모두에게 더 좋은 결과를 맺는다",
+  "description": "Chain-of-Thought 프롬프팅부터 추론 모델의 시대까지. 인지과학과 LLM 연구가 똑같이 말하는 한 가지 — 단계를 밟아라.",
+  "datePublished": "2026-04-21T09:00:00+09:00",
+  "dateModified": "2026-04-21T09:00:00+09:00",
+  "author": {
+    "@type": "Person",
+    "name": "이중균",
+    "affiliation": {
+      "@type": "Organization",
+      "name": "한국데이터사이언티스트협회",
+      "url": "https://cdsa.kr"
+    }
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "한국데이터사이언티스트협회",
+    "url": "https://cdsa.kr",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://cdsa.kr/og-image.png"
+    }
+  },
+  "image": ["https://cdsa.kr/og-image.png"],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://cdsa.kr/blog/step-by-step-thinking.html"
+  },
+  "articleSection": "AI 사고론",
+  "inLanguage": "ko-KR"
+}
+</script>
+<!-- END SEO -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NZL39P5EYZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NZL39P5EYZ');
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700&family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/blog/_layout.css">
+<style>
+  :root {
+    --cream: #faf9f5; --cream-deep: #f3efe3; --ink: #1a1a1a; --ink-soft: #3d3d3a;
+    --ink-mute: #6b6b66; --rule: #d9d6cc; --clay: #cc785c; --clay-deep: #a85a42;
+    --clay-light: #f0ddd4; --code-bg: #f2f0e8; --teal: #2a7d6e; --teal-light: #e0f0ec;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--cream); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  body { font-family: "Fraunces", "Noto Serif KR", Georgia, serif; font-weight: 300; font-size: 19px; line-height: 1.72; letter-spacing: -0.005em; }
+
+  .topnav { position: fixed; top: 0; left: 0; right: 0; height: 48px; background: rgba(250, 249, 245, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; }
+  .topnav-left { display: flex; align-items: center; gap: 18px; }
+  .topnav-left a { color: var(--ink-soft); text-decoration: none; transition: color 0.2s; }
+  .topnav-left a:hover { color: var(--clay-deep); }
+  .topnav-home { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 600; font-size: 16px; color: var(--ink) !important; letter-spacing: -0.3px; }
+  .topnav-sep { color: var(--rule); font-size: 11px; }
+  .topnav-right { display: flex; gap: 16px; }
+  .topnav-right a { color: var(--ink-mute); text-decoration: none; font-size: 12px; transition: color 0.2s; }
+  .topnav-right a:hover { color: var(--clay-deep); }
+  .topnav-current { color: var(--ink) !important; font-weight: 600; position: relative; }
+  .topnav-current::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 2px; background: var(--clay); border-radius: 1px; }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 116px 28px 120px; }
+  .breadcrumb { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; margin-bottom: 36px; display: flex; align-items: center; gap: 8px; color: var(--ink-mute); }
+  .breadcrumb a { color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--ink); }
+  .breadcrumb .bc-sep { color: var(--rule); }
+
+  .kicker { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay-deep); margin-bottom: 28px; }
+  h1 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 400; font-size: 42px; line-height: 1.2; letter-spacing: -0.02em; margin: 0 0 24px; color: var(--ink); word-break:keep-all; overflow-wrap:break-word; }
+  .dek { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 300; font-style: italic; font-size: 21px; line-height: 1.55; color: var(--ink-soft); margin: 0 0 40px; word-break:keep-all; overflow-wrap:break-word; }
+  .byline { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); padding: 18px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-bottom: 56px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .byline strong { font-weight: 500; color: var(--ink-soft); }
+
+  .lede { font-size: 19px; line-height: 1.72; margin-bottom: 22px; word-break:keep-all; overflow-wrap:break-word; }
+  .lede::first-letter { font-family: "Fraunces", serif; font-weight: 400; font-size: 68px; float: left; line-height: 0.88; padding: 8px 10px 0 0; color: var(--clay); }
+
+  h2 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 28px; line-height: 1.25; letter-spacing: -0.015em; margin: 64px 0 16px; color: var(--ink); scroll-margin-top: 80px; word-break:keep-all; overflow-wrap:break-word; }
+  h2 .num { font-family: "Inter", sans-serif; font-size: 12px; font-weight: 600; color: var(--clay); letter-spacing: 0.1em; display: block; margin-bottom: 10px; }
+  h3 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 20px; margin: 36px 0 10px; color: var(--ink); word-break:keep-all; overflow-wrap:break-word; }
+  p { margin: 0 0 22px; }
+  p + p { margin-top: -6px; }
+  strong { font-weight: 500; color: var(--ink); }
+  em { font-style: italic; }
+  pre { background: var(--code-bg); border: 1px solid var(--rule); border-radius: 4px; padding: 20px 22px; font-family: "JetBrains Mono", "Menlo", monospace; font-size: 13px; line-height: 1.65; overflow-x: auto; margin: 28px 0; color: var(--ink-soft); }
+  code { font-family: "JetBrains Mono", monospace; font-size: 0.88em; background: var(--code-bg); padding: 2px 6px; border-radius: 3px; color: var(--clay-deep); }
+  pre code { background: transparent; padding: 0; color: inherit; font-size: inherit; }
+
+  blockquote { margin: 36px 0; padding: 4px 0 4px 22px; border-left: 2px solid var(--clay); font-family: "Fraunces", "Noto Serif KR", serif; font-style: italic; font-size: 20px; line-height: 1.55; color: var(--ink-soft); word-break:keep-all; overflow-wrap:break-word; }
+
+  .compare { margin: 32px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .compare .row { display: grid; grid-template-columns: 130px 1fr; padding: 16px 0; border-bottom: 1px solid var(--rule); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 15px; line-height: 1.55; }
+  .compare .row:last-child { border-bottom: none; }
+  .compare .label { font-weight: 600; color: var(--clay-deep); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; padding-top: 3px; }
+  .compare .body { color: var(--ink-soft); }
+
+  .data-table { width: 100%; margin: 28px 0; border-collapse: collapse; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 14.5px; line-height: 1.55; }
+  .data-table thead th { text-align: left; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--clay-deep); padding: 12px 14px; border-bottom: 2px solid var(--clay); background: var(--code-bg); }
+  .data-table tbody td { padding: 12px 14px; border-bottom: 1px solid var(--rule); color: var(--ink-soft); vertical-align: top; }
+  .data-table tbody tr:last-child td { border-bottom: 2px solid var(--rule); }
+  .data-table .highlight { color: var(--teal); font-weight: 600; }
+  .data-table .model-name { color: var(--ink); font-weight: 500; }
+
+  .layer-list { list-style: none; padding: 0; margin: 24px 0 32px; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 15px; }
+  .layer-list li { padding: 14px 0; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: 110px 1fr; gap: 16px; }
+  .layer-list li:first-child { border-top: 1px solid var(--rule); }
+  .layer-list .tag { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--clay); padding-top: 3px; }
+  .layer-list .desc { color: var(--ink-soft); line-height: 1.55; }
+
+  .thinking-layers { margin: 36px 0; display: flex; flex-direction: column; gap: 0; }
+  .thinking-layer { display: flex; align-items: stretch; min-height: 72px; }
+  .thinking-layer .layer-bar { width: 6px; flex-shrink: 0; border-radius: 3px; }
+  .thinking-layer .layer-content { padding: 16px 20px; flex: 1; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 14.5px; line-height: 1.55; border-bottom: 1px solid var(--rule); }
+  .thinking-layer:last-child .layer-content { border-bottom: none; }
+  .thinking-layer .layer-title { font-weight: 600; color: var(--ink); font-size: 13px; letter-spacing: 0.02em; margin-bottom: 4px; }
+  .thinking-layer .layer-desc { color: var(--ink-soft); }
+  .bar-surface { background: var(--clay-light); }
+  .bar-mid { background: var(--clay); }
+  .bar-deep { background: var(--clay-deep); }
+  .bar-teal { background: var(--teal); }
+
+  .metric-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 28px 0; }
+  .metric-card { background: var(--code-bg); border: 1px solid var(--rule); border-radius: 6px; padding: 20px; text-align: center; }
+  .metric-card .metric-value { font-family: "Fraunces", serif; font-size: 36px; font-weight: 500; color: var(--clay-deep); line-height: 1.1; }
+  .metric-card .metric-label { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; color: var(--ink-mute); margin-top: 8px; letter-spacing: 0.02em; line-height: 1.4; }
+
+  .rule-hr { border: none; border-top: 1px solid var(--rule); margin: 56px 0; }
+  .diagram-caption { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; color: var(--ink-mute); margin-top: 12px; text-align: center; }
+
+  .footer { margin-top: 72px; padding-top: 28px; border-top: 1px solid var(--rule); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); line-height: 1.65; }
+  .footer strong { color: var(--ink-soft); font-weight: 600; }
+
+  .bottom-nav { margin-top: 72px; padding: 36px 0; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .bottom-nav a { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .bottom-nav a:hover { color: var(--ink); }
+  .bottom-nav-home { font-family: "Fraunces", "Noto Serif KR", serif !important; font-size: 16px !important; font-style: italic; font-weight: 400; }
+
+  @media (max-width: 560px) {
+    .wrap { padding: 92px 22px 80px; }
+    h1 { font-size: 30px; line-height: 1.24; }
+    .dek { font-size: 17.5px; }
+    body { font-size: 17px; }
+    h2 { font-size: 23px; margin-top: 52px; }
+    .topnav-right { display: none; }
+    .compare .row { grid-template-columns: 1fr; gap: 4px; }
+    .layer-list li { grid-template-columns: 1fr; gap: 4px; }
+    .metric-row { grid-template-columns: 1fr; }
+    .data-table { font-size: 13px; }
+    .data-table thead th, .data-table tbody td { padding: 10px 8px; }
+  }
+  @media (max-width: 400px) {
+    h1 { font-size: 26px !important; line-height: 1.25; }
+    .dek { font-size: 16px !important; }
+    h2 { font-size: 21px !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="topnav-left">
+    <a href="/" class="topnav-home">CDSA</a>
+    <span class="topnav-sep">|</span>
+    <a href="/">홈페이지</a>
+    <a href="/blog/" class="topnav-current">블로그</a>
+  </div>
+  <nav class="topnav-right">
+    <a href="/framework.html">프레임워크</a>
+    <a href="/fullcourse.html">Full Course</a>
+  </nav>
+</header>
+
+<button class="blog-hamburger" aria-label="블로그 목록 열기"><span></span><span></span><span></span></button>
+<div class="blog-overlay"></div>
+<aside class="blog-left">
+  <div class="blog-left-title">Blog Posts</div>
+  <ol class="blog-left-list"></ol>
+</aside>
+<aside class="blog-right">
+  <div class="blog-right-title">On This Page</div>
+  <ul class="blog-toc"></ul>
+</aside>
+
+<article class="wrap">
+
+  <nav class="breadcrumb">
+    <a href="/">← CDSA 홈</a>
+    <span class="bc-sep">/</span>
+    <a href="/blog/">블로그</a>
+    <span class="bc-sep">/</span>
+    <span>AI 사고론</span>
+  </nav>
+
+  <div class="kicker">Editorial · AI 사고론</div>
+
+  <h1>단계별 사고가<br>사람과 AI 모두에게<br>더 좋은 결과를 맺는다</h1>
+
+  <p class="dek">
+    "한 번에 답하라"는 습관이 사람에게도 모델에게도 가장 큰 병목이다.
+    문제를 쪼개고, 순서를 밟고, 중간 결과를 점검하는 일 — 그 평범한 절차가
+    결과의 질을 결정적으로 바꾼다.
+  </p>
+
+  <div class="byline">
+    <span><strong>이중균</strong> &nbsp;·&nbsp; AI·데이터 분석 &amp; 바이브코딩 전문가</span>
+    <span>2026. 4. 21</span>
+  </div>
+
+  <p class="lede">누군가에게 복잡한 질문을 던졌을 때, "잠깐만, 정리해 볼게"라고 말하는 사람과 곧바로 답부터 내뱉는 사람 중 누구의 답이 더 신뢰가 갈까. 대부분은 전자를 고를 것이다. 한 박자 멈추고, 머릿속에서 순서를 세우고, 빠진 조건이 없는지 되짚은 뒤에 나오는 답은 직감적인 답과 질적으로 다르다. 이건 경험이지, 이론이 아니다.</p>
+
+  <p>흥미로운 사실은 대형 언어 모델(LLM)에게도 정확히 같은 원리가 작동한다는 것이다. 2022년, 도쿄대학교의 Kojima 등은 프롬프트 끝에 딱 한 문장을 덧붙였다. <strong>"Let's think step by step."</strong> 그 한 문장만으로 산술 문제의 정답률이 17.7%에서 78.7%로 뛰었다. 모델이 달라진 것이 아니다. 같은 모델에게 "천천히 단계를 밟으라"고 말해 줬을 뿐이다.</p>
+
+  <p>이 글은 그 현상을 좀 더 깊이 들여다보려는 기록이다. 단계별 사고가 왜 사람에게 효과적인지, AI에게는 어떤 메커니즘으로 작동하는지, 그리고 실무에서 이 원리를 어떻게 설계에 녹여야 하는지를 풀어 보려 한다.</p>
+
+  <h2 id="s01"><span class="num">01 / 인간의 뇌</span>쪼개야 풀린다 — 인지과학이 말하는 것</h2>
+
+  <p>MIT의 인지과학 연구팀은 인간이 복잡한 문제를 푸는 방식을 오랫동안 관찰해 왔다. 결론은 의외로 단순하다. <strong>사람은 문제를 관리 가능한 하위 과제로 쪼갤 때 가장 잘 푼다.</strong> 커피 한 잔을 사러 가는 일조차 우리 뇌는 세 단계로 나눈다. 건물 밖으로 나가기, 카페까지 이동하기, 카페에서 커피 받기. 만약 엘리베이터가 고장 났다면? 첫 번째 단계만 수정하면 된다. 나머지 두 단계는 건드릴 필요가 없다.</p>
+
+  <p>이 전략이 강력한 이유는 <strong>작업 기억(working memory)</strong>의 한계와 관련이 있다. 인간의 작업 기억은 한 번에 7±2개의 항목만 다룰 수 있다는 것이 정설이다. 열 가지 조건을 동시에 고려해야 하는 문제를 한꺼번에 풀려고 하면 뇌는 과부하에 빠진다. 하지만 같은 문제를 세 단계로 쪼개면, 각 단계에서 고려해야 할 조건은 서너 개로 줄어든다. 작업 기억의 한계 안에 들어오는 것이다.</p>
+
+  <div class="compare">
+    <div class="row">
+      <div class="label">직감적 사고</div>
+      <div class="body">모든 조건을 동시에 처리 → 작업 기억 과부하 → 중요한 조건 누락 → 오류율 상승</div>
+    </div>
+    <div class="row">
+      <div class="label">단계별 사고</div>
+      <div class="body">문제를 하위 과제로 분해 → 각 단계에서 소수의 조건만 처리 → 중간 결과 점검 → 오류 조기 발견</div>
+    </div>
+  </div>
+
+  <p>인지심리학에서는 이를 <strong>위계적 추론(hierarchical reasoning)</strong>이라 부른다. 큰 목표를 상위 층에 두고, 그 아래에 중간 목표, 가장 아래에 구체적 행동을 배치하는 구조다. 학생들이 큰 과제를 끝낼 때 가장 효과적인 전략이 "단계로 나누어 하나씩 해치우기"라는 건 누구나 경험적으로 안다. 인지과학은 그 경험을 실험실에서 확인해 주었을 뿐이다.</p>
+
+  <blockquote>사람의 뇌는 계산 자원이 유한한 환경에서 합리적으로 행동하도록 진화했다. 문제를 쪼개는 것은 제한된 자원 안에서 최선의 결과를 내기 위한 전략이지, 게으름이 아니다.</blockquote>
+
+  <h2 id="s02"><span class="num">02 / AI의 추론</span>"천천히 생각해 봐" — 한 문장이 바꾼 것</h2>
+
+  <p>2022년, 구글 리서치의 Jason Wei 등이 발표한 Chain-of-Thought(CoT) 프롬프팅 논문은 AI 연구의 흐름을 바꿨다. 핵심 아이디어는 놀라울 만큼 단순하다. 모델에게 최종 답만 내라고 하지 말고, <strong>중간 추론 과정을 함께 출력하게 하라</strong>는 것이다.</p>
+
+  <p>같은 해 Kojima 등은 한 걸음 더 나아갔다. 몇 가지 예시를 보여줄 필요도 없이, <code>"Let's think step by step"</code>이라는 단 한 문장만 프롬프트 끝에 붙여도 비슷한 효과가 난다는 것을 보여 주었다. 이것이 <strong>Zero-shot CoT</strong>다.</p>
+
+  <p>숫자로 보면 효과는 극적이다.</p>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>벤치마크</th>
+        <th>일반 프롬프트</th>
+        <th>+ "단계별로 생각해 봐"</th>
+        <th>향상폭</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="model-name">MultiArith (산술)</td>
+        <td>17.7%</td>
+        <td>78.7%</td>
+        <td class="highlight">+61.0%p</td>
+      </tr>
+      <tr>
+        <td class="model-name">GSM8K (수학 문장제)</td>
+        <td>10.4%</td>
+        <td>40.7%</td>
+        <td class="highlight">+30.3%p</td>
+      </tr>
+      <tr>
+        <td class="model-name">SVAMP (상식 산술)</td>
+        <td>63.7%</td>
+        <td>79.0%</td>
+        <td class="highlight">+15.3%p</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="diagram-caption">Kojima et al. (2022), "Large Language Models are Zero-Shot Reasoners" — InstructGPT 기준</div>
+
+  <p>같은 모델, 같은 파라미터, 같은 데이터. 달라진 것은 오직 "단계를 밟으라"는 지시 한 줄이다. 왜 이런 일이 벌어지는 걸까?</p>
+
+  <p>원리를 짧게 풀어 보면 이렇다. LLM은 다음 토큰을 예측하는 함수다. "답은 42입니다"를 바로 생성하라고 하면, 모델은 입력에서 답까지의 거리를 한 번의 점프로 건너야 한다. 중간 과정을 출력하게 하면, 모델은 "먼저 A를 구하고 → A에서 B를 유도하고 → B에서 최종 답을 내는" 경로를 밟게 된다. 각 점프의 거리가 짧아지니 오류가 줄어드는 것이다. <strong>인간의 작업 기억 제한과 놀라울 만큼 닮은 구조다.</strong></p>
+
+  <h2 id="s03"><span class="num">03 / 추론 모델</span>생각하는 시간을 사는 새로운 패러다임</h2>
+
+  <p>CoT 프롬프팅은 사용자가 모델에게 "단계별로 생각하라"고 <em>요청</em>하는 방식이었다. 2024년부터 등장한 추론 모델(reasoning model)은 한 차원 다르다. 모델 자체가 답을 내기 전에 <strong>스스로 길게 생각하도록 훈련</strong>되었다.</p>
+
+  <p>OpenAI의 o1이 그 시작이었고, o3에 이르러 성능은 놀라운 수준에 도달했다. Anthropic의 Claude도 Extended Thinking이라는 이름으로 같은 방향을 걷고 있다. 핵심 아이디어는 동일하다. <strong>모델에게 "생각하는 시간"을 더 주면, 결과가 더 좋아진다.</strong></p>
+
+  <div class="metric-row">
+    <div class="metric-card">
+      <div class="metric-value">96.7%</div>
+      <div class="metric-label">o3의 AIME 2024 정답률<br><span style="font-size:11px;color:var(--ink-mute)">미국 수학 올림피아드 예선</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">87.7%</div>
+      <div class="metric-label">o3의 GPQA Diamond 정답률<br><span style="font-size:11px;color:var(--ink-mute)">박사급 과학 문제</span></div>
+    </div>
+  </div>
+  <div class="metric-row">
+    <div class="metric-card">
+      <div class="metric-value">87.5%</div>
+      <div class="metric-label">o3의 ARC-AGI 점수<br><span style="font-size:11px;color:var(--ink-mute)">통과 임계값(85%) 최초 초과</span></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value">+54%</div>
+      <div class="metric-label">Claude think tool 사용 시<br>에이전트 과제 성공률 향상<br><span style="font-size:11px;color:var(--ink-mute)">τ-bench 항공 도메인 기준</span></div>
+    </div>
+  </div>
+
+  <p>여기서 주목할 패턴이 있다. Anthropic의 연구에 따르면, Extended Thinking의 성능은 "사고 토큰" 수에 따라 <strong>로그 함수적으로</strong> 향상된다. 즉, 생각을 10배 더 하면 정답률이 일정량 올라가고, 또 10배를 더 써야 같은 폭만큼 다시 올라간다. 인간이 난제 앞에서 겪는 수확 체감의 법칙과 정확히 같은 곡선이다.</p>
+
+  <blockquote>추론 모델의 등장은 AI 업계에 새로운 스케일링 축을 열었다. 훈련 데이터를 더 모으거나 파라미터를 더 늘리는 대신, 추론 시간에 더 오래 생각하게 하는 것 — 이것을 test-time compute 스케일링이라 부른다. 생각하는 시간 자체가 자원이 된 셈이다.</blockquote>
+
+  <h2 id="s04"><span class="num">04 / 공통 구조</span>사람과 AI의 단계별 사고는 왜 닮았는가</h2>
+
+  <p>사람의 위계적 추론과 AI의 Chain-of-Thought가 비슷한 효과를 내는 것은 우연이 아니다. 둘 다 같은 문제를 풀고 있기 때문이다. <strong>유한한 처리 자원으로 복잡한 추론을 수행하는 문제.</strong></p>
+
+  <div class="thinking-layers">
+    <div class="thinking-layer">
+      <div class="layer-bar bar-surface"></div>
+      <div class="layer-content">
+        <div class="layer-title">1층: 문제 인식</div>
+        <div class="layer-desc"><strong>사람</strong> — "이건 한 번에 풀기엔 복잡한데?" → 멈추고 정리하기로 결정<br><strong>AI</strong> — 시스템 프롬프트 또는 훈련된 패턴에 의해 단계적 접근 시작</div>
+      </div>
+    </div>
+    <div class="thinking-layer">
+      <div class="layer-bar bar-mid"></div>
+      <div class="layer-content">
+        <div class="layer-title">2층: 분해</div>
+        <div class="layer-desc"><strong>사람</strong> — 큰 문제를 하위 과제 3~5개로 나눔. 각 과제는 작업 기억 안에서 처리 가능<br><strong>AI</strong> — 중간 추론 토큰을 생성하며 문제를 순차적 단계로 분해</div>
+      </div>
+    </div>
+    <div class="thinking-layer">
+      <div class="layer-bar bar-deep"></div>
+      <div class="layer-content">
+        <div class="layer-title">3층: 순차 실행 + 중간 점검</div>
+        <div class="layer-desc"><strong>사람</strong> — 각 하위 과제를 순서대로 풀되, 앞 단계의 결과가 맞는지 되짚음<br><strong>AI</strong> — 각 단계의 출력이 다음 단계의 입력이 됨. 추론 모델은 자기 검증까지 수행</div>
+      </div>
+    </div>
+    <div class="thinking-layer">
+      <div class="layer-bar bar-teal"></div>
+      <div class="layer-content">
+        <div class="layer-title">4층: 종합 및 최종 답</div>
+        <div class="layer-desc"><strong>사람</strong> — 하위 결과들을 모아 전체 답을 구성. 빠진 것이 없는지 마지막 확인<br><strong>AI</strong> — 중간 추론 결과를 종합하여 최종 응답 생성</div>
+      </div>
+    </div>
+  </div>
+
+  <p>MIT 연구팀의 최근 발견이 이 대칭을 뒷받침한다. 인공신경망에 인간과 유사한 계산 제약을 부과하면, 그 네트워크는 인간과 놀라울 만큼 비슷한 행동 패턴을 보였다. 이는 인간의 단계별 사고 전략이 "제한된 자원 아래에서의 합리적 행동"이라는 점을 시사한다. AI의 CoT도 본질적으로 같은 전략의 다른 구현인 셈이다.</p>
+
+  <h2 id="s05"><span class="num">05 / 실무 적용</span>단계별 사고를 "설계"한다는 것</h2>
+
+  <p>원리를 아는 것과 실무에 적용하는 것 사이에는 늘 간극이 있다. 단계별 사고의 원리를 실제 업무와 AI 활용에 녹이는 방법을 세 가지 층위로 나누어 보자.</p>
+
+  <h3>층위 1: 프롬프트에 단계를 심기</h3>
+
+  <p>가장 단순한 적용이다. AI에게 작업을 시킬 때, "보고서 써줘"라고 던지는 대신 단계를 명시한다.</p>
+
+<pre><code># 단계를 명시하지 않은 프롬프트
+"이 데이터를 분석해서 보고서를 작성해줘."
+
+# 단계를 명시한 프롬프트
+"이 데이터를 아래 단계에 따라 분석해줘:
+ 1단계: 데이터의 전체 구조를 파악하고 누락값을 확인한다.
+ 2단계: 주요 변수의 분포와 이상치를 탐색한다.
+ 3단계: 핵심 인사이트 3가지를 도출한다.
+ 4단계: 인사이트를 기반으로 보고서 초안을 작성한다.
+ 5단계: 초안을 검토하고 논리적 비약이 없는지 확인한다."</code></pre>
+
+  <p>차이는 극적이다. 첫 번째 프롬프트는 모델에게 입력에서 최종 결과까지 한 번에 점프하라고 요구한다. 두 번째 프롬프트는 다섯 번의 짧은 점프를 밟게 한다. 각 점프의 난이도가 낮아지니, 전체 결과의 품질이 올라간다.</p>
+
+  <h3>층위 2: 에이전트 설계에 단계를 내장하기</h3>
+
+  <p>프롬프트 수준을 넘어서면, 작업 흐름 자체에 단계를 구조화할 수 있다. AI 에이전트를 설계할 때 <strong>하나의 거대한 프롬프트로 모든 걸 처리하는 대신, 각 단계를 별도의 호출로 분리</strong>하는 것이다.</p>
+
+<pre><code># 단일 호출: 모든 걸 한 번에
+response = model.generate("시장 조사를 해서 보고서를 만들어줘")
+
+# 다단계 파이프라인: 각 단계를 분리
+step1 = model.generate("조사 목적과 핵심 질문 3가지를 정리해줘")
+step2 = model.generate(f"다음 질문에 대해 조사해줘: {step1}")
+step3 = model.generate(f"조사 결과를 표로 구조화해줘: {step2}")
+step4 = model.generate(f"이 표를 바탕으로 보고서 초안을 써줘: {step3}")
+step5 = model.generate(f"초안을 검토하고 빠진 부분을 보완해줘: {step4}")</code></pre>
+
+  <p>이 방식은 단순히 프롬프트를 잘 쓰는 것을 넘어, <strong>일을 어떻게 분해할 것인가</strong>를 설계하는 일이다. 그리고 이 설계 능력은 AI가 대신해 주지 않는다. 일의 구조를 가장 잘 아는 사람이 해야 하는 일이다.</p>
+
+  <h3>층위 3: 사람의 사고 습관 자체를 바꾸기</h3>
+
+  <p>가장 깊은 적용은 AI와 무관하게 작동한다. 복잡한 의사결정 앞에서 "일단 해보자" 대신 "잠깐, 이걸 세 단계로 나누면 뭐가 되지?"라고 스스로에게 묻는 습관이다.</p>
+
+  <ul class="layer-list">
+    <li><span class="tag">기획 회의</span><span class="desc">"이 프로젝트의 성공 조건이 뭔지 먼저 정의하고, 그 다음에 방법론을 논의합시다" — 목표 → 방법 → 실행 순서를 강제하는 것만으로 회의의 질이 달라진다.</span></li>
+    <li><span class="tag">문서 작성</span><span class="desc">곧바로 본문을 쓰지 않고, 목차부터 잡는다. 목차는 문제를 분해한 결과물이다. 목차가 탄탄하면 본문은 각 항목을 채우는 일이 된다.</span></li>
+    <li><span class="tag">디버깅</span><span class="desc">"왜 안 되지?"에서 "어디까지 되는지 먼저 확인하자"로 질문을 바꾼다. 작동하는 마지막 지점을 찾으면, 문제의 범위가 좁아진다.</span></li>
+    <li><span class="tag">의사결정</span><span class="desc">"이게 맞을까?"보다 "이 결정에 영향을 미치는 요인이 뭐가 있지?"를 먼저 나열한다. 요인을 펼쳐 놓으면 판단이 투명해진다.</span></li>
+  </ul>
+
+  <p>이 세 층위는 서로 독립적이지 않다. 사람이 일을 잘 쪼개는 습관을 가지면 AI에게 주는 지시도 자연스럽게 단계적이 된다. AI의 결과물이 좋아지면 사람은 더 복잡한 작업을 맡기게 되고, 그러면 더 정교한 분해가 필요해진다. 선순환이 생기는 것이다.</p>
+
+  <h2 id="s06"><span class="num">06 / 주의사항</span>단계별 사고가 만능은 아니다</h2>
+
+  <p>여기까지 읽으면 "모든 문제에 단계를 밟으면 되겠구나"라는 결론에 이를 수 있다. 하지만 최근 연구는 좀 더 복잡한 그림을 보여준다.</p>
+
+  <p>2025년 Wharton의 Generative AI Lab에서 발표한 보고서는 흥미로운 발견을 담고 있다. <strong>최신 추론 모델(o3, Claude 등)에서는 CoT 프롬프팅의 추가 효과가 줄어들고 있다</strong>는 것이다. 이유는 간단하다. 이 모델들은 이미 내부적으로 단계별 사고를 수행하도록 훈련되어 있기 때문에, 사용자가 밖에서 한 번 더 "단계별로 생각해"라고 말하는 것이 중복이 되는 것이다.</p>
+
+  <div class="compare">
+    <div class="row">
+      <div class="label">효과가 큰 경우</div>
+      <div class="body">비추론 모델(GPT-4, Claude Sonnet 기본 모드)에 산술·논리 문제를 시킬 때. 복잡한 다단계 작업을 에이전트로 분리할 때. 사람이 복잡한 의사결정을 구조화할 때.</div>
+    </div>
+    <div class="row">
+      <div class="label">효과가 작은 경우</div>
+      <div class="body">이미 추론을 내장한 모델(o3, Claude Extended Thinking)에 단순 질문을 할 때. 직관적 판단이 더 적합한 창의적 작업. 단계를 밟는 비용이 작업 자체보다 클 때.</div>
+    </div>
+  </div>
+
+  <p>이 발견이 단계별 사고의 가치를 부정하는 것은 아니다. 오히려 반대다. 추론 모델이 내부적으로 CoT를 수행한다는 것은, <strong>단계별 사고가 너무 효과적이어서 모델 자체에 내장되었다</strong>는 뜻이다. 차의 엔진에 이미 변속기가 달려 있으니, 운전자가 수동으로 기어를 바꿀 필요가 줄었을 뿐이다. 변속의 원리가 사라진 것이 아니라, 자동화된 것이다.</p>
+
+  <p>그래서 진짜 중요한 질문은 이것이다. <em>"언제 AI의 자동 추론에 맡기고, 언제 사람이 직접 단계를 설계해야 하는가?"</em></p>
+
+  <p>경험칙은 이렇다. 작업이 정형적이고 모델이 유사한 문제를 많이 학습했다면, 모델의 자동 추론이 충분하다. 작업이 비정형적이고, 도메인 지식이 필요하고, 실패의 비용이 높다면 — 그때는 사람이 단계를 설계해야 한다. AI가 아무리 똑똑해져도, 일의 구조를 결정하는 일은 그 일을 가장 잘 아는 사람의 몫으로 남는다.</p>
+
+  <hr class="rule-hr">
+
+  <h2 id="s07"><span class="num">07 / 마무리</span>멈추고, 쪼개고, 밟아 나가기</h2>
+
+  <p>다시 처음으로 돌아가 보자. 복잡한 질문 앞에서 "잠깐만, 정리해 볼게"라고 말하는 사람의 이야기. 그 한 박자의 멈춤이 결과를 바꾸는 이유를 이제 우리는 두 방향에서 이해할 수 있다.</p>
+
+  <p>인간의 뇌는 작업 기억의 한계 안에서 최선의 결과를 내기 위해 문제를 쪼갠다. AI의 언어 모델은 한 번의 점프 거리를 줄이기 위해 중간 추론 단계를 밟는다. 표면은 다르지만 구조는 같다. <strong>유한한 자원으로 복잡한 문제를 풀 때, 단계를 밟는 것이 단계를 생략하는 것보다 낫다.</strong></p>
+
+  <p>이 원리는 프롬프트 한 줄에도, 에이전트 아키텍처에도, 회의실의 화이트보드에도 똑같이 적용된다. "Let's think step by step"이 AI의 정답률을 네 배로 올린 것과, 좋은 기획자가 프로젝트를 마일스톤으로 쪼개는 것과, 숙련된 개발자가 큰 풀 리퀘스트를 작은 단위로 나누는 것은 — 전부 같은 전략의 서로 다른 표현이다.</p>
+
+  <p>결국 단계별 사고는 기술이 아니라 태도다. 복잡함 앞에서 한 발 물러나 "이걸 세 조각으로 나누면 뭐가 되지?"라고 스스로에게 묻는 태도. 그 질문이 습관이 되면, 사람의 판단도, AI의 출력도, 그 둘이 합쳐진 결과물도 — 모두 한 단계 위의 수준에서 시작하게 된다.</p>
+
+  <p>급할수록 돌아가라는 옛말은, 2026년의 AI 시대에도 여전히 유효한 전략이다.</p>
+
+  <div class="footer">
+    <p><strong>이중균</strong> — 한국데이터사이언티스트협회 파트너이사 · AX(AI Transformation) 전문가. 前 한국야쿠르트 데이터센터장·인재개발원장, 前 LG텔레콤 CRM 기획/운영팀장. 데이터기반 지능행정 역량강화 컨설턴트, 과학기술정보통신부 AI성과 심사위원, 식품안전관리인증원 자문위원. 연세대학교 IT경영전략 석사.</p>
+    <p>의견·협업 제안 <a href="mailto:jklee@cdsa.or.kr" style="color: var(--clay-deep); text-decoration: none;">jklee@cdsa.or.kr</a> · <a href="https://jklee.lovable.app/" target="_blank" rel="noopener noreferrer" style="color: var(--clay-deep); text-decoration: none;">AI Studio &amp; Lab</a> · <a href="https://www.youtube.com/@joongkyoonlee3757" target="_blank" rel="noopener noreferrer" style="color: var(--clay-deep); text-decoration: none;">YouTube</a></p>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="/blog/" class="bottom-nav-home">← 블로그 목록</a>
+    <a href="/">CDSA 홈페이지 →</a>
+  </nav>
+
+</article>
+
+<script src="/blog/_posts.js" defer></script>
+
+</body>
+</html>

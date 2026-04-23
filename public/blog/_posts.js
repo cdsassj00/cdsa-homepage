@@ -24,6 +24,20 @@
   // Single source of truth for blog posts. Sorted newest-first.
   const POSTS = [
     {
+      slug: 'search-vs-delegate',
+      title: 'AI를 써도 업무가 빨라지지 않는 진짜 이유',
+      date: '2026. 4. 22',
+      category: 'AI 활용론',
+      href: '/blog/search-vs-delegate.html',
+    },
+    {
+      slug: 'step-by-step-thinking',
+      title: '단계별 사고가 사람과 AI 모두에게 더 좋은 결과를 맺는다',
+      date: '2026. 4. 21',
+      category: 'AI 사고론',
+      href: '/blog/step-by-step-thinking.html',
+    },
+    {
       slug: 'ai-problem-solving',
       title: 'AI가 똑똑해져도 당신의 업무가 안 바뀌는 이유',
       date: '2026. 4. 20',
