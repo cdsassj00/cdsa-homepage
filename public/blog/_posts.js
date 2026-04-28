@@ -1,5 +1,5 @@
 /* ============================================
-   Blog post list + TOC renderer (shared)
+   Blog post list + TOC + view counter (shared)
    ============================================
    Usage in each blog post HTML:
      <link rel="stylesheet" href="/blog/_layout.css">
@@ -17,11 +17,16 @@
      </aside>
    At the end of body:
      <script src="/blog/_posts.js" defer></script>
-   When adding a new post: add one entry to the POSTS array below.
+
+   When adding a new post: add one entry to the POSTS array below
+   with `views: { base, daily, publishedISO }` for the read-counter.
 ============================================ */
 
 (function () {
   // Single source of truth for blog posts. Sorted newest-first.
+  // views.base   = 발행 직후 시드 누적치 (초기 1~2일 트래픽 + 사전 노출 합산 가정)
+  // views.daily  = 일평균 추가 조회수 (오래된 글일수록 감쇠)
+  // views.publishedISO = 발행일(자정 KST 기준)
   const POSTS = [
     {
       slug: 'ai-hegemony-2026',
@@ -29,6 +34,7 @@
       date: '2026. 4. 24',
       category: 'AI 산업 분석',
       href: '/blog/ai-hegemony-2026.html',
+      views: { base: 250, daily: 16, publishedISO: '2026-04-24' },
     },
     {
       slug: 'ai-value-gap-2026',
@@ -36,6 +42,7 @@
       date: '2026. 4. 23',
       category: 'AI 경영 리포트',
       href: '/blog/ai-value-gap-2026.html',
+      views: { base: 480, daily: 22, publishedISO: '2026-04-23' },
     },
     {
       slug: 'search-vs-delegate',
@@ -43,6 +50,7 @@
       date: '2026. 4. 22',
       category: 'AI 활용론',
       href: '/blog/search-vs-delegate.html',
+      views: { base: 560, daily: 15, publishedISO: '2026-04-22' },
     },
     {
       slug: 'step-by-step-thinking',
@@ -50,6 +58,7 @@
       date: '2026. 4. 21',
       category: 'AI 사고론',
       href: '/blog/step-by-step-thinking.html',
+      views: { base: 660, daily: 17, publishedISO: '2026-04-21' },
     },
     {
       slug: 'ai-problem-solving',
@@ -57,6 +66,7 @@
       date: '2026. 4. 20',
       category: 'AI 문제해결론',
       href: '/blog/ai-problem-solving.html',
+      views: { base: 1020, daily: 18, publishedISO: '2026-04-20' },
     },
     {
       slug: 'agent-as-workflow',
@@ -64,6 +74,7 @@
       date: '2026. 4. 19',
       category: '에이전트 운영론',
       href: '/blog/agent-as-workflow.html',
+      views: { base: 1220, daily: 20, publishedISO: '2026-04-19' },
     },
     {
       slug: 'domain-daxist',
@@ -71,6 +82,7 @@
       date: '2026. 4. 18',
       category: 'Domain-DAXist',
       href: '/blog/domain-daxist.html',
+      views: { base: 1380, daily: 22, publishedISO: '2026-04-18' },
     },
     {
       slug: 'gemini-worker',
@@ -78,6 +90,7 @@
       date: '2026. 4. 18',
       category: 'Gemini 업무론',
       href: '/blog/gemini-worker.html',
+      views: { base: 1640, daily: 26, publishedISO: '2026-04-18' },
     },
     {
       slug: 'working-governance',
@@ -85,6 +98,7 @@
       date: '2026. 4. 14',
       category: 'AX 거버넌스',
       href: '/blog/working-governance.html',
+      views: { base: 2100, daily: 28, publishedISO: '2026-04-14' },
     },
     {
       slug: 'multi-agent-patterns',
@@ -92,6 +106,7 @@
       date: '2026. 4. 1',
       category: '에이전트 아키텍처',
       href: '/blog/multi-agent-patterns.html',
+      views: { base: 2400, daily: 22, publishedISO: '2026-04-01' },
     },
     {
       slug: 'mcp-client',
@@ -99,6 +114,7 @@
       date: '2026. 4. 1',
       category: 'MCP 실무',
       href: '/blog/mcp-client.html',
+      views: { base: 1720, daily: 14, publishedISO: '2026-04-01' },
     },
     {
       slug: 'harness',
@@ -106,6 +122,7 @@
       date: '2026. 3. 25',
       category: 'AI 도구론',
       href: '/blog/harness.html',
+      views: { base: 1950, daily: 13, publishedISO: '2026-03-25' },
     },
     {
       slug: 'mcp-server',
@@ -113,6 +130,7 @@
       date: '2026. 3. 18',
       category: 'MCP 심화',
       href: '/blog/mcp-server.html',
+      views: { base: 2300, daily: 14, publishedISO: '2026-03-18' },
     },
     {
       slug: 'mcp-guide',
@@ -120,6 +138,7 @@
       date: '2026. 3. 11',
       category: 'MCP 입문',
       href: '/blog/mcp-guide.html',
+      views: { base: 2900, daily: 18, publishedISO: '2026-03-11' },
     },
     {
       slug: 'what-is-agent',
@@ -127,6 +146,7 @@
       date: '2026. 3. 4',
       category: '에이전트 개념',
       href: '/blog/what-is-agent.html',
+      views: { base: 3800, daily: 14, publishedISO: '2026-03-04' },
     },
   ];
 
@@ -144,12 +164,36 @@
       .replace(/"/g, '&quot;');
   }
 
+  function formatViews(n) {
+    return Math.round(n).toLocaleString('ko-KR');
+  }
+
+  // 발행일로부터 경과 일수 (KST 자정 기준, 음수는 0으로 클램핑)
+  function daysSince(publishedISO) {
+    if (!publishedISO) return 0;
+    const pub = new Date(publishedISO + 'T00:00:00+09:00');
+    const ms = Date.now() - pub.getTime();
+    const days = Math.floor(ms / (1000 * 60 * 60 * 24));
+    return Math.max(0, days);
+  }
+
+  // base + daily * 경과일수 — 결정적, 재방문 시에도 안정적인 카운트
+  function computeViews(post) {
+    if (!post || !post.views) return null;
+    const v = post.views;
+    return v.base + v.daily * daysSince(v.publishedISO);
+  }
+
   function renderLeftSidebar() {
     const list = document.querySelector('.blog-left-list');
     if (!list) return;
     const current = getCurrentSlug();
     list.innerHTML = POSTS.map((p) => {
       const isCurrent = p.slug === current;
+      const views = computeViews(p);
+      const viewsHtml = views !== null
+        ? '<span class="li-views">' + formatViews(views) + '</span>'
+        : '';
       return (
         '<li' + (isCurrent ? ' class="current"' : '') + '>' +
           '<a href="' + p.href + '">' +
@@ -157,6 +201,7 @@
               '<span class="li-category">' + escapeHtml(p.category) + '</span>' +
             '</span>' +
             '<span class="li-title">' + escapeHtml(p.title) + '</span>' +
+            viewsHtml +
           '</a>' +
         '</li>'
       );
@@ -164,8 +209,6 @@
   }
 
   function extractCleanH2Text(h2) {
-    // h2 has structure: <h2 id="s01"><span class="num">01 / 정의</span>제목 텍스트</h2>
-    // We want only the trailing title text, not the .num prefix.
     const clone = h2.cloneNode(true);
     const num = clone.querySelector('.num');
     if (num) num.remove();
@@ -219,11 +262,40 @@
     overlay.addEventListener('click', toggle);
   }
 
+  // 현재 글의 byline 우측에 "· 조회 X,XXX" 추가
+  function renderViewCount() {
+    const slug = getCurrentSlug();
+    if (!slug) return;
+    const post = POSTS.find((p) => p.slug === slug);
+    const views = computeViews(post);
+    if (views === null) return;
+
+    const byline = document.querySelector('.byline');
+    if (!byline) return;
+
+    // byline의 마지막 span(보통 발행일)에 조회수 추가
+    const spans = byline.querySelectorAll('span');
+    if (spans.length === 0) return;
+    const dateSpan = spans[spans.length - 1];
+    if (dateSpan.querySelector('.view-count')) return; // 중복 방지
+
+    const sep = document.createElement('span');
+    sep.textContent = ' · ';
+    sep.style.cssText = 'color:var(--rule);';
+    const vc = document.createElement('span');
+    vc.className = 'view-count';
+    vc.style.cssText = 'color:var(--clay-deep);font-weight:500;letter-spacing:0.02em;';
+    vc.textContent = '조회 ' + formatViews(views);
+    dateSpan.appendChild(sep);
+    dateSpan.appendChild(vc);
+  }
+
   function init() {
     renderLeftSidebar();
     renderTOC();
     setupScrollSpy();
     setupHamburger();
+    renderViewCount();
   }
 
   if (document.readyState === 'loading') {

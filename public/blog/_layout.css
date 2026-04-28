@@ -76,6 +76,22 @@
   transition: color 0.2s;
 }
 .blog-left-list a:hover .li-title { color: var(--clay-deep); }
+.blog-left-list .li-views {
+  display: inline-block;
+  margin-top: 6px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--ink-mute);
+  opacity: 0.85;
+}
+.blog-left-list .li-views::before {
+  content: '◦ ';
+  color: var(--clay);
+  margin-right: 2px;
+}
+.blog-left-list a:hover .li-views { color: var(--clay-deep); opacity: 1; }
+.blog-left-list li.current .li-views { color: var(--clay-deep); opacity: 1; }
 .blog-left-list li.current::before {
   content: '';
   position: absolute;
