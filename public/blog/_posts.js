@@ -24,6 +24,13 @@
   // Single source of truth for blog posts. Sorted newest-first.
   const POSTS = [
     {
+      slug: 'ai-hegemony-2026',
+      title: '2026 AI 패권 전쟁 — 더 이상 모델 싸움이 아닙니다',
+      date: '2026. 4. 24',
+      category: 'AI 산업 분석',
+      href: '/blog/ai-hegemony-2026.html',
+    },
+    {
       slug: 'ai-value-gap-2026',
       title: '2026 생성형 AI 가치 격차 — 88%가 도입했는데 왜 6%만 이익을 보는가',
       date: '2026. 4. 23',
