@@ -31,6 +31,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://cdsa.kr/unsloth-workbook.html</loc>
+    <lastmod>2026-05-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://cdsa.kr/blog/ai-hegemony-2026.html</loc>
     <lastmod>2026-04-24</lastmod>
     <changefreq>monthly</changefreq>
