@@ -29,6 +29,14 @@
   // views.publishedISO = 발행일(자정 KST 기준)
   const POSTS = [
     {
+      slug: 'ai-floor-and-ceiling',
+      title: 'AI가 끌어올린 바닥, 우리의 천장은 어디인가',
+      date: '2026. 5. 8',
+      category: '큐레이션 · AI 시대 일하기',
+      href: '/blog/ai-floor-and-ceiling.html',
+      views: { base: 80, daily: 9, publishedISO: '2026-05-08' },
+    },
+    {
       slug: 'ai-hegemony-2026',
       title: '2026 AI 패권 전쟁 — 더 이상 모델 싸움이 아닙니다',
       date: '2026. 4. 24',
