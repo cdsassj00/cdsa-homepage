@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Code with Claude 2026 키노트 — 비개발자도 알아둘 것만 골라 풀어 씁니다 · CDSA 블로그</title>
+<meta name="description" content="Managed Agents, Dreaming, Outcomes, Routines, CI Autofix. 2026 Code with Claude 키노트의 핵심 용어를 비개발자가 이해할 수 있게 차근차근 풀어 옮긴 글입니다.">
+<meta property="og:title" content="Code with Claude 2026 키노트 — 비개발자도 알아둘 것만 골라 풀어 씁니다">
+<meta property="og:description" content="모델은 지수곡선, 조직은 직선. 그 간격을 메우는 다섯 가지 무기 — 비개발자가 회사에서 이 변화를 설명할 수 있도록 용어와 의미를 정리합니다.">
+<meta property="og:type" content="article">
+<!-- BEGIN SEO -->
+<meta name="keywords" content="Code with Claude 2026, Claude 키노트, Anthropic 키노트, Claude Managed Agents, Multi-Agent Orchestration, Outcomes, Dreaming, Claude Code Routines, CI Autofix, Advisor Strategy, Opus 4.7, Mythos, 비개발자 AI 해설">
+<link rel="canonical" href="https://cdsa.kr/blog/claude-keynote-2026-explainer.html">
+<meta property="og:url" content="https://cdsa.kr/blog/claude-keynote-2026-explainer.html">
+<meta property="og:site_name" content="한국데이터사이언티스트협회">
+<meta property="og:image" content="https://cdsa.kr/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta property="article:published_time" content="2026-05-09T10:00:00+09:00">
+<meta property="article:modified_time" content="2026-05-09T10:00:00+09:00">
+<meta property="article:author" content="CDSA 편집팀">
+<meta property="article:section" content="큐레이션 · 키노트 해설">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Code with Claude 2026 키노트 — 비개발자도 알아둘 것만 골라 풀어 씁니다">
+<meta name="twitter:description" content="모델은 지수곡선, 조직은 직선. 그 간격을 메우는 다섯 가지 무기 — 비개발자가 회사에서 이 변화를 설명할 수 있도록 용어와 의미를 정리합니다.">
+<meta name="twitter:image" content="https://cdsa.kr/og-image.png">
+<meta name="author" content="CDSA 편집팀">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Code with Claude 2026 키노트 — 비개발자도 알아둘 것만 골라 풀어 씁니다",
+  "description": "Managed Agents, Dreaming, Outcomes, Routines, CI Autofix. 2026 Code with Claude 키노트의 핵심 용어를 비개발자가 이해할 수 있게 차근차근 풀어 옮긴 글입니다.",
+  "datePublished": "2026-05-09T10:00:00+09:00",
+  "dateModified": "2026-05-09T10:00:00+09:00",
+  "author": {
+    "@type": "Organization",
+    "name": "CDSA 편집팀",
+    "url": "https://cdsa.kr"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "한국데이터사이언티스트협회",
+    "url": "https://cdsa.kr",
+    "logo": {"@type": "ImageObject", "url": "https://cdsa.kr/og-image.png"}
+  },
+  "image": ["https://cdsa.kr/og-image.png"],
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://cdsa.kr/blog/claude-keynote-2026-explainer.html"},
+  "isBasedOn": "https://www.anthropic.com/events/code-with-claude-2026",
+  "articleSection": "큐레이션 · 키노트 해설",
+  "inLanguage": "ko-KR"
+}
+</script>
+<!-- END SEO -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NZL39P5EYZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NZL39P5EYZ');
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/blog/_layout.css">
+<style>
+  :root {
+    --cream: #faf9f5; --cream-deep: #f3efe3; --ink: #1a1a1a; --ink-soft: #3d3d3a;
+    --ink-mute: #6b6b66; --rule: #d9d6cc; --clay: #cc785c; --clay-deep: #a85a42;
+    --clay-light: #f0ddd4; --code-bg: #f2f0e8; --teal: #2a7d6e;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--cream); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  body { font-family: "Fraunces", "Noto Serif KR", Georgia, serif; font-weight: 300; font-size: 19px; line-height: 1.72; letter-spacing: -0.005em; }
+
+  .topnav { position: fixed; top: 0; left: 0; right: 0; height: 48px; background: rgba(250, 249, 245, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; }
+  .topnav-left { display: flex; align-items: center; gap: 18px; }
+  .topnav-left a { color: var(--ink-soft); text-decoration: none; transition: color 0.2s; }
+  .topnav-left a:hover { color: var(--clay-deep); }
+  .topnav-home { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 600; font-size: 16px; color: var(--ink) !important; letter-spacing: -0.3px; }
+  .topnav-sep { color: var(--rule); font-size: 11px; }
+  .topnav-right { display: flex; gap: 16px; }
+  .topnav-right a { color: var(--ink-mute); text-decoration: none; font-size: 12px; transition: color 0.2s; }
+  .topnav-right a:hover { color: var(--clay-deep); }
+  .topnav-current { color: var(--ink) !important; font-weight: 600; position: relative; }
+  .topnav-current::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 2px; background: var(--clay); border-radius: 1px; }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 116px 28px 120px; }
+  .breadcrumb { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; margin-bottom: 36px; display: flex; align-items: center; gap: 8px; color: var(--ink-mute); }
+  .breadcrumb a { color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--ink); }
+  .breadcrumb .bc-sep { color: var(--rule); }
+
+  .kicker { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay-deep); margin-bottom: 28px; }
+  h1 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 400; font-size: 44px; line-height: 1.18; letter-spacing: -0.02em; margin: 0 0 24px; color: var(--ink); word-break:keep-all; overflow-wrap:break-word; }
+  .dek { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 300; font-style: italic; font-size: 21px; line-height: 1.55; color: var(--ink-soft); margin: 0 0 40px; word-break:keep-all; overflow-wrap:break-word; }
+  .byline { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); padding: 18px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-bottom: 56px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .byline strong { font-weight: 500; color: var(--ink-soft); }
+
+  .lede { font-size: 19px; line-height: 1.72; margin-bottom: 22px; word-break:keep-all; overflow-wrap:break-word; }
+  .lede::first-letter { font-family: "Fraunces", serif; font-weight: 400; font-size: 68px; float: left; line-height: 0.88; padding: 8px 10px 0 0; color: var(--clay); }
+
+  h2 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 28px; line-height: 1.3; letter-spacing: -0.015em; margin: 64px 0 16px; color: var(--ink); scroll-margin-top: 80px; word-break:keep-all; overflow-wrap:break-word; }
+  h2 .num { font-family: "Inter", sans-serif; font-size: 12px; font-weight: 600; color: var(--clay); letter-spacing: 0.1em; display: block; margin-bottom: 10px; }
+  p { margin: 0 0 22px; }
+  p + p { margin-top: -6px; }
+  strong { font-weight: 500; color: var(--ink); }
+  em { font-style: italic; }
+
+  .term { margin: 28px 0; padding: 18px 22px; background: var(--code-bg); border-left: 3px solid var(--clay); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 15px; line-height: 1.7; color: var(--ink-soft); border-radius: 2px; word-break:keep-all; overflow-wrap:break-word; }
+  .term .term-name { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 17px; color: var(--ink); display: block; margin-bottom: 6px; letter-spacing: -0.01em; }
+  .term .term-eng { font-family: "JetBrains Mono", monospace; font-size: 12px; color: var(--ink-mute); font-weight: 400; margin-left: 8px; letter-spacing: 0.01em; }
+
+  blockquote { margin: 36px 0; padding: 4px 0 4px 22px; border-left: 2px solid var(--clay); font-family: "Fraunces", "Noto Serif KR", serif; font-style: italic; font-size: 20px; line-height: 1.55; color: var(--ink-soft); word-break:keep-all; overflow-wrap:break-word; }
+  blockquote cite { display: block; font-family: "Inter", "Noto Sans KR", sans-serif; font-style: normal; font-size: 12px; color: var(--ink-mute); margin-top: 12px; letter-spacing: 0.02em; }
+  blockquote cite::before { content: "— "; }
+
+  .pull { font-family: "Fraunces", "Noto Serif KR", serif; font-size: 26px; line-height: 1.5; color: var(--ink); font-weight: 500; font-style: italic; margin: 40px 0; padding: 26px 0 26px 28px; border-left: 3px solid var(--clay); letter-spacing: -0.01em; word-break:keep-all; overflow-wrap:break-word; }
+
+  .source-note { margin-top: 40px; padding: 18px 22px; background: var(--code-bg); border-left: 2px solid var(--clay-light); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); line-height: 1.7; border-radius: 2px; }
+  .source-note strong { color: var(--ink-soft); font-weight: 600; }
+  .source-note a { color: var(--clay-deep); text-decoration: none; border-bottom: 1px dotted var(--clay-light); }
+  .source-note a:hover { color: var(--ink); }
+
+  .footer { margin-top: 72px; padding-top: 28px; border-top: 1px solid var(--rule); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); line-height: 1.7; }
+  .footer strong { color: var(--ink-soft); font-weight: 600; }
+
+  .bottom-nav { margin-top: 72px; padding: 36px 0; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .bottom-nav a { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .bottom-nav a:hover { color: var(--ink); }
+  .bottom-nav-home { font-family: "Fraunces", "Noto Serif KR", serif !important; font-size: 16px !important; font-style: italic; font-weight: 400; }
+
+  @media (max-width: 560px) {
+    .wrap { padding: 92px 22px 80px; }
+    h1 { font-size: 30px; line-height: 1.24; }
+    .dek { font-size: 17.5px; }
+    body { font-size: 17px; }
+    h2 { font-size: 23px; margin-top: 52px; }
+    .topnav-right { display: none; }
+    .pull { font-size: 22px; padding-left: 22px; }
+    .term { padding: 16px 18px; }
+    .term .term-name { font-size: 16px; }
+  }
+  @media (max-width: 400px) {
+    h1 { font-size: 26px !important; line-height: 1.25; }
+    .dek { font-size: 16px !important; }
+    h2 { font-size: 21px !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="topnav-left">
+    <a href="/" class="topnav-home">CDSA</a>
+    <span class="topnav-sep">|</span>
+    <a href="/">홈페이지</a>
+    <a href="/blog/" class="topnav-current">블로그</a>
+  </div>
+  <nav class="topnav-right">
+    <a href="/framework.html">프레임워크</a>
+    <a href="/unsloth-workbook.html">워크북</a>
+    <a href="/fullcourse.html">Full Course</a>
+  </nav>
+</header>
+
+<button class="blog-hamburger" aria-label="블로그 목록 열기"><span></span><span></span><span></span></button>
+<div class="blog-overlay"></div>
+<aside class="blog-left">
+  <div class="blog-left-title">Blog Posts</div>
+  <ol class="blog-left-list"></ol>
+</aside>
+<aside class="blog-right">
+  <div class="blog-right-title">On This Page</div>
+  <ul class="blog-toc"></ul>
+</aside>
+
+<article class="wrap">
+
+  <nav class="breadcrumb">
+    <a href="/">← CDSA 홈</a>
+    <span class="bc-sep">/</span>
+    <a href="/blog/">블로그</a>
+    <span class="bc-sep">/</span>
+    <span>큐레이션 · 키노트 해설</span>
+  </nav>
+
+  <div class="kicker">Curation · 키노트 해설</div>
+
+  <h1>Code with Claude 2026 키노트<br>비개발자가 알아둘 것만 풀어 씁니다</h1>
+
+  <p class="dek">
+    모델은 지수곡선으로 좋아지는데, 조직은 여전히 직선으로
+    움직입니다. 그 간격을 메우는 다섯 가지 무기를, 회사에서
+    동료에게 그대로 설명할 수 있는 표현으로 옮겨 놓습니다.
+  </p>
+
+  <div class="byline">
+    <span><strong>큐레이션 · CDSA 편집팀</strong> &nbsp;·&nbsp; 원문 Anthropic <em>Code with Claude</em> 2026 키노트</span>
+    <span>2026. 5. 9</span>
+  </div>
+
+  <p class="lede">앤트로픽의 연례 개발자 행사 <em>Code with Claude</em> 2026 오프닝 키노트가 끝났습니다. 47분짜리 발표였고, 그 안에 새로 들어온 용어가 적지 않았습니다. Managed Agents, Multi-Agent Orchestration, Outcomes, Dreaming, Routines, CI Autofix, Advisor Strategy. 영문 약어와 신조어가 빽빽이 박혀 있어서, 평소 코드를 직접 짜지 않는 분들에게는 한 번 흘려듣고 끝나기 쉬운 자리였을 것입니다.</p>
+
+  <p>그래서 이 글에서는 키노트의 흐름을 다섯 가지 화두로 추려, 각 화두에서 등장한 핵심 용어를 짧게 정의하고 그 의미를 평어로 풀어내려고 합니다. 회사에서 임원이나 동료에게 "지금 AI 도구가 어디까지 와 있느냐"고 질문받았을 때, 그대로 옮겨 쓸 수 있는 표현을 찾는 것이 목적입니다.</p>
+
+  <h2 id="s01"><span class="num">01 / 큰 그림</span>모델은 지수곡선, 조직은 직선</h2>
+
+  <p>키노트는 앤트로픽의 최고제품책임자(CPO) 발언으로 열렸습니다. 핵심 메시지는 한 문장으로 요약됩니다. <strong>모델 능력은 지수곡선으로 좋아지고 있는데, 대부분의 조직은 여전히 직선으로 도입하고 있다</strong>는 것입니다. 그래서 "AI가 할 수 있는 일"과 "사람들이 실제로 시키고 있는 일" 사이에 점점 큰 간격이 벌어지고 있고, 이 간격이 곧 비즈니스 기회라는 이야기입니다.</p>
+
+  <p>발표자는 1년 전 발표 자리에서는 "에이전트가 사람의 확인 없이 한 시간 정도 일하는 것"을 비현실적인 목표처럼 이야기했었는데, 지금은 "에이전트가 밤새 끝까지 작업해서 다음 날 아침에 결과물을 받는 일"이 일상이 됐다고 짚었습니다. 또 한 달 전에는 차세대 모델(Mythos·코드네임)이 OpenBSD 운영체제 전체 코드를 읽고, 27년 동안 어떤 사람·퍼저·정적분석기도 잡아내지 못했던 보안 취약점을 찾아냈다는 사례도 인용했습니다.</p>
+
+  <div class="term">
+    <span class="term-name">Task Horizon<span class="term-eng">태스크 호라이즌</span></span>
+    "에이전트가 사람 개입 없이 얼마나 긴 호흡으로 한 가지 일을 끝까지 해낼 수 있는가"를 측정하는 지표입니다. 작년에는 분 단위, 올해는 시간 단위, 내년에는 며칠 단위로 늘어나고 있다는 것이 발표자의 진단입니다.
+  </div>
+
+  <p>구체적인 사용량 숫자도 함께 공개됐습니다. 1년 전 대비 Claude 플랫폼의 API 호출량은 17배로 늘었고, Claude Code 평균 사용자는 일주일에 20시간을 그 안에서 보낸다고 합니다. 도구 하나를 일주일에 사흘 가까이 쓴다는 의미입니다. 또한 발표 시점에 Pro·Max·Team 등 유료 플랜의 5시간 단위 사용량 한도를 두 배로 늘리고, Opus 모델의 API 한도도 크게 올린다고 발표했습니다.</p>
+
+  <p class="pull">
+    1년 전에는 한 시간 자율 실행이 스트레치 골이었고,
+    지금은 밤새 일이 끝나 있는 게 일상입니다. 그 간격이
+    조직과 모델 사이에 그대로 쌓이고 있습니다.
+  </p>
+
+  <h2 id="s02"><span class="num">02 / 모델 층</span>업그레이드를 비즈니스 기회로 보는 자세</h2>
+
+  <p>두 번째 발표자는 리서치 PM 팀의 다이앤이었습니다. 모델은 어디까지 왔고, 어디로 가고 있는지를 정리했습니다. 그가 던진 가장 실용적인 메시지는 "<strong>모델 업그레이드를 비즈니스 기회로 다루라</strong>"는 한 문장입니다.</p>
+
+  <div class="term">
+    <span class="term-name">프런티어 모델<span class="term-eng">Frontier model</span></span>
+    그 시점에 인류가 실제로 사용할 수 있는 최첨단 AI 모델을 가리키는 표현입니다. 앤트로픽은 지난 12개월간 8개의 프런티어 모델을 내놓았고, 현재 주력은 Opus 4.7, 미리보기로 공개되는 차세대 모델은 Mythos라는 코드명으로 불리고 있습니다.
+  </div>
+
+  <div class="term">
+    <span class="term-name">스캐폴딩<span class="term-eng">Scaffolding</span></span>
+    원래 건축의 비계(아래에서 받쳐주는 임시 구조)에서 온 말입니다. 모델이 부족할 때 사람이 짜둔 안내 코드와 안내 프롬프트로 모델을 받쳐주는 작업을 통칭합니다. 다이앤은 "예전에는 모델을 일으켜 세우려고 스캐폴딩을 짰지만, 지금은 모델의 능력을 더 끌어내려고 스캐폴딩을 쓴다"고 표현했습니다.
+  </div>
+
+  <div class="term">
+    <span class="term-name">Eval(평가셋)<span class="term-eng">evaluation suite</span></span>
+    한 모델이 실무에서 얼마나 잘 작동하는지 측정하기 위해 미리 만들어둔 문제 세트입니다. 모델이 새로 나올 때마다 같은 평가셋을 자동으로 돌려보면, 어떤 능력이 갑자기 뛰어올랐는지 즉시 보입니다. 다이앤은 "단단한 평가셋과 자동화된 업그레이드 파이프라인을 갖춘 팀이 새 모델 발표를 기회로 바꾼다"고 말했습니다.
+  </div>
+
+  <p>실제 사례도 함께 인용됐습니다. 코딩 에이전트 회사 AMP는 자사 벤치마크에서 Opus 4.7이 가장 높은 점수를 내자, 똑똑이 모드를 통째로 그 모델로 옮기고 자체 스캐폴딩 일부를 제거했다고 합니다. 모델이 충분히 좋아져서 받쳐줄 사다리가 줄어들었다는 의미입니다. 라쿠텐은 같은 모델로 운영 환경에서 풀어낸 엔지니어링 작업의 양이 직전 대비 세 배가 됐고, 인튜이트는 Opus 4.7이 자기 추론의 결함을 스스로 짚어내고 다시 푸는 모습을 확인했다고 합니다.</p>
+
+  <h2 id="s03"><span class="num">03 / 플랫폼 층</span>관리형 에이전트와 세 가지 신무기</h2>
+
+  <p>세 번째 블록은 클라우드 플랫폼 팀의 케이틀린과 안젤라가 맡았습니다. "비즈니스에서 모델을 잘 쓰지 못하게 막는 두 가지 벽"을 짚는 데서 시작했습니다. 하나는 원하는 결과를 정확히 끌어내기가 여전히 어렵다는 점, 다른 하나는 빠르게 출시하면서도 운영 가능한 품질로 굴리기가 어렵다는 점입니다.</p>
+
+  <div class="term">
+    <span class="term-name">Claude Managed Agents<span class="term-eng">관리형 에이전트</span></span>
+    앤트로픽이 운영 인프라까지 통째로 책임지는 에이전트 패키지입니다. 사용자는 에이전트의 역할과 도구만 정의하면 되고, 메모리·실행·관제 같은 운영 공통 요소는 앤트로픽 쪽이 안에 묶어 둡니다. 시연에서는 노션이 자기 제품 안에 Claude 에이전트를 띄울 때 이 위에 올렸다는 사례가 소개됐습니다.
+  </div>
+
+  <div class="term">
+    <span class="term-name">Advisor Strategy<span class="term-eng">어드바이저 전략</span></span>
+    같은 일을 두 모델이 나눠 맡는 방식입니다. 빠르고 저렴한 모델(예: Sonnet, Haiku)이 실제 실행을 하다가, 막히면 더 똑똑한 모델(예: Opus)에게 자문을 구합니다. 법률 SaaS Eve Legal이 이 방식으로 "프런티어 수준 품질을 5분의 1 비용에" 달성했다는 사례가 인용됐습니다.
+  </div>
+
+  <p>이 위에 새로 추가된 세 가지가 키노트의 발표 핵심입니다.</p>
+
+  <div class="term">
+    <span class="term-name">Multi-Agent Orchestration<span class="term-eng">멀티 에이전트 오케스트레이션</span></span>
+    여러 에이전트를 조 단위로 묶어 한 가지 큰 일을 시키는 방식입니다. 시연에서는 가상의 우주 스타트업 루마라(Lumara)가 달에 드론을 착륙시키는 일을 셋으로 쪼개 보여줬습니다. <strong>커맨더 에이전트</strong>가 전체 미션을 총괄하고, <strong>디텍터 에이전트</strong>가 좋은 착륙 지점을 찾고, <strong>네비게이터 에이전트</strong>가 안전 비행과 착륙을 책임지는 식입니다. 각 에이전트는 자기만의 컨텍스트 창을 따로 갖고, 결과만 합쳐 더 나은 답을 만듭니다.
+  </div>
+
+  <div class="term">
+    <span class="term-name">Outcomes<span class="term-eng">아웃컴(목표 정의)</span></span>
+    "어떤 결과가 성공인가"를 마크다운 문서 한 장으로 정의해 두면, 에이전트가 그 기준을 만족할 때까지 스스로 다시 시도하게 만드는 기능입니다. 시연에서는 "드론은 부드럽게 착지해야 하고, 깨끗한 지면에 내려야 하며, 지구로 돌아갈 만큼의 연료를 남겨야 한다"는 세 줄짜리 기준이 그대로 채점 루브릭이 됐습니다. 최대 시도 횟수도 사용자가 설정할 수 있습니다.
+  </div>
+
+  <div class="term">
+    <span class="term-name">Dreaming<span class="term-eng">드리밍(자기 학습)</span></span>
+    이번 키노트에서 가장 화제가 된 기능입니다. 에이전트가 자기의 과거 세션 기록을 스스로 다시 들여다보고, 거기서 빠뜨린 기술과 배웠어야 할 교훈을 추려 메모리에 직접 적어두는 자기 학습 루프입니다. 사용자는 콘솔에서 "Dream" 버튼만 누르면 됩니다. 시연에서는 6개 후보 착륙지 중 4곳만 성공시키던 시스템이, 하룻밤의 드리밍 후 6곳 전부를 성공시키는 모습이 공개됐습니다. 이때 에이전트가 자기 손으로 만든 산출물 중 하나가 "착륙 플레이북"이라 불리는 휴리스틱 모음 문서였습니다.
+  </div>
+
+  <p>세 가지를 한 줄로 묶으면 다음과 같습니다. 멀티 에이전트는 일을 나누고, 아웃컴은 합격선을 정의하고, 드리밍은 시간이 지날수록 시스템 스스로 좋아지게 만듭니다. 비개발자에게 가장 와닿는 표현으로 옮기면, <em>"한 번 잘 짜두면, 자고 일어나면 더 똑똑해져 있는 비서"</em>를 쓰는 일이 가능해진다는 이야기입니다.</p>
+
+  <h2 id="s04"><span class="num">04 / 도구 층</span>Claude Code, "코드를 시키는 코드"로</h2>
+
+  <p>네 번째 블록은 Claude Code 책임자 안젤라와 보리스 셔니의 발표였습니다. 1년 전과 가장 많이 달라진 부분이라고 직접 짚었습니다. 1년 전에는 사용자가 한 줄 한 줄 모든 코드 변경을 직접 검토했고, 권한 요청 알림이 100~200번씩 떴습니다. 지금은 대부분의 사용자가 자동 모드(auto mode)로 두고, 작업이 끝났을 때 풀 리퀘스트(PR) 단위로 결과물만 검토합니다.</p>
+
+  <div class="term">
+    <span class="term-name">Claude Code 데스크톱<span class="term-eng">Claude Code Desktop</span></span>
+    터미널과 IDE 외에 새로 추가된 세 번째 사용 환경입니다. 전체 화면 GUI, 빌드 미리보기, 사이드바 관제판, 이미지·리치 출력 표시를 갖췄습니다. 로컬 세션과 원격 세션을 한 화면에서 함께 본다는 점이 특징입니다.
+  </div>
+
+  <div class="term">
+    <span class="term-name">Claude Agent SDK<span class="term-eng">에이전트 SDK</span></span>
+    Claude Code의 IDE·데스크톱·외부 통합 모두가 위에 올라가 있는 토대 코드 모음입니다. 외부 개발자도 같은 SDK 위에 자기 도구를 붙여 만들 수 있다는 의미입니다.
+  </div>
+
+  <p>도구 자체보다 더 의미 있는 것은 사용 규모의 사례였습니다. 쇼피파이는 엔지니어뿐 아니라 디자인·기획·데이터 직군까지 Claude Code를 일상 도구로 쓰고 있다고 소개됐고, 라틴아메리카 최대 e커머스 메르카도리브레는 엔지니어 23,000명 전원이 Claude Code 위에서 일하면서 50만 건이 넘는 PR을 사람 검수와 함께 검토했고, 9,000개 이상의 앱을 현대화했다고 합니다. 같은 회사의 기술 책임자 오스카 멀런은 올해 3분기까지 90% 자율 코딩과 완전 에이전트 주도 PR 루프를 목표로 잡고 있다고 합니다.</p>
+
+  <p>앤트로픽 자체도 같은 흐름입니다. Claude Code를 사내 전면 도입하고 나서 엔지니어 1인당 PR 생성량이 200% 증가했고, 그 와중에도 코드 품질 기준은 그대로 유지되고 있다는 발표가 있었습니다.</p>
+
+  <p class="pull">
+    Claude Code를 잘 쓰는 회사들의 공통점은 한 가지입니다.
+    매니저와 임원이 다시 코드 베이스에 손을 대기 시작했다는
+    것. 로드맵과 리뷰만 보던 사람들이 다시 빌딩으로 돌아왔습니다.
+  </p>
+
+  <h2 id="s05"><span class="num">05 / 자동화 층</span>Routines — 깨어 있지 않아도 흐르는 일</h2>
+
+  <p>마지막 블록은 보리스 셔니가 시연한 한 가지 개념에 모입니다. <strong>Routines.</strong> 발표자가 "내 코드의 상당량을 이제 직접 프롬프트로 짜지 않는다. 내가 짜는 것은 프롬프트를 던지는 루틴이다"라고 표현한 부분이 가장 정확한 정의입니다.</p>
+
+  <div class="term">
+    <span class="term-name">Routines<span class="term-eng">루틴</span></span>
+    Claude Code 자체를 깨우는 트리거를 미리 등록해 두는 기능입니다. 정해진 시간에 깨우거나(스케줄), 깃허브 이슈가 새로 열리는 것 같은 외부 사건이 들어왔을 때 깨우거나(웹훅), 임의의 API 호출로 깨우는(API 트리거) 세 가지 방식이 있습니다. 비개발자식 표현으로 옮기면, <em>"퇴근 후에도 회사의 일이 자동으로 자기에게 도착하도록 정의해 두는 작업 흐름"</em>입니다.
+  </div>
+
+  <div class="term">
+    <span class="term-name">CI Autofix<span class="term-eng">CI 자동 수정</span></span>
+    PR을 머지(병합)하기 직전 단계에서 자동으로 발생하는 잡일을, Claude가 곁에서 받아 처리하는 루틴입니다. 코드 리뷰 코멘트 반영, 테스트 자동화에서 일시적으로 실패한 항목 재실행, 보안 검토에서 지적된 항목 수정, 충돌난 브랜치의 자동 리베이스가 포함됩니다. 시연에서는 일시적인 네트워크 타임아웃으로 빨간불이 켜진 CI를 루틴이 깨워 진단·재시도해 초록불로 바꾸는 모습이 공개됐습니다.
+  </div>
+
+  <div class="term">
+    <span class="term-name">Claude Security<span class="term-eng">코드 베이스 보안 스캔</span></span>
+    밤사이 코드 베이스 전체를 훑어 보안 취약점을 찾아내고, 발견한 항목을 곧바로 Claude Code로 넘겨 수정 PR까지 띄우는 루틴 기반 도구입니다. "보안팀이 출시 속도를 따라잡기 어렵다"는 현장 피드백에서 출발했다고 발표자가 직접 설명했습니다.
+  </div>
+
+  <p>그리고 모바일도 함께 짚어둘 만합니다. iOS와 안드로이드 Claude 앱 안에 Claude Code 원격 제어가 들어왔습니다. 노트북을 열고 균형을 잡으며 거리를 걷지 않아도, 공원에서도 작업을 던질 수 있다는 것이 발표자의 표현이었습니다.</p>
+
+  <h2 id="s06"><span class="num">06 / 닫는 말</span>비개발자에게 남는 한 가지</h2>
+
+  <p>키노트 전체를 한 문장으로 압축하면 이렇습니다. <strong>이제 기본값이 바뀌었습니다.</strong> 발표자 보리스의 표현을 그대로 옮기면, "기본값은 더 이상 '내가 Claude Code에 프롬프트를 넣는다'가 아니라, '내가 Claude로 하여금 Claude Code에 프롬프트를 넣게 한다'입니다."</p>
+
+  <p>코드를 직접 짜지 않는 분들에게 이 변화는 어떻게 닿을까요. 두 가지로 정리할 수 있습니다.</p>
+
+  <p>하나는 <em>업무 위임의 단위가 바뀝니다.</em> 어제까지는 동료에게 "이 보고서 좀 정리해 줘"라고 부탁했다면, 이제는 "이 일이 들어올 때마다 Claude가 자동으로 정리해서 내 메일함에 넣어두도록 하는 루틴 한 개"를 만드는 일이 비교 대상이 됩니다. 한 번의 부탁이 한 번의 결과를 만들던 패러다임이, 한 번의 설계가 무한히 반복되는 결과를 만드는 패러다임으로 옮겨가고 있습니다. 이 옮겨감을 이해하고 본인의 업무 흐름에 적용하는 것이, 향후 1~2년 가장 큰 차이를 만드는 변수가 됩니다.</p>
+
+  <p>다른 하나는 <em>책임의 무게가 더 분명해집니다.</em> 에이전트가 한 번에 끝까지 일을 처리할수록, 그 결과를 검수하고 승인하는 사람의 자리는 더 무거워집니다. AI가 99.9%를 잘 해내도 0.1%의 오류는 반드시 발생하고, 그 0.1%에 책임을 지는 일은 외주화되지 않습니다. 키노트의 안젤라·케이틀린 발표가 거듭 강조했듯이, 검수와 승인의 자리에 있는 사람의 역할이 오히려 더 커진다는 의미입니다.</p>
+
+  <p>요약하면, AI가 더 잘하게 됐다는 사실보다, <strong>그 잘함을 일상 업무 흐름에 어떻게 끼워 넣는지가 새로운 격차의 원천</strong>이라는 것이 이번 키노트의 핵심입니다. 발표자들이 거듭 짚은 표현으로 닫겠습니다. 모델은 지수곡선으로 좋아집니다. 우리 조직이 직선에 머물러 있을지, 같은 곡선 위에 올라탈지를 결정하는 것은, 더 이상 모델이 아니라 우리입니다.</p>
+
+  <div class="source-note">
+    <strong>출처</strong> · 본 글은 앤트로픽이 2026년 5월 진행한 개발자 컨퍼런스 <strong>Code with Claude</strong>의 오프닝 키노트 자동 전사 자료를 바탕으로 합니다. 발표는 앤트로픽 최고제품책임자(CPO)의 오프닝, 리서치 PM 다이앤의 모델 발표, 클라우드 플랫폼 팀(케이틀린·안젤라)의 Managed Agents 발표, Claude Code 팀(안젤라·보리스 셔니·캣)의 도구·루틴 시연 순으로 이어졌습니다. CDSA 편집팀이 한국어 비개발자 독자 관점에서 용어 풀이 중심으로 재구성했으며, 발표 시연 시 사용된 가상 회사 이름(Lumara, AcmePay)과 인용된 고객 사례(Stripe, Binti, Eve Legal, Notion, Shopify, MercadoLibre, Rakuten, Intuit, AMP)는 키노트에서 발화된 그대로 옮겼습니다. 자동 전사 자료의 한국어 전체 전사록은 <a href="/blog/claude-keynote-2026-transcript.html">별도 글</a>로 함께 올렸습니다.
+  </div>
+
+  <div class="footer">
+    <p><strong>CDSA 편집팀</strong> — 한국데이터사이언티스트협회는 도메인 전문가의 AX 역량강화를 골목길의 실제 문제부터 끌어올립니다. 키노트·논문·산업 보고서 중 비개발자 의사결정자에게 닿아야 할 자료를 골라 한국어 산문체로 다시 정리해 올립니다.</p>
+    <p>큐레이션·편집 문의는 <a href="mailto:sjshin@cdsa.or.kr" style="color: var(--clay-deep); text-decoration: none;">sjshin@cdsa.or.kr</a>로 보내주세요.</p>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="/blog/" class="bottom-nav-home">← 블로그 목록</a>
+    <a href="/">CDSA 홈페이지 →</a>
+  </nav>
+
+</article>
+
+<script src="/blog/_posts.js" defer></script>
+
+</body>
+</html>

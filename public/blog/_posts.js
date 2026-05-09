@@ -29,6 +29,22 @@
   // views.publishedISO = 발행일(자정 KST 기준)
   const POSTS = [
     {
+      slug: 'claude-keynote-2026-explainer',
+      title: 'Code with Claude 2026 키노트 — 비개발자가 알아둘 것만 풀어 씁니다',
+      date: '2026. 5. 9',
+      category: '큐레이션 · 키노트 해설',
+      href: '/blog/claude-keynote-2026-explainer.html',
+      views: { base: 110, daily: 11, publishedISO: '2026-05-09' },
+    },
+    {
+      slug: 'claude-keynote-2026-transcript',
+      title: 'Code with Claude 2026 키노트 — 전체 한국어 전사록',
+      date: '2026. 5. 9',
+      category: '자료 · 전사록',
+      href: '/blog/claude-keynote-2026-transcript.html',
+      views: { base: 60, daily: 6, publishedISO: '2026-05-09' },
+    },
+    {
       slug: 'ai-floor-and-ceiling',
       title: 'AI가 끌어올린 바닥, 우리의 천장은 어디인가',
       date: '2026. 5. 8',
