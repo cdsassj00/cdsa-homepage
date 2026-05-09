@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>허깅페이스 모델 페이지, 비개발자가 처음 봐야 할 다섯 가지 · CDSA 블로그</title>
+<meta name="description" content="허깅페이스(huggingface.co)에 처음 들어선 비개발자가 모델을 고를 때 가장 먼저 보아야 할 다섯 가지. 라이선스, 모델명, instruct 여부, 한국어, 크기를 어렵지 않은 우리말로 풀어 쓴 첫 편.">
+<meta property="og:title" content="허깅페이스 모델 페이지, 비개발자가 처음 봐야 할 다섯 가지">
+<meta property="og:description" content="라이선스, 모델명, instruct 여부, 한국어, 크기. 허깅페이스 모델 카드를 처음 펼친 비개발자가 무엇부터 봐야 하는지 다섯 가지 판단축으로 정리한 시리즈 1편.">
+<meta property="og:type" content="article">
+<meta name="keywords" content="허깅페이스, Hugging Face, SLM, LLM, 모델 카드, 라이선스, instruct, 비개발자, 신성진">
+
+<link rel="canonical" href="https://cdsa.kr/blog/huggingface-for-beginners-1.html">
+<meta property="og:url" content="https://cdsa.kr/blog/huggingface-for-beginners-1.html">
+<meta property="og:site_name" content="한국데이터사이언티스트협회">
+<meta property="og:image" content="https://cdsa.kr/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta property="article:published_time" content="2026-05-09T14:00:00+09:00">
+<meta property="article:modified_time" content="2026-05-09T14:00:00+09:00">
+<meta property="article:author" content="신성진">
+<meta property="article:section" content="허깅페이스 모델 읽기">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="허깅페이스 모델 페이지, 비개발자가 처음 봐야 할 다섯 가지">
+<meta name="twitter:description" content="라이선스, 모델명, instruct 여부, 한국어, 크기. 비개발자가 모델을 고를 때 정말로 봐야 할 다섯 가지.">
+<meta name="twitter:image" content="https://cdsa.kr/og-image.png">
+<meta name="author" content="신성진">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "허깅페이스 모델 페이지, 비개발자가 처음 봐야 할 다섯 가지",
+  "description": "라이선스, 모델명, instruct 여부, 한국어, 크기. 허깅페이스 모델 카드를 처음 펼친 비개발자가 무엇부터 봐야 하는지 다섯 가지 판단축으로 정리한 시리즈 1편.",
+  "datePublished": "2026-05-09T14:00:00+09:00",
+  "dateModified": "2026-05-09T14:00:00+09:00",
+  "author": {
+    "@type": "Person",
+    "name": "신성진",
+    "affiliation": {
+      "@type": "Organization",
+      "name": "한국데이터사이언티스트협회",
+      "url": "https://cdsa.kr"
+    }
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "한국데이터사이언티스트협회",
+    "url": "https://cdsa.kr",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://cdsa.kr/og-image.png"
+    }
+  },
+  "image": ["https://cdsa.kr/og-image.png"],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://cdsa.kr/blog/huggingface-for-beginners-1.html"
+  },
+  "articleSection": "허깅페이스 모델 읽기",
+  "inLanguage": "ko-KR"
+}
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NZL39P5EYZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NZL39P5EYZ');
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/blog/_layout.css">
+<style>
+  :root {
+    --cream: #faf9f5;
+    --cream-deep: #f3efe3;
+    --ink: #1a1a1a;
+    --ink-soft: #3d3d3a;
+    --ink-mute: #6b6b66;
+    --rule: #d9d6cc;
+    --clay: #cc785c;
+    --clay-deep: #a85a42;
+    --code-bg: #f2f0e8;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--cream); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  body { font-family: "Fraunces", "Noto Serif KR", Georgia, serif; font-weight: 300; font-size: 19px; line-height: 1.72; letter-spacing: -0.005em; }
+
+  .topnav { position: fixed; top: 0; left: 0; right: 0; height: 48px; background: rgba(250, 249, 245, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; }
+  .topnav-left { display: flex; align-items: center; gap: 18px; }
+  .topnav-left a { color: var(--ink-soft); text-decoration: none; transition: color 0.2s; }
+  .topnav-left a:hover { color: var(--clay-deep); }
+  .topnav-home { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 600; font-size: 16px; color: var(--ink) !important; letter-spacing: -0.3px; }
+  .topnav-sep { color: var(--rule); font-size: 11px; }
+  .topnav-right { display: flex; gap: 16px; }
+  .topnav-right a { color: var(--ink-mute); text-decoration: none; font-size: 12px; transition: color 0.2s; }
+  .topnav-right a:hover { color: var(--clay-deep); }
+  .topnav-current { color: var(--ink) !important; font-weight: 600; position: relative; }
+  .topnav-current::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 2px; background: var(--clay); border-radius: 1px; }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 116px 28px 120px; }
+  .breadcrumb { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; margin-bottom: 36px; display: flex; align-items: center; gap: 8px; color: var(--ink-mute); }
+  .breadcrumb a { color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--ink); }
+  .breadcrumb .bc-sep { color: var(--rule); }
+
+  .kicker { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay-deep); margin-bottom: 28px; }
+  h1 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 400; font-size: 44px; line-height: 1.18; letter-spacing: -0.02em; margin: 0 0 24px; color: var(--ink); word-break:keep-all;overflow-wrap:break-word;}
+  .dek { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 300; font-style: italic; font-size: 21px; line-height: 1.55; color: var(--ink-soft); margin: 0 0 40px; word-break:keep-all;overflow-wrap:break-word;}
+  .byline { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); padding: 18px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-bottom: 56px; display: flex; justify-content: space-between; }
+  .byline strong { font-weight: 500; color: var(--ink-soft); }
+
+  .lede { font-size: 19px; line-height: 1.72; margin-bottom: 22px; word-break:keep-all;overflow-wrap:break-word;}
+  .lede::first-letter { font-family: "Fraunces", serif; font-weight: 400; font-size: 68px; float: left; line-height: 0.88; padding: 8px 10px 0 0; color: var(--clay); }
+
+  h2 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 28px; line-height: 1.25; letter-spacing: -0.015em; margin: 64px 0 16px; color: var(--ink); scroll-margin-top: 80px; word-break:keep-all;overflow-wrap:break-word;}
+  h2 .num { font-family: "Inter", sans-serif; font-size: 12px; font-weight: 600; color: var(--clay); letter-spacing: 0.1em; display: block; margin-bottom: 10px; }
+  p { margin: 0 0 22px; word-break:keep-all;overflow-wrap:break-word;}
+  p + p { margin-top: -6px; }
+  strong { font-weight: 500; color: var(--ink); }
+  em { font-style: italic; }
+  code { font-family: "JetBrains Mono", monospace; font-size: 0.9em; background: var(--code-bg); padding: 1px 6px; border-radius: 3px; color: var(--ink-soft); }
+
+  .pull {
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-size: 24px;
+    line-height: 1.5;
+    color: var(--ink);
+    font-weight: 400;
+    font-style: italic;
+    margin: 40px 0;
+    padding: 22px 0 22px 26px;
+    border-left: 3px solid var(--clay);
+    letter-spacing: -0.01em;
+  }
+
+  .hashtags { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--rule); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; color: var(--ink-mute); letter-spacing: 0.02em; display: flex; flex-wrap: wrap; gap: 14px; }
+  .footer { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--rule); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); line-height: 1.65; }
+  .footer strong { color: var(--ink-soft); font-weight: 600; }
+  .bottom-nav { margin-top: 72px; padding: 36px 0; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .bottom-nav a { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .bottom-nav a:hover { color: var(--ink); }
+  .bottom-nav-home { font-family: "Fraunces", "Noto Serif KR", serif !important; font-size: 16px !important; font-style: italic; font-weight: 400; }
+
+  @media (max-width: 560px) {
+    .wrap { padding: 92px 22px 80px; }
+    h1 { font-size: 34px; }
+    .dek { font-size: 18px; }
+    body { font-size: 17px; }
+    .topnav-right { display: none; }
+  }
+  @media (max-width: 400px) {
+    h1 { font-size: 26px !important; line-height: 1.22; }
+    .dek { font-size: 16px !important; }
+    h2 { font-size: 22px !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="topnav-left">
+    <a href="/" class="topnav-home">CDSA</a>
+    <span class="topnav-sep">|</span>
+    <a href="/">홈페이지</a>
+    <a href="/blog/" class="topnav-current">블로그</a>
+  </div>
+  <nav class="topnav-right">
+    <a href="/framework.html">프레임워크</a>
+    <a href="/fullcourse.html">Full Course</a>
+  </nav>
+</header>
+
+<button class="blog-hamburger" aria-label="블로그 목록 열기"><span></span><span></span><span></span></button>
+<div class="blog-overlay"></div>
+<aside class="blog-left">
+  <div class="blog-left-title">Blog Posts</div>
+  <ol class="blog-left-list"></ol>
+</aside>
+<aside class="blog-right">
+  <div class="blog-right-title">On This Page</div>
+  <ul class="blog-toc"></ul>
+</aside>
+
+<article class="wrap">
+
+  <nav class="breadcrumb">
+    <a href="/">← CDSA 홈</a>
+    <span class="bc-sep">/</span>
+    <a href="/blog/">블로그</a>
+    <span class="bc-sep">/</span>
+    <span>허깅페이스 모델 읽기 · 1편</span>
+  </nav>
+
+  <div class="kicker">Series 01 · 허깅페이스 모델 읽기</div>
+
+  <h1>허깅페이스 모델 페이지,<br>비개발자가 처음 봐야 할 다섯 가지</h1>
+
+  <p class="dek">
+    영어로 빼곡한 모델 카드 앞에서 한 발 물러서지 않아도 됩니다.
+    처음 볼 것은 라이선스·모델명·instruct 여부·한국어·크기, 다섯 가지뿐입니다.
+  </p>
+
+  <div class="byline">
+    <span><strong>신성진</strong> &nbsp;&middot;&nbsp; 한국데이터사이언티스트협회</span>
+    <span>2026. 5. 9</span>
+  </div>
+
+  <p class="lede">요즘 행정·교육·민원 현장에서 "우리 조직 안에서 직접 돌리는 작은 AI를 한번 시험해보자"는 이야기가 부쩍 늘었다. 외부 클라우드에 자료를 보내지 않아도 되고, 우리 규정과 문서에 맞춰 답하는 모델을 갖고 싶다는 요구다. 그래서 검색 끝에 도착하는 곳이 허깅페이스(<a href="https://huggingface.co" target="_blank" rel="noopener" style="color: var(--clay-deep); text-decoration: none;">huggingface.co</a>)다. 전 세계의 인공지능 모델이 모여 있는, 일종의 공개 도서관 같은 사이트다.</p>
+
+  <p>그런데 막상 모델 페이지를 열면 영어로 된 설명과 빼곡한 파일 목록 앞에서 한 발 물러서게 된다. 무엇을, 어떤 순서로 봐야 할지 모르기 때문이다. 이 글은 그런 분들을 위한 첫 안내서다. 깊게 들어가지 않고, 비개발자가 처음 모델을 고를 때 정말 봐야 할 다섯 가지만 짚는다. 학습 데이터·튜닝 방식·내부 구조 같은 더 깊은 이야기는 2편에서, 행정·민원·RAG 같은 실제 활용 이야기는 3편에서 이어 풀어 둘 예정이다.</p>
+
+  <h2 id="s01"><span class="num">01 / 라이선스</span>"이 모델, 우리 회사에서 써도 되는가"</h2>
+
+  <p>가장 먼저 보아야 할 것은 모델 성능이 아니라 라이선스다. 라이선스는 모델을 만든 측이 정해 둔 사용 규칙이다. 어떤 모델은 누구나 자유롭게 가져다 쓰고 회사 서비스에 넣어도 되지만, 어떤 모델은 연구 목적에만 쓸 수 있고 상업적으로는 쓰지 못한다. 허깅페이스 모델 페이지에 들어가면 오른쪽 사이드바, 또는 모델 카드 상단에 <em>License</em>라는 항목이 있다. 거기 적힌 한두 단어가 우리가 이 모델을 어디까지 쓸 수 있는지를 결정한다.</p>
+
+  <p>자주 보이는 표기를 풀어 두자면 <em>Apache-2.0</em>과 <em>MIT</em>는 비교적 자유로운 오픈소스 라이선스로, 회사 안에서 쓰거나 유료 교육 자료에 활용해도 대체로 문제가 없다. <em>CC-BY</em>는 출처만 표시하면 자유롭게 쓸 수 있다는 뜻이다. 반면 Meta가 만든 Llama 계열은 <em>Llama License</em>라는 별도 조건이 있고, Google의 Gemma 계열은 <em>Gemma Terms</em>를 따로 둔다. 두 라이선스 모두 대체로 상업 활용을 허용하지만, 사용자 수 상한이나 금지 분야 같은 단서 조항이 있어 한 번은 직접 읽어 보아야 한다. 카드에 "Research only" 또는 "Non-commercial"이 붙어 있다면 회사 서비스나 수익 활동에는 쓰지 못한다고 보면 된다.</p>
+
+  <p>오픈소스라는 단어가 들어 있다고 해서 무조건 마음대로 써도 되는 것은 아니다. 모델을 골랐을 때 가장 먼저 라이선스를 확인하는 습관만 들여도, 나중에 법무 검토 단계에서 모든 일이 뒤집히는 경험을 피할 수 있다. 특히 공공기관에서 시범 서비스를 만들 때, 라이선스 한 줄이 사업 연장 여부를 가르는 일이 실제로 자주 일어난다.</p>
+
+  <h2 id="s02"><span class="num">02 / 모델명</span>이름 안에 이미 절반의 정보가 있다</h2>
+
+  <p>허깅페이스의 모델 주소는 "만든 곳/모델이름"이라는 형식을 따른다. <code>google/gemma-2-2b-it</code>, <code>microsoft/Phi-3-mini-4k-instruct</code>, <code>meta-llama/Llama-3.2-3B-Instruct</code> 같은 식이다. 이 길어 보이는 이름이 사실은 모델의 핵심 정보를 압축해 담고 있다. 모델 카드 본문에 들어가지 않고도, 이름만 잘 읽어 두면 후보를 절반쯤 추릴 수 있다.</p>
+
+  <p>앞쪽의 google, microsoft, meta-llama는 모델을 만든 회사다. 같은 능력의 모델이라도 누가 만들었는지에 따라 문서의 친절함, 업데이트 주기, 라이선스 안정성이 크게 달라진다. 한 번 들어 본 회사의 모델을 우선 후보군에 두는 것은 보수적이지만 합리적인 선택이다. 그다음에 오는 gemma-2, Phi-3, Llama-3.2는 모델 계열과 세대다. 같은 가족 안에서 숫자가 클수록 더 최근 세대이고, 이전 세대보다 한국어와 추론 능력이 좋아져 있을 가능성이 높다.</p>
+
+  <p>이름 중간에 자주 등장하는 <em>2b</em>, <em>3b</em>, <em>7b</em>, <em>70b</em> 같은 표기는 파라미터 수를 뜻한다. 파라미터는 모델 안에 저장된 학습된 숫자값이고, b는 billion 즉 10억이다. 7b라면 약 70억 개의 숫자값을 가진 모델이라는 의미다. 마지막에 붙는 <em>it</em>, <em>instruct</em>, <em>chat</em>은 사용자의 지시를 따르도록 추가 학습되었다는 표시이고, <em>base</em>가 붙어 있으면 아직 그 추가 학습이 되지 않은 기본 모델이라는 뜻이다. 이름에 <em>mini</em>, <em>small</em>이 보이면 같은 가족 안에서 작은 쪽, <em>ko</em>, <em>korean</em>이 보이면 한국어 데이터가 추가되었거나 한국어용으로 조정된 버전일 가능성이 높다.</p>
+
+  <h2 id="s03"><span class="num">03 / instruct 여부</span>"지시를 따르는 모델인가"</h2>
+
+  <p>업무용으로 쓸 모델이라면 거의 예외 없이 instruct 또는 chat이 붙은 모델을 골라야 한다. 차이를 짧게 풀자면, 기본(base) 모델은 인터넷에 있던 글, 책, 논문 같은 방대한 텍스트로 "다음 단어 맞히기"를 익혀 둔 상태다. 글의 구조와 단어 사이의 관계는 잘 알지만, 사용자가 "이 문서를 표로 정리해줘"라고 했을 때 그것이 명령이라는 사실을 잘 인식하지 못한다. 그래서 base 모델은 부탁을 하면 부탁의 뒷말을 이어 쓰거나 비슷한 문장을 변주하기도 한다.</p>
+
+  <p>이 위에 "이렇게 부탁하면 이렇게 답한다"는 모범 예시를 수십만 건 추가로 보여주는 학습 단계가 있다. 이를 <em>instruction tuning</em>(지시 학습)이라고 부르고, 이 과정을 거친 모델이 <em>instruct</em> 또는 <em>chat</em>이라는 이름표를 단다. 행정·문서 작업에 쓰는 모델은 거의 모두 instruct 계열이다. 모델 카드에 <em>chat template</em>이라는 표현이 보이면 더 안심해도 된다. system, user, assistant 같은 역할 표시를 이해하고 대화 형식으로 답할 줄 안다는 뜻이기 때문이다.</p>
+
+  <p>반대로 base 모델은 직접 추가 학습을 할 사람이 가져가는 재료에 가깝다. 비개발자가 곧바로 "민원 답변문 좀 써줘"를 시키기에는 적절하지 않다. 같은 가족 모델이라도 이름 끝에 instruct가 붙어 있는 쪽을 고르는 것이 첫 단계의 안전한 선택이다.</p>
+
+  <h2 id="s04"><span class="num">04 / 한국어</span>한국어를 진짜로 다루는 모델인가</h2>
+
+  <p>모델이 한국어를 어느 정도 다루는지는 의외로 빨리 확인할 수 있다. 첫째로 모델 카드 상단의 <em>Languages</em> 항목을 본다. ko, korean이 들어 있으면 학습 단계부터 한국어 데이터를 일정 비율 보았다는 뜻이다. 둘째로 카드 본문에 <em>multilingual</em>(다국어)이라는 표현이 있고 그 옆에 한국어가 명시되어 있는지를 본다. 셋째로 평가 결과 표에 <em>KoBEST</em>, <em>KLUE</em>, <em>KoBBQ</em> 같은 한국어 벤치마크 점수가 적혀 있는지 본다. 한국어 벤치마크가 아예 등장하지 않는 모델은, 만들 때 한국어를 일급 시민으로 다루지 않았다고 봐도 무방하다.</p>
+
+  <p>영어 중심으로 학습된 큰 모델도 한국어를 어느 정도 한다. 하지만 행정 문서처럼 문체와 형식이 정확해야 하는 영역에서는 "어느 정도"가 위험하다. 결재가 가능한 문장을 만들어 내는지, 존댓말과 공문 어투를 자연스럽게 쓰는지는 영어 성능과는 완전히 다른 문제다. 영어 시험은 100점인데 한국어 공문은 어색한 모델이 의외로 많다.</p>
+
+  <p>그래서 후보군에는 한국어 데이터로 추가 학습된 모델, 또는 한국 회사가 직접 만든 공개 모델을 함께 두는 편이 좋다. Upstage의 SOLAR 계열, EleutherAI의 한국어 변형 모델, LG·카카오·네이버 계열에서 공개한 모델, 그리고 국내 연구실이 한국어로 추가 튜닝해 올린 community 모델들이 그런 후보다. 이런 모델은 카드 첫 줄부터 한국어 설명이 등장하는 경우가 많아 알아보기도 쉽다.</p>
+
+  <h2 id="s05"><span class="num">05 / 크기</span>우리 컴퓨터에서 돌릴 수 있는 모델인가</h2>
+
+  <p>마지막 관문은 모델 크기다. 같은 가족이라도 2B, 3B, 7B, 13B, 70B처럼 여러 크기로 공개되는 경우가 많다. 단순하게 말하면 숫자가 클수록 똑똑할 가능성이 높지만, 돌리는 비용도 그만큼 커진다. 비개발자가 가늠해 두면 좋은 대략적인 기준은 이렇다. 2B에서 3B 사이의 모델은 상대적으로 작은 그래픽카드(예: RTX 4060급)나 노트북 GPU, 또는 기관에 흔히 있는 보조 서버에서도 돌아간다. 7B급은 본격적인 GPU(RTX 4090, A6000 등) 한 장이 있어야 안정적으로 돌고, 13B 이상은 더 좋은 GPU나 두 장 이상의 GPU가 필요해진다. 70B로 가면 일반 조직에서 자체적으로 돌리기는 어렵고, 클라우드를 빌리거나 양자화(모델을 더 작은 숫자 형식으로 줄이는 것) 버전을 써야 한다.</p>
+
+  <p>여기서 비개발자가 자주 빠지는 함정이 하나 있다. 큰 모델이 무조건 더 똑똑할 것이라는 직관이다. 행정·교육 현장의 골목길 문제 — 공문 요약, 민원 분류, 내부 규정 질의응답 같은 — 는 의외로 2B에서 7B급의 작은 모델로도 충분한 경우가 많다. 작은 모델을 우리 조직 데이터에 맞춰 가볍게 추가 학습하면, 큰 모델보다 더 빠르고 더 정확한 결과가 나오는 사례가 적지 않다. 더 중요한 것은, 큰 모델은 도입 비용과 운영 비용이 함께 커진다는 사실이다. 한 달 전기요금만 수백만 원씩 늘 수도 있다.</p>
+
+  <p class="pull">
+    그래서 처음에는 가장 작은 instruct 모델부터 시작하는 것이
+    가장 보수적이면서도 가장 빠른 길이다.
+  </p>
+
+  <h2 id="s06"><span class="num">06 / 마무리</span>다섯 줄로 끝나는 첫 체크리스트</h2>
+
+  <p>여기까지가 첫 편이다. 정리하자면 이렇다. 첫째, 라이선스를 보고 우리 조직이 이 모델을 써도 되는지 확인한다. 둘째, 모델명에 들어 있는 회사·세대·크기·instruct 표시를 읽는다. 셋째, instruct 또는 chat이 붙어 있는지 본다. 넷째, 한국어를 일급으로 다루었다는 단서가 있는지 본다. 다섯째, 우리 컴퓨터로 돌릴 수 있는 크기인지 가늠한다. 이 다섯 가지만 차례로 짚어 보아도, 허깅페이스에 올라온 수만 개 모델 가운데 우리 업무에 어울리는 후보 서너 개로 좁혀진다.</p>
+
+  <p>다음 편에서는 그렇게 추린 후보 모델의 안쪽을 들여다본다. 이 모델은 무슨 데이터를 보고 자랐는지, 어떤 식으로 다듬어졌는지, 모델 페이지의 Files and versions 탭에 줄지어 있는 <code>config.json</code>·<code>tokenizer.json</code>·<code>model.safetensors</code> 같은 파일은 각각 어떤 역할을 하는지를, 똑같이 비개발자 어휘로 풀어 둔다. 1편을 읽고 후보 모델 두세 개를 책갈피에 꽂아 두셨다면, 2편이 그 책갈피를 펼쳐 보는 시간이 될 것이다.</p>
+
+  <div class="hashtags">
+    <span>#허깅페이스</span>
+    <span>#HuggingFace</span>
+    <span>#비개발자를위한AI</span>
+    <span>#모델고르기</span>
+  </div>
+
+  <div class="footer">
+    <p><strong>신성진</strong> — 한국데이터사이언티스트협회 대표이사. 행정안전부 전문위원, 과학기술정보통신부 자문위원. 행정·공공·민간 현장의 골목길 문제를 작은 AI로 직접 풀어내는 바이브 코딩 교육에 집중한다.</p>
+    <p>이 시리즈는 1편(처음 봐야 할 다섯 가지) → 2편(모델 안쪽 들여다보기) → 3편(행정·민원·RAG 활용) 순으로 이어집니다. 의견·질문은 <a href="mailto:sjshin@cdsa.or.kr" style="color: var(--clay-deep); text-decoration: none;">sjshin@cdsa.or.kr</a>로 보내 주세요.</p>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="/blog/" class="bottom-nav-home">← 블로그 목록</a>
+    <a href="/blog/huggingface-for-beginners-2.html">2편 · 모델 안쪽 들여다보기 →</a>
+  </nav>
+
+</article>
+
+<script src="/blog/_posts.js" defer></script>
+</body>
+</html>

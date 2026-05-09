@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>허깅페이스 모델 안쪽 들여다보기 — 학습 데이터, 튜닝, 파라미터, 파일들 · CDSA 블로그</title>
+<meta name="description" content="후보 모델을 골랐다면 한 단계 더 들어갈 차례. 사전학습 데이터, SFT·RLHF·DPO·LoRA·QLoRA 같은 튜닝 방식, 파라미터·컨텍스트·레이어, 그리고 config.json·tokenizer·safetensors 파일까지 — 비개발자 어휘로 풀어 쓴 시리즈 2편.">
+<meta property="og:title" content="허깅페이스 모델 안쪽 들여다보기 — 학습 데이터, 튜닝, 파라미터, 파일들">
+<meta property="og:description" content="사전학습 데이터, SFT·RLHF·DPO·LoRA·QLoRA, 파라미터·컨텍스트·레이어, config.json·tokenizer·safetensors. 모델 카드의 절반을 차지하는 어려운 단어들을 일상 어휘로 옮긴 두 번째 편.">
+<meta property="og:type" content="article">
+<meta name="keywords" content="허깅페이스, SFT, RLHF, DPO, LoRA, QLoRA, 사전학습, 파라미터, 컨텍스트, safetensors, 신성진">
+
+<link rel="canonical" href="https://cdsa.kr/blog/huggingface-for-beginners-2.html">
+<meta property="og:url" content="https://cdsa.kr/blog/huggingface-for-beginners-2.html">
+<meta property="og:site_name" content="한국데이터사이언티스트협회">
+<meta property="og:image" content="https://cdsa.kr/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta property="article:published_time" content="2026-05-09T14:30:00+09:00">
+<meta property="article:modified_time" content="2026-05-09T14:30:00+09:00">
+<meta property="article:author" content="신성진">
+<meta property="article:section" content="허깅페이스 모델 읽기">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="허깅페이스 모델 안쪽 들여다보기 — 학습 데이터, 튜닝, 파라미터, 파일들">
+<meta name="twitter:description" content="사전학습 데이터, SFT·RLHF·DPO·LoRA·QLoRA, 파라미터·컨텍스트·레이어, config.json·tokenizer·safetensors. 모델 카드의 절반을 차지하는 어려운 단어들을 일상 어휘로 옮긴다.">
+<meta name="twitter:image" content="https://cdsa.kr/og-image.png">
+<meta name="author" content="신성진">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "허깅페이스 모델 안쪽 들여다보기 — 학습 데이터, 튜닝, 파라미터, 파일들",
+  "description": "사전학습 데이터, SFT·RLHF·DPO·LoRA·QLoRA, 파라미터·컨텍스트·레이어, config.json·tokenizer·safetensors. 모델 카드의 어려운 용어를 일상 어휘로 옮긴 시리즈 2편.",
+  "datePublished": "2026-05-09T14:30:00+09:00",
+  "dateModified": "2026-05-09T14:30:00+09:00",
+  "author": {
+    "@type": "Person",
+    "name": "신성진",
+    "affiliation": {
+      "@type": "Organization",
+      "name": "한국데이터사이언티스트협회",
+      "url": "https://cdsa.kr"
+    }
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "한국데이터사이언티스트협회",
+    "url": "https://cdsa.kr",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://cdsa.kr/og-image.png"
+    }
+  },
+  "image": ["https://cdsa.kr/og-image.png"],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://cdsa.kr/blog/huggingface-for-beginners-2.html"
+  },
+  "articleSection": "허깅페이스 모델 읽기",
+  "inLanguage": "ko-KR"
+}
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NZL39P5EYZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NZL39P5EYZ');
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/blog/_layout.css">
+<style>
+  :root {
+    --cream: #faf9f5;
+    --cream-deep: #f3efe3;
+    --ink: #1a1a1a;
+    --ink-soft: #3d3d3a;
+    --ink-mute: #6b6b66;
+    --rule: #d9d6cc;
+    --clay: #cc785c;
+    --clay-deep: #a85a42;
+    --code-bg: #f2f0e8;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--cream); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  body { font-family: "Fraunces", "Noto Serif KR", Georgia, serif; font-weight: 300; font-size: 19px; line-height: 1.72; letter-spacing: -0.005em; }
+
+  .topnav { position: fixed; top: 0; left: 0; right: 0; height: 48px; background: rgba(250, 249, 245, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; }
+  .topnav-left { display: flex; align-items: center; gap: 18px; }
+  .topnav-left a { color: var(--ink-soft); text-decoration: none; transition: color 0.2s; }
+  .topnav-left a:hover { color: var(--clay-deep); }
+  .topnav-home { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 600; font-size: 16px; color: var(--ink) !important; letter-spacing: -0.3px; }
+  .topnav-sep { color: var(--rule); font-size: 11px; }
+  .topnav-right { display: flex; gap: 16px; }
+  .topnav-right a { color: var(--ink-mute); text-decoration: none; font-size: 12px; transition: color 0.2s; }
+  .topnav-right a:hover { color: var(--clay-deep); }
+  .topnav-current { color: var(--ink) !important; font-weight: 600; position: relative; }
+  .topnav-current::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 2px; background: var(--clay); border-radius: 1px; }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 116px 28px 120px; }
+  .breadcrumb { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; margin-bottom: 36px; display: flex; align-items: center; gap: 8px; color: var(--ink-mute); }
+  .breadcrumb a { color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--ink); }
+  .breadcrumb .bc-sep { color: var(--rule); }
+
+  .kicker { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay-deep); margin-bottom: 28px; }
+  h1 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 400; font-size: 44px; line-height: 1.18; letter-spacing: -0.02em; margin: 0 0 24px; color: var(--ink); word-break:keep-all;overflow-wrap:break-word;}
+  .dek { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 300; font-style: italic; font-size: 21px; line-height: 1.55; color: var(--ink-soft); margin: 0 0 40px; word-break:keep-all;overflow-wrap:break-word;}
+  .byline { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); padding: 18px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-bottom: 56px; display: flex; justify-content: space-between; }
+  .byline strong { font-weight: 500; color: var(--ink-soft); }
+
+  .lede { font-size: 19px; line-height: 1.72; margin-bottom: 22px; word-break:keep-all;overflow-wrap:break-word;}
+  .lede::first-letter { font-family: "Fraunces", serif; font-weight: 400; font-size: 68px; float: left; line-height: 0.88; padding: 8px 10px 0 0; color: var(--clay); }
+
+  h2 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 28px; line-height: 1.25; letter-spacing: -0.015em; margin: 64px 0 16px; color: var(--ink); scroll-margin-top: 80px; word-break:keep-all;overflow-wrap:break-word;}
+  h2 .num { font-family: "Inter", sans-serif; font-size: 12px; font-weight: 600; color: var(--clay); letter-spacing: 0.1em; display: block; margin-bottom: 10px; }
+  p { margin: 0 0 22px; word-break:keep-all;overflow-wrap:break-word;}
+  p + p { margin-top: -6px; }
+  strong { font-weight: 500; color: var(--ink); }
+  em { font-style: italic; }
+  code { font-family: "JetBrains Mono", monospace; font-size: 0.9em; background: var(--code-bg); padding: 1px 6px; border-radius: 3px; color: var(--ink-soft); }
+
+  .pull {
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-size: 24px;
+    line-height: 1.5;
+    color: var(--ink);
+    font-weight: 400;
+    font-style: italic;
+    margin: 40px 0;
+    padding: 22px 0 22px 26px;
+    border-left: 3px solid var(--clay);
+    letter-spacing: -0.01em;
+  }
+
+  .hashtags { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--rule); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; color: var(--ink-mute); letter-spacing: 0.02em; display: flex; flex-wrap: wrap; gap: 14px; }
+  .footer { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--rule); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); line-height: 1.65; }
+  .footer strong { color: var(--ink-soft); font-weight: 600; }
+  .bottom-nav { margin-top: 72px; padding: 36px 0; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .bottom-nav a { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .bottom-nav a:hover { color: var(--ink); }
+  .bottom-nav-home { font-family: "Fraunces", "Noto Serif KR", serif !important; font-size: 16px !important; font-style: italic; font-weight: 400; }
+
+  @media (max-width: 560px) {
+    .wrap { padding: 92px 22px 80px; }
+    h1 { font-size: 34px; }
+    .dek { font-size: 18px; }
+    body { font-size: 17px; }
+    .topnav-right { display: none; }
+  }
+  @media (max-width: 400px) {
+    h1 { font-size: 26px !important; line-height: 1.22; }
+    .dek { font-size: 16px !important; }
+    h2 { font-size: 22px !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="topnav-left">
+    <a href="/" class="topnav-home">CDSA</a>
+    <span class="topnav-sep">|</span>
+    <a href="/">홈페이지</a>
+    <a href="/blog/" class="topnav-current">블로그</a>
+  </div>
+  <nav class="topnav-right">
+    <a href="/framework.html">프레임워크</a>
+    <a href="/fullcourse.html">Full Course</a>
+  </nav>
+</header>
+
+<button class="blog-hamburger" aria-label="블로그 목록 열기"><span></span><span></span><span></span></button>
+<div class="blog-overlay"></div>
+<aside class="blog-left">
+  <div class="blog-left-title">Blog Posts</div>
+  <ol class="blog-left-list"></ol>
+</aside>
+<aside class="blog-right">
+  <div class="blog-right-title">On This Page</div>
+  <ul class="blog-toc"></ul>
+</aside>
+
+<article class="wrap">
+
+  <nav class="breadcrumb">
+    <a href="/">← CDSA 홈</a>
+    <span class="bc-sep">/</span>
+    <a href="/blog/">블로그</a>
+    <span class="bc-sep">/</span>
+    <span>허깅페이스 모델 읽기 · 2편</span>
+  </nav>
+
+  <div class="kicker">Series 02 · 허깅페이스 모델 읽기</div>
+
+  <h1>허깅페이스 모델 안쪽 들여다보기<br>학습 데이터, 튜닝, 파라미터, 파일들</h1>
+
+  <p class="dek">
+    SFT·RLHF·DPO·LoRA·QLoRA, 그리고 config.json·tokenizer·safetensors.
+    모델 카드 곳곳을 채우는 어려운 단어들을 일상 어휘로 한 번 옮겨 둡니다.
+  </p>
+
+  <div class="byline">
+    <span><strong>신성진</strong> &nbsp;&middot;&nbsp; 한국데이터사이언티스트협회</span>
+    <span>2026. 5. 9</span>
+  </div>
+
+  <p class="lede">1편에서 라이선스, 모델명, instruct 여부, 한국어, 크기 다섯 가지로 후보 모델을 추렸다면, 이제 한 단계 더 들어갈 차례다. 모델 카드 본문과 Files and versions 탭에는 비개발자가 보면 막막한 단어가 잔뜩 등장한다. pretraining, SFT, RLHF, DPO, LoRA, QLoRA, hidden size, attention heads, safetensors. 하나하나 모두 알 필요는 없지만, 이름만 알아 두어도 모델 카드의 절반이 자연스럽게 읽힌다.</p>
+
+  <p>이 글은 그 단어들을 우리말 일상 어휘로 옮긴 두 번째 안내서다. 표나 정의 나열보다, 한 호흡으로 읽으며 "아, 이건 이런 뜻이구나"라고 기억에 남도록 풀어 두는 데 무게를 두었다.</p>
+
+  <h2 id="s01"><span class="num">01 / 사전학습 데이터</span>모델은 무엇을 보고 자랐는가</h2>
+
+  <p>모델 카드를 보면 거의 빠짐없이 <em>pretraining data</em> 또는 <em>training data</em>라는 항목이 등장한다. 우리말로는 <strong>사전학습 데이터</strong>다. 모델이 처음부터 언어 능력을 익히기 위해 사용한 대규모 데이터를 가리킨다. 사람으로 치자면 어릴 적에 본 책, 만난 사람, 들은 이야기 같은 것들이다. 이 단계에서 모델은 단어와 문장의 구조를 익히고, 역사·과학·사회·기술 같은 일반 지식을 흡수하고, 영어·한국어·중국어 같은 여러 언어의 패턴을 배우고, 보고서·기사·설명문 같은 문서 양식을 받아들인다.</p>
+
+  <p>자료는 보통 인터넷에 공개된 웹 문서, 위키피디아, 라이선스가 허용된 도서, 학술 논문, 깃허브 같은 공개 코드 저장소, 공개 뉴스, 그리고 질문과 답변 형식의 데이터가 섞인다. 모델 카드에는 이 사실이 다음과 같은 표현으로 등장한다. "trained on a mixture of public data"는 공개 데이터 여러 종류를 섞어 학습했다는 뜻이고, "web-scale dataset"은 인터넷 규모의 큰 데이터를 썼다는 의미다. "curated dataset"은 품질을 사람 손으로 거른 데이터를, "proprietary dataset"은 그 회사가 가지고 있는 비공개 데이터를 사용했다는 뜻이다. 최근에는 "synthetic data"라는 표현도 흔한데, 이는 사람이 만든 데이터가 아니라 AI가 생성한 데이터를 다시 학습 재료로 썼다는 의미다.</p>
+
+  <p>대부분의 큰 모델은 학습 데이터를 모두 공개하지는 않는다. 그래서 비개발자 입장에서는 "이 모델은 어디까지 보고 자랐는지를 회사가 얼마나 솔직히 적어 두었는가"를 보면 된다. 항목이 비어 있거나 한 줄만 적혀 있는 모델은 그만큼 검증하기도 어렵다는 뜻이다.</p>
+
+  <h2 id="s02"><span class="num">02 / 산업·언어 데이터</span>"우리 업무에 어울리는 모델인가"</h2>
+
+  <p>사전학습 데이터에는 일반 데이터 외에 <strong>도메인 데이터</strong> 또는 <strong>산업 데이터</strong>가 섞여 있을 수 있다. 행정 분야라면 공문, 민원, 정책자료, 법령, 회의록 같은 자료가 그 예다. 의료라면 진료 기록과 의학 논문, 금융이라면 공시자료와 재무제표, 법률이라면 판례와 계약서, 제조라면 설비 로그와 품질 데이터가 그렇다. 모든 모델이 이런 데이터를 본 것은 아니다. 일반 모델은 다양한 자료를 넓게 학습하고, 도메인 특화 모델은 특정 분야의 자료를 더 많이 학습하거나 그 위에 추가 튜닝을 한 모델이다.</p>
+
+  <p>행정 업무에 쓰려면 모델이 공문, 보도자료, 회의록, 민원 답변, 정책 보고서, 법령, 지침, 사업계획서, 예산 설명자료 같은 텍스트의 어투와 형식을 본 적이 있어야 한다. 본 적이 있다면 결재가 가능한 문장을 만들어 낼 가능성이 높고, 본 적이 없다면 "어색하게 정중한" 어투에 그칠 때가 많다.</p>
+
+  <p>여기에 더해 1편에서 짚은 한국어 데이터 포함 여부가 다시 중요해진다. 영어로 본 보고서 양식과 한국어로 본 보고서 양식은 모델 입장에서는 서로 다른 패턴이기 때문이다. Languages 항목에 ko가 있는지, KoBEST·KLUE 같은 한국어 평가 점수가 적혀 있는지, 그리고 카드 본문에 한국 공공·산업 데이터를 학습했다는 직접적인 언급이 있는지를 함께 본다.</p>
+
+  <h2 id="s03"><span class="num">03 / 튜닝 1</span>Instruction Tuning과 SFT</h2>
+
+  <p>사전학습이 끝난 모델은 글의 구조와 단어 사이의 관계는 잘 알지만, 사람이 부탁하는 방식의 문장을 명령으로 알아채는 데에는 약하다. 그래서 그 위에 추가 학습을 한다. 이를 <strong>튜닝</strong>(tuning)이라고 부른다. 모델 카드 본문에 가장 자주 등장하는 튜닝 단어 네 가지가 있다. <em>Instruction Tuning</em>, <em>SFT</em>, <em>RLHF</em>, <em>DPO</em>다.</p>
+
+  <p>먼저 <em>Instruction Tuning</em>은 사용자의 지시문을 잘 따르도록 학습시키는 방식이다. "다음 문서를 요약해줘", "이 내용을 표로 정리해줘", "민원 답변문 형식으로 작성해줘", "다음 코드의 오류를 찾아줘" 같은 요청을 이해하고 그에 맞게 답하는 능력을 추가로 익힌다. instruct, it, chat이 이름에 붙은 모델은 모두 이 단계를 거친 모델이다. 행정·문서·요약·질의응답에는 base 모델보다 instruct 모델이 훨씬 잘 맞는 이유가 여기에 있다.</p>
+
+  <p><em>SFT</em>는 <em>Supervised Fine-Tuning</em>의 약자다. 우리말로 옮기면 <strong>지도 미세조정</strong>이다. 의미는 단순하다. 좋은 질문과 좋은 답변의 예시를 많이 보여 주면서 모델을 추가 학습시키는 방식이다. "이 문서를 요약해줘"라는 입력에 "핵심 내용은 다음과 같습니다…"라는 모범 답안을, "민원 답변문을 작성해줘"라는 입력에 "안녕하십니까. 귀하의 민원에 대해 답변드립니다…" 같은 모범 답안을 짝지어 보여 주는 식이다. 모델에게 "이런 질문이 오면 이런 식으로 답하라"를 가르치는 가장 기본적인 방식이다. Instruction Tuning은 사실 SFT를 통해 이뤄지는 경우가 많아, 두 단어가 거의 같은 맥락에서 쓰일 때도 있다.</p>
+
+  <h2 id="s04"><span class="num">04 / 튜닝 2</span>RLHF와 DPO</h2>
+
+  <p><em>RLHF</em>는 <em>Reinforcement Learning from Human Feedback</em>의 약자로, 우리말로는 <strong>사람의 피드백 기반 강화학습</strong>이다. 이름은 거창하지만 과정은 직관적이다. 모델이 같은 질문에 여러 답변을 만들고, 사람이 그 가운데 더 좋은 답변을 골라 준다. 모델은 사람이 선호한 답변 쪽을 더 자주 만들도록 추가 학습된다. 이 과정을 거치면 답변이 자연스러워지고, 지시를 더 잘 따르고, 위험하거나 부적절한 표현이 줄어든다. ChatGPT가 처음 등장했을 때 사람들이 "왜 이렇게 말이 잘 통하지?"라고 느꼈던 이유의 상당 부분이 이 RLHF에 있다.</p>
+
+  <p><em>DPO</em>는 <em>Direct Preference Optimization</em>의 약자다. 사람의 선호를 반영한다는 점은 RLHF와 같지만, 학습 구조가 더 단순하다. 좋은 답변과 나쁜 답변을 짝으로 묶어 주고, 모델이 좋은 답변 쪽을 더 선호하도록 직접 학습시키는 방식이다. 같은 민원 질문에 대해 정중하고 정확한 답변을 좋은 예로, 너무 캐주얼하거나 정확하지 않은 답변을 나쁜 예로 묶어 보여 주는 식이다. RLHF보다 학습 비용이 작고 결과도 비슷해, 최근 공개되는 오픈소스 모델은 SFT 다음 단계로 DPO를 쓰는 경우가 점점 늘고 있다.</p>
+
+  <p>모델 카드에서 "trained with SFT and DPO" 같은 문장을 보면, 그 모델은 모범 답안으로 한 번 다듬은 뒤 좋은 답·나쁜 답 비교로 한 번 더 다듬은 모델이라는 뜻이다. 이 단계까지 거친 모델은 곧바로 업무에 투입해도 비교적 안전한 출발점이 된다.</p>
+
+  <h2 id="s05"><span class="num">05 / 가벼운 추가 학습</span>LoRA와 QLoRA</h2>
+
+  <p>모델을 우리 조직에 맞게 추가 학습하고 싶다는 이야기가 나오면 빠지지 않고 등장하는 단어가 <em>LoRA</em>와 <em>QLoRA</em>다. LoRA는 <em>Low-Rank Adaptation</em>의 약자로, 모델 전체를 다시 학습하지 않고 작은 추가 학습 파일만 붙여서 모델의 행동을 바꾸는 방식이다. 모델 본체는 그대로 두고 옆에 작은 부속 부품을 하나 더 다는 그림에 가깝다. 전체를 다시 학습하는 방식에 비해 비용이 훨씬 작고, 학습한 결과 파일도 본체 모델보다 훨씬 작다. 우리 조직의 보도자료 문체, 우리 부서의 민원 답변 양식, 우리 사업의 회의록 형식 같은 좁은 목적의 학습에 잘 맞는다.</p>
+
+  <p><em>QLoRA</em>는 <em>Quantized LoRA</em>의 약자로, LoRA보다 메모리를 더 적게 쓰도록 만든 방식이다. 모델을 더 작은 숫자 형식으로 줄여 메모리 사용량을 낮춘 다음, 그 상태에서 LoRA 학습을 진행한다. 같은 GPU로 더 큰 모델을 다룰 수 있게 해 주기 때문에, 개인 노트북이나 무료 클라우드 환경(예: Colab)에서 추가 학습을 시도할 때 가장 많이 쓰는 방법이다.</p>
+
+  <p>LoRA·QLoRA가 중요한 이유는 단순하다. 모델 전체를 다시 학습하려면 수천만 원에서 수억 원의 비용이 들지만, LoRA·QLoRA로 우리 조직 데이터를 가르치는 데에는 잘 짜면 수십만 원, 심지어 0원에 가까운 비용으로도 가능하기 때문이다. "우리 조직 데이터로 작은 모델을 한번 추가 학습해 보자"는 시도가 현실적인 선택지가 된 배경에는 이 두 가지 방식이 있다.</p>
+
+  <h2 id="s06"><span class="num">06 / 파라미터 구조</span>크기, 컨텍스트, 그리고 내부 부품들</h2>
+
+  <p>모델 카드의 오른쪽이나 본문 하단에는 모델 내부 구조에 관한 숫자들이 적혀 있다. 비개발자가 깊이 알 필요는 없지만, 단어의 뜻만 알아 두면 좋다. <em>parameters</em>는 모델 안에 저장된 학습된 숫자값의 총량이다. 1B는 10억, 7B는 70억, 70B는 700억 개의 숫자값이라는 뜻이다. 일반적으로 숫자가 많으면 더 복잡한 패턴을 다룰 수 있지만, 무조건 큰 모델이 좋은 것은 아니다. 작은 모델을 우리 데이터에 맞춰 가볍게 다듬으면 큰 모델보다 더 잘 답할 때가 자주 있다.</p>
+
+  <p><em>context length</em>(컨텍스트 길이)는 모델이 한 번에 읽고 처리할 수 있는 입력의 길이다. 4k, 8k, 32k, 128k라는 표기를 보게 되는데, 단위는 토큰이다. 토큰은 모델이 텍스트를 잘게 나누어 처리하는 단위이고, 한국어는 글자·단어·조사가 여러 토큰으로 쪼개진다. 컨텍스트 길이가 길수록 긴 보고서를 한 번에 넣어 요약하거나, 회의록 전체를 한 번에 분석하거나, 검색된 여러 문단을 한꺼번에 모델에게 보여 주는 작업에 유리하다. 행정 문서 업무에는 최소 8k, 가능하다면 32k 이상이 편하다.</p>
+
+  <p>그 외에 자주 보이는 단어가 셋 더 있다. <em>num_hidden_layers</em>는 모델 내부의 처리 단계 수, <em>num_attention_heads</em>는 문장 안의 여러 관계를 동시에 살피는 부품의 수, <em>hidden_size</em>는 모델이 토큰 하나를 내부에서 표현할 때 쓰는 숫자 벡터의 크기다. 이 세 숫자는 모델이 클수록 함께 커진다. 비개발자 입장에서 깊이 들여다볼 필요는 없지만, 모델 카드에 등장하는 이 단어들이 "내부 부품의 수와 크기를 가리키는구나" 정도만 기억해 두면 충분하다.</p>
+
+  <h2 id="s07"><span class="num">07 / 파일 구성</span>Files and versions 탭에 무엇이 있는가</h2>
+
+  <p>모델 페이지 상단에는 Model card 옆에 <em>Files and versions</em>라는 탭이 있다. 누르면 모델을 실제로 돌리는 데 필요한 파일들이 줄지어 나타난다. 비개발자가 알아 두면 좋은 파일은 네 가지다.</p>
+
+  <p>첫째, <code>config.json</code>은 모델의 구조 설정 파일이다. 모델 종류, 레이어 수, hidden size, attention head 수, 토큰 사전 크기, 컨텍스트 길이 같은 정보가 이 안에 정리되어 있다. 6번 절에서 본 숫자들의 출처가 바로 이 파일이다. 사람이 직접 읽기보다는 모델을 불러오는 프로그램이 자동으로 참고한다.</p>
+
+  <p>둘째, <code>tokenizer.json</code>·<code>tokenizer_config.json</code>·<code>special_tokens_map.json</code>은 <strong>토크나이저</strong>(tokenizer) 관련 파일들이다. 토크나이저는 사용자가 입력한 문장을 모델이 처리할 수 있는 토큰 단위로 잘게 자르는 도구다. 같은 한국어 문장도 토크나이저에 따라 잘게 쪼개지는 방식이 다르고, 그래서 모델과 토크나이저는 항상 한 쌍으로 따라 다닌다. Llama 모델인데 다른 모델용 토크나이저를 쓰면 글자가 깨지거나 성능이 크게 떨어진다.</p>
+
+  <p>셋째, <code>model.safetensors</code> 또는 <code>model-00001-of-00004.safetensors</code>처럼 여러 개로 나뉜 파일이 모델의 실제 학습값(가중치)이 들어 있는 파일이다. 모델이 7B, 13B로 커질수록 한 파일에 다 담기지 않아 여러 조각으로 나뉘고, 그 조각들의 목록을 <code>model.safetensors.index.json</code>이 안내해 준다. <em>safetensors</em>라는 형식은 예전의 <code>.bin</code>보다 안전하고 빠르게 불러올 수 있도록 설계된 표준이다.</p>
+
+  <p>넷째, <code>generation_config.json</code>은 모델이 답변을 생성할 때의 기본 설정을 담은 파일이다. 답변의 최대 길이, 답변의 다양성 정도(<em>temperature</em>), 후보 단어를 고르는 범위(<em>top_p</em>), 같은 표현을 반복할 때 누르는 강도(<em>repetition_penalty</em>) 같은 값이 들어 있다. 행정 문서나 보고서처럼 정확성과 일관성이 중요한 작업에서는 temperature를 너무 높게 쓰지 않는 편이 좋다. 반대로 카피라이팅이나 아이디어 도출에는 살짝 높여 쓰는 것이 어울린다.</p>
+
+  <p class="pull">
+    config.json은 설계도, tokenizer는 입구의 번역기,
+    safetensors는 모델의 본체, generation_config는 출구의 손잡이.
+    네 종류만 기억해 두면 파일 목록이 더 이상 낯설지 않다.
+  </p>
+
+  <h2 id="s08"><span class="num">08 / 마무리</span>모델 카드를 끝까지 읽는 힘</h2>
+
+  <p>여기까지가 두 번째 편이다. 학습 데이터가 무엇을 의미하는지, SFT와 RLHF와 DPO는 어떻게 다른지, LoRA와 QLoRA는 어떤 상황에 등장하는지, 파라미터·컨텍스트 길이가 우리 업무에 어떤 영향을 주는지, 그리고 Files and versions 탭에 보이는 네 종류의 파일이 무슨 일을 하는지를 같은 호흡으로 풀어 두었다. 한 번에 모두 외울 필요는 없다. 모델 카드를 다시 펼쳤을 때 이 단어들이 "어디서 들어 본 적이 있는 단어"로 다가오는 것만으로도 절반은 성공이다.</p>
+
+  <p>다음 편에서는 그렇게 고른 모델을 실제로 어디에 쓰는가를 다룬다. 행정 문서 작성, 민원 답변, 회의록과 보고서 요약, 그리고 우리 조직 내부 문서를 근거로 답하게 만드는 RAG(검색 기반 생성)까지 — 비개발자가 가장 먼저 시도해 볼 만한 다섯 가지 활용을 같은 산문 호흡으로 정리한다.</p>
+
+  <div class="hashtags">
+    <span>#허깅페이스</span>
+    <span>#SFT</span>
+    <span>#RLHF</span>
+    <span>#DPO</span>
+    <span>#LoRA</span>
+    <span>#QLoRA</span>
+    <span>#비개발자를위한AI</span>
+  </div>
+
+  <div class="footer">
+    <p><strong>신성진</strong> — 한국데이터사이언티스트협회 대표이사. 행정안전부 전문위원, 과학기술정보통신부 자문위원. 행정·공공·민간 현장의 골목길 문제를 작은 AI로 직접 풀어내는 바이브 코딩 교육에 집중한다.</p>
+    <p>이 시리즈는 1편(처음 봐야 할 다섯 가지) → 2편(모델 안쪽 들여다보기) → 3편(행정·민원·RAG 활용) 순으로 이어집니다. 의견·질문은 <a href="mailto:sjshin@cdsa.or.kr" style="color: var(--clay-deep); text-decoration: none;">sjshin@cdsa.or.kr</a>로 보내 주세요.</p>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="/blog/huggingface-for-beginners-1.html" class="bottom-nav-home">← 1편 · 처음 봐야 할 다섯 가지</a>
+    <a href="/blog/huggingface-for-beginners-3.html">3편 · 행정·민원·RAG 활용 →</a>
+  </nav>
+
+</article>
+
+<script src="/blog/_posts.js" defer></script>
+</body>
+</html>

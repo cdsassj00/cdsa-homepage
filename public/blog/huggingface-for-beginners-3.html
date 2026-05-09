@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>허깅페이스에서 고른 모델, 행정·민원·RAG에 어떻게 쓰나 · CDSA 블로그</title>
+<meta name="description" content="모델을 골랐다면 이제 실제로 써볼 차례. 행정 문서 작성, 민원 답변, 회의록 요약, 내부 규정 질의응답, 그리고 검색 기반 생성(RAG)까지. 비개발자가 가장 먼저 시도해 볼 만한 다섯 가지 활용을 정리한 시리즈 마지막 편.">
+<meta property="og:title" content="허깅페이스에서 고른 모델, 행정·민원·RAG에 어떻게 쓰나">
+<meta property="og:description" content="공문 초안, 민원 답변, 회의록 요약, 내부 규정 질의응답, 그리고 RAG. 골목길 행정 업무에 작은 AI를 어떻게 끼워 넣을지 — 비개발자 어휘로 풀어 쓴 시리즈 마지막 편.">
+<meta property="og:type" content="article">
+<meta name="keywords" content="허깅페이스, RAG, 검색증강생성, 행정문서, 민원, 회의록 요약, 비개발자, 신성진">
+
+<link rel="canonical" href="https://cdsa.kr/blog/huggingface-for-beginners-3.html">
+<meta property="og:url" content="https://cdsa.kr/blog/huggingface-for-beginners-3.html">
+<meta property="og:site_name" content="한국데이터사이언티스트협회">
+<meta property="og:image" content="https://cdsa.kr/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta property="article:published_time" content="2026-05-09T15:00:00+09:00">
+<meta property="article:modified_time" content="2026-05-09T15:00:00+09:00">
+<meta property="article:author" content="신성진">
+<meta property="article:section" content="허깅페이스 모델 읽기">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="허깅페이스에서 고른 모델, 행정·민원·RAG에 어떻게 쓰나">
+<meta name="twitter:description" content="공문 초안, 민원 답변, 회의록 요약, 내부 규정 질의응답, 그리고 RAG. 골목길 행정 업무에 작은 AI를 어떻게 끼워 넣을지를 정리한 마지막 편.">
+<meta name="twitter:image" content="https://cdsa.kr/og-image.png">
+<meta name="author" content="신성진">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "허깅페이스에서 고른 모델, 행정·민원·RAG에 어떻게 쓰나",
+  "description": "행정 문서, 민원 답변, 회의록 요약, 내부 규정 질의응답, 그리고 RAG. 비개발자가 가장 먼저 시도해 볼 만한 다섯 가지 활용을 정리한 시리즈 마지막 편.",
+  "datePublished": "2026-05-09T15:00:00+09:00",
+  "dateModified": "2026-05-09T15:00:00+09:00",
+  "author": {
+    "@type": "Person",
+    "name": "신성진",
+    "affiliation": {
+      "@type": "Organization",
+      "name": "한국데이터사이언티스트협회",
+      "url": "https://cdsa.kr"
+    }
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "한국데이터사이언티스트협회",
+    "url": "https://cdsa.kr",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://cdsa.kr/og-image.png"
+    }
+  },
+  "image": ["https://cdsa.kr/og-image.png"],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://cdsa.kr/blog/huggingface-for-beginners-3.html"
+  },
+  "articleSection": "허깅페이스 모델 읽기",
+  "inLanguage": "ko-KR"
+}
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NZL39P5EYZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NZL39P5EYZ');
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/blog/_layout.css">
+<style>
+  :root {
+    --cream: #faf9f5;
+    --cream-deep: #f3efe3;
+    --ink: #1a1a1a;
+    --ink-soft: #3d3d3a;
+    --ink-mute: #6b6b66;
+    --rule: #d9d6cc;
+    --clay: #cc785c;
+    --clay-deep: #a85a42;
+    --code-bg: #f2f0e8;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--cream); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  body { font-family: "Fraunces", "Noto Serif KR", Georgia, serif; font-weight: 300; font-size: 19px; line-height: 1.72; letter-spacing: -0.005em; }
+
+  .topnav { position: fixed; top: 0; left: 0; right: 0; height: 48px; background: rgba(250, 249, 245, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; }
+  .topnav-left { display: flex; align-items: center; gap: 18px; }
+  .topnav-left a { color: var(--ink-soft); text-decoration: none; transition: color 0.2s; }
+  .topnav-left a:hover { color: var(--clay-deep); }
+  .topnav-home { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 600; font-size: 16px; color: var(--ink) !important; letter-spacing: -0.3px; }
+  .topnav-sep { color: var(--rule); font-size: 11px; }
+  .topnav-right { display: flex; gap: 16px; }
+  .topnav-right a { color: var(--ink-mute); text-decoration: none; font-size: 12px; transition: color 0.2s; }
+  .topnav-right a:hover { color: var(--clay-deep); }
+  .topnav-current { color: var(--ink) !important; font-weight: 600; position: relative; }
+  .topnav-current::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 2px; background: var(--clay); border-radius: 1px; }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 116px 28px 120px; }
+  .breadcrumb { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; margin-bottom: 36px; display: flex; align-items: center; gap: 8px; color: var(--ink-mute); }
+  .breadcrumb a { color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--ink); }
+  .breadcrumb .bc-sep { color: var(--rule); }
+
+  .kicker { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay-deep); margin-bottom: 28px; }
+  h1 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 400; font-size: 44px; line-height: 1.18; letter-spacing: -0.02em; margin: 0 0 24px; color: var(--ink); word-break:keep-all;overflow-wrap:break-word;}
+  .dek { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 300; font-style: italic; font-size: 21px; line-height: 1.55; color: var(--ink-soft); margin: 0 0 40px; word-break:keep-all;overflow-wrap:break-word;}
+  .byline { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); padding: 18px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-bottom: 56px; display: flex; justify-content: space-between; }
+  .byline strong { font-weight: 500; color: var(--ink-soft); }
+
+  .lede { font-size: 19px; line-height: 1.72; margin-bottom: 22px; word-break:keep-all;overflow-wrap:break-word;}
+  .lede::first-letter { font-family: "Fraunces", serif; font-weight: 400; font-size: 68px; float: left; line-height: 0.88; padding: 8px 10px 0 0; color: var(--clay); }
+
+  h2 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 28px; line-height: 1.25; letter-spacing: -0.015em; margin: 64px 0 16px; color: var(--ink); scroll-margin-top: 80px; word-break:keep-all;overflow-wrap:break-word;}
+  h2 .num { font-family: "Inter", sans-serif; font-size: 12px; font-weight: 600; color: var(--clay); letter-spacing: 0.1em; display: block; margin-bottom: 10px; }
+  p { margin: 0 0 22px; word-break:keep-all;overflow-wrap:break-word;}
+  p + p { margin-top: -6px; }
+  strong { font-weight: 500; color: var(--ink); }
+  em { font-style: italic; }
+  code { font-family: "JetBrains Mono", monospace; font-size: 0.9em; background: var(--code-bg); padding: 1px 6px; border-radius: 3px; color: var(--ink-soft); }
+
+  .pull {
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-size: 24px;
+    line-height: 1.5;
+    color: var(--ink);
+    font-weight: 400;
+    font-style: italic;
+    margin: 40px 0;
+    padding: 22px 0 22px 26px;
+    border-left: 3px solid var(--clay);
+    letter-spacing: -0.01em;
+  }
+
+  .hashtags { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--rule); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; color: var(--ink-mute); letter-spacing: 0.02em; display: flex; flex-wrap: wrap; gap: 14px; }
+  .footer { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--rule); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); line-height: 1.65; }
+  .footer strong { color: var(--ink-soft); font-weight: 600; }
+  .bottom-nav { margin-top: 72px; padding: 36px 0; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .bottom-nav a { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .bottom-nav a:hover { color: var(--ink); }
+  .bottom-nav-home { font-family: "Fraunces", "Noto Serif KR", serif !important; font-size: 16px !important; font-style: italic; font-weight: 400; }
+
+  @media (max-width: 560px) {
+    .wrap { padding: 92px 22px 80px; }
+    h1 { font-size: 34px; }
+    .dek { font-size: 18px; }
+    body { font-size: 17px; }
+    .topnav-right { display: none; }
+  }
+  @media (max-width: 400px) {
+    h1 { font-size: 26px !important; line-height: 1.22; }
+    .dek { font-size: 16px !important; }
+    h2 { font-size: 22px !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="topnav-left">
+    <a href="/" class="topnav-home">CDSA</a>
+    <span class="topnav-sep">|</span>
+    <a href="/">홈페이지</a>
+    <a href="/blog/" class="topnav-current">블로그</a>
+  </div>
+  <nav class="topnav-right">
+    <a href="/framework.html">프레임워크</a>
+    <a href="/fullcourse.html">Full Course</a>
+  </nav>
+</header>
+
+<button class="blog-hamburger" aria-label="블로그 목록 열기"><span></span><span></span><span></span></button>
+<div class="blog-overlay"></div>
+<aside class="blog-left">
+  <div class="blog-left-title">Blog Posts</div>
+  <ol class="blog-left-list"></ol>
+</aside>
+<aside class="blog-right">
+  <div class="blog-right-title">On This Page</div>
+  <ul class="blog-toc"></ul>
+</aside>
+
+<article class="wrap">
+
+  <nav class="breadcrumb">
+    <a href="/">← CDSA 홈</a>
+    <span class="bc-sep">/</span>
+    <a href="/blog/">블로그</a>
+    <span class="bc-sep">/</span>
+    <span>허깅페이스 모델 읽기 · 3편</span>
+  </nav>
+
+  <div class="kicker">Series 03 · 허깅페이스 모델 읽기</div>
+
+  <h1>고른 모델을 어디에 쓰나<br>행정 문서, 민원, 회의록, 그리고 RAG</h1>
+
+  <p class="dek">
+    공문 초안, 민원 답변, 회의록 요약, 내부 규정 질의응답, 그리고 검색 기반 생성.
+    비개발자가 가장 먼저 시도해 볼 만한 다섯 가지를 한 호흡으로 풀어 둡니다.
+  </p>
+
+  <div class="byline">
+    <span><strong>신성진</strong> &nbsp;&middot;&nbsp; 한국데이터사이언티스트협회</span>
+    <span>2026. 5. 9</span>
+  </div>
+
+  <p class="lede">1편에서 라이선스·모델명·instruct·한국어·크기 다섯 가지로 후보 모델을 추렸고, 2편에서 학습 데이터·튜닝·파라미터·파일 구성으로 모델 안쪽을 들여다보았다. 이제 마지막 편이다. 모델을 골랐다고 해도, 그것을 실제 업무 어디에 어떻게 끼워 넣어야 할지를 모르면 결국 책상 위의 신기한 장난감으로만 남는다. 이 글은 행정·교육·민원 현장에서 작은 AI 모델을 가장 먼저 적용해 볼 만한 다섯 가지 자리를 정리한다.</p>
+
+  <p>중요한 전제가 하나 있다. 여기서 다루는 활용은 모두 사람이 검토하고 책임지는 것을 전제로 한다. AI가 만든 결과를 그대로 결재 문서로 올리거나, 검토 없이 민원인에게 발송하는 일은 어떤 업무에서도 권장되지 않는다. 모델은 "초안을 빠르게 만들어 주는 보조"이지, "결재권을 가진 담당자"가 아니다. 이 전제를 잊지 않은 채 다섯 가지 활용을 차례로 살펴 본다.</p>
+
+  <h2 id="s01"><span class="num">01 / 행정 문서 작성</span>공문·보도자료·보고서 초안</h2>
+
+  <p>가장 먼저 시도해 볼 만한 자리는 행정 문서의 초안 작성이다. 공문이라면 제목, 본문, 협조 요청 문구를 만들어 주는 작업이고, 보도자료라면 제목과 리드문, 본문, 인용문을 잡아 주는 작업이다. 보고서라면 현황·문제점·개선방안·기대효과 같은 구조를 채워 주는 작업이고, 회의자료라면 안건·추진배경·세부과업·예산·일정의 골격을 짜 주는 작업이다.</p>
+
+  <p>이 자리에는 instruct 또는 chat이 붙은 한국어 모델이 잘 맞는다. 작은 모델(2B~7B)이라도 충분한 경우가 많고, 모델에게 "이 사업 개요를 가지고 보도자료 초안을 작성해 줘. 제목 한 줄, 리드문 두 줄, 본문 다섯 단락, 그리고 인용문 한 단락을 포함해 줘"처럼 형식과 분량을 함께 일러 주면 결과의 품질이 단번에 올라간다. 답변의 다양성을 결정하는 <em>temperature</em> 값은 정확성과 일관성이 중요한 행정 문서에서는 너무 높지 않게 두는 편이 좋다. 보통은 0.3~0.5 사이가 안전한 출발점이다.</p>
+
+  <p>이 자리의 가장 큰 효용은 "처음 한 단락"의 막막함을 없애는 데에 있다. 문서를 처음부터 쓰는 시간보다, 초안을 보고 고치는 시간이 압도적으로 짧다는 사실은 한 번이라도 직접 해보면 곧바로 체감된다. 담당자의 시간이 가장 비싼 자원이라는 점을 생각하면, 행정 문서 초안은 작은 AI 모델이 가장 먼저 자리 잡아야 할 영역이다.</p>
+
+  <h2 id="s02"><span class="num">02 / 민원 답변</span>가장 신중하게, 가장 보조적으로</h2>
+
+  <p>민원 답변은 행정에서 AI를 쓰는 가장 매력적인 자리이면서, 동시에 가장 신중해야 하는 자리다. 모델이 잘할 수 있는 일은 분명히 있다. 들어온 민원을 교통·복지·환경·세무 같은 분야로 분류하는 작업, 긴 민원의 핵심을 한 단락으로 줄이는 작업, 답변의 정중한 초안을 만드는 작업, 그리고 비슷한 민원이 과거에 어떻게 처리되었는지 검색해 보여 주는 작업이 그렇다.</p>
+
+  <p>대신 AI 답변을 그대로 발송하지 않는 원칙은 절대 흔들리지 않아야 한다. 법령 근거를 모델이 잘못 인용하는 일은 의외로 자주 일어나고, 기관마다 다른 처리 절차를 일반론으로 답하면 민원인에게 잘못된 신호를 줄 수 있다. 또 입력 단계에서 주민번호·주소·연락처 같은 개인정보가 포함되지 않도록 거르는 절차가 반드시 있어야 한다. 외부 클라우드 모델이 아니라, 우리 조직 안에서 돌아가는 작은 모델을 골라야 한다는 1·2편의 이야기가 가장 무거워지는 지점이 바로 여기다.</p>
+
+  <p>그래서 민원 자리에서는 모델 한 대로 끝내기보다 뒤이어 설명할 RAG 방식이 함께 쓰인다. 우리 부서의 과거 답변, 내부 지침, 관련 법령을 모델에게 함께 보여 주면서 "이 자료들 안에서만 답하라"고 시키는 방식이다. 이렇게 두면 사실에서 벗어나는 답변의 비율이 크게 줄어든다.</p>
+
+  <h2 id="s03"><span class="num">03 / 회의록·보고서 요약</span>긴 문서를 읽는 시간을 돌려받기</h2>
+
+  <p>회의가 끝난 뒤 한 시간짜리 녹취록을 마주한 경험, 백 페이지짜리 보고서를 읽고 한 페이지로 줄여야 했던 경험은 행정·기획 업무에서 흔하다. 이 자리는 작은 모델이 가장 명확한 가치를 만들어 내는 영역이다. 회의록이라면 주요 논의사항, 결정사항, 후속 조치(담당자·기한)를 뽑아 정리해 주고, 보고서라면 배경·문제점·대안·기대효과의 네 줄로 압축해 준다. 보도자료라면 핵심 메시지를 세 줄로 요약하고, 법령 문서라면 적용 대상·의무 사항·예외 사항을 골라 보여 준다.</p>
+
+  <p>요약 작업에서 가장 중요한 것은 두 가지다. 첫째, 중요한 내용을 빠뜨리지 않는 것. 둘째, 원문에 없는 내용을 만들어 내지 않는 것. 두 조건 모두 모델 입장에서는 어려운 일이고, 그래서 모델 카드의 평가 결과에 요약 점수가 적혀 있다면 한 번은 살펴 볼 가치가 있다. 다만 가장 좋은 검증은 우리 회의록·우리 보고서를 직접 한두 건 넣어 결과를 비교해 보는 것이다. 한국어 보고서 양식은 모델마다 처리 방식이 꽤 다르다.</p>
+
+  <p>요약 자리에서 또 하나 중요한 것이 컨텍스트 길이다. 2편에서 본 그 단어다. 회의록 한 시간 분량은 토큰으로 따지면 1만 개를 훌쩍 넘기기 쉽고, 보고서 백 페이지는 더 그렇다. 4k짜리 모델로는 한 번에 다 들어가지 않으니, 32k 이상의 컨텍스트를 가진 모델을 우선 후보로 두는 편이 편하다.</p>
+
+  <h2 id="s04"><span class="num">04 / 내부 규정 질의응답</span>"이 지침에서 정산 기한이 언제인가요"</h2>
+
+  <p>네 번째 자리는 내부 규정·매뉴얼·사업안내서·지침에 대한 질의응답이다. "이 지침에서 보조금 정산 기한은 언제인가요?", "이 사업의 신청 자격에 해당하는 기관 유형은 무엇인가요?", "이 지침의 평가 항목 중 가점이 부여되는 항목은 무엇인가요?" 같은 질문이 매일 부서로 들어온다. 담당자가 매번 같은 답을 찾아 주는 일에는 의외로 많은 시간이 든다.</p>
+
+  <p>이 자리에서 모델이 만들어 내는 가치는 단순하다. 우리 조직의 자료를 모델에게 보여 주고, 그 자료 안에서 답을 찾아 주도록 만든다. 모델 자체가 외워 둔 지식에 의존해 답하면 위험하다. 같은 보조금이라도 우리 부서 지침과 다른 부서 지침이 다르고, 작년 지침과 올해 지침이 다르기 때문이다. 그래서 이 자리에서도 자연스럽게 다음 절의 RAG가 등장한다.</p>
+
+  <p>한 가지 덧붙이자면, 내부 규정 질의응답 자리는 처음 작은 AI를 도입할 때 가장 빠르게 성과가 보이는 영역이다. 정답이 문서 안에 분명히 있고, 모델이 해야 할 일이 검색해서 옮겨 놓는 정도라 잘못될 여지가 적다. 첫 시범 사업의 자리로 권할 만한 곳이다.</p>
+
+  <h2 id="s05"><span class="num">05 / RAG</span>"우리 문서 안에서만 답하라"</h2>
+
+  <p>RAG는 <em>Retrieval-Augmented Generation</em>의 약자이고, 우리말로는 <strong>검색 증강 생성</strong>이다. 이름은 어렵지만 구조는 단순하다. 사용자의 질문이 들어오면, 시스템이 먼저 우리 조직의 문서 가운데 그 질문과 관련된 문단을 찾아 모델에게 함께 넘겨 준다. 모델은 자기 머릿속의 일반 지식이 아니라, 그 문단들에 적힌 내용을 근거로 답한다. 행정·법률·의료처럼 답이 우리 문서에 매여 있는 영역에서는 RAG가 사실상 표준이다.</p>
+
+  <p>구성 요소는 다섯 가지다. 첫째, 우리 조직의 문서들(공문·지침·매뉴얼·회의록 등). 둘째, 그 문서들을 검색에 적합한 작은 단위로 잘라 둔 <em>청크</em>(chunk). 셋째, 문장을 검색용 숫자 표현으로 바꾸는 <em>임베딩 모델</em>(embedding model). 넷째, 그 숫자 표현을 저장하고 빠르게 찾아 주는 <em>벡터 데이터베이스</em>(vector database). 다섯째, 사용자의 질문을 받아 답하는 <em>생성 모델</em>이다. 우리가 1편과 2편에서 고른 instruct 모델은 이 마지막 단계, 즉 답변 생성 자리에 들어간다.</p>
+
+  <p>RAG가 행정 업무에 잘 어울리는 이유는 분명하다. 모델이 우리 문서에 적힌 내용만으로 답하기 때문에, 사실에서 벗어나는 답변(이른바 <em>할루시네이션</em>, 환각)이 줄어든다. 답변과 함께 어떤 문서의 어느 문단을 근거로 했는지를 함께 보여 줄 수 있어, 담당자가 검증하기도 쉽다. 그리고 우리 조직의 문서가 바뀌면 검색 대상만 갱신하면 되므로, 모델 자체를 다시 학습시키지 않고도 최신 정보를 반영할 수 있다. 무엇보다 자료가 외부로 나가지 않는 구조로 만들기 쉬워, 행정망·폐쇄망 환경에서도 운영할 수 있다.</p>
+
+  <p class="pull">
+    행정 업무에서 모델은 검색을 대신하는 도구가 아니라,
+    검색된 우리 문서를 함께 읽어 주고 정리해 주는 동료다.
+  </p>
+
+  <h2 id="s06"><span class="num">06 / 마무리</span>세 편의 시리즈가 도착하는 자리</h2>
+
+  <p>세 편의 시리즈가 도착하는 자리는 결국 단순한 한 문장이다. 거대한 외부 모델 한 대에 모든 것을 의존하는 시대에서, 우리 조직 안에서 우리 자료에 맞춰 작게 도는 모델 한 대를 갖는 시대로 옮겨 가고 있다는 것. 그 작은 모델을 고르는 자리가 허깅페이스이고, 1편의 다섯 가지 판단축은 그 첫 문턱을, 2편의 안쪽 단어들은 그 두 번째 문턱을, 그리고 이번 3편의 다섯 가지 활용은 그 모델이 내려앉는 우리 책상 위의 자리를 보여 준다.</p>
+
+  <p>막막하게 느껴진다면 가장 작은 한 자리부터 시작하면 된다. 우리 부서 지침 한 권을 골라 모델에게 질문해 보는 일, 일주일치 회의록 다섯 건을 한 단락 요약으로 만들어 보는 일, 같은 사업의 공문 세 건을 가지고 보도자료 초안을 잡아 보는 일. 그 작은 시도가 쌓이면, 외부 클라우드의 큰 모델에 결재 문서를 통째로 던지지 않고도 우리 업무가 충분히 가벼워진다는 것을 직접 확인하게 된다.</p>
+
+  <p>한국데이터사이언티스트협회는 이 시리즈의 연장선에서 행정·공공·민간 폐쇄망 조직을 위한 바이브 코딩 교육과 자체 모델 도입 컨설팅을 이어 가고 있다. 시리즈를 읽고 막히는 지점이 생기면 언제든 이메일로 알려 주시면 좋겠다. 다음 시리즈는 직접 작은 모델을 우리 노트북·우리 서버에서 띄워 보는 실습편으로 이어질 예정이다.</p>
+
+  <div class="hashtags">
+    <span>#허깅페이스</span>
+    <span>#RAG</span>
+    <span>#검색증강생성</span>
+    <span>#행정문서</span>
+    <span>#민원</span>
+    <span>#비개발자를위한AI</span>
+  </div>
+
+  <div class="footer">
+    <p><strong>신성진</strong> — 한국데이터사이언티스트협회 대표이사. 행정안전부 전문위원, 과학기술정보통신부 자문위원. 행정·공공·민간 현장의 골목길 문제를 작은 AI로 직접 풀어내는 바이브 코딩 교육에 집중한다.</p>
+    <p>이 시리즈는 1편(처음 봐야 할 다섯 가지) → 2편(모델 안쪽 들여다보기) → 3편(행정·민원·RAG 활용) 순으로 이어집니다. 의견·질문은 <a href="mailto:sjshin@cdsa.or.kr" style="color: var(--clay-deep); text-decoration: none;">sjshin@cdsa.or.kr</a>로 보내 주세요.</p>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="/blog/huggingface-for-beginners-2.html" class="bottom-nav-home">← 2편 · 모델 안쪽 들여다보기</a>
+    <a href="/blog/" >블로그 목록 →</a>
+  </nav>
+
+</article>
+
+<script src="/blog/_posts.js" defer></script>
+</body>
+</html>

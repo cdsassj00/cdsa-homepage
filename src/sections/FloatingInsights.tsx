@@ -2,6 +2,21 @@ import { useState } from 'react'
 
 const articles = [
   {
+    title: '허깅페이스 모델 페이지, 처음 봐야 할 다섯 가지',
+    description: '라이선스·모델명·instruct·한국어·크기. 비개발자가 모델을 고를 때 정말 봐야 할 첫 다섯 가지 (시리즈 1편)',
+    href: '/blog/huggingface-for-beginners-1.html',
+  },
+  {
+    title: '허깅페이스 모델 안쪽 들여다보기',
+    description: 'SFT·RLHF·DPO·LoRA·QLoRA, config.json·tokenizer·safetensors. 모델 카드의 어려운 단어들을 일상 어휘로 (시리즈 2편)',
+    href: '/blog/huggingface-for-beginners-2.html',
+  },
+  {
+    title: '고른 모델, 행정·민원·RAG에 어떻게 쓰나',
+    description: '공문 초안, 민원 답변, 회의록 요약, 내부 규정 질의응답, 그리고 검색 기반 생성 (시리즈 3편)',
+    href: '/blog/huggingface-for-beginners-3.html',
+  },
+  {
     title: 'AX 역량강화 프레임워크',
     description: '0~8단계 역량 체계와 교육 철학',
     href: '/framework.html',

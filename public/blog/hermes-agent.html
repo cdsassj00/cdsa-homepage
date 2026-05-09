@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermes Agent 설치와 첫 대화 — Nous Research가 만든 자라는 에이전트 따라 해보기 · CDSA 블로그</title>
+<meta name="description" content="터미널을 한 번도 써본 적 없는 분을 가정하고 쓴, Nous Research Hermes Agent 설치·연결·첫 대화·자동화 활용 가이드.">
+<meta property="og:title" content="Hermes Agent 설치와 첫 대화 — 자라는 에이전트 따라 해보기">
+<meta property="og:description" content="까만 창에 명령 한 줄을 쳐 본 적 없는 분도 끝까지 따라올 수 있도록 풀어 쓴 Hermes Agent 입문 가이드.">
+<meta property="og:type" content="article">
+<meta name="keywords" content="Hermes Agent, Nous Research, AI 에이전트, 자동화, 터미널, CLI, MCP, 신성진">
+
+<link rel="canonical" href="https://cdsa.kr/blog/hermes-agent.html">
+<meta property="og:url" content="https://cdsa.kr/blog/hermes-agent.html">
+<meta property="og:site_name" content="한국데이터사이언티스트협회">
+<meta property="og:image" content="https://cdsa.kr/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta property="article:published_time" content="2026-05-09T16:00:00+09:00">
+<meta property="article:modified_time" content="2026-05-09T16:00:00+09:00">
+<meta property="article:author" content="신성진">
+<meta property="article:section" content="AI 도구 입문">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Hermes Agent 설치와 첫 대화 — 자라는 에이전트 따라 해보기">
+<meta name="twitter:description" content="터미널 처음 보는 사람도 술술 읽히는 Hermes Agent 입문 가이드.">
+<meta name="twitter:image" content="https://cdsa.kr/og-image.png">
+<meta name="author" content="신성진">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Hermes Agent 설치와 첫 대화 — Nous Research가 만든 자라는 에이전트 따라 해보기",
+  "description": "터미널을 한 번도 써본 적 없는 분을 가정하고 쓴, Nous Research Hermes Agent 설치·연결·첫 대화·자동화 활용 가이드.",
+  "datePublished": "2026-05-09T16:00:00+09:00",
+  "dateModified": "2026-05-09T16:00:00+09:00",
+  "author": {
+    "@type": "Person",
+    "name": "신성진",
+    "affiliation": {
+      "@type": "Organization",
+      "name": "한국데이터사이언티스트협회",
+      "url": "https://cdsa.kr"
+    }
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "한국데이터사이언티스트협회",
+    "url": "https://cdsa.kr",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://cdsa.kr/og-image.png"
+    }
+  },
+  "image": [
+    "https://cdsa.kr/og-image.png"
+  ],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://cdsa.kr/blog/hermes-agent.html"
+  },
+  "articleSection": "AI 도구 입문",
+  "inLanguage": "ko-KR"
+}
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NZL39P5EYZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NZL39P5EYZ');
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/blog/_layout.css">
+<style>
+  :root {
+    --cream: #faf9f5;
+    --cream-deep: #f3efe3;
+    --ink: #1a1a1a;
+    --ink-soft: #3d3d3a;
+    --ink-mute: #6b6b66;
+    --rule: #d9d6cc;
+    --clay: #cc785c;
+    --clay-deep: #a85a42;
+    --code-bg: #f2f0e8;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--cream);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    font-family: "Fraunces", "Noto Serif KR", Georgia, serif;
+    font-weight: 300;
+    font-size: 19px;
+    line-height: 1.72;
+    letter-spacing: -0.005em;
+  }
+
+  .topnav {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: 48px; background: rgba(250, 249, 245, 0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--rule);
+    z-index: 100; display: flex; align-items: center;
+    justify-content: space-between;
+    padding: 0 24px; font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 13px;
+  }
+  .topnav-left { display: flex; align-items: center; gap: 18px; }
+  .topnav-left a { color: var(--ink-soft); text-decoration: none; transition: color 0.2s; }
+  .topnav-left a:hover { color: var(--clay-deep); }
+  .topnav-home {
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-weight: 600; font-size: 16px;
+    color: var(--ink) !important; letter-spacing: -0.3px;
+  }
+  .topnav-sep { color: var(--rule); font-size: 11px; }
+  .topnav-right { display: flex; gap: 16px; }
+  .topnav-right a {
+    color: var(--ink-mute); text-decoration: none;
+    font-size: 12px; transition: color 0.2s;
+  }
+  .topnav-right a:hover { color: var(--clay-deep); }
+  .topnav-current {
+    color: var(--ink) !important; font-weight: 600;
+    position: relative;
+  }
+  .topnav-current::after {
+    content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
+    height: 2px; background: var(--clay); border-radius: 1px;
+  }
+
+  .wrap {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 116px 28px 120px;
+  }
+
+  .breadcrumb {
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 12px;
+    margin-bottom: 36px;
+    display: flex; align-items: center; gap: 8px;
+    color: var(--ink-mute);
+  }
+  .breadcrumb a { color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--ink); }
+  .breadcrumb .bc-sep { color: var(--rule); }
+
+  .kicker {
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--clay-deep);
+    margin-bottom: 28px;
+  }
+  h1 {
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-weight: 400;
+    font-size: 44px;
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+    margin: 0 0 24px;
+    color: var(--ink);
+  word-break:keep-all;overflow-wrap:break-word;}
+  .dek {
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: 21px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0 0 40px;
+  word-break:keep-all;overflow-wrap:break-word;}
+  .byline {
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 13px;
+    color: var(--ink-mute);
+    padding: 18px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 56px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .byline strong { font-weight: 500; color: var(--ink-soft); }
+  .lede {
+    font-size: 19px;
+    line-height: 1.72;
+    margin-bottom: 22px;
+  word-break:keep-all;overflow-wrap:break-word;}
+  .lede::first-letter {
+    font-family: "Fraunces", serif;
+    font-weight: 400;
+    font-size: 68px;
+    float: left;
+    line-height: 0.88;
+    padding: 8px 10px 0 0;
+    color: var(--clay);
+  }
+  h2 {
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    margin: 64px 0 8px;
+    color: var(--ink);
+    scroll-margin-top: 80px;
+  word-break:keep-all;overflow-wrap:break-word;}
+  h2 .num {
+    font-family: "Inter", sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--clay);
+    letter-spacing: 0.1em;
+    display: block;
+    margin-bottom: 10px;
+  }
+  h3 {
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-weight: 500;
+    font-size: 20px;
+    margin: 36px 0 10px;
+    color: var(--ink);
+  word-break:keep-all;overflow-wrap:break-word;}
+  p { margin: 0 0 22px; }
+  p + p { margin-top: -6px; }
+  strong { font-weight: 500; color: var(--ink); }
+  em { font-style: italic; }
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 20px 22px;
+    font-family: "JetBrains Mono", "Menlo", monospace;
+    font-size: 13px;
+    line-height: 1.65;
+    overflow-x: auto;
+    margin: 28px 0;
+    color: var(--ink-soft);
+  }
+  code {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.88em;
+    background: var(--code-bg);
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: var(--clay-deep);
+  }
+  pre code { background: transparent; padding: 0; color: inherit; font-size: inherit; }
+  .rule { border: none; border-top: 1px solid var(--rule); margin: 56px 0; }
+  .sources {
+    margin: 40px 0 0;
+    padding: 22px 24px;
+    background: var(--code-bg);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+  }
+  .sources .src-title {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--clay-deep);
+    margin-bottom: 10px;
+  }
+  .sources a { color: var(--ink-soft); text-decoration: none; border-bottom: 1px solid var(--rule); }
+  .sources a:hover { color: var(--clay-deep); border-bottom-color: var(--clay-deep); }
+  .sources p { margin: 0 0 6px; }
+  .sources p:last-child { margin-bottom: 0; }
+
+  .footer {
+    margin-top: 72px; padding-top: 28px;
+    border-top: 1px solid var(--rule);
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 13px; color: var(--ink-mute); line-height: 1.65;
+  }
+  .footer strong { color: var(--ink-soft); font-weight: 600; }
+  .footer a { color: var(--clay-deep); text-decoration: none; }
+  .footer a:hover { color: var(--ink); }
+
+  .bottom-nav {
+    margin-top: 72px;
+    padding: 36px 0;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .bottom-nav a {
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 13px; color: var(--clay-deep);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .bottom-nav a:hover { color: var(--ink); }
+  .bottom-nav-home {
+    font-family: "Fraunces", "Noto Serif KR", serif !important;
+    font-size: 16px !important;
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  @media (max-width: 560px) {
+    .wrap { padding: 92px 22px 80px; }
+    h1 { font-size: 34px; word-break:keep-all;overflow-wrap:break-word;}
+    .dek { font-size: 18px; word-break:keep-all;overflow-wrap:break-word;}
+    body { font-size: 17px; }
+    .topnav-right { display: none; }
+  }
+
+  @media (max-width: 400px) {
+    h1 { font-size: 26px !important; line-height: 1.22; }
+    .dek { font-size: 16px !important; }
+    h2 { font-size: 22px !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="topnav-left">
+    <a href="/" class="topnav-home">CDSA</a>
+    <span class="topnav-sep">|</span>
+    <a href="/">홈페이지</a>
+    <a href="/blog/" class="topnav-current">블로그</a>
+  </div>
+  <nav class="topnav-right">
+    <a href="/framework.html">프레임워크</a>
+    <a href="/fullcourse.html">Full Course</a>
+  </nav>
+</header>
+
+<button class="blog-hamburger" aria-label="블로그 목록 열기"><span></span><span></span><span></span></button>
+<div class="blog-overlay"></div>
+<aside class="blog-left">
+  <div class="blog-left-title">Blog Posts</div>
+  <ol class="blog-left-list"></ol>
+</aside>
+<aside class="blog-right">
+  <div class="blog-right-title">On This Page</div>
+  <ul class="blog-toc"></ul>
+</aside>
+
+<article class="wrap">
+
+  <nav class="breadcrumb">
+    <a href="/">← CDSA 홈</a>
+    <span class="bc-sep">/</span>
+    <a href="/blog/">블로그</a>
+    <span class="bc-sep">/</span>
+    <span>Hermes Agent 따라 해보기</span>
+  </nav>
+
+  <div class="kicker">Editorial &middot; AI 도구 입문</div>
+
+  <h1>Hermes Agent 설치와 첫 대화<br>— 자라는 에이전트 따라 해보기</h1>
+
+  <p class="dek">까만 창에 명령 한 줄을 쳐 본 적 없는 분을 가정하고 다시 쓴, Nous Research Hermes Agent 입문 가이드. 설치부터 첫 대화, 그리고 자동화로 키워 가는 다섯 갈래까지.</p>
+
+  <div class="byline">
+    <span><strong>신성진</strong> &nbsp;&middot;&nbsp; 한국데이터사이언티스트협회</span>
+    <span>2026. 5. 9</span>
+  </div>
+
+  <p class="lede">요즘 ChatGPT, Claude, Gemini 같은 AI 비서를 안 써본 사람은 거의 없다. 다들 웹브라우저에 들어가 입력창에 질문을 적는 방식이다. Hermes Agent는 그런 비서 중에서도 조금 다른 자리를 차지한다. 웹브라우저가 아니라 내 컴퓨터 안에서 직접 살면서, 내 파일을 들여다보고 내 폴더를 정리하고 내 메신저로 보고서를 보내주는 비서다.</p>
+
+  <p>Nous Research라는 미국 AI 회사가 만들었고, 무료로 공개되어 있다. 가장 큰 특징은 “쓸수록 자란다”는 점이다. 이번에 한 번 가르쳐 두면 다음번에는 알아서 같은 방식으로 일을 해낸다. 어제 나눈 대화도 기억하고, 내가 어떤 사람인지 점점 더 정확히 파악해 간다. 라이선스가 MIT라 회사 안에서도 자유롭게 쓸 수 있고, 2026년 5월 7일 공개된 최신 버전은 v0.13.0이다.</p>
+
+  <p>이 글은 “컴퓨터 화면에서 까만 창에 글자를 쳐 본 적이 한 번도 없다”는 분을 가정하고 썼다. 그러니 이상한 곳에서 막히면 그건 글이 친절하지 못한 탓이라고 보고 다음 단락으로 넘어가도 된다.</p>
+
+  <h2 id="s01"><span class="num">01 &nbsp;/&nbsp; 시작 전에</span>먼저 ‘터미널’이 무엇인지부터</h2>
+
+  <p>Hermes는 사진이나 메뉴가 떠 있는 보통의 프로그램과 다르다. 우리가 마우스로 클릭해 쓰는 카톡, 한글, 크롬 같은 것들이 아니라, 까만 창에 글자만 떠 있고 거기에 우리가 글을 적어 말을 거는 방식의 프로그램이다.</p>
+
+  <p>이 까만 창을 통틀어 “터미널”이라고 부른다. 윈도우에는 “Windows Terminal”이라는 이름의 앱이 들어 있고, 맥에는 “터미널”이라는 같은 이름의 앱이 기본으로 깔려 있다. 시작 메뉴나 런치패드에서 그 이름으로 검색하면 바로 나온다. 그 안에 한 줄을 적고 엔터를 누르면, 컴퓨터가 그 줄을 “명령”으로 받아들여 시키는 일을 한다. 이걸 “명령어를 친다”라고 한다. 처음에는 영화 속 해커 같지만, 사실은 검색창에 글을 적어 엔터를 누르는 것과 다르지 않다.</p>
+
+  <h2 id="s02"><span class="num">02 &nbsp;/&nbsp; 운영체제 준비</span>맥은 그대로, 윈도우는 한 번만</h2>
+
+  <p>Hermes가 잘 동작하는 운영체제는 맥(macOS), 리눅스, 그리고 윈도우 안에서 리눅스를 빌려 쓰는 “WSL2”라는 환경이다. 맥을 쓰는 분이라면 별다른 준비 없이 바로 다음 단계로 가도 된다.</p>
+
+  <p>윈도우를 쓰는 분이라면 한 번만 WSL2라는 기능을 켜 두는 작업이 필요하다. 윈도우 11에서는 시작 메뉴에서 “PowerShell”을 찾아 마우스 오른쪽 버튼으로 “관리자 권한으로 실행”을 누른 뒤 <code>wsl --install</code>이라는 한 줄을 적고 엔터를 친다. 자동으로 설치된다. 한 번 재부팅하고 나면 시작 메뉴에 “Ubuntu”라는 새 앱이 생긴다. 이 우분투 창이 앞으로 우리가 Hermes에게 말을 거는 까만 창이 된다. 윈도우 자체에서 바로 돌리는 버전도 있긴 하지만 아직 시험 단계라, 처음 써보는 분에게는 우분투 쪽을 권한다.</p>
+
+  <h2 id="s03"><span class="num">03 &nbsp;/&nbsp; 설치</span>한 줄 복사·붙여넣기로 끝난다</h2>
+
+  <p>이제 진짜 설치다. Hermes는 “설치 스크립트”라는 것을 제공한다. 스크립트라는 말이 어렵게 들리지만, “여러 단계의 설치 작업을 한 줄로 묶어 놓은 자동화 묶음”이라고 보면 된다. 우리는 그 한 줄만 복사해 까만 창에 붙여 넣으면, 나머지는 컴퓨터가 알아서 한다. 맥, 리눅스, 우분투(WSL2) 창에서는 다음 한 줄을 그대로 붙여넣고 엔터를 누른다.</p>
+
+<pre><code>curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh | bash</code></pre>
+
+  <p>화면에 글자들이 빠르게 흘러간다. 무언가 다운받고, 압축을 풀고, 설정을 잡는 과정이다. 길어야 몇 분이면 끝난다. 끝나면 마지막에 “이제 다음 줄을 한 번 더 쳐 달라”는 안내가 뜨는데, 보통은 다음 줄이다.</p>
+
+<pre><code>source ~/.bashrc</code></pre>
+
+  <p>이 줄의 의미는 “방금 새로 깔린 hermes라는 명령을 컴퓨터에게 알려줘라”에 가깝다. 안 치면 다음에 hermes라고 적었을 때 “그런 명령 모릅니다”라는 말을 듣게 된다. 여기까지 했으면 Hermes 본체는 깔린 셈이다.</p>
+
+  <h2 id="s04"><span class="num">04 &nbsp;/&nbsp; 두뇌 연결</span>어느 회사 AI를 빌려 쓸지 정한다</h2>
+
+  <p>다음으로 할 일은 “이 비서가 어느 회사의 두뇌를 빌려 쓸지” 정하는 것이다. ChatGPT는 OpenAI가 만든 두뇌고, Claude는 Anthropic, Gemini는 구글이 만든 두뇌다. Hermes는 자체 두뇌가 없고, 위와 같은 외부 두뇌 중 하나를 빌려와 답을 만들어 낸다. 그러니 어느 회사 계정을 쓸지 한 번은 정해줘야 한다. 까만 창에 다음 줄을 친다.</p>
+
+<pre><code>hermes model</code></pre>
+
+  <p>치면 메뉴가 뜨고, 위아래 화살표로 회사를 고른 뒤 엔터를 누른다. Anthropic의 Claude를 쓰겠다고 골랐다면 그다음에는 Anthropic 사이트에서 발급받은 “API 키”를 적어 달라는 화면이 나온다. API 키라는 건 그 회사가 “이 사람은 우리 두뇌를 써도 됩니다”라고 인증해 주는 길고 복잡한 비밀번호 같은 것이다. 미리 만들어 두지 않았다면 각 회사 사이트에 접속해 회원가입을 하고 “API key” 메뉴에서 발급받으면 된다.</p>
+
+  <p>한국 사용자가 가장 무난하게 시작할 수 있는 두 곳을 굳이 꼽자면 Anthropic의 Claude와 OpenRouter다. 후자는 한 계정으로 여러 회사 모델을 한꺼번에 쓸 수 있어 편하다. 회사 안에서 외부 인터넷을 못 쓰는 분이라면 “Custom Endpoint”라는 마지막 항목을 고르면, 회사 안에서 따로 돌리는 모델 서버 주소를 적어 그쪽으로 연결할 수도 있다.</p>
+
+  <h2 id="s05"><span class="num">05 &nbsp;/&nbsp; 첫 대화</span>그냥 한국어로 말을 걸면 된다</h2>
+
+  <p>준비가 끝나면 정말 끝이다. 이제 까만 창에 한 단어만 친다.</p>
+
+<pre><code>hermes</code></pre>
+
+  <p>화면이 바뀌면서 입력창이 뜬다. 여기서부터는 ChatGPT 쓰던 것과 똑같다. 한국어로 그냥 말을 걸면 된다.</p>
+
+<pre><code>내 다운로드 폴더에서 가장 큰 파일 다섯 개를 알려줘.</code></pre>
+
+  <p>Hermes는 답을 글로 적어줄 뿐 아니라, 필요하면 진짜로 내 컴퓨터 폴더를 열어 살펴보고 결과를 가져온다. 이게 일반 챗봇과 가장 큰 차이다. 처음에는 무서울 수 있어 “정리해줘”까지 시키지 말고, 일단 “알려줘”, “보여줘” 정도로 며칠 친해지는 것을 추천한다.</p>
+
+  <p>대화를 하다 보면 가끔 메시지 맨 앞에 빗금(<code>/</code>) 기호를 적는 특별한 명령들이 등장한다. 이걸 “슬래시 명령”이라고 부른다. 평범한 질문이 아니라 Hermes 자체에 내리는 지시다. <code>/help</code>는 쓸 수 있는 명령 전체 목록을, <code>/tools</code>는 지금 켜져 있는 기능들을, <code>/model</code>은 두뇌를 즉석에서 다른 회사로 바꾸는 메뉴를 띄워 준다. <code>/save</code>는 지금 나눈 대화를 파일로 저장한다.</p>
+
+  <p>메시지를 한 줄이 아니라 여러 줄로 길게 적고 싶을 때는 줄을 바꿀 자리에서 그냥 엔터를 누르면 메시지가 보내져 버리니, 대신 Shift 키를 누른 채로 엔터를 누른다. 그러면 줄만 바뀐다. 답이 엉뚱한 방향으로 가고 있으면 키보드의 Ctrl 키와 영문 C 키를 동시에 눌러 멈출 수 있다. 어제 하던 작업을 이어가고 싶다면 hermes 대신 <code>hermes --continue</code>라고 치면 마지막 대화가 그대로 이어진다.</p>
+
+  <h2 id="s06"><span class="num">06 &nbsp;/&nbsp; 막혔을 때</span>의사한테 보내듯 doctor를 쓴다</h2>
+
+  <p>쓰다 보면 어느 날 갑자기 답이 안 오거나, hermes를 쳤더니 “그런 명령 없습니다”라는 말이 나오는 일이 생긴다. 그럴 때 가장 먼저 칠 명령은 <code>hermes doctor</code>다. 의사가 진찰하듯 어디가 막혔는지 한 번에 검사해서, 어떤 곳을 손봐야 하는지 알려준다.</p>
+
+  <p>두뇌를 다른 회사로 바꾸고 싶으면 <code>hermes model</code>을 다시 치고, 처음부터 새로 잡고 싶으면 <code>hermes setup</code>을 친다. 새 버전이 나왔다는 안내가 보이면 <code>hermes update</code> 한 줄로 갱신된다. 어제 하던 대화가 어디 있는지 잘 모르겠을 땐 <code>hermes sessions list</code>를 치면 과거 대화 목록이 쭉 뜬다. 처음에는 이 다섯 줄만 외워 두면 충분하다.</p>
+
+  <hr class="rule">
+
+  <h2 id="s07"><span class="num">07 &nbsp;/&nbsp; 자동화 활용</span>그래서 실제로 뭘 시킬 수 있나</h2>
+
+  <p>“쓸수록 자란다”는 말이 막연하게 들릴 수 있다. 그래서 처음 한 달 동안 실제로 시켜볼 만한 일들을 결이 다른 다섯 묶음으로 풀어 본다. 모두 이미 다른 분들이 같은 방식으로 굴리고 있는 일들이고, 어느 것 하나도 코드를 짤 줄 알아야 하는 일이 아니다. 한국어로 그냥 말로 부탁하면 된다.</p>
+
+  <h3>책상 위 자료 정리</h3>
+  <p>다운로드 폴더는 아무리 정리해도 며칠이면 다시 엉망이 된다. Hermes에게 “다운로드 폴더에 쌓인 파일들을 한 번 훑어보고, PDF는 ‘논문’ 폴더로, 강의자료(PPT, KEY)는 ‘강의자료’ 폴더로, 영수증으로 보이는 이미지는 ‘영수증’ 폴더로 옮겨줘. 잘 모르겠으면 옮기지 말고 목록으로만 보여줘”라고 부탁하면, 한 파일씩 열어 내용을 살펴보고 분류한다. 한 번 정해진 규칙은 자기 메모에 적어 두기 때문에, 다음번에 “지난번처럼 정리해줘” 한 마디면 같은 작업이 반복된다. 같은 결로 “지난주 받은 강의자료 30개의 표지에서 강의 제목과 강사명만 뽑아서 엑셀로 만들어줘” 같은 일도 한 번에 끝난다.</p>
+
+  <h3>자동 모니터링</h3>
+  <p>Hermes는 인터넷을 직접 들여다볼 수 있다. 그래서 “나라장터에 ‘AI 교육’이나 ‘바이브 코딩’ 같은 키워드가 들어간 새 공고가 뜨면 알려줘”, “과기정통부 보도자료 페이지를 매일 아침 9시에 확인하고 새로 올라온 게 있으면 제목과 한 줄 요약을 텔레그램으로 보내줘” 같은 부탁이 통한다. 한 번만 일러두면 매일 같은 시간에 알아서 돌아간다. 이메일을 살펴 “요청·문의가 들어온 메일만 골라 한 줄 요약과 함께 묶어서 보여줘”라고 하면 출근하자마자 오늘의 우선순위가 정리된 채 내 앞에 놓인다.</p>
+
+  <h3>글쓰기 도우미</h3>
+  <p>이건 ChatGPT와 비슷해 보이지만 결정적인 차이가 있다. Hermes는 내 컴퓨터 안의 파일과 과거 대화를 같이 본다. “지난달 강의 후기 다섯 개에서 공통적으로 나오는 칭찬과 아쉬움을 정리해서, 다음 강의 소개 카피 초안을 세 가지 톤으로 써줘”, “이 폴더 안의 회의록 12개를 다 읽고 이번 분기 협회 핵심 의사결정 다섯 개를 뽑아 임원회의용 한 장 보고서로 만들어줘” 같은 일을 시킬 수 있다. 매번 자료를 일일이 복사해 붙여 넣을 필요 없이, “이 폴더 안의 것들”이라고만 가리키면 된다.</p>
+
+  <h3>메신저로 옮겨간 비서</h3>
+  <p><code>hermes gateway setup</code>으로 텔레그램이나 디스코드, 슬랙에 같은 비서를 붙여 두면, 외출 중에도 휴대폰에서 똑같이 일을 시킬 수 있다. “지금 노트북에 켜져 있는 한글 문서들 제목만 알려줘”, “책상 위 ‘이번주’ 폴더 안 PDF 제목들 한 줄로 요약해서 보내줘” 같은 부탁이 답으로 돌아온다. 출근길에 “오늘 저녁 7시에 강의 자료 마지막 페이지에 협회 로고와 연락처 한 줄 추가해 두라고 8시쯤 다시 알려줘” 식의 미래형 부탁도 가능하다.</p>
+
+  <h3>정해진 시간 자동 실행</h3>
+  <p>개발 쪽 용어로는 “크론”이라고 부르지만, Hermes에서는 그냥 “매주 금요일 오후 6시에”라는 말로 통한다. “매일 아침 7시에 오늘 일정과 어제 받은 미답신 이메일을 묶어 텔레그램으로 보내줘”, “매주 금요일 오후 6시에 한 주 동안 ‘바이브코딩’ 폴더 안에 새로 추가된 파일을 정리해 한 페이지 보고서로 만들어줘”, “매월 말일 23시에 협회 공식 메일함을 백업해줘”처럼 시켜두면, 그날부터는 잊고 살아도 정해진 시간에 알아서 결과물이 도착한다. 한 번 만들어 둔 자동 작업은 Hermes 안에서 언제든 켜고 끌 수 있어, 시즌이 끝나면 멈춰 두면 그만이다.</p>
+
+  <h2 id="s08"><span class="num">08 &nbsp;/&nbsp; 마무리</span>한 번에 다 자동화하지 말 것</h2>
+
+  <p>이 다섯 묶음을 가만 보면, 결국 Hermes는 “비서를 한 명 더 채용한 것”에 가깝다. 단순 검색은 ChatGPT도 잘하지만, “내 컴퓨터를 알고”, “내 메신저로 들어오고”, “정해진 시간에 알아서 움직이고”, “하면 할수록 내 일하는 방식을 외워 가는” 비서는 이쪽이 한 발 앞서 있다.</p>
+
+  <p>처음에는 부탁 한 가지로 시작해, 그게 손에 익으면 두 번째, 세 번째 자동화를 얹어 가는 식으로 키우는 것이 가장 안전하다. 한 번에 모든 것을 자동화하려 들면 결과를 검증하지 못한 채 일이 진행되어 도리어 신뢰가 깨지기 쉽다. 처음 며칠은 답이 시원찮아 보일 수 있다. 그래도 며칠만 같은 종류의 일을 함께 해보면, 어느 순간 “아, 이 친구가 내 폴더 구조와 내 일하는 방식을 외웠구나” 하는 순간이 온다. 그때부터가 진짜다. 너무 거창하게 시작하지 말고, 평소 답답하던 작은 일 하나, 예를 들어 “이 폴더 안 PDF들 제목만 모아서 표로 만들어줘” 같은 부탁부터 던져 보시면 좋다.</p>
+
+  <div class="sources">
+    <div class="src-title">참고 자료</div>
+    <p><a href="https://hermes-agent.nousresearch.com/" target="_blank" rel="noopener">Hermes Agent — The Agent That Grows With You (공식 사이트)</a></p>
+    <p><a href="https://hermes-agent.nousresearch.com/docs/getting-started/quickstart" target="_blank" rel="noopener">Hermes Agent Quickstart 공식 문서</a></p>
+    <p><a href="https://hermes-agent.nousresearch.com/docs/getting-started/installation/" target="_blank" rel="noopener">Hermes Agent Installation 공식 문서</a></p>
+    <p><a href="https://github.com/NousResearch/hermes-agent" target="_blank" rel="noopener">NousResearch/hermes-agent GitHub 저장소</a></p>
+    <p><a href="https://github.com/NousResearch/hermes-agent/blob/main/website/docs/reference/cli-commands.md" target="_blank" rel="noopener">Hermes Agent CLI 레퍼런스</a></p>
+    <p><a href="https://www.datacamp.com/tutorial/hermes-agent" target="_blank" rel="noopener">DataCamp 튜토리얼: Hermes Agent Setup</a></p>
+  </div>
+
+  <div class="footer">
+    <strong>신성진 (Shinsungjin)</strong><br>
+    한국데이터사이언티스트협회 대표 &middot; CDSA<br>
+    개인·조직 AX 변화관리 컨설턴트 &middot; AX/DX 교육 설계 &middot; 공공기관 커리큘럼 설계<br>
+    YouTube @workbyax &middot; <a href="mailto:sjshin@cdsa.or.kr">sjshin@cdsa.or.kr</a>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="/" class="bottom-nav-home">← CDSA 홈으로</a>
+    <a href="/blog/">블로그 목록 →</a>
+  </nav>
+
+</article>
+
+<script src="/blog/_posts.js" defer></script>
+</body>
+</html>
