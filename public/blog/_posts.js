@@ -27,6 +27,12 @@
   // views.base   = 발행 직후 시드 누적치 (초기 1~2일 트래픽 + 사전 노출 합산 가정)
   // views.daily  = 일평균 추가 조회수 (오래된 글일수록 감쇠)
   // views.publishedISO = 발행일(자정 KST 기준)
+  // 단일 진실원 (single source of truth) — 새 글 추가 시 이 배열에만 항목 한 개를 더하면
+  // 인덱스 카드, 사이드바 목록, Blog Schema JSON-LD가 모두 자동으로 따라온다.
+  // dek      = 인덱스 카드의 발췌문 (3~4줄)
+  // author   = JSON-LD article author 이름. 미명시 시 'CDSA 편집팀'
+  // authorType = 'Person' | 'Organization' (기본 'Person')
+  // publishTime = '09:00:00' 같은 KST 시각. 미명시 시 '09:00:00'
   const POSTS = [
     {
       slug: 'claude-keynote-2026-explainer',
@@ -34,6 +40,10 @@
       date: '2026. 5. 9',
       category: '큐레이션 · 키노트 해설',
       href: '/blog/claude-keynote-2026-explainer.html',
+      author: 'CDSA 편집팀',
+      authorType: 'Organization',
+      publishTime: '10:00:00',
+      dek: 'Managed Agents, Multi-Agent Orchestration, Outcomes, Dreaming, Routines, CI Autofix. 앤트로픽 키노트 47분에 등장한 핵심 용어를 비개발자 어휘로 옮긴 다섯 화두. "모델은 지수곡선, 조직은 직선" 그 간격을 메우는 무기들.',
       views: { base: 110, daily: 11, publishedISO: '2026-05-09' },
     },
     {
@@ -42,6 +52,10 @@
       date: '2026. 5. 9',
       category: '자료 · 전사록',
       href: '/blog/claude-keynote-2026-transcript.html',
+      author: 'CDSA 편집팀',
+      authorType: 'Organization',
+      publishTime: '10:30:00',
+      dek: '앤트로픽이 진행한 2026 Code with Claude 오프닝 키노트의 47분짜리 발화 전체를 발표자별·타임스탬프별로 한국어로 옮긴 전사록. CPO 오프닝부터 Boris Cherny의 AcmePay·Routines 시연까지 다섯 섹션 구조.',
       views: { base: 60, daily: 6, publishedISO: '2026-05-09' },
     },
     {
@@ -50,6 +64,8 @@
       date: '2026. 5. 8',
       category: '큐레이션 · AI 시대 일하기',
       href: '/blog/ai-floor-and-ceiling.html',
+      author: '최홍찬',
+      dek: '1839년 사진기가 발명되었을 때 회화는 죽지 않았다. 천장이 더 높이 올라갔을 뿐. 구글 테크 리드 최홍찬이 길어 올린 세 가지 화두 — FOMO를 다스리는 법, 책임은 외주화할 수 없다, 그리고 비판적 사고력.',
       views: { base: 80, daily: 9, publishedISO: '2026-05-08' },
     },
     {
@@ -58,6 +74,8 @@
       date: '2026. 4. 24',
       category: 'AI 산업 분석',
       href: '/blog/ai-hegemony-2026.html',
+      author: '김태유',
+      dek: '지능보다 빠른 것은 에너지·인터페이스·몸이었다. 메타의 원자력 20년 계약, 오픈AI Operator의 인터페이스 소멸, 1X NEO 2만 달러 휴머노이드 — 네 거인은 이제 같은 전쟁을 다른 무기로 치르는 것이 아니라 네 개의 다른 전쟁을 치른다. 김태유 박사의 AI 산업 지형 리포트.',
       views: { base: 250, daily: 16, publishedISO: '2026-04-24' },
     },
     {
@@ -66,6 +84,8 @@
       date: '2026. 4. 23',
       category: 'AI 경영 리포트',
       href: '/blog/ai-value-gap-2026.html',
+      author: '신성진',
+      dek: '맥킨지·PwC·BCG·가트너가 2026년 1분기에 쏟아낸 리서치가 같은 결론으로 수렴한다. 월스트리트 6대 은행의 470억 달러 이익과 1만 5천 명 감원, 한국은행 BOKI와 LG전자 288배 분석 가속화까지 — 실험의 해는 끝났고 결산이 시작됐다. 신성진 대표 · Claude Deep Research 공동 작성.',
       views: { base: 480, daily: 22, publishedISO: '2026-04-23' },
     },
     {
@@ -74,6 +94,8 @@
       date: '2026. 4. 22',
       category: 'AI 활용론',
       href: '/blog/search-vs-delegate.html',
+      author: '이중균',
+      dek: 'AI를 네이버·구글처럼 검색하고 있다면, 지금부터 접근을 완전히 바꿔야 한다. 주산반이 사라졌듯 지금의 검색 습관도 사라진다. 검색이 아니라 위임이다.',
       views: { base: 560, daily: 15, publishedISO: '2026-04-22' },
     },
     {
@@ -82,6 +104,8 @@
       date: '2026. 4. 21',
       category: 'AI 사고론',
       href: '/blog/step-by-step-thinking.html',
+      author: '이중균',
+      dek: '"Let\'s think step by step" 한 문장이 산술 정답률을 17.7%에서 78.7%로 올렸다. Chain-of-Thought부터 추론 모델 시대까지 — 인지과학과 LLM 연구가 똑같이 말하는 원리.',
       views: { base: 660, daily: 17, publishedISO: '2026-04-21' },
     },
     {
@@ -90,6 +114,8 @@
       date: '2026. 4. 20',
       category: 'AI 문제해결론',
       href: '/blog/ai-problem-solving.html',
+      author: '이중균',
+      dek: "문제는 기술이 아니다. AI를 '도구'로 보는 순간, 가장 중요한 질문을 놓친다. 문서 · 데이터 · 바이브코딩 세 톱니바퀴가 맞물려야 비로소 '문제 해결'이 된다는, 이중균 대표의 AI 문제해결론.",
       views: { base: 1020, daily: 18, publishedISO: '2026-04-20' },
     },
     {
@@ -98,6 +124,8 @@
       date: '2026. 4. 19',
       category: '에이전트 운영론',
       href: '/blog/agent-as-workflow.html',
+      author: '김태유',
+      dek: '챗봇은 "뭘 알고 싶어?"에 답하지만, 에이전트는 "뭘 해야 해?"에 답한다. 더 좋은 모델의 문제가 아니라 일을 쪼개고 굴리는 구조의 문제다. OpenClaw 기준으로 풀어 보는 에이전트 운영론 시리즈의 첫 편.',
       views: { base: 1220, daily: 20, publishedISO: '2026-04-19' },
     },
     {
@@ -106,6 +134,8 @@
       date: '2026. 4. 18',
       category: 'Domain-DAXist',
       href: '/blog/domain-daxist.html',
+      author: '현중균',
+      dek: "생성형 AI 시대, 기획·디자인·개발의 경계가 '묽어지고' 있다. 알파고 이후의 데이터 석유 시대, 시민 데이터 과학자, 그리고 LLM 이후 — 자신의 도메인을 바탕으로 DX·AX를 스스로 주도하는 새 인재상을 정의하는 연재의 첫 편.",
       views: { base: 1380, daily: 22, publishedISO: '2026-04-18' },
     },
     {
@@ -114,6 +144,8 @@
       date: '2026. 4. 18',
       category: 'Gemini 업무론',
       href: '/blog/gemini-worker.html',
+      author: '김태유',
+      dek: '직접 생산하는 사람에서 설계하고 검수하는 사람으로. 회의·이메일·보고서가 재배치되는 자리, 그리고 Gemini가 업무 흐름 속으로 들어오는 방법. 집필 중인 단행본 「직장인을 위한 Gemini 업무 활용법」 1장 초고.',
       views: { base: 1640, daily: 26, publishedISO: '2026-04-18' },
     },
     {
@@ -122,6 +154,8 @@
       date: '2026. 4. 14',
       category: 'AX 거버넌스',
       href: '/blog/working-governance.html',
+      author: '신성진',
+      dek: '막는 정책에서 작동하는 거버넌스로. 폐쇄망에서 실제로 돌아가는 여덟 가지 증거, 골목길의 문제, 그리고 거버넌스 5층위의 3·4·5층을 채우는 이야기.',
       views: { base: 2100, daily: 28, publishedISO: '2026-04-14' },
     },
     {
@@ -130,6 +164,8 @@
       date: '2026. 4. 1',
       category: '에이전트 아키텍처',
       href: '/blog/multi-agent-patterns.html',
+      author: '신성진',
+      dek: "SNS 타임라인에 자주 도는 '멀티 에이전트 7가지 패턴'을 실무 기준으로 풀어 본다. 오케스트레이터부터 자기성찰형까지. 본질은 통제 구조와 실행 순서 두 축이다.",
       views: { base: 2400, daily: 22, publishedISO: '2026-04-01' },
     },
     {
@@ -138,6 +174,8 @@
       date: '2026. 4. 1',
       category: 'MCP 실무',
       href: '/blog/mcp-client.html',
+      author: '신성진',
+      dek: '도구라는 말은 편하지만 손에 잘 잡히지 않는다. 채팅창 뒤에 무엇이 있어야 MCP 클라이언트가 제대로 작동하는가. 기능을 네 가지 유형으로 풀어 본 현실적인 지도.',
       views: { base: 1720, daily: 14, publishedISO: '2026-04-01' },
     },
     {
@@ -146,6 +184,8 @@
       date: '2026. 3. 25',
       category: 'AI 도구론',
       href: '/blog/harness.html',
+      author: '신성진',
+      dek: '용어를 아는 것은 좋은 출발점이다. 다만 그 자리에서 한 걸음만 더 들어가면, 훨씬 또렷하게 보이는 풍경이 있다. 60줄짜리 파이썬부터 Claude Code까지, 하네스의 실체를 파일과 폴더 단위로 내려가 본 기록.',
       views: { base: 1950, daily: 13, publishedISO: '2026-03-25' },
     },
     {
@@ -154,6 +194,8 @@
       date: '2026. 3. 18',
       category: 'MCP 심화',
       href: '/blog/mcp-server.html',
+      author: '신성진',
+      dek: '기능 목록·입력 형식·실행 코드·결과 반환. 거창한 마법이 아니라 네 가지 뼈대로 풀어 본 MCP 서버의 내부 구조. 일반 API 서버와 무엇이 다른가부터 왜 필요한가까지.',
       views: { base: 2300, daily: 14, publishedISO: '2026-03-18' },
     },
     {
@@ -162,6 +204,8 @@
       date: '2026. 3. 11',
       category: 'MCP 입문',
       href: '/blog/mcp-guide.html',
+      author: '신성진',
+      dek: 'MCP는 한 마디로 무엇인가. 서버와 클라이언트와 에이전트 서버는 어떻게 다른가. 식당 비유로 풀어 본 입문 지도. 그리고 초보자가 직접 만들 때 어디서부터 시작해야 하는지까지.',
       views: { base: 2900, daily: 18, publishedISO: '2026-03-11' },
     },
     {
@@ -170,6 +214,8 @@
       date: '2026. 3. 4',
       category: '에이전트 개념',
       href: '/blog/what-is-agent.html',
+      author: '신성진',
+      dek: '프롬프팅·워크플로우·에이전트·에이전틱 AI·하네스 — 섞여 쓰이는 이 단어들을 운전 비유 하나로 정리한다. 진짜 구분선은 "AI가 다음에 뭘 할지 누가 정하는가"다.',
       views: { base: 3800, daily: 14, publishedISO: '2026-03-04' },
     },
   ];
@@ -286,6 +332,66 @@
     overlay.addEventListener('click', toggle);
   }
 
+  // 인덱스(/blog/) 페이지 — 카드 리스트를 POSTS에서 자동 렌더링
+  function renderIndexCards() {
+    const list = document.getElementById('posts-list');
+    if (!list) return;
+    list.innerHTML = POSTS.map((p) => {
+      return (
+        '<article class="post">' +
+          '<div class="post-meta">' +
+            '<span class="post-date">' + escapeHtml(p.date) + '</span>' +
+            '<span class="post-category">' + escapeHtml(p.category) + '</span>' +
+          '</div>' +
+          '<div class="post-body">' +
+            '<a href="' + p.href + '">' +
+              '<h2 class="post-title">' + escapeHtml(p.title) + '</h2>' +
+              '<p class="post-dek">' + escapeHtml(p.dek || '') + '</p>' +
+              '<span class="post-readmore">읽기 →</span>' +
+            '</a>' +
+          '</div>' +
+        '</article>'
+      );
+    }).join('');
+  }
+
+  // 인덱스(/blog/) 페이지 — Blog Schema JSON-LD를 POSTS에서 자동 생성
+  function renderIndexJsonLd() {
+    const slot = document.getElementById('blog-jsonld');
+    if (!slot) return;
+    const blogPost = POSTS.map((p) => {
+      const time = p.publishTime || '09:00:00';
+      const datePub = (p.views && p.views.publishedISO ? p.views.publishedISO : '') + 'T' + time + '+09:00';
+      return {
+        '@type': 'BlogPosting',
+        headline: p.title,
+        url: 'https://cdsa.kr' + p.href,
+        datePublished: datePub,
+        author: {
+          '@type': p.authorType || 'Person',
+          name: p.author || 'CDSA 편집팀',
+        },
+        articleSection: p.category,
+      };
+    });
+    const data = {
+      '@context': 'https://schema.org',
+      '@type': 'Blog',
+      name: 'CDSA 블로그 · 현장의 기록',
+      description: 'AI와 데이터, 그리고 일하는 방식에 대해 협회 전문가들이 남기는 기록.',
+      url: 'https://cdsa.kr/blog/',
+      publisher: {
+        '@type': 'Organization',
+        name: '한국데이터사이언티스트협회',
+        url: 'https://cdsa.kr',
+        logo: { '@type': 'ImageObject', url: 'https://cdsa.kr/og-image.png' },
+      },
+      inLanguage: 'ko-KR',
+      blogPost: blogPost,
+    };
+    slot.textContent = JSON.stringify(data, null, 2);
+  }
+
   // 현재 글의 byline 우측에 "· 조회 X,XXX" 추가
   function renderViewCount() {
     const slug = getCurrentSlug();
@@ -320,6 +426,9 @@
     setupScrollSpy();
     setupHamburger();
     renderViewCount();
+    // 인덱스 페이지 전용 (개별 글 페이지에서는 대상 요소가 없어 noop)
+    renderIndexCards();
+    renderIndexJsonLd();
   }
 
   if (document.readyState === 'loading') {
