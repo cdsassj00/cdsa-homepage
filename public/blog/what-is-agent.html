@@ -64,6 +64,65 @@
   "inLanguage": "ko-KR"
 }
 </script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "CDSA",
+      "item": "https://cdsa.kr/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "블로그",
+      "item": "https://cdsa.kr/blog/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "ChatGPT에 코드 물어보는 것도 AI 에이전트일까?",
+      "item": "https://cdsa.kr/blog/what-is-agent.html"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "AI 에이전트란 무엇인가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "AI 에이전트는 사용자의 목표를 받아 스스로 계획을 세우고, 도구를 호출하며, 결과를 검증하는 자율적 AI 시스템입니다. 단순 챗봇과 달리 여러 단계의 작업을 스스로 수행합니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "멀티에이전트 시스템은 어떤 상황에서 필요한가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "단일 에이전트로는 처리하기 복잡한 작업, 전문 분야가 다른 하위 작업들을 병렬로 처리해야 할 때, 또는 검토-실행 분리가 필요한 업무에서 멀티에이전트 구조가 효과적입니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "01  /  시나리오하나의 장면으로 시작해 보자에 대해 무엇을 알아야 하나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "이 글에서 '01  /  시나리오하나의 장면으로 시작해 보자' 섹션을 통해 구체적인 데이터와 사례로 설명합니다. 자세한 내용은 본문을 참고하세요."
+      }
+    }
+  ]
+}
+</script>
 <!-- END SEO -->
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-NZL39P5EYZ"></script>
@@ -297,7 +356,7 @@
   <p class="dek">프롬프팅, 워크플로우, 에이전트, 에이전틱 AI, 하네스 — 섞여 쓰이는 이 단어들을 운전 비유 하나로 한 번에 정리해 본다.</p>
 
   <div class="byline">
-    <span><strong>신성진</strong> &nbsp;&middot;&nbsp; 한국데이터사이언티스트협회</span>
+    <span><strong>신성진</strong>  &middot;  한국데이터사이언티스트협회</span>
     <span>2026. 3. 4</span>
   </div>
 
@@ -305,7 +364,7 @@
 
   <p>이 글에서는 AI를 활용하는 네 가지 방식을 <strong>운전</strong>에 비유해서 구분해 보겠습니다. 이 구분을 알고 나면, 지금 내가 AI를 어떤 수준으로 쓰고 있는지, 그리고 다음 단계는 뭔지가 보이기 시작합니다.</p>
 
-  <h2 id="s01"><span class="num">01 &nbsp;/&nbsp; 시나리오</span>하나의 장면으로 시작해 보자</h2>
+  <h2 id="s01"><span class="num">01  /  시나리오</span>하나의 장면으로 시작해 보자</h2>
 
   <p>여러분이 간단한 웹페이지를 만들고 싶다고 가정해 보겠습니다. ChatGPT에게 이렇게 묻습니다.</p>
 
@@ -317,7 +376,7 @@
 
   <p>아닙니다. 이건 <strong>프롬프팅</strong>입니다. 이유는 지금부터 풀어 보겠습니다.</p>
 
-  <h2 id="s02"><span class="num">02 &nbsp;/&nbsp; 프롬프팅</span>길을 물어보는 것</h2>
+  <h2 id="s02"><span class="num">02  /  프롬프팅</span>길을 물어보는 것</h2>
 
   <p>"강남역 어떻게 가요?" 물어보고, 답을 듣고, 운전은 내가 합니다. AI는 조언자일 뿐입니다.</p>
 
@@ -327,7 +386,7 @@
     <span class="label">핵심 특징</span>AI에게 물어보고, 내가 행동한다.
   </div>
 
-  <h2 id="s03"><span class="num">03 &nbsp;/&nbsp; 워크플로우</span>내비게이션을 따라 운전하는 것</h2>
+  <h2 id="s03"><span class="num">03  /  워크플로우</span>내비게이션을 따라 운전하는 것</h2>
 
   <p>경로는 사람이 미리 정해 놨습니다. AI는 그 정해진 자리에서 정해진 일만 합니다.</p>
 
@@ -341,7 +400,7 @@
     <span class="label">핵심 특징</span>내가 짠 길 위에서 AI가 한 칸씩 일한다.
   </div>
 
-  <h2 id="s04"><span class="num">04 &nbsp;/&nbsp; 에이전트</span>자율주행차</h2>
+  <h2 id="s04"><span class="num">04  /  에이전트</span>자율주행차</h2>
 
   <p>목적지만 말하면, 차가 알아서 경로를 정하고, 공사 구간을 만나면 돌아가고, 주유가 필요하면 주유소에 들르고, 실패하면 다시 시도합니다.</p>
 
@@ -367,7 +426,7 @@
     <span class="label">핵심 특징</span>목표만 주면 AI가 길을 정하고 행동한다.
   </div>
 
-  <h2 id="s05"><span class="num">05 &nbsp;/&nbsp; 하네스</span>자율주행을 가능하게 하는 자동차</h2>
+  <h2 id="s05"><span class="num">05  /  하네스</span>자율주행을 가능하게 하는 자동차</h2>
 
   <p>자율주행차에는 LiDAR, 카메라, 브레이크, 핸들, 제어 컴퓨터가 필요합니다. 아무리 똑똑한 AI 운전자라도 이것들 없이는 도로에 나갈 수 없습니다.</p>
 
@@ -381,7 +440,7 @@
     <span class="label">핵심 특징</span>AI가 행동할 수 있게 해 주는 도구·루프·환경의 총체.
   </div>
 
-  <h2 id="s06"><span class="num">06 &nbsp;/&nbsp; 분류</span>그래서 Manus, Genspark 같은 건 뭔가요</h2>
+  <h2 id="s06"><span class="num">06  /  분류</span>그래서 Manus, Genspark 같은 건 뭔가요</h2>
 
   <p>최근 주목받는 서비스들을 위의 기준으로 분류해 보겠습니다.</p>
 
@@ -397,7 +456,7 @@
 ChatGPT      Zapier+AI       ChatGPT Agent 모드     Manus, Claude Code
 (질문→답변)  (정해진 길)     (확인받으며 진행)       (알아서 끝까지)</pre>
 
-  <h2 id="s07"><span class="num">07 &nbsp;/&nbsp; 판별</span>가장 많이 하는 오해</h2>
+  <h2 id="s07"><span class="num">07  /  판별</span>가장 많이 하는 오해</h2>
 
   <p>"ChatGPT 쓰는 것도 에이전트 아닌가요?"</p>
 
@@ -412,7 +471,7 @@ ChatGPT      Zapier+AI       ChatGPT Agent 모드     Manus, Claude Code
 
   <p>ChatGPT에 코드를 물어보고 Netlify에 올리는 그 시나리오에서, "이제 Netlify에 올려야지"라고 결정한 건 <strong>여러분</strong>이었습니다. ChatGPT는 그 결정에 관여하지 않았습니다. 그래서 에이전트가 아닙니다.</p>
 
-  <h2 id="s08"><span class="num">08 &nbsp;/&nbsp; 혼용</span>전문가마다 정의가 다른 이유</h2>
+  <h2 id="s08"><span class="num">08  /  혼용</span>전문가마다 정의가 다른 이유</h2>
 
   <p>뉴스나 강연에서 "AI Agent와 Agentic AI는 다른 개념"이라는 설명을 들으셨을 수도 있습니다. 틀린 말은 아닙니다. <strong>학술적 프레이밍</strong>에서는 이렇게 나눕니다.</p>
 
@@ -432,7 +491,7 @@ ChatGPT      Zapier+AI       ChatGPT Agent 모드     Manus, Claude Code
 
   <hr class="rule">
 
-  <h2 id="s09"><span class="num">09 &nbsp;/&nbsp; 요약</span>한 줄로 네 개</h2>
+  <h2 id="s09"><span class="num">09  /  요약</span>한 줄로 네 개</h2>
 
   <div class="summary-table">
     <div class="row head">

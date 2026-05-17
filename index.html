@@ -34,12 +34,13 @@
     <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Organization",
+  "@type": "EducationalOrganization",
   "name": "한국데이터사이언티스트협회",
   "alternateName": "CDSA",
   "url": "https://cdsa.kr",
   "logo": "https://cdsa.kr/og-image.png",
   "email": "sjshin@cdsa.or.kr",
+  "foundingDate": "2020",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "금천구 가산동 디지털로9길 73, 622호",
@@ -49,7 +50,15 @@
   "sameAs": [
     "https://www.youtube.com/@workbyax"
   ],
-  "description": "AI 시대, 일하는 방식을 바꾸는 전문가들. 공공·대기업 150여 기관에서 AI·데이터 교육을 직접 설계하고 실행합니다."
+  "description": "공공기관과 대기업 150여 곳에서 AI·데이터 교육을 직접 설계하고 실행하는 전문기관. 바이브코딩, AI 리터러시, 폐쇄망 AI 거버넌스까지.",
+  "knowsAbout": ["AI 교육", "바이브코딩", "생성형 AI", "데이터분석", "폐쇄망 AI", "AI 거버넌스", "MCP", "AI 에이전트", "공공 AI", "AI 리터러시"],
+  "numberOfEmployees": {"@type": "QuantitativeValue", "value": 9},
+  "founder": {
+    "@type": "Person",
+    "name": "신성진",
+    "jobTitle": "대표이사",
+    "description": "경영지도사. 행정안전부 AI·데이터활용 전문위원. 과기정통부 데이터기반행정 자문위원."
+  }
 }
     </script>
     <script type="application/ld+json">
@@ -58,13 +67,100 @@
   "@type": "WebSite",
   "name": "한국데이터사이언티스트협회",
   "url": "https://cdsa.kr",
-  "inLanguage": "ko-KR"
+  "inLanguage": "ko-KR",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://cdsa.kr/blog/?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+    </script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "한국데이터사이언티스트협회(CDSA)는 어떤 기관인가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "CDSA는 공공기관과 대기업을 대상으로 AI·데이터 활용 교육을 설계하고 실행하는 전문 교육기관입니다. 150여 기관에서 현장 중심의 AI 역량 강화 프로그램을 수행하며, 행정안전부·과기정통부 자문위원이 직접 교육을 설계합니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "바이브코딩 교육을 받으면 무엇을 할 수 있나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "코딩 경험이 없는 기획자·공무원·마케터도 Cursor, Lovable, Claude Code 등으로 업무 도구를 직접 만들 수 있습니다. HTML 웹페이지부터 Python 자동화, 업무용 웹 앱까지 15세션에 걸쳐 체계적으로 학습합니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "행정망이나 폐쇄망에서도 AI를 활용할 수 있나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "가능합니다. CDSA의 '민첩한 AI 거버넌스' 프레임워크는 인터넷 없이도 AI를 활용하는 8가지 유형을 제공합니다. USB 기반 단일 HTML 도구, Ollama 로컬 LLM, 오프라인 Python 패키징 등 보안 규정을 준수하면서 AI 혁신을 실현합니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "어떤 기관에서 교육을 수행했나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "행정안전부, 과기정통부, NIA, 삼성전자 인재개발원, LG에너지솔루션, KAIST, 한진그룹, 카카오엔터테인먼트, 국민건강보험공단, KOTRA 등 공공·대기업·학계 150여 기관에서 교육을 수행했습니다."
+      }
+    }
+  ]
 }
     </script>
     <!-- END SEO -->
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Static content for SEO/GEO crawlers — React replaces on hydration -->
+      <header><nav><a href="/">한국데이터사이언티스트협회</a> <a href="/blog/">블로그</a> <a href="/about.html">About</a> <a href="/services/vibe-coding.html">바이브코딩</a> <a href="/services/public-ai.html">공공 AI 교육</a></nav></header>
+      <main>
+        <section>
+          <h1>AI 시대, 일하는 방식을 바꾸는 전문가들.</h1>
+          <p>한국데이터사이언티스트협회(CDSA)는 공공기관과 대기업 150여 곳에서 AI·데이터 교육을 직접 설계하고 실행하는 전문기관입니다. 가르치는 강사가 교육을 설계하고, 컨설턴트가 직접 연락드립니다.</p>
+        </section>
+        <section>
+          <h2>거시적 혁신이 고속도로라면, 우리는 골목길을 설계합니다.</h2>
+          <p>정부는 소버린 AI와 GPU 인프라를, 기업은 초거대 모델 자체 구축과 ERP AI 도입을 추진합니다. 그러나 고속도로가 깔려도 현장의 골목길은 바뀌지 않습니다. 공문 하나 쓰는 데 반나절, 엑셀 정리에 매주 반복되는 야근—이런 미시적 비효율에는 대규모 시스템의 손이 닿지 않습니다.</p>
+          <p>공공이든 민간이든 진짜 필요한 것은 현장의 문제를 스스로 정의하고, 이미 존재하는 AI 도구들을 레고 블록처럼 조합해 해결할 수 있는 생활형·실무형 역량입니다.</p>
+        </section>
+        <section>
+          <h2>현장에서 바로 쓰는 AI 교육 과정</h2>
+          <ul>
+            <li>AI 리터러시 — 전 직원 대상, AI 원리 이해와 업무 적용 판단력</li>
+            <li>AI 리더십 — CEO·임원 대상, AI 도입 의사결정과 조직 전환 전략</li>
+            <li>생성형 AI 문서 생성 — 보고서·기획서·공문 워크플로우 자동화</li>
+            <li>생성형 AI 데이터 분석 — 엑셀·파이썬·R을 LLM과 함께</li>
+            <li>바이브 코딩 — 비개발자가 Cursor·Lovable로 도구를 직접 제작</li>
+            <li>엑셀 자동화 — GPT + 수식 + VBA + Power Query</li>
+            <li>직무별 AI 스킬 — HR·마케팅·영업·법무·R&D 맞춤</li>
+            <li>폐쇄망 AI 거버넌스 — 행정망에서 로컬 LLM으로 AI 활용</li>
+          </ul>
+        </section>
+        <section>
+          <h2>수행 기관</h2>
+          <p>행정안전부, 과학기술정보통신부, NIA, 국민권익위원회, 식품의약품안전처, 법무부, 통계청, 농촌진흥청, 소방청, 한국연구재단, 국민건강보험공단, LH, KOTRA, 삼성전자 인재개발원, LG에너지솔루션, SK, KT그룹, 한진그룹, KCC, 풀무원, CJ프레시웨이, 카카오엔터테인먼트, 하나금융그룹, KAIST, 한양대학교 외 150여 기관</p>
+        </section>
+        <section>
+          <h2>전문가 네트워크</h2>
+          <p>신성진 대표이사 — 경영지도사, 행안부 AI 전문위원, 과기정통부 자문위원</p>
+          <p>이중균 파트너이사 — 前 한국야쿠르트 데이터센터장</p>
+          <p>현중균 사내이사 — Intel AI4FW Facilitator, 가톨릭대 의료AI 박사과정</p>
+          <p>김태유 AI 전문교수 — MSTY Korea 대표, 前 KPMG AI 총괄 리드, Swiss AI 박사</p>
+        </section>
+        <section>
+          <h2>문의</h2>
+          <p>이메일: sjshin@cdsa.or.kr | 서울특별시 금천구 가산동 디지털로9길 73, 622호</p>
+        </section>
+      </main>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

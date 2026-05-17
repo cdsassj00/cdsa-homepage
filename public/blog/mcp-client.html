@@ -64,6 +64,65 @@
   "inLanguage": "ko-KR"
 }
 </script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "CDSA",
+      "item": "https://cdsa.kr/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "블로그",
+      "item": "https://cdsa.kr/blog/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "MCP 클라이언트를 직접 만들 때 왜 에이전트 서버가 핵심인가",
+      "item": "https://cdsa.kr/blog/mcp-client.html"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "MCP(Model Context Protocol)란 무엇인가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "MCP는 Anthropic이 공개한 개방형 프로토콜로, AI 에이전트가 외부 도구·데이터소스와 표준화된 방식으로 연결될 수 있게 합니다. 서버-클라이언트 구조로 동작하며, 어떤 LLM이든 MCP 서버에 연결해 기능을 확장할 수 있습니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "MCP 서버를 만들려면 어떤 기술이 필요한가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Python 또는 TypeScript 기본 지식이면 충분합니다. Anthropic의 MCP SDK를 사용하면 도구(tool) 정의와 핸들러 함수를 작성하는 것만으로 서버를 구축할 수 있습니다. 비개발자도 바이브코딩으로 직접 만들 수 있는 수준입니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "01  /  기능의 네 가지 유형직접 보이는 형태로 다시 설명하면에 대해 무엇을 알아야 하나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "이 글에서 '01  /  기능의 네 가지 유형직접 보이는 형태로 다시 설명하면' 섹션을 통해 구체적인 데이터와 사례로 설명합니다. 자세한 내용은 본문을 참고하세요."
+      }
+    }
+  ]
+}
+</script>
 <!-- END SEO -->
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-NZL39P5EYZ"></script>
@@ -384,7 +443,7 @@
   <p class="dek">도구라는 말은 편하지만 손에 잘 잡히지 않는다. 채팅창 뒤에 무엇이 있어야 MCP 클라이언트가 제대로 작동하는가.</p>
 
   <div class="byline">
-    <span><strong>신성진</strong> &nbsp;&middot;&nbsp; 한국데이터사이언티스트협회</span>
+    <span><strong>신성진</strong>  &middot;  한국데이터사이언티스트협회</span>
     <span>2026. 4. 1</span>
   </div>
 
@@ -415,7 +474,7 @@
 
   <p>따라서 MCP 서버를 만든다는 말은 거창한 무언가를 만든다는 뜻이 아니라, 이런 실행 가능한 기능들을 모델이 일정한 방식으로 호출할 수 있게 정리해 놓는다는 뜻입니다.</p>
 
-  <h2 id="s01"><span class="num">01 &nbsp;/&nbsp; 기능의 네 가지 유형</span>직접 보이는 형태로 다시 설명하면</h2>
+  <h2 id="s01"><span class="num">01  /  기능의 네 가지 유형</span>직접 보이는 형태로 다시 설명하면</h2>
 
   <p>직접 만드는 MCP 시스템에서 모델이 사용할 수 있는 것은 대개 아래처럼 생긴 기능들입니다. 뭉뚱그린 "도구"가 아니라, 입력과 처리와 출력이 분명한 네 가지 결의 실행 단위로 나누어 보면 훨씬 또렷하게 보입니다.</p>
 
@@ -472,7 +531,7 @@
 
   <p>즉, MCP에서 모델이 다루는 것은 추상적인 마법 상자가 아니라, 실제로는 이런 개별 기능들입니다. <strong>입력이 있고, 내부 처리 로직이 있고, 출력이 있는 아주 구체적인 실행 단위들</strong>입니다.</p>
 
-  <h2 id="s02"><span class="num">02 &nbsp;/&nbsp; 핵심</span>그러면 왜 에이전트 서버가 핵심인가</h2>
+  <h2 id="s02"><span class="num">02  /  핵심</span>그러면 왜 에이전트 서버가 핵심인가</h2>
 
   <p>이제 여기서 핵심이 보입니다. 사용자가 직접 MCP 클라이언트를 만든다고 했을 때, 실제 어려운 부분은 이 기능들을 화면에 예쁘게 보여주는 것이 아닙니다. 더 중요한 것은 <strong>사용자의 질문을 보고 어떤 기능을 언제 어떤 순서로 호출할지 결정하고, 그 결과를 다시 모델에게 넣어 최종 답을 완성하는 흐름을 통제하는 것</strong>입니다.</p>
 
@@ -504,7 +563,7 @@
 
   <p>이것이 없으면 화면은 있어도 제대로 동작하는 MCP 클라이언트가 되지 않습니다.</p>
 
-  <h2 id="s03"><span class="num">03 &nbsp;/&nbsp; 착시</span>유명한 MCP 클라이언트가 왜 쉬워 보이는가</h2>
+  <h2 id="s03"><span class="num">03  /  착시</span>유명한 MCP 클라이언트가 왜 쉬워 보이는가</h2>
 
   <p>Claude Desktop이나 Cursor 같은 이미 완성된 제품은 이 중간 조정 계층이 이미 안에 들어 있습니다. 그래서 사용자는 마치 모델이 바로 MCP 기능을 쓰는 것처럼 느낍니다.</p>
 
@@ -522,7 +581,7 @@
 
   <p>이 계층이 바로 에이전트 서버입니다. 그래서 직접 만드는 MCP 클라이언트는 정확히 말하면 클라이언트를 만드는 작업이 아니라, <strong>MCP 기능들을 안전하고 순서 있게 실행시키는 에이전트 서버를 만들고 그 위에 화면을 얹는 작업</strong>에 가깝습니다.</p>
 
-  <h2 id="s04"><span class="num">04 &nbsp;/&nbsp; 정리</span>아주 현실적인 기준으로 다시</h2>
+  <h2 id="s04"><span class="num">04  /  정리</span>아주 현실적인 기준으로 다시</h2>
 
   <p>직접 만드는 MCP 시스템에서 모델이 쓰는 것은 추상적인 도구가 아니라 아래 같은 실행 함수들입니다.</p>
 
@@ -543,7 +602,7 @@
 
   <hr class="rule">
 
-  <h2 id="s05"><span class="num">05 &nbsp;/&nbsp; 한 줄 결론</span>흐름 제어기가 먼저다</h2>
+  <h2 id="s05"><span class="num">05  /  한 줄 결론</span>흐름 제어기가 먼저다</h2>
 
   <blockquote>유명한 MCP 클라이언트는 이미 내부에 함수 호출 흐름 제어기가 들어 있어서 편해 보이는 것이고, 사용자가 생짜로 직접 만들 MCP 클라이언트는 결국 그 함수 호출 흐름 제어기 — 즉 에이전트 서버를 먼저 만들어야 제대로 작동합니다.</blockquote>
 

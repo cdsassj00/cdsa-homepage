@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>폐쇄망·행정망 AI 교육 — 보안 환경에서도 작동하는 AI 활용법 · CDSA</title>
+<meta name="description" content="인터넷 없는 행정망·폐쇄망에서도 AI를 활용할 수 있습니다. 로컬 LLM, USB 배포 도구, 오프라인 Python 등 8가지 유형의 민첩한 AI 거버넌스.">
+<meta name="keywords" content="폐쇄망 AI, 행정망 AI, 로컬 LLM, Ollama, 오프라인 AI, 민첩한 AI 거버넌스, 공공 AI 보안, 폐쇄망 바이브코딩, CDSA, 신성진">
+<link rel="canonical" href="https://cdsa.kr/services/closed-network-ai.html">
+<meta property="og:title" content="폐쇄망·행정망 AI 교육 — 보안 환경에서도 작동하는 AI 활용법 · CDSA">
+<meta property="og:description" content="인터넷 없는 행정망·폐쇄망에서도 AI를 활용할 수 있습니다. 로컬 LLM, USB 배포 도구, 오프라인 Python 등 8가지 유형의 민첩한 AI 거버넌스.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cdsa.kr/services/closed-network-ai.html">
+<meta property="og:site_name" content="한국데이터사이언티스트협회">
+<meta property="og:image" content="https://cdsa.kr/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="폐쇄망·행정망 AI 교육 — 보안 환경에서도 작동하는 AI 활용법 · CDSA">
+<meta name="twitter:description" content="인터넷 없는 행정망·폐쇄망에서도 AI를 활용할 수 있습니다. 로컬 LLM, USB 배포 도구, 오프라인 Python 등 8가지 유형의 민첩한 AI 거버넌스.">
+<meta name="twitter:image" content="https://cdsa.kr/og-image.png">
+<meta name="author" content="신성진">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "폐쇄망·행정망 AI 교육 — 민첩한 AI 거버넌스",
+  "description": "인터넷 연결 없이도 AI 혁신을 실현하는 CDSA의 독자 프레임워크 '민첩한 AI 거버넌스(Agile AI Governance)' 기반 교육. 로컬 LLM, USB 배포 도구, 오프라인 Python 패키징 등 8가지 유형으로 행정망·폐쇄망에서 AI를 안전하게 활용합니다.",
+  "provider": {
+    "@type": "Organization",
+    "name": "한국데이터사이언티스트협회",
+    "url": "https://cdsa.kr"
+  },
+  "url": "https://cdsa.kr/services/closed-network-ai.html",
+  "image": "https://cdsa.kr/og-image.png",
+  "inLanguage": "ko-KR",
+  "teaches": ["로컬 LLM", "오프라인 AI", "Ollama", "행정망 AI", "폐쇄망 보안", "오프라인 Python"],
+  "hasCourseInstance": {
+    "@type": "CourseInstance",
+    "courseMode": "onsite",
+    "inLanguage": "ko-KR"
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "행정망·폐쇄망에서 AI를 쓸 수 있나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "네, 가능합니다. CDSA의 민첩한 AI 거버넌스(Agile AI Governance) 프레임워크는 인터넷 연결 없이도 AI를 활용하는 8가지 방법을 정리한 것입니다. HTML 단일 파일 도구, Python 오프라인 패키징, Ollama 로컬 LLM 등 모두 행정망·폐쇄망에서 오늘 당장 실행할 수 있는 방법들입니다. 외부 서버와 통신하지 않으므로 보안 규정을 준수합니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "로컬 LLM은 성능이 충분한가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "폐쇄망 업무 맥락에 따라 다르지만, Ollama 기반의 1B~7B 크기 모델로도 민원 유형 분류, 짧은 요약, 단순 Q&A, 텍스트 분류 등 행정 실무의 반복 작업 상당 부분을 처리할 수 있습니다. CPU만으로도 동작하며, 외부 통신이 전혀 없어 개인정보 보호와 보안 규정 준수가 가능합니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "교육 후 실제로 도구를 만들어 쓸 수 있나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "네. 교육은 '개념 이해'가 아니라 '현장 적용'을 목표로 합니다. 한글 공문 자동 병합, 민원 유형 분류, 내부 규정 FAQ 생성 등 실제 행정 업무에서 출발한 사례로 실습하며, 교육 중에 실제 사용 가능한 도구를 직접 만들어봅니다. 이후 기관 내에서 유사 도구를 추가 제작할 수 있는 역량을 목표로 합니다."
+      }
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "CDSA",
+      "item": "https://cdsa.kr/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "서비스",
+      "item": "https://cdsa.kr/services/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "폐쇄망·행정망 AI 교육",
+      "item": "https://cdsa.kr/services/closed-network-ai.html"
+    }
+  ]
+}
+</script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NZL39P5EYZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NZL39P5EYZ');
+</script>
+
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --cream: #faf9f5;
+    --cream-deep: #f3efe3;
+    --ink: #1a1a1a;
+    --ink-soft: #3d3d3a;
+    --ink-mute: #6b6b66;
+    --rule: #d9d6cc;
+    --clay: #cc785c;
+    --clay-deep: #a85a42;
+    --code-bg: #f2f0e8;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--cream); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  body { font-family: "Fraunces", "Noto Serif KR", Georgia, serif; font-weight: 300; font-size: 19px; line-height: 1.72; letter-spacing: -0.005em; }
+
+  .topnav { position: fixed; top: 0; left: 0; right: 0; height: 48px; background: rgba(250, 249, 245, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; }
+  .topnav-left { display: flex; align-items: center; gap: 18px; }
+  .topnav-left a { color: var(--ink-soft); text-decoration: none; transition: color 0.2s; }
+  .topnav-left a:hover { color: var(--clay-deep); }
+  .topnav-home { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 600; font-size: 16px; color: var(--ink) !important; letter-spacing: -0.3px; }
+  .topnav-sep { color: var(--rule); font-size: 11px; }
+  .topnav-right { display: flex; gap: 16px; }
+  .topnav-right a { color: var(--ink-mute); text-decoration: none; font-size: 12px; transition: color 0.2s; }
+  .topnav-right a:hover { color: var(--clay-deep); }
+
+  .wrap { max-width: 720px; margin: 0 auto; padding: 100px 28px 120px; }
+
+  .breadcrumb { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; margin-bottom: 36px; display: flex; align-items: center; gap: 8px; color: var(--ink-mute); }
+  .breadcrumb a { color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--ink); }
+  .breadcrumb .bc-sep { color: var(--rule); }
+
+  .kicker { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay-deep); margin-bottom: 28px; }
+
+  h1 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 400; font-size: 48px; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 28px; color: var(--ink); word-break: keep-all; overflow-wrap: break-word; }
+  h1 em { font-style: italic; color: var(--clay-deep); font-weight: 500; }
+
+  .dek { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 300; font-style: italic; font-size: 21px; line-height: 1.55; color: var(--ink-soft); margin: 0 0 48px; word-break: keep-all; overflow-wrap: break-word; border-bottom: 1px solid var(--rule); padding-bottom: 40px; }
+
+  h2 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 26px; line-height: 1.28; letter-spacing: -0.015em; margin: 64px 0 16px; color: var(--ink); scroll-margin-top: 80px; word-break: keep-all; overflow-wrap: break-word; }
+  h2 .num { font-family: "Inter", sans-serif; font-size: 11px; font-weight: 600; color: var(--clay); letter-spacing: 0.12em; display: block; margin-bottom: 8px; text-transform: uppercase; }
+
+  p { margin: 0 0 22px; }
+  strong { font-weight: 500; color: var(--ink); }
+  code { font-family: "JetBrains Mono", monospace; font-size: 0.88em; background: var(--code-bg); padding: 2px 6px; border-radius: 3px; color: var(--clay-deep); }
+
+  .definition {
+    background: var(--cream-deep);
+    border-left: 3px solid var(--clay);
+    padding: 26px 28px;
+    border-radius: 0 4px 4px 0;
+    margin: 0 0 48px;
+    font-size: 18px;
+    line-height: 1.78;
+    color: var(--ink-soft);
+  }
+
+  .evidence { margin: 24px 0 40px; display: grid; gap: 12px; }
+  .ev {
+    border: 1px solid var(--rule);
+    background: var(--code-bg);
+    padding: 22px 24px;
+    border-radius: 4px;
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    gap: 20px;
+  }
+  .ev .ex {
+    font-family: "Fraunces", serif;
+    font-size: 40px;
+    font-weight: 600;
+    color: var(--clay);
+    line-height: 1;
+    font-style: italic;
+  }
+  .ev h3 {
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0 0 6px;
+    color: var(--ink);
+    letter-spacing: -0.1px;
+  }
+  .ev .tag {
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--clay-deep);
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .ev p {
+    margin: 6px 0 0;
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 14px;
+    line-height: 1.68;
+    color: var(--ink-soft);
+  }
+  .ev p strong { color: var(--ink); }
+
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+    margin: 24px 0 40px;
+  }
+  .why-card {
+    border: 1px solid var(--rule);
+    padding: 22px 18px;
+    border-radius: 4px;
+    background: var(--cream);
+  }
+  .why-card .why-num {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--clay);
+    letter-spacing: 0.1em;
+    display: block;
+    margin-bottom: 10px;
+  }
+  .why-card .why-title {
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--ink);
+    display: block;
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+  .why-card .why-desc {
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 13px;
+    color: var(--ink-mute);
+    line-height: 1.6;
+  }
+
+  .case-list {
+    list-style: none;
+    padding: 0;
+    margin: 24px 0 40px;
+  }
+  .case-list li {
+    padding: 16px 0 16px 24px;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+  }
+  .case-list li:first-child { border-top: 1px solid var(--rule); }
+  .case-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 26px;
+    width: 8px;
+    height: 2px;
+    background: var(--clay);
+  }
+  .case-list li strong { color: var(--ink); }
+  .case-list li .tool {
+    display: inline-block;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: var(--clay-deep);
+    background: var(--code-bg);
+    padding: 2px 7px;
+    border-radius: 3px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  .blog-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 22px;
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--clay);
+    border-radius: 0 4px 4px 0;
+    background: var(--cream-deep);
+    text-decoration: none;
+    margin: 32px 0;
+    transition: border-color 0.2s;
+  }
+  .blog-link:hover { border-left-color: var(--clay-deep); }
+  .blog-link .bl-label {
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--clay);
+    flex-shrink: 0;
+  }
+  .blog-link .bl-title {
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--ink-soft);
+    line-height: 1.45;
+  }
+
+  .cta-block {
+    margin-top: 72px;
+    padding: 40px 36px;
+    background: var(--cream-deep);
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--clay);
+    border-radius: 0 0 4px 4px;
+    text-align: center;
+  }
+  .cta-block p {
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--ink-soft);
+    margin: 0 0 24px;
+    line-height: 1.6;
+  }
+  .cta-btn {
+    display: inline-block;
+    background: var(--clay);
+    color: #fff;
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 14px 36px;
+    border-radius: 3px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .cta-btn:hover { background: var(--clay-deep); }
+
+  .rule { border: none; border-top: 1px solid var(--rule); margin: 56px 0; }
+
+  .footer { margin-top: 72px; padding-top: 28px; border-top: 1px solid var(--rule); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); line-height: 1.65; }
+  .footer strong { color: var(--ink-soft); font-weight: 600; }
+  .bottom-nav { margin-top: 48px; padding: 28px 0; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .bottom-nav a { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .bottom-nav a:hover { color: var(--ink); }
+
+  .service-links {
+    margin-top: 20px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .service-links a {
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 12px;
+    color: var(--ink-mute);
+    text-decoration: none;
+    border: 1px solid var(--rule);
+    padding: 6px 12px;
+    border-radius: 3px;
+    transition: all 0.2s;
+  }
+  .service-links a:hover { color: var(--clay-deep); border-color: var(--clay); }
+
+  @media (max-width: 640px) {
+    .wrap { padding: 80px 20px 80px; }
+    h1 { font-size: 34px; }
+    .dek { font-size: 18px; }
+    body { font-size: 17px; }
+    .topnav-right { display: none; }
+    .ev { grid-template-columns: 40px 1fr; gap: 14px; padding: 18px; }
+    .ev .ex { font-size: 28px; }
+    .cta-block { padding: 28px 20px; }
+    .cta-block p { font-size: 17px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="topnav-left">
+    <a href="/" class="topnav-home">CDSA</a>
+    <span class="topnav-sep">|</span>
+    <a href="/">홈페이지</a>
+    <a href="/blog/">블로그</a>
+  </div>
+  <nav class="topnav-right">
+    <a href="/services/vibe-coding.html">바이브코딩 교육</a>
+    <a href="/services/public-ai.html">공공기관 AI 교육</a>
+  </nav>
+</header>
+
+<main class="wrap">
+
+  <nav class="breadcrumb">
+    <a href="/">← CDSA 홈</a>
+    <span class="bc-sep">/</span>
+    <span>폐쇄망·행정망 AI 교육</span>
+  </nav>
+
+  <div class="kicker">Service &middot; 교육 과정</div>
+
+  <h1>폐쇄망·행정망<br><em>AI 교육</em></h1>
+
+  <p class="dek">인터넷 없는 보안 환경에서도 작동하는 AI. 8가지 유형의 민첩한 AI 거버넌스.</p>
+
+  <div class="definition">
+    민첩한 AI 거버넌스(Agile AI Governance)는 인터넷 연결 없이도 AI 혁신을 실현하는 CDSA의 독자 프레임워크입니다. 보안이 생명인 행정망·폐쇄망 환경에서 로컬 LLM, USB 배포 도구, 오프라인 Python 패키징 등 8가지 유형으로 AI를 안전하게 활용합니다.
+  </div>
+
+  <a href="/blog/working-governance.html" class="blog-link">
+    <span class="bl-label">관련 블로그</span>
+    <span class="bl-title">작동하는 거버넌스, 바닥에서 올라오는 AX — 폐쇄망 8가지 증거 전체 읽기 →</span>
+  </a>
+
+  <h2><span class="num">01 / 8 Types</span>8가지 유형</h2>
+
+  <p>모두 행정망·폐쇄망에서 오늘 당장 돌아가는 방법들입니다. 외부 서버와 통신하지 않으므로 보안 규정을 준수합니다.</p>
+
+  <div class="evidence">
+
+    <div class="ev">
+      <div class="ex">01</div>
+      <div>
+        <div class="tag">Browser &middot; Single File</div>
+        <h3>HTML·CSS·JS 단일 파일 도구</h3>
+        <p>브라우저만 있으면 동작합니다. 자바스크립트 라이브러리를 파일 안에 심어 넣어, 더블클릭 한 번으로 실행됩니다. <strong>CDN도 설치도 필요 없습니다.</strong> 민원 CSV를 올리면 대시보드가 그려지고 통계가 계산됩니다.</p>
+      </div>
+    </div>
+
+    <div class="ev">
+      <div class="ex">02</div>
+      <div>
+        <div class="tag">Python &middot; Offline Packaging</div>
+        <h3>Python 오프라인 패키징</h3>
+        <p>외부망에서 코드를 받아 내부망에서 실행합니다. 라이브러리가 필요하면 <code>pip install --target</code> 한 줄로 폴더째 받아 폐쇄망으로 옮기면 끝입니다. <strong>보고서 자동 생성, PDF 추출, 개인정보 마스킹</strong>을 한 사람이 한 시간 안에 만들 수 있습니다.</p>
+      </div>
+    </div>
+
+    <div class="ev">
+      <div class="ex">03</div>
+      <div>
+        <div class="tag">Node.js &middot; node_modules</div>
+        <h3>Node.js NPM 오프라인 배포</h3>
+        <p><code>node_modules</code> 폴더째 들고 들어가면 내부망에서도 수천 개의 오픈소스 라이브러리를 그대로 사용할 수 있습니다. 파일 정리, 로그 파싱, 대량 변환 등 더 복잡한 자동화가 가능합니다.</p>
+      </div>
+    </div>
+
+    <div class="ev">
+      <div class="ex">04</div>
+      <div>
+        <div class="tag">Local LLM &middot; Ollama</div>
+        <h3>Ollama + 로컬 소형 LLM</h3>
+        <p>1B~2B 크기의 모델이면 CPU만으로도 동작합니다. 민원 유형 분류, 자연어 요약, 짧은 질의응답을 <strong>전부 로컬에서, 외부 통신 없이</strong> 수행합니다. 폐쇄망 안의 AI 어시스턴트가 이렇게 완성됩니다.</p>
+      </div>
+    </div>
+
+    <div class="ev">
+      <div class="ex">05</div>
+      <div>
+        <div class="tag">Legacy &times; LLM &middot; VBA</div>
+        <h3>VBA + Ollama 연동</h3>
+        <p>엑셀 VBA에서 로컬 AI 함수를 직접 호출합니다. 셀 하나에 <code>=AI("이 민원을 3줄 요약")</code>이면 됩니다. <strong>GPT for Sheets의 공공 버전</strong>을 직접 만들 수 있습니다.</p>
+      </div>
+    </div>
+
+    <div class="ev">
+      <div class="ex">06</div>
+      <div>
+        <div class="tag">Agentic &middot; Internal Network</div>
+        <h3>내부망 AI 에이전트</h3>
+        <p>파일을 읽고, 수정하고, 업무를 함께하는 AI 에이전트를 내부망 안에서 운용합니다. 보안 당국이 검증한 공공 기반 모델을 탑재하면 <strong>공공형 AI 에이전트</strong>가 완성됩니다.</p>
+      </div>
+    </div>
+
+    <div class="ev">
+      <div class="ex">07</div>
+      <div>
+        <div class="tag">RAG Alternative &middot; Offline</div>
+        <h3>내부 문서 질의 (RAG 대체)</h3>
+        <p>기관 내부 규정, 지침, 매뉴얼을 대상으로 자연어 질의를 수행합니다. 클라우드 RAG 없이 로컬 임베딩과 벡터 검색으로 구현합니다. <strong>개인정보 외부 유출 위험이 없습니다.</strong></p>
+      </div>
+    </div>
+
+    <div class="ev">
+      <div class="ex">08</div>
+      <div>
+        <div class="tag">Ollama &middot; MCP &middot; Text-to-SQL</div>
+        <h3>Ollama + MCP + Text-to-SQL</h3>
+        <p>자연어 질문을 SQL 쿼리로 변환해 내부 데이터베이스를 조회합니다. MCP(Model Context Protocol)로 에이전트와 데이터 소스를 연결합니다. <strong>비개발자도 데이터를 질문으로 분석</strong>할 수 있습니다.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <h2><span class="num">02 / Why</span>왜 필요한가</h2>
+
+  <p>행정망 공무원도 AI 역량이 필요합니다. 하지만 클라우드 AI 서비스는 보안 규정상 사용이 어렵습니다. 이 간극을 메우는 것이 민첩한 AI 거버넌스입니다.</p>
+
+  <div class="why-grid">
+    <div class="why-card">
+      <span class="why-num">Why 01</span>
+      <span class="why-title">행정망 공무원도 AI 역량 필요</span>
+      <div class="why-desc">AI 활용 역량은 이제 공무원에게도 필수입니다. 인터넷 연결 여부와 관계없이 역량을 갖춰야 합니다.</div>
+    </div>
+    <div class="why-card">
+      <span class="why-num">Why 02</span>
+      <span class="why-title">클라우드 불가 환경의 대안</span>
+      <div class="why-desc">ChatGPT, Claude 등 클라우드 AI는 행정망에서 접근할 수 없습니다. 로컬 대안이 반드시 필요합니다.</div>
+    </div>
+    <div class="why-card">
+      <span class="why-num">Why 03</span>
+      <span class="why-title">보안 규정 준수</span>
+      <div class="why-desc">외부 서버와 통신하지 않으므로 개인정보보호법·정보보안 지침을 준수합니다. 보안 담당자가 검증할 수 있습니다.</div>
+    </div>
+  </div>
+
+  <h2><span class="num">03 / Cases</span>적용 사례</h2>
+
+  <p>교육 과정에서 다루는 실제 행정 업무 기반 사례들입니다. 수강 후 유사 도구를 직접 만들 수 있는 역량을 목표로 합니다.</p>
+
+  <ul class="case-list">
+    <li>
+      <strong>한글 공문 자동 병합</strong> — 여러 한글 문서를 규칙에 따라 자동으로 병합·분류 <span class="tool">Python + HWP API</span>
+    </li>
+    <li>
+      <strong>민원 유형 분류</strong> — 접수된 민원 텍스트를 카테고리별로 자동 분류 <span class="tool">Ollama + Python</span>
+    </li>
+    <li>
+      <strong>내부 규정 FAQ 생성</strong> — 기관 내부 규정집을 기반으로 자연어 질의응답 시스템 구축 <span class="tool">로컬 RAG</span>
+    </li>
+    <li>
+      <strong>보고서 자동 생성</strong> — 정형 데이터를 입력하면 표·그래프·본문이 포함된 보고서 자동 생성 <span class="tool">Python + openpyxl</span>
+    </li>
+    <li>
+      <strong>엑셀 AI 함수</strong> — 셀에서 직접 AI 텍스트 처리 (요약·분류·변환)를 호출 <span class="tool">VBA + Ollama</span>
+    </li>
+  </ul>
+
+  <hr class="rule">
+
+  <div class="cta-block">
+    <p>보안 환경에서의 AI 도입,<br>함께 방법을 찾겠습니다.</p>
+    <a href="https://cdsapaper.lovable.app/inquiry/cdsa" class="cta-btn" target="_blank" rel="noopener">교육 문의하기 →</a>
+  </div>
+
+  <div class="footer">
+    <strong>한국데이터사이언티스트협회 (CDSA)</strong><br>
+    폐쇄망·행정망 AI 교육 전문 · 민첩한 AI 거버넌스<br>
+    문의: <a href="mailto:sjshin@cdsa.or.kr" style="color: var(--clay-deep); text-decoration: none;">sjshin@cdsa.or.kr</a>
+    <div class="service-links">
+      <a href="/services/vibe-coding.html">바이브코딩 교육</a>
+      <a href="/services/public-ai.html">공공기관 AI 교육</a>
+      <a href="/blog/working-governance.html">민첩한 AI 거버넌스 블로그</a>
+      <a href="/blog/">블로그</a>
+      <a href="/">CDSA 홈</a>
+    </div>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="/">← CDSA 홈으로</a>
+    <a href="/blog/">블로그 →</a>
+  </nav>
+
+</main>
+
+</body>
+</html>
