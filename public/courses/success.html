@@ -81,7 +81,7 @@
       msg.textContent = '수강 신청이 정상 처리되었습니다. 입력하신 이메일로 확인서가 발송됩니다.';
       box.style.display = 'block';
       box.innerHTML = `
-        <div class="row"><span class="label">과정명</span><span class="value">AXP-10: AI 기반 HR 데이터 분석 & 인사 자동화</span></div>
+        <div class="row"><span class="label">과정명</span><span class="value">AXP-10: 교육기획을 위한 AI활용 및 HRD 분석 과정</span></div>
         <div class="row"><span class="label">주문번호</span><span class="value">${orderId}</span></div>
         <div class="row"><span class="label">결제금액</span><span class="value">${Number(amount).toLocaleString()}원</span></div>
         <div class="row"><span class="label">상태</span><span class="value status-ok">결제 완료</span></div>
@@ -94,7 +94,7 @@
         transaction_id: orderId,
         value: Number(amount),
         currency: 'KRW',
-        items: [{ item_name: 'AXP-10 AI HR 데이터 분석', price: Number(amount), quantity: 1 }]
+        items: [{ item_name: 'AXP-10 교육기획을 위한 AI활용 및 HRD 분석', price: Number(amount), quantity: 1 }]
       });
     } else {
       // 결제 실패 (토스 응답 에러)
