@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>결제 실패 · CDSA</title>
+<meta name="robots" content="noindex">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500&family=Inter:wght@400;500;600&family=Noto+Serif+KR:wght@400;500&family=Noto+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--cream:#faf9f5;--ink:#1a1a1a;--ink-soft:#3d3d3a;--ink-mute:#6b6b66;--rule:#d9d6cc;--clay:#cc785c;--clay-deep:#a85a42;--code-bg:#f2f0e8}
+  *{box-sizing:border-box}html,body{margin:0;padding:0;background:var(--cream);color:var(--ink);-webkit-font-smoothing:antialiased}
+  body{font-family:"Fraunces","Noto Serif KR",Georgia,serif;font-weight:300;font-size:18px;line-height:1.72}
+  .wrap{max-width:560px;margin:0 auto;padding:120px 28px 80px;text-align:center}
+  .icon{font-size:64px;margin-bottom:24px}
+  h1{font-family:"Fraunces","Noto Serif KR",serif;font-weight:500;font-size:32px;margin:0 0 16px}
+  .msg{color:var(--ink-soft);margin:0 0 12px;line-height:1.7}
+  .error-code{font-family:"Inter",sans-serif;font-size:13px;color:var(--ink-mute);background:var(--code-bg);padding:8px 16px;border-radius:4px;display:inline-block;margin:0 0 32px}
+  a.btn{display:inline-block;background:var(--clay);color:#fff;font-family:"Inter",sans-serif;font-size:14px;font-weight:600;padding:14px 32px;border-radius:4px;text-decoration:none;transition:background .2s}
+  a.btn:hover{background:var(--clay-deep)}
+  .contact{margin-top:24px;font-family:"Inter","Noto Sans KR",sans-serif;font-size:13px;color:var(--ink-mute)}
+  .contact a{color:var(--clay-deep)}
+  .footer{margin-top:48px;font-family:"Inter","Noto Sans KR",sans-serif;font-size:12px;color:var(--ink-mute)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="icon">❌</div>
+  <h1 id="fail-title">결제가 완료되지 않았습니다</h1>
+  <p class="msg" id="fail-msg">결제 과정에서 문제가 발생했습니다. 다시 시도해 주세요.</p>
+  <div class="error-code" id="fail-code"></div>
+  <br><br>
+  <a class="btn" href="/courses/axp-10-ai-hr.html">다시 시도하기</a>
+  <div class="contact">
+    계속 문제가 발생하면 <a href="mailto:sjshin@cdsa.or.kr">sjshin@cdsa.or.kr</a>로 문의해 주세요.
+  </div>
+  <div class="footer">&copy; 2026 한국데이터사이언티스트협회(CDSA)</div>
+</div>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const code = params.get('code') || '';
+  const message = params.get('message') || '';
+  if (message) document.getElementById('fail-msg').textContent = decodeURIComponent(message);
+  if (code) document.getElementById('fail-code').textContent = 'Error: ' + code;
+  else document.getElementById('fail-code').style.display = 'none';
+</script>
+</body>
+</html>

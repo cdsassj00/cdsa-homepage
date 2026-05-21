@@ -18,6 +18,13 @@
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
+  <!-- Course Pages -->
+  <url>
+    <loc>https://cdsa.kr/courses/axp-10-ai-hr.html</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
   <!-- Service Landing Pages -->
   <url>
     <loc>https://cdsa.kr/services/vibe-coding.html</loc>

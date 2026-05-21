@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>결제 완료 · CDSA</title>
+<meta name="robots" content="noindex">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Noto+Serif+KR:wght@400;500&family=Noto+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NZL39P5EYZ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-NZL39P5EYZ');</script>
+<style>
+  :root { --cream:#faf9f5; --ink:#1a1a1a; --ink-soft:#3d3d3a; --ink-mute:#6b6b66; --rule:#d9d6cc; --clay:#cc785c; --clay-deep:#a85a42; --teal:#2a7d6e; --code-bg:#f2f0e8; }
+  *{box-sizing:border-box}html,body{margin:0;padding:0;background:var(--cream);color:var(--ink);-webkit-font-smoothing:antialiased}
+  body{font-family:"Fraunces","Noto Serif KR",Georgia,serif;font-weight:300;font-size:18px;line-height:1.72}
+  .wrap{max-width:600px;margin:0 auto;padding:120px 28px 80px;text-align:center}
+  .icon{font-size:64px;margin-bottom:24px}
+  h1{font-family:"Fraunces","Noto Serif KR",serif;font-weight:500;font-size:32px;margin:0 0 16px}
+  .msg{color:var(--ink-soft);margin:0 0 32px;line-height:1.7}
+  .detail-box{background:var(--code-bg);border:1px solid var(--rule);border-radius:6px;padding:24px;margin:0 0 32px;text-align:left;font-family:"Inter","Noto Sans KR",sans-serif;font-size:14px;line-height:1.8}
+  .detail-box .row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--rule)}
+  .detail-box .row:last-child{border-bottom:none}
+  .detail-box .label{color:var(--ink-mute);font-weight:500}
+  .detail-box .value{color:var(--ink);font-weight:600}
+  .status-ok{color:var(--teal);font-weight:700}
+  .status-fail{color:#c0392b;font-weight:700}
+  .spinner{display:inline-block;width:24px;height:24px;border:3px solid var(--rule);border-top-color:var(--clay);border-radius:50%;animation:spin .8s linear infinite;margin-right:8px;vertical-align:middle}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  a.btn{display:inline-block;background:var(--clay);color:#fff;font-family:"Inter",sans-serif;font-size:14px;font-weight:600;padding:14px 32px;border-radius:4px;text-decoration:none;transition:background .2s}
+  a.btn:hover{background:var(--clay-deep)}
+  .footer{margin-top:48px;font-family:"Inter","Noto Sans KR",sans-serif;font-size:12px;color:var(--ink-mute)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="icon" id="status-icon"><div class="spinner"></div></div>
+  <h1 id="status-title">결제 확인 중...</h1>
+  <p class="msg" id="status-msg">토스페이먼츠 서버에 결제를 확인하고 있습니다. 잠시만 기다려 주세요.</p>
+  <div class="detail-box" id="detail-box" style="display:none"></div>
+  <div id="action-area"></div>
+  <div class="footer">&copy; 2026 한국데이터사이언티스트협회(CDSA)</div>
+</div>
+
+<script>
+(async function() {
+  const params = new URLSearchParams(window.location.search);
+  const paymentKey = params.get('paymentKey');
+  const orderId = params.get('orderId');
+  const amount = params.get('amount');
+
+  const icon = document.getElementById('status-icon');
+  const title = document.getElementById('status-title');
+  const msg = document.getElementById('status-msg');
+  const box = document.getElementById('detail-box');
+  const action = document.getElementById('action-area');
+
+  if (!paymentKey || !orderId || !amount) {
+    icon.textContent = '⚠️';
+    title.textContent = '잘못된 접근입니다';
+    msg.textContent = '결제 정보가 누락되었습니다. 처음부터 다시 시도해 주세요.';
+    action.innerHTML = '<a class="btn" href="/courses/axp-10-ai-hr.html">과정 페이지로 돌아가기</a>';
+    return;
+  }
+
+  try {
+    const res = await fetch('/api/confirm', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        paymentKey: paymentKey,
+        orderId: orderId,
+        amount: Number(amount),
+      }),
+    });
+
+    const data = await res.json();
+
+    if (res.ok && data.status === 'DONE') {
+      // 결제 성공
+      icon.textContent = '✅';
+      title.textContent = '결제가 완료되었습니다';
+      msg.textContent = '수강 신청이 정상 처리되었습니다. 입력하신 이메일로 확인서가 발송됩니다.';
+      box.style.display = 'block';
+      box.innerHTML = `
+        <div class="row"><span class="label">과정명</span><span class="value">AXP-10: AI 기반 HR 데이터 분석 & 인사 자동화</span></div>
+        <div class="row"><span class="label">주문번호</span><span class="value">${orderId}</span></div>
+        <div class="row"><span class="label">결제금액</span><span class="value">${Number(amount).toLocaleString()}원</span></div>
+        <div class="row"><span class="label">상태</span><span class="value status-ok">결제 완료</span></div>
+        <div class="row"><span class="label">승인시각</span><span class="value">${data.approvedAt ? new Date(data.approvedAt).toLocaleString('ko-KR') : '-'}</span></div>
+      `;
+      action.innerHTML = '<a class="btn" href="/">CDSA 홈으로</a>';
+
+      // GA4 purchase event
+      gtag('event', 'purchase', {
+        transaction_id: orderId,
+        value: Number(amount),
+        currency: 'KRW',
+        items: [{ item_name: 'AXP-10 AI HR 데이터 분석', price: Number(amount), quantity: 1 }]
+      });
+    } else {
+      // 결제 실패 (토스 응답 에러)
+      icon.textContent = '❌';
+      title.textContent = '결제에 실패했습니다';
+      msg.textContent = data.message || '결제 승인 과정에서 문제가 발생했습니다. 다시 시도해 주세요.';
+      action.innerHTML = '<a class="btn" href="/courses/axp-10-ai-hr.html">다시 시도하기</a>';
+    }
+  } catch (err) {
+    icon.textContent = '❌';
+    title.textContent = '오류가 발생했습니다';
+    msg.textContent = '서버와 통신 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.';
+    action.innerHTML = '<a class="btn" href="/courses/axp-10-ai-hr.html">다시 시도하기</a>';
+  }
+})();
+</script>
+</body>
+</html>
