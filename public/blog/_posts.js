@@ -35,6 +35,18 @@
   // publishTime = '09:00:00' 같은 KST 시각. 미명시 시 '09:00:00'
   const POSTS = [
     {
+      slug: 'google-io-2026-summary',
+      title: 'Google I/O 2026 키노트 요약 — Gemini Omni·3.5 Flash·Spark가 그리는 다음 자리',
+      date: '2026. 5. 21',
+      category: '큐레이션 · 키노트 해설',
+      href: '/blog/google-io-2026-summary.html',
+      author: 'CDSA 편집팀',
+      authorType: 'Organization',
+      publishTime: '10:00:00',
+      dek: 'Gemini Omni, 3.5 Flash, Spark, Anti-Gravity, UCP·AP2, 오디오 글라스. 구글 I/O 2026 키노트 47분을 비개발자가 회사에서 그대로 옮길 수 있는 산문체로 정리했습니다. 본문 끝의 편집자 노트에 작년 I/O와 무엇이 달라졌는지 차별화 포인트 여섯을 모았습니다.',
+      views: { base: 80, daily: 8, publishedISO: '2026-05-21' },
+    },
+    {
       slug: 'hermes-agent',
       title: 'Hermes Agent 설치와 첫 대화 — 자라는 에이전트 따라 해보기',
       date: '2026. 5. 9',

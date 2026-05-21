@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Google I/O 2026 키노트 요약 — Gemini Omni·3.5 Flash·Spark가 그리는 다음 자리 · CDSA 블로그</title>
+<meta name="description" content="Gemini Omni, Gemini 3.5 Flash, Gemini Spark. 구글 I/O 2026 키노트 47분에 등장한 핵심 발표를 비개발자가 회사에서 그대로 옮길 수 있게 산문체로 정리합니다.">
+<meta property="og:title" content="Google I/O 2026 키노트 요약 — Gemini Omni·3.5 Flash·Spark가 그리는 다음 자리">
+<meta property="og:description" content="AI가 검색 안에 있던 시기에서, 검색 자체가 AI인 시기로. 노트북을 닫아도 24시간 돌아가는 개인 비서 Spark까지 — 작년 I/O와 무엇이 달라졌는지 편집자 노트로 함께 정리합니다.">
+<meta property="og:type" content="article">
+<!-- BEGIN SEO -->
+<meta name="keywords" content="Google I/O 2026, 구글 I/O 2026, Gemini Omni, Gemini 3.5 Flash, Gemini 3.5 Pro, Gemini Spark, Anti-Gravity, Google AI Ultra, Gemini Enterprise, AI Mode, AI Overviews, Universal Commerce Protocol, Agent Payments Protocol, Google Pix, Google Flow, Gemini for Science, 오디오 글라스, 비개발자 AI 해설">
+<link rel="canonical" href="https://cdsa.kr/blog/google-io-2026-summary.html">
+<meta property="og:url" content="https://cdsa.kr/blog/google-io-2026-summary.html">
+<meta property="og:site_name" content="한국데이터사이언티스트협회">
+<meta property="og:image" content="https://cdsa.kr/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta property="article:published_time" content="2026-05-21T10:00:00+09:00">
+<meta property="article:modified_time" content="2026-05-21T10:00:00+09:00">
+<meta property="article:author" content="CDSA 편집팀">
+<meta property="article:section" content="큐레이션 · 키노트 해설">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Google I/O 2026 키노트 요약 — Gemini Omni·3.5 Flash·Spark가 그리는 다음 자리">
+<meta name="twitter:description" content="검색 안의 AI에서, 검색 자체가 AI로. 노트북을 닫아도 24시간 돌아가는 개인 비서 Spark까지 — 작년 I/O와 무엇이 달라졌는지 편집자 노트로 정리.">
+<meta name="twitter:image" content="https://cdsa.kr/og-image.png">
+<meta name="author" content="CDSA 편집팀">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Google I/O 2026 키노트 요약 — Gemini Omni·3.5 Flash·Spark가 그리는 다음 자리",
+  "description": "Gemini Omni, Gemini 3.5 Flash, Gemini Spark. 구글 I/O 2026 키노트 47분에 등장한 핵심 발표를 비개발자가 회사에서 그대로 옮길 수 있게 산문체로 정리합니다.",
+  "datePublished": "2026-05-21T10:00:00+09:00",
+  "dateModified": "2026-05-21T10:00:00+09:00",
+  "author": {
+    "@type": "Organization",
+    "name": "CDSA 편집팀",
+    "url": "https://cdsa.kr"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "한국데이터사이언티스트협회",
+    "url": "https://cdsa.kr",
+    "logo": {"@type": "ImageObject", "url": "https://cdsa.kr/og-image.png"}
+  },
+  "image": ["https://cdsa.kr/og-image.png"],
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://cdsa.kr/blog/google-io-2026-summary.html"},
+  "isBasedOn": "https://io.google/2026/",
+  "articleSection": "큐레이션 · 키노트 해설",
+  "inLanguage": "ko-KR"
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "CDSA",
+      "item": "https://cdsa.kr/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "블로그",
+      "item": "https://cdsa.kr/blog/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Google I/O 2026 키노트 요약 — Gemini Omni·3.5 Flash·Spark가 그리는 다음 자리",
+      "item": "https://cdsa.kr/blog/google-io-2026-summary.html"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Gemini Spark는 어디에서 쓸 수 있나요? AI 스튜디오에 들어가나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "AI 스튜디오의 개발자 도구가 아니라 일반 Gemini 앱(Web/App) 안에 들어옵니다. 소비자용은 미국 지역의 Google AI Ultra 구독자 베타로 먼저 열리고, 여름 중 데스크톱 앱으로 확대됩니다. 업무용은 Gemini Enterprise와 Workspace 가입자의 Gemini 앱에서 프리뷰 형태로 곧 제공됩니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Gemini Spark가 기존 챗봇과 무엇이 다른가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "프롬프트를 넣고 답을 기다리는 방식이 아닙니다. 사용자가 한 번 지시를 내려두면 구글 클라우드의 전용 가상 머신에서 24시간 계속 돌아갑니다. 노트북을 닫거나 스마트폰 화면이 꺼져 있어도, 여러 앱을 가로지르며 단계별로 일을 진행합니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Gemini 3.5 Flash와 3.5 Pro는 어떻게 다른가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "3.5 Flash는 속도·효율을 앞세운 모델 시리즈의 첫 번째 모델로, 키노트 시점에 모든 제품과 API에 풀려 있습니다. Anti-Gravity 안에서 이전 세대 대비 12배 빠르게 최적화됐다는 발표가 있었습니다. 3.5 Pro는 현재 구글 내부에서 사용 중이며 다음 달 공개 예정입니다."
+      }
+    }
+  ]
+}
+</script>
+<!-- END SEO -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NZL39P5EYZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NZL39P5EYZ');
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700&family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/blog/_layout.css">
+<style>
+  :root {
+    --cream: #faf9f5; --cream-deep: #f3efe3; --ink: #1a1a1a; --ink-soft: #3d3d3a;
+    --ink-mute: #6b6b66; --rule: #d9d6cc; --clay: #cc785c; --clay-deep: #a85a42;
+    --clay-light: #f0ddd4; --code-bg: #f2f0e8; --teal: #2a7d6e;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--cream); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  body { font-family: "Fraunces", "Noto Serif KR", Georgia, serif; font-weight: 300; font-size: 19px; line-height: 1.72; letter-spacing: -0.005em; }
+
+  .topnav { position: fixed; top: 0; left: 0; right: 0; height: 48px; background: rgba(250, 249, 245, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; }
+  .topnav-left { display: flex; align-items: center; gap: 18px; }
+  .topnav-left a { color: var(--ink-soft); text-decoration: none; transition: color 0.2s; }
+  .topnav-left a:hover { color: var(--clay-deep); }
+  .topnav-home { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 600; font-size: 16px; color: var(--ink) !important; letter-spacing: -0.3px; }
+  .topnav-sep { color: var(--rule); font-size: 11px; }
+  .topnav-right { display: flex; gap: 16px; }
+  .topnav-right a { color: var(--ink-mute); text-decoration: none; font-size: 12px; transition: color 0.2s; }
+  .topnav-right a:hover { color: var(--clay-deep); }
+  .topnav-current { color: var(--ink) !important; font-weight: 600; position: relative; }
+  .topnav-current::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 2px; background: var(--clay); border-radius: 1px; }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 116px 28px 120px; }
+  .breadcrumb { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; margin-bottom: 36px; display: flex; align-items: center; gap: 8px; color: var(--ink-mute); }
+  .breadcrumb a { color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--ink); }
+  .breadcrumb .bc-sep { color: var(--rule); }
+
+  .kicker { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay-deep); margin-bottom: 28px; }
+  h1 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 400; font-size: 44px; line-height: 1.18; letter-spacing: -0.02em; margin: 0 0 24px; color: var(--ink); word-break:keep-all; overflow-wrap:break-word; }
+  .dek { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 300; font-style: italic; font-size: 21px; line-height: 1.55; color: var(--ink-soft); margin: 0 0 40px; word-break:keep-all; overflow-wrap:break-word; }
+  .byline { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); padding: 18px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-bottom: 56px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .byline strong { font-weight: 500; color: var(--ink-soft); }
+
+  .lede { font-size: 19px; line-height: 1.72; margin-bottom: 22px; word-break:keep-all; overflow-wrap:break-word; }
+  .lede::first-letter { font-family: "Fraunces", serif; font-weight: 400; font-size: 68px; float: left; line-height: 0.88; padding: 8px 10px 0 0; color: var(--clay); }
+
+  h2 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 28px; line-height: 1.3; letter-spacing: -0.015em; margin: 64px 0 16px; color: var(--ink); scroll-margin-top: 80px; word-break:keep-all; overflow-wrap:break-word; }
+  h2 .num { font-family: "Inter", sans-serif; font-size: 12px; font-weight: 600; color: var(--clay); letter-spacing: 0.1em; display: block; margin-bottom: 10px; }
+  p { margin: 0 0 22px; }
+  p + p { margin-top: -6px; }
+  strong { font-weight: 500; color: var(--ink); }
+  em { font-style: italic; }
+
+  .term { margin: 28px 0; padding: 18px 22px; background: var(--code-bg); border-left: 3px solid var(--clay); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 15px; line-height: 1.7; color: var(--ink-soft); border-radius: 2px; word-break:keep-all; overflow-wrap:break-word; }
+  .term .term-name { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 17px; color: var(--ink); display: block; margin-bottom: 6px; letter-spacing: -0.01em; }
+  .term .term-eng { font-family: "JetBrains Mono", monospace; font-size: 12px; color: var(--ink-mute); font-weight: 400; margin-left: 8px; letter-spacing: 0.01em; }
+
+  blockquote { margin: 36px 0; padding: 4px 0 4px 22px; border-left: 2px solid var(--clay); font-family: "Fraunces", "Noto Serif KR", serif; font-style: italic; font-size: 20px; line-height: 1.55; color: var(--ink-soft); word-break:keep-all; overflow-wrap:break-word; }
+  blockquote cite { display: block; font-family: "Inter", "Noto Sans KR", sans-serif; font-style: normal; font-size: 12px; color: var(--ink-mute); margin-top: 12px; letter-spacing: 0.02em; }
+  blockquote cite::before { content: "— "; }
+
+  .pull { font-family: "Fraunces", "Noto Serif KR", serif; font-size: 26px; line-height: 1.5; color: var(--ink); font-weight: 500; font-style: italic; margin: 40px 0; padding: 26px 0 26px 28px; border-left: 3px solid var(--clay); letter-spacing: -0.01em; word-break:keep-all; overflow-wrap:break-word; }
+
+  /* Editor's note — 본문 뒤 고딕 볼드 편집자 멘트 */
+  .editor-note { margin: 64px 0 0; padding: 32px 34px 30px; background: #1a1a1a; color: #faf9f5; border-radius: 4px; font-family: "Inter", "Noto Sans KR", sans-serif; line-height: 1.62; letter-spacing: -0.005em; word-break: keep-all; overflow-wrap: break-word; }
+  .editor-note .en-kicker { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--clay-light); margin-bottom: 10px; }
+  .editor-note .en-title { font-family: "Inter", "Noto Sans KR", sans-serif; font-weight: 700; font-size: 22px; line-height: 1.32; letter-spacing: -0.01em; color: #faf9f5; margin: 0 0 18px; }
+  .editor-note .en-lede { font-weight: 500; font-size: 15px; line-height: 1.7; color: #d9d6cc; margin: 0 0 22px; }
+  .editor-note ol { list-style: none; counter-reset: en; padding: 0; margin: 0; }
+  .editor-note ol li { counter-increment: en; padding: 14px 0 14px 36px; position: relative; border-top: 1px solid #2e2e2c; font-weight: 600; font-size: 15px; line-height: 1.62; color: #faf9f5; }
+  .editor-note ol li:first-child { border-top: 1px solid #2e2e2c; }
+  .editor-note ol li::before { content: counter(en, decimal-leading-zero); position: absolute; left: 0; top: 14px; font-family: "JetBrains Mono", monospace; font-weight: 500; font-size: 12px; color: var(--clay); letter-spacing: 0.04em; }
+  .editor-note ol li b { font-weight: 700; color: #faf9f5; display: block; margin-bottom: 4px; font-size: 15.5px; }
+  .editor-note ol li span { font-weight: 500; color: #b8b5ad; font-size: 14.5px; line-height: 1.65; }
+  .editor-note .en-sign { margin-top: 24px; padding-top: 18px; border-top: 1px solid #2e2e2c; font-size: 12px; font-weight: 500; color: #8a8780; letter-spacing: 0.04em; }
+
+  .source-note { margin-top: 40px; padding: 18px 22px; background: var(--code-bg); border-left: 2px solid var(--clay-light); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); line-height: 1.7; border-radius: 2px; }
+  .source-note strong { color: var(--ink-soft); font-weight: 600; }
+  .source-note a { color: var(--clay-deep); text-decoration: none; border-bottom: 1px dotted var(--clay-light); }
+  .source-note a:hover { color: var(--ink); }
+
+  .footer { margin-top: 72px; padding-top: 28px; border-top: 1px solid var(--rule); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); line-height: 1.7; }
+  .footer strong { color: var(--ink-soft); font-weight: 600; }
+
+  .bottom-nav { margin-top: 72px; padding: 36px 0; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .bottom-nav a { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .bottom-nav a:hover { color: var(--ink); }
+  .bottom-nav-home { font-family: "Fraunces", "Noto Serif KR", serif !important; font-size: 16px !important; font-style: italic; font-weight: 400; }
+
+  @media (max-width: 560px) {
+    .wrap { padding: 92px 22px 80px; }
+    h1 { font-size: 30px; line-height: 1.24; }
+    .dek { font-size: 17.5px; }
+    body { font-size: 17px; }
+    h2 { font-size: 23px; margin-top: 52px; }
+    .topnav-right { display: none; }
+    .pull { font-size: 22px; padding-left: 22px; }
+    .term { padding: 16px 18px; }
+    .term .term-name { font-size: 16px; }
+    .editor-note { padding: 26px 22px 24px; }
+    .editor-note .en-title { font-size: 19px; }
+  }
+  @media (max-width: 400px) {
+    h1 { font-size: 26px !important; line-height: 1.25; }
+    .dek { font-size: 16px !important; }
+    h2 { font-size: 21px !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="topnav-left">
+    <a href="/" class="topnav-home">CDSA</a>
+    <span class="topnav-sep">|</span>
+    <a href="/">홈페이지</a>
+    <a href="/blog/" class="topnav-current">블로그</a>
+  </div>
+  <nav class="topnav-right">
+    <a href="/framework.html">프레임워크</a>
+    <a href="/unsloth-workbook.html">워크북</a>
+    <a href="/fullcourse.html">Full Course</a>
+  </nav>
+</header>
+
+<button class="blog-hamburger" aria-label="블로그 목록 열기"><span></span><span></span><span></span></button>
+<div class="blog-overlay"></div>
+<aside class="blog-left">
+  <div class="blog-left-title">Blog Posts</div>
+  <ol class="blog-left-list"></ol>
+</aside>
+<aside class="blog-right">
+  <div class="blog-right-title">On This Page</div>
+  <ul class="blog-toc"></ul>
+</aside>
+
+<article class="wrap">
+
+  <nav class="breadcrumb">
+    <a href="/">← CDSA 홈</a>
+    <span class="bc-sep">/</span>
+    <a href="/blog/">블로그</a>
+    <span class="bc-sep">/</span>
+    <span>큐레이션 · 키노트 해설</span>
+  </nav>
+
+  <div class="kicker">Curation · 키노트 해설</div>
+
+  <h1>Google I/O 2026 키노트 요약<br>Gemini Omni·3.5 Flash·Spark가 그리는 다음 자리</h1>
+
+  <p class="dek">
+    AI가 검색 안에 들어 있던 시기에서, 검색 자체가 AI인
+    시기로. 노트북을 닫아도 24시간 일하는 비서까지 —
+    구글 I/O 2026 47분을 비개발자가 회사에서 그대로
+    옮길 수 있는 표현으로 정리합니다.
+  </p>
+
+  <div class="byline">
+    <span><strong>큐레이션 · CDSA 편집팀</strong>  ·  원문 Google I/O 2026 키노트</span>
+    <span>2026. 5. 21</span>
+  </div>
+
+  <p class="lede">구글의 연례 개발자 행사 <em>Google I/O</em> 2026 키노트가 마무리됐습니다. 한 해 동안 가장 많은 새 용어가 쏟아진 자리였습니다. Gemini Omni, Gemini 3.5 Flash, Gemini Spark, Anti-Gravity, Universal Commerce Protocol, Agent Payments Protocol, Daily Brief, Google Pix, Google Flow, Gemini for Science. 영문 줄임말과 코드명이 빽빽이 박혀 있어서, 코드를 직접 짜지 않는 분들에게는 한 번 흘려듣고 끝나기 쉬운 발표였을 것입니다.</p>
+
+  <p>그래서 이번 글에서는 키노트 흐름을 여섯 개 화두로 추려, 각 화두에서 등장한 핵심 용어를 짧게 정의하고 그 의미를 평어로 풀어내겠습니다. 회사에서 임원이나 동료에게 "이번 구글 발표는 우리에게 뭘 바꾸느냐"고 질문받았을 때 그대로 옮겨 쓸 수 있는 표현을 찾는 것이 목적입니다. 끝에는 작년 I/O와 무엇이 달라졌는지 차별화 포인트만 모은 편집자 노트를 따로 붙였습니다.</p>
+
+  <h2 id="s01"><span class="num">01 / 큰 그림</span>토큰과 사용자 숫자가 말하는 것</h2>
+
+  <p>키노트는 구글이 처리하는 AI 사용량 숫자에서 시작했습니다. 핵심 메시지는 한 문장으로 요약됩니다. <strong>AI는 더 이상 "도입할까 말까"의 단계가 아니라, "어디까지 흘러가는가"의 단계라는 것</strong>입니다. 발표자가 같은 자리에서 1년 전 짚었던 숫자와 지금의 숫자를 나란히 펼쳐 놓았기 때문에 비교가 또렷합니다.</p>
+
+  <div class="term">
+    <span class="term-name">토큰<span class="term-eng">token</span></span>
+    AI 모델이 글이나 코드를 처리할 때의 가장 작은 단위입니다. 구글은 1년 전 자사 AI 모델들이 한 달에 9.7조 개의 토큰을 처리한다고 발표했습니다. 이번 키노트의 숫자는 <strong>한 달에 3.2경(京) 토큰</strong>입니다. 1년 만에 7배 가까이 늘었다는 의미이고, 발표자는 이를 "문제 해결의 척도"라고 표현했습니다.
+  </div>
+
+  <p>제품 단의 숫자도 함께 공개됐습니다. 구글이 보유한, 사용자가 10억 명을 넘은 제품은 13개이며, 그중 5개는 30억 명을 넘습니다. 새 모델은 그 모든 제품 안에 들어가고 있습니다.</p>
+
+  <p>특히 눈에 띄는 세 가지가 있습니다. 첫째, 검색 결과 위에 답을 얹어 주는 <strong>AI Overviews</strong>가 월간 25억 명을 넘었습니다. 둘째, 작년 I/O에서 베타로 공개됐던 <strong>AI 모드(AI Mode)</strong>는 출시 1년 만에 월간 10억 명을 돌파해, 구글 발표자가 "구글 검색 역사상 가장 큰 업그레이드"라고 부른 자리에 올랐습니다. 셋째, <strong>Gemini 앱</strong>은 작년 I/O 당시 월간 4억 명 수준에서 9억 명 이상으로 두 배 이상 늘었습니다.</p>
+
+  <p class="pull">
+    1년 전 키노트는 "AI를 어디에 끼울까"가 화두였고,
+    올해는 "AI가 이미 들어와 있는 자리에서 무엇을 할까"가
+    화두였습니다. 사용자 숫자가 그 변화를 그대로 보여 줍니다.
+  </p>
+
+  <p>인프라 측 발표도 짧게 짚었습니다. 구글은 자체 AI 칩(TPU)을 100만 개 이상 묶어 학습 자원을 분산시키는 <strong>Jackson Pathways</strong>라는 내부 시스템을 공개했습니다. 비개발자 표현으로 옮기면, "전 세계에 흩어진 100만 대의 슈퍼컴퓨터 부품을 한 덩어리처럼 다루는 배차 시스템"입니다. 새 모델이 더 크고 더 빨라질 수 있는 토대가 된다는 의미입니다.</p>
+
+  <h2 id="s02"><span class="num">02 / 모델 층</span>Gemini Omni — 모든 입력에서 모든 출력으로</h2>
+
+  <p>두 번째 블록은 새 모델 발표였습니다. 발표 순서는 Omni가 먼저, 그다음이 3.5 Flash, 마지막이 다음 달 공개될 3.5 Pro의 짧은 예고였습니다.</p>
+
+  <div class="term">
+    <span class="term-name">Gemini Omni<span class="term-eng">제미나이 옴니</span></span>
+    글·이미지·소리·영상 같은 모든 종류의 입력을 받아, 같은 종류의 모든 출력을 만들어 내는 통합 모델입니다. 그동안 그림 모델·영상 모델·음성 모델이 각각 따로 있었다면, Omni는 그것을 한 덩어리 모델로 묶어 둔 시도입니다. 이번 키노트에서는 비디오 생성으로 먼저 풀리고, 점차 다른 출력 유형으로 확장될 예정이라고 발표됐습니다. "세계 이해, 다중 모드 처리, 편집 능력에서 새로운 수준"이라는 표현이 키노트의 발화 그대로입니다.
+  </div>
+
+  <p>같은 자리에서 짧게 짚어 둔 안전 장치는 <strong>SynthID</strong>입니다. AI가 만들어 낸 이미지·영상·음성에 사람 눈에는 보이지 않는 워터마크를 새겨 두는 기술인데, 출시 이후 누적 1,000억 개 이상의 콘텐츠에 적용됐다고 합니다. 이번 발표에서는 SynthID와 콘텐츠 자격 증명 확인 기능을 <strong>구글 검색과 크롬 브라우저</strong>로 확장한다고 밝혔습니다. 사용자가 어떤 이미지를 마주쳤을 때 "이게 AI가 만든 것이냐"를 그 자리에서 확인할 수 있게 된다는 의미입니다. OpenAI, 카카오, ElevenLabs 같은 외부 회사들도 SynthID를 채택하기 시작했다는 점이 함께 소개됐습니다.</p>
+
+  <div class="term">
+    <span class="term-name">Gemini 3.5 Flash<span class="term-eng">제미나이 3.5 플래시</span></span>
+    속도와 효율을 앞세운 3.5 시리즈의 첫 번째 모델입니다. 직전 세대인 3.1 Pro와 비교했을 때 거의 모든 평가 기준에서 더 높은 점수를 냈으면서도 훨씬 빠르다고 발표됐습니다. 시연에서는 사용자가 "크롬 다이노 게임을 만들어 줘"라고 입력하자, <strong>초당 약 1,500 토큰</strong>으로 결과를 실시간 생성하는 모습이 공개됐습니다. 요청을 타이핑하는 시간보다 응답이 끝나는 시간이 더 짧다는 의미입니다. 키노트 시점에 모든 구글 제품과 API에 풀려 있는 상태입니다.
+  </div>
+
+  <p>3.5 Flash가 가장 눈에 띄는 자리에 선 시연은 <strong>Anti-Gravity</strong>라는 개발 환경 위에서였습니다.</p>
+
+  <h2 id="s03"><span class="num">03 / 도구 층</span>Anti-Gravity와 12배 빠른 에이전트 팀워크</h2>
+
+  <p>Anti-Gravity는 작년 I/O에서 처음 공개된 구글의 에이전트 기반 개발 환경입니다. 이번 키노트에서 발표자가 직접 던진 도전 과제는 만만치 않았습니다. <strong>운영체제를 처음부터 만들어 봐 달라</strong>는 한 줄짜리 지시였습니다.</p>
+
+  <div class="term">
+    <span class="term-name">하위 에이전트 팀워크<span class="term-eng">sub-agent teamwork</span></span>
+    한 가지 큰 작업을 여러 에이전트에게 나눠 맡기고, 그들이 서로 결과를 주고받으며 일을 풀어가게 만드는 구조입니다. Anti-Gravity 시연에서는 운영체제 빌딩 과제를 받은 메인 에이전트가 <strong>93개의 하위 에이전트</strong>를 생성해 12시간 동안 병렬로 일을 시켰고, 그 결과 <strong>15,000회 이상의 모델 호출</strong>과 <strong>26억 개의 토큰 처리</strong>를 거쳐 작동하는 운영체제의 핵심부가 완성됐다고 발표됐습니다.
+  </div>
+
+  <p>여기에서 발표자가 한 번 더 강조한 대목이 있습니다. 만들어진 OS에서 둠(Doom) 게임을 돌리려고 보니 영상 출력과 키보드 입력을 처리할 드라이버가 빠져 있었습니다. Anti-Gravity는 이 문제를 사람 손을 빌리지 않고, 직접 자료를 찾아가며 100줄이 넘는 드라이버 코드를 새로 작성해 끼워 넣었습니다. 발표자는 이 장면을 가리키며 "Flash가 단순히 빠른 모델이 아니라, 빨라진 만큼 더 많이 시도하고 더 많이 실패하면서 더 빨리 좋아진다는 점이 핵심"이라고 표현했습니다. 같은 환경에서 Anti-Gravity 안의 Flash는 직전 대비 4배가 아니라 <strong>12배 빠르게</strong> 최적화됐다는 숫자가 함께 공개됐습니다.</p>
+
+  <p class="pull">
+    작년 I/O의 Flow는 한 번에 프롬프트 하나만 받았습니다.
+    올해는 한 줄의 지시가 93개의 하위 에이전트로 분해되어,
+    12시간 동안 깨어 있는 채로 운영체제를 만듭니다.
+  </p>
+
+  <p><strong>Gemini 3.5 Pro</strong>는 키노트 시점에 구글이 내부에서 사용 중이며, 다음 달 공개 예정이라고만 짧게 짚었습니다. Flash를 먼저 푼 뒤 Pro를 다음 달에 푸는 순서는, 작년처럼 큰 모델을 헤드라인에 세우던 발표 방식과 가장 다른 지점입니다.</p>
+
+  <h2 id="s04"><span class="num">04 / 에이전트 층</span>Gemini Spark — 노트북을 닫아도 일하는 비서</h2>
+
+  <p>이번 키노트에서 가장 길게 시연된 발표가 <strong>Gemini Spark</strong>입니다. 이름에서 짐작되는 인상과 다르게, 더 똑똑한 챗봇이 아닙니다. 발표 자료의 표현을 그대로 옮기면 "사용자의 디지털 생활을 탐색하고, 지시에 따라 행동하는 개인 AI 에이전트"입니다.</p>
+
+  <div class="term">
+    <span class="term-name">Gemini Spark<span class="term-eng">제미나이 스파크</span></span>
+    구글 클라우드 위의 전용 가상 머신에서 24시간 깨어 있는 개인 비서입니다. 사용자의 노트북이나 스마트폰이 켜져 있는지와 무관하게 작업을 이어갑니다. 모델은 Gemini 3.5, 그 위를 굴리는 도구 묶음은 Anti-Gravity 하네스를 그대로 쓴다고 발표됐습니다. 비개발자식 표현으로 옮기면, <em>"내 일을 대신해 줄 사람을 한 명 고용해서 클라우드에 상주시켜 두고, 채팅으로 일을 던지는 자리"</em>입니다.
+  </div>
+
+  <p>그리고 사용자 입장에서 가장 중요한 두 가지 질문 — "어디에서 쓰느냐"와 "누가 먼저 받느냐"를 짚어 둘 필요가 있습니다.</p>
+
+  <p>먼저 <strong>어디에서 쓰는가</strong>입니다. Spark는 구글 AI 스튜디오 같은 개발자 도구 안에 들어가지 않습니다. 일반 사용자가 매일 켜는 <strong>Gemini 앱(웹·모바일)</strong> 안에 들어옵니다. 일하는 자리는 같고, 그 안에 백그라운드 에이전트 자리가 새로 생긴다고 이해하시면 정확합니다.</p>
+
+  <p>다음으로 <strong>누가 먼저 받는가</strong>입니다. 소비자용은 미국 지역의 <strong>Google AI Ultra</strong> 구독자를 대상으로 베타가 먼저 열리고, 여름 중 데스크톱 앱으로 확대됩니다. 업무용은 <strong>Gemini Enterprise</strong> 가입자와 구글 워크스페이스 사용자의 Gemini 앱에서 프리뷰 형태로 곧 제공된다는 일정이 발표됐습니다. 한국 사용자가 곧바로 받을 수 있는 것은 아니라는 점을 분명히 짚어 두는 것이 좋겠습니다.</p>
+
+  <p>Spark가 일을 받는 방식은 세 가지입니다.</p>
+
+  <div class="term">
+    <span class="term-name">연속 워크플로우<span class="term-eng">multi-step workflow</span></span>
+    한 줄로 던진 지시를 여러 단계로 쪼개 알아서 처리하는 방식입니다. 키노트 시연에서는 사용자가 동네 블록 파티 계획을 부탁하자, Spark가 메일함의 RSVP 응답을 모으고, 누가 무엇을 가져오는지 구글 시트에 실시간 추적표를 만들고, 아직 답하지 않은 이웃에게 이메일 초안까지 작성했습니다. 업무 자리에서 그대로 옮기면 — <em>"이번 프로젝트 관련 메일과 채팅을 모아 한 장짜리 요약으로 정리하고, 그걸 공유 메일 초안으로 만들어 둬"</em>가 한 번의 지시로 끝나는 자리입니다.
+  </div>
+
+  <div class="term">
+    <span class="term-name">반복·모니터링<span class="term-eng">trigger-based monitoring</span></span>
+    정해진 시간이 되거나 특정 사건이 발생할 때마다 Spark가 알아서 깨어나 일을 하는 방식입니다. 시연에서 인용된 예 — 매일 아침 메일함에서 자녀 학교의 공지만 골라 요약하기, 카드 명세서를 매월 훑어 새로 시작된 구독료가 있는지 감시하기, 학년 말까지 챙겨야 할 일을 문서 한 장으로 누적해 두기 같은 자리들입니다. 한 번의 부탁이 한 번의 결과를 만들던 챗봇과 가장 크게 다른 지점입니다.
+  </div>
+
+  <div class="term">
+    <span class="term-name">외부 서비스 연동<span class="term-eng">third-party integration</span></span>
+    구글 워크스페이스(지메일·문서·시트·캘린더·포토)는 기본이고, 그 바깥의 도구와도 직접 손잡고 일을 끝까지 처리합니다. 업무용 환경에서는 마이크로소프트 쉐어포인트와 세일즈포스 같은 사내 시스템과 묶이고, 소비자용 환경에서는 캔바(Canva)·인스타카트(Instacart) 같은 외부 앱과 연결됩니다. 연결 방식은 몇 주 안에 <strong>MCP(Model Context Protocol)</strong>를 통한 표준 연결로도 확장된다고 발표됐습니다.
+  </div>
+
+  <p>한 줄로 묶으면, Spark는 <strong>Gemini 앱 안에서 구글 생태계와 외부 앱들을 엮어 내 비서처럼 부리는 백그라운드 자동화 에이전트</strong>입니다. 채팅창은 그대로 두되, 그 뒤에 24시간 깨어 있는 비서 한 명을 클라우드에 상주시켜 두는 것에 가깝습니다.</p>
+
+  <h2 id="s05"><span class="num">05 / 사용자 자리</span>검색·쇼핑·창작이 에이전트의 자리가 되다</h2>
+
+  <p>Spark가 새 자리를 만든다면, 같은 자리에서 기존 자리들도 다시 짜였습니다. 발표자가 가장 분명하게 짚은 표현이 인상적이었습니다. <strong>"AI가 검색 안에 있는 것이 아니라, 검색 자체가 AI가 된다."</strong></p>
+
+  <div class="term">
+    <span class="term-name">정보 에이전트<span class="term-eng">information agent</span></span>
+    검색창 안에 사용자가 직접 만드는 24시간 백그라운드 일꾼입니다. Spark와 결을 같이하지만, 자리는 검색입니다. 금융 분야 시연이 또렷했습니다 — 사용자가 "PER 15 미만, 현금 흐름 양수, 부채 비율 낮은 대형 바이오테크"라는 한 줄 조건을 검색에 등록해 두면, 시장이 그 조건을 충족하거나 깨뜨릴 때마다 검색이 알아서 종합 업데이트를 보내옵니다. 한 번의 검색이 한 번의 답을 주던 자리가, 한 번의 조건이 끝없이 다시 검색되는 자리로 옮겨갑니다.
+  </div>
+
+  <p>같은 방향에서 시연된 또 하나의 변화는 <strong>맞춤형 도구 생성</strong>입니다. 사용자가 "이번 주말 계획 좀 짜 줘"라고만 입력하면, 검색이 선제적으로 "주말 계획기 도구를 만들어 볼까요?"라고 제안하고, 사용자가 지메일·포토·캘린더를 안전하게 연결하면 식당 예약·지도·일정이 한 화면 대시보드로 깔립니다. 검색 결과가 페이지가 아니라 도구로 떨어진다는 의미입니다.</p>
+
+  <p>쇼핑 자리는 한 단계 더 나아갔습니다. 구글에서 매일 발생하는 쇼핑 관련 검색이 10억 건을 넘는다는 숫자가 함께 공개됐는데, 이 자리에 세 가지 새 표준이 깔립니다.</p>
+
+  <div class="term">
+    <span class="term-name">Universal Commerce Protocol<span class="term-eng">UCP · 보편 상거래 프로토콜</span></span>
+    여러 쇼핑몰과 결제 시스템을 가로질러 에이전트가 거래를 진행할 수 있게 정해 둔 공용 약속입니다. 사용자 대신 에이전트가 가게를 옮겨 다닐 때 매번 다른 형식과 정책을 일일이 익히지 않아도 되도록 합니다.
+  </div>
+
+  <div class="term">
+    <span class="term-name">Agent Payments Protocol<span class="term-eng">AP2 · 에이전트 결제 프로토콜</span></span>
+    에이전트가 사용자의 권한 위임을 받아 직접 결제까지 처리할 수 있도록 만든 결제 규약입니다. 카드 정보를 매번 노출하지 않아도, "이 한도 안에서 이 조건에 맞는 거래만"이라는 식의 위임이 표준화된다는 의미입니다.
+  </div>
+
+  <div class="term">
+    <span class="term-name">Universal Cart<span class="term-eng">유니버설 카트</span></span>
+    제품을 카트에 담는 순간부터 에이전트가 카트 안에서 추론을 돌리는 지능형 쇼핑 카트입니다. 시연에서는 사용자가 처음 PC를 조립하면서 평 좋은 마더보드를 담았는데, 이미 카트에 들어 있는 프로세서와 소켓이 맞지 않는다는 사실을 카트가 먼저 잡아내고 대안을 제시하는 장면이 공개됐습니다. 사람이 알아채기 전에 부딪힐 부품을 카트가 막아준다는 의미입니다.
+  </div>
+
+  <p>창작 자리도 함께 짚어 둘 만합니다. 워크스페이스 안에는 <strong>Google Pix</strong>라는 새 이미지 생성·편집 도구가 들어왔습니다. 마우스를 올려 클릭만으로 요소를 지우고, 크기를 조정하고, 글씨를 바꾸고, 몇 번의 클릭으로 전체를 다른 언어로 옮길 수 있습니다. 작년 I/O에서 처음 공개됐던 <strong>Google Flow</strong>도 크게 진화했습니다. 작년에는 한 번에 하나의 프롬프트만 받았는데, 올해는 한 장의 이미지를 분석해 가장 매력적인 카메라 각도를 직접 찾아내고, 그 안에서 <strong>16개의 서로 다른 영상</strong>을 동시에 만들어 냅니다.</p>
+
+  <p>일상 자리에서 가장 작지만 또렷한 변화는 <strong>Daily Brief</strong>입니다. 아침마다 메일함·캘린더·작업 목록을 묶어 그날 중요한 것만 추려 알려 주는 하루치 요약 카드입니다. Spark가 던져 둔 작업의 진행 상태도 같은 자리에서 확인됩니다.</p>
+
+  <h2 id="s06"><span class="num">06 / 글라스·과학</span>귀로 듣는 비서, 그리고 닫는 말</h2>
+
+  <p>키노트 마지막 블록은 두 가지 자리로 나뉘었습니다. 한쪽은 몸에 가까이 오는 자리, 다른 한쪽은 가장 먼 자리입니다.</p>
+
+  <p>몸에 가까이 오는 자리는 <strong>오디오 글라스(audio glasses)</strong>입니다. 올 가을 출시 예정이며, 삼성이 하드웨어를 만들고, 안경 디자인은 젠틀몬스터와 워비파커가 맡았습니다. 이번 글라스는 시야에 정보를 띄우는 방향이 아닙니다. <strong>화면이 없습니다.</strong> Gemini가 하루 종일 옆에 있다가, 필요한 순간에만 귀에 비공개로 음성을 전달합니다.</p>
+
+  <p>시연이 인상적이었습니다. 사용자가 "DoorDash로 동네 카페 라떼 한 잔 시켜 줘"라고 말하자, Gemini가 그 자리에서 DoorDash 앱을 직접 열고, 화면을 순서대로 눌러 가며 옵션을 골라 주문을 끝냈습니다. 사용자는 한 번도 화면을 보지 않습니다. 글라스가 한 일은 "사용자의 부탁을 자기 손으로 옮긴 것"뿐입니다. 시각 디스플레이가 사라진 자리에 음성과 손이 들어왔다는 표현이 정확합니다.</p>
+
+  <p>가장 먼 자리는 <strong>Gemini for Science</strong>입니다. 새로 발표된 연구실 프로토타입이 시연됐는데, 새로 공개된 논문을 자동으로 읽어 들이고, 연구 목표를 실행 가능한 코드로 옮기고, 새 가설까지 생성하는 일상적인 과학 작업의 흐름이 한 화면에서 굴러갔습니다. 발표자는 이 자리를 가리키며 "AI가 인류의 발견을 가속하는 궁극의 도구가 될 것"이라고 닫았고, 그 발언은 키노트의 마지막 슬라이드 — "인간의 창의성을 증폭시키는 도구로서의 AI" — 로 이어졌습니다.</p>
+
+  <p class="pull">
+    글라스가 사라지는 디스플레이라면, Gemini for Science는
+    사라지지 않는 도전이고, Spark는 사라지지 않는 비서입니다.
+    세 자리가 한 방향을 가리킵니다 — AI가 도구가 아니라 자리로
+    바뀌는 1년이었습니다.
+  </p>
+
+  <p>키노트 전체를 한 줄로 압축하면 이렇습니다. <strong>1년 전 구글 I/O가 "AI를 어디에 끼울까"의 발표였다면, 2026 I/O는 "AI가 이미 들어와 있는 자리에서 어떤 일을 자리 그 자체로 만들까"의 발표였습니다.</strong> 검색은 페이지에서 도구로, 쇼핑은 카트에서 프로토콜로, 비서는 채팅 세션에서 클라우드 VM으로 옮겨갔습니다.</p>
+
+  <aside class="editor-note" aria-labelledby="en-h">
+    <div class="en-kicker">Editor's Note · 차별화 포인트</div>
+    <h3 class="en-title" id="en-h">작년 I/O와 비교해 무엇이 달라졌는가</h3>
+    <p class="en-lede">키노트는 한 시간 동안 30개 가까운 신규 명칭을 쏟아냈지만, 정작 우리 일에 의미가 닿는 변화는 여섯 가지로 압축됩니다. 각 항목은 "1년 전에는 이랬는데, 올해는 이렇게 바뀌었다"의 형식으로 정리했습니다.</p>
+    <ol>
+      <li>
+        <b>AI가 검색 안에 있던 자리에서 → 검색 자체가 AI인 자리로.</b>
+        <span>작년 AI Overviews는 검색 결과 위에 답을 얹어 주는 기능이었습니다. 올해부터는 검색창 자체가 에이전트의 거주지가 됐고, 사용자는 한 검색 안에서 여러 에이전트를 만들어 조건과 트리거를 등록합니다.</span>
+      </li>
+      <li>
+        <b>프롬프트 한 줄 시대에서 → 93개 하위 에이전트가 12시간 협업하는 시대로.</b>
+        <span>작년 Flow는 한 번에 하나의 프롬프트만 받았습니다. 올해는 Anti-Gravity 위에서 한 줄의 지시가 93개 하위 에이전트로 분해되어 운영체제 같은 큰 일을 풀어내는 시연이 메인이 됐습니다.</span>
+      </li>
+      <li>
+        <b>채팅 세션 시대에서 → 노트북을 닫아도 도는 클라우드 VM의 비서로.</b>
+        <span>기존 Gemini 앱은 사용자가 창을 닫으면 일이 멈췄습니다. Spark는 사용자의 단말과 분리된 구글 클라우드 전용 VM에서 24시간 깨어 있어, 며칠 단위로 이어지는 일과 모니터링 트리거를 받습니다.</span>
+      </li>
+      <li>
+        <b>카트에 담는 행위에서 → 카트가 추론하고 결제 프로토콜이 합의되는 자리로.</b>
+        <span>쇼핑 카트가 부딪힐 부품을 사용자보다 먼저 잡아내고, UCP·AP2 같은 표준이 깔리면서 에이전트가 여러 가게를 가로질러 사용자 위임 범위 안에서 결제까지 진행하는 흐름이 표준화됩니다.</span>
+      </li>
+      <li>
+        <b>글라스의 시각 디스플레이 시도에서 → 화면 없는 음성 비서로.</b>
+        <span>예전 글라스 발표는 시야 위에 정보를 띄우는 방향이었습니다. 올해는 디스플레이가 사라진 자리에 음성과 손이 들어왔습니다 — Gemini가 사용자의 부탁을 받아 DoorDash 같은 앱을 직접 눌러 처리해 줍니다.</span>
+      </li>
+      <li>
+        <b>큰 모델이 헤드라인이던 자리에서 → Flash가 먼저, Pro는 한 달 뒤로.</b>
+        <span>과거 키노트의 1열은 Pro/Ultra였습니다. 올해는 3.5 Flash가 먼저 모든 제품·API에 풀렸고, 3.5 Pro는 다음 달 공개로 미뤘습니다. 속도·효율이 모델 발표의 1열로 옮겨갔다는 신호입니다.</span>
+      </li>
+    </ol>
+    <p class="en-sign">— CDSA 편집팀, 2026. 5. 21</p>
+  </aside>
+
+  <div class="source-note">
+    <strong>출처</strong> · 본 글은 구글이 2026년 5월 진행한 개발자 컨퍼런스 <strong>Google I/O 2026</strong> 오프닝 키노트의 한국어 발화 요약 자료를 바탕으로 합니다. 발표는 토큰·사용량 숫자 공개, Gemini Omni 발표, Anti-Gravity 위 Gemini 3.5 Flash 시연(가상 운영체제 빌딩), Gemini Spark 시연(블록 파티 계획·정보 에이전트), 검색·쇼핑·창작 자리 시연(UCP·AP2·Universal Cart·Google Pix·Google Flow), 오디오 글라스 및 Gemini for Science 순으로 이어졌습니다. CDSA 편집팀이 한국어 비개발자 독자 관점에서 용어 풀이와 차별화 포인트 중심으로 재구성했으며, Spark의 출시 지역·구독 채널·진입 자리(미국 Google AI Ultra → 여름 데스크톱 앱 → Gemini Enterprise/Workspace 프리뷰) 정보는 키노트 발화 그대로 옮겼습니다.
+  </div>
+
+  <div class="footer">
+    <p><strong>CDSA 편집팀</strong> — 한국데이터사이언티스트협회는 도메인 전문가의 AX 역량강화를 골목길의 실제 문제부터 끌어올립니다. 키노트·논문·산업 보고서 중 비개발자 의사결정자에게 닿아야 할 자료를 골라 한국어 산문체로 다시 정리해 올립니다.</p>
+    <p>큐레이션·편집 문의는 <a href="mailto:sjshin@cdsa.or.kr" style="color: var(--clay-deep); text-decoration: none;">sjshin@cdsa.or.kr</a>로 보내주세요.</p>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="/blog/" class="bottom-nav-home">← 블로그 목록</a>
+    <a href="/">CDSA 홈페이지 →</a>
+  </nav>
+
+</article>
+
+<script src="/blog/_posts.js" defer></script>
+
+</body>
+</html>
