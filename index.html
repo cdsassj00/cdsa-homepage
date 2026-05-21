@@ -118,8 +118,10 @@
     <!-- END SEO -->
   </head>
   <body>
+    <style>.seo-shell{display:none}</style>
+    <noscript><style>.seo-shell{display:block}</style></noscript>
     <div id="root">
-      <!-- Static content for SEO/GEO crawlers — React replaces on hydration -->
+      <div class="seo-shell">
       <header><nav><a href="/">한국데이터사이언티스트협회</a> <a href="/blog/">블로그</a> <a href="/about.html">About</a> <a href="/services/vibe-coding.html">바이브코딩</a> <a href="/services/public-ai.html">공공 AI 교육</a></nav></header>
       <main>
         <section>
@@ -160,6 +162,7 @@
           <p>이메일: sjshin@cdsa.or.kr | 서울특별시 금천구 가산동 디지털로9길 73, 622호</p>
         </section>
       </main>
+      </div>
     </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
