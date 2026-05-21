@@ -14,7 +14,7 @@
   body{font-family:"Fraunces","Noto Serif KR",Georgia,serif;font-weight:300;font-size:18px;line-height:1.72}
   .wrap{max-width:600px;margin:0 auto;padding:120px 28px 80px;text-align:center}
   .icon{font-size:64px;margin-bottom:24px}
-  h1{font-family:"Fraunces","Noto Serif KR",serif;font-weight:500;font-size:32px;margin:0 0 16px}
+  h1{font-family:"Fraunces","Noto Serif KR",serif;font-weight:500;font-size:28px;margin:0 0 16px;word-break:keep-all;overflow-wrap:break-word}
   .msg{color:var(--ink-soft);margin:0 0 32px;line-height:1.7}
   .detail-box{background:var(--code-bg);border:1px solid var(--rule);border-radius:6px;padding:24px;margin:0 0 32px;text-align:left;font-family:"Inter","Noto Sans KR",sans-serif;font-size:14px;line-height:1.8}
   .detail-box .row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--rule)}
@@ -80,8 +80,9 @@
       title.textContent = '결제가 완료되었습니다';
       msg.textContent = '수강 신청이 정상 처리되었습니다. 입력하신 이메일로 확인서가 발송됩니다.';
       box.style.display = 'block';
+      var orderName = data.orderName || '결제 상품';
       box.innerHTML = `
-        <div class="row"><span class="label">과정명</span><span class="value">AXP-10: 직무역량 강화를 위한 생성형 AI실무 심화 과정</span></div>
+        <div class="row"><span class="label">과정명</span><span class="value">${orderName}</span></div>
         <div class="row"><span class="label">주문번호</span><span class="value">${orderId}</span></div>
         <div class="row"><span class="label">결제금액</span><span class="value">${Number(amount).toLocaleString()}원</span></div>
         <div class="row"><span class="label">상태</span><span class="value status-ok">결제 완료</span></div>
@@ -94,7 +95,7 @@
         transaction_id: orderId,
         value: Number(amount),
         currency: 'KRW',
-        items: [{ item_name: 'AXP-10 직무역량 강화를 위한 생성형 AI실무 심화', price: Number(amount), quantity: 1 }]
+        items: [{ item_name: orderName, price: Number(amount), quantity: 1 }]
       });
     } else {
       // 결제 실패 (토스 응답 에러)
