@@ -36,7 +36,7 @@
   "offers": {
     "@type": "Offer",
     "name": "참가권",
-    "price": "9900",
+    "price": "990",
     "priceCurrency": "KRW",
     "availability": "https://schema.org/InStock",
     "url": "https://cdsa.kr/five-blades.html",
@@ -76,7 +76,7 @@ html,body{background:var(--bg);color:var(--ink);font-family:'Pretendard','Noto S
 a{color:inherit;text-decoration:none}
 
 /* ============ TOPBAR ============ */
-.topbar{position:sticky;top:0;z-index:100;background:rgba(26,20,16,.9);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);height:64px;display:flex;align-items:center;padding:0 40px}
+.topbar{position:sticky;top:0;z-index:100;background:rgba(26,20,16,.9);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);height:64px;display:flex;align-items:center;padding:0 clamp(28px,8vw,120px)}
 .topbar .brand{font-family:'Noto Serif KR',serif;font-weight:700;font-size:17px;letter-spacing:-.3px;color:var(--ink)}
 .topbar .brand .ai{color:var(--gold);margin:0 2px}
 .topbar .brand-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:400;font-size:12px;letter-spacing:2px;color:var(--ink-mute);margin-left:16px;padding-left:16px;border-left:1px solid var(--line-warm)}
@@ -105,7 +105,7 @@ a{color:inherit;text-decoration:none}
 .watermark.filled{color:var(--watermark);-webkit-text-stroke:0}
 
 /* ============ COVER ============ */
-.cover{min-height:calc(100vh - 64px);display:grid;grid-template-rows:auto 1fr auto;padding:60px 40px 50px;position:relative;overflow:hidden}
+.cover{min-height:calc(100vh - 64px);display:grid;grid-template-rows:auto 1fr auto;padding:60px clamp(28px,8vw,120px) 50px;position:relative;overflow:hidden}
 .cover .wm-1{top:14%;left:-4%;font-size:clamp(110px,26vw,400px)}
 .cover .wm-2{bottom:6%;right:-4%;font-size:clamp(80px,12vw,180px);opacity:.9;color:var(--watermark);-webkit-text-stroke:0;letter-spacing:-2px}
 .cover > *:not(.watermark){position:relative;z-index:2}
@@ -150,7 +150,7 @@ a{color:inherit;text-decoration:none}
 .cover .cover-foot .col .lv .sub{display:block;font-size:10.5px;color:var(--ink-mute);font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:400;margin-top:4px;letter-spacing:1.5px}
 
 /* ============ PHILOSOPHY ============ */
-.philosophy{padding:130px 40px;background:var(--bg-1);border-top:1px solid var(--line);border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+.philosophy{padding:130px clamp(28px,8vw,120px);background:var(--bg-1);border-top:1px solid var(--line);border-bottom:1px solid var(--line);position:relative;overflow:hidden}
 .philosophy .wm-1{top:10%;right:-5%;font-size:clamp(120px,18vw,260px)}
 .philosophy .inner{max-width:920px;margin:0 auto;position:relative;z-index:2}
 .philosophy .en-label{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:var(--gold);letter-spacing:2px;margin-bottom:18px;font-weight:400}
@@ -163,7 +163,7 @@ a{color:inherit;text-decoration:none}
 .prose .pull em{font-style:italic;color:var(--gold);font-weight:600}
 
 /* ============ LINEUP ============ */
-.lineup{padding:130px 40px;position:relative;overflow:hidden}
+.lineup{padding:130px clamp(28px,8vw,120px);position:relative;overflow:hidden}
 .lineup .wm-1{top:6%;left:50%;transform:translateX(-50%);font-size:clamp(160px,22vw,340px)}
 .lineup .inner{max-width:1180px;margin:0 auto;position:relative;z-index:2}
 .section-head{text-align:center;margin-bottom:64px}
@@ -187,7 +187,7 @@ a{color:inherit;text-decoration:none}
 .blade-tag{font-family:'Noto Serif KR',serif;font-style:italic;font-size:13px;color:var(--ink-soft);margin-top:14px;padding-top:12px;border-top:1px dashed var(--line-warm);line-height:1.6;word-break:keep-all;overflow-wrap:break-word;font-weight:400}
 
 /* ============ TIMETABLE ============ */
-.timetable{padding:130px 40px;background:var(--bg-1);border-top:1px solid var(--line);border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+.timetable{padding:130px clamp(28px,8vw,120px);background:var(--bg-1);border-top:1px solid var(--line);border-bottom:1px solid var(--line);position:relative;overflow:hidden}
 .timetable .wm-1{top:8%;right:-5%;font-size:clamp(140px,20vw,300px)}
 .timetable .inner{max-width:960px;margin:0 auto;position:relative;z-index:2}
 .tt-list{margin-top:8px;border-top:1px solid var(--line-warm)}
@@ -200,7 +200,7 @@ a{color:inherit;text-decoration:none}
 .tt-row.break .tt-title{color:var(--ink-mute);font-style:italic;font-weight:400;font-size:16.5px}
 
 /* ============ DELIVERABLES ============ */
-.deliverables{padding:130px 40px;position:relative;overflow:hidden}
+.deliverables{padding:130px clamp(28px,8vw,120px);position:relative;overflow:hidden}
 .deliverables .wm-1{top:10%;left:-5%;font-size:clamp(140px,20vw,300px)}
 .deliverables .inner{max-width:1080px;margin:0 auto;position:relative;z-index:2}
 .deliv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:8px}
@@ -213,7 +213,7 @@ a{color:inherit;text-decoration:none}
 .deliv-card .delivery{margin-top:18px;padding-top:14px;border-top:1px dashed var(--line-warm);font-family:'Noto Serif KR',serif;font-size:12px;color:var(--gold);font-weight:600;letter-spacing:.5px}
 
 /* ============ AUDIENCE ============ */
-.audience{padding:130px 40px;background:var(--bg-1);border-top:1px solid var(--line);border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+.audience{padding:130px clamp(28px,8vw,120px);background:var(--bg-1);border-top:1px solid var(--line);border-bottom:1px solid var(--line);position:relative;overflow:hidden}
 .audience .wm-1{top:10%;right:-5%;font-size:clamp(140px,20vw,280px)}
 .audience .inner{max-width:1080px;margin:0 auto;position:relative;z-index:2}
 .aud-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:8px}
@@ -223,7 +223,7 @@ a{color:inherit;text-decoration:none}
 .aud-card p{font-family:'Pretendard',sans-serif;font-size:14.5px;color:var(--ink-soft);line-height:1.78;font-weight:400;word-break:keep-all;overflow-wrap:break-word;}
 
 /* ============ FAQ ============ */
-.faq{padding:130px 40px;position:relative;overflow:hidden}
+.faq{padding:130px clamp(28px,8vw,120px);position:relative;overflow:hidden}
 .faq .wm-1{bottom:6%;left:-5%;font-size:clamp(140px,20vw,300px)}
 .faq .inner{max-width:880px;margin:0 auto;position:relative;z-index:2}
 .faq-item{padding:30px 0;border-bottom:1px solid var(--line)}
@@ -233,7 +233,7 @@ a{color:inherit;text-decoration:none}
 .faq-a{font-family:'Pretendard',sans-serif;font-size:15.5px;line-height:1.85;color:var(--ink-soft);font-weight:400;word-break:keep-all;overflow-wrap:break-word;}
 
 /* ============ FINAL ============ */
-.final{padding:140px 40px 120px;background:var(--bg-1);border-top:1px solid var(--line);text-align:center;position:relative;overflow:hidden}
+.final{padding:140px clamp(28px,8vw,120px) 120px;background:var(--bg-1);border-top:1px solid var(--line);text-align:center;position:relative;overflow:hidden}
 .final .wm-1{top:10%;left:50%;transform:translateX(-50%);font-size:clamp(160px,22vw,360px)}
 .final .inner{max-width:780px;margin:0 auto;position:relative;z-index:2}
 .final .en-label{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:var(--gold);letter-spacing:3px;margin-bottom:18px;font-weight:400}
@@ -248,7 +248,7 @@ a{color:inherit;text-decoration:none}
 .final .meta-line{margin-top:32px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:var(--ink-mute);letter-spacing:2px}
 
 /* ============ FOOTER ============ */
-footer{background:#0f0c08;padding:60px 40px 50px;border-top:1px solid var(--line)}
+footer{background:#0f0c08;padding:60px clamp(28px,8vw,120px) 50px;border-top:1px solid var(--line)}
 .foot-inner{max-width:1080px;margin:0 auto;font-family:'Pretendard',sans-serif;font-size:13px;color:rgba(237,228,211,.55);line-height:1.7}
 .foot-brand{font-family:'Noto Serif KR',serif;font-size:18px;font-weight:700;color:var(--ink);margin-bottom:14px;letter-spacing:-.3px}
 .foot-brand .ai{color:var(--gold)}
@@ -573,7 +573,7 @@ footer{background:#0f0c08;padding:60px 40px 50px;border-top:1px solid var(--line
 
     <div class="faq-item">
       <div class="faq-q">참가비는 얼마인가요.</div>
-      <div class="faq-a">참가비는 9,900원입니다. 결제 수수료와 줌 회선·다시보기 호스팅 비용을 간신히 덮는 금액이고, 다섯 분 강사료는 0원입니다. 사후 결제도 없고, 부트캠프 광고도 보내지 않습니다. 강의 후 요약 메뉴얼·강의안·명령어 치트시트 세 가지 자료가 별도로 전달됩니다.</div>
+      <div class="faq-a">참가비는 990원입니다. 결제 수수료와 줌 회선·다시보기 호스팅 비용을 간신히 덮는 금액이고, 다섯 분 강사료는 0원입니다. 사후 결제도 없고, 부트캠프 광고도 보내지 않습니다. 강의 후 요약 메뉴얼·강의안·명령어 치트시트 세 가지 자료가 별도로 전달됩니다.</div>
     </div>
 
     <div class="faq-item">
@@ -599,10 +599,10 @@ footer{background:#0f0c08;padding:60px 40px 50px;border-top:1px solid var(--line
   <div class="inner">
     <div class="en-label">— Reserve Your Seat</div>
     <h2>다섯 자루의 에이전트가<br>한 문제를 푸는 자리,<br><span class="em">함께해 주세요.</span></h2>
-    <p class="price-note">2026.06.13 SAT · 13:00 – 16:30 · 비대면 라이브 · 정원 200명<br>참가비 <strong>9,900원</strong> · 강의 후 요약 메뉴얼 · 강의안 · 명령어 치트시트 별도 전달</p>
+    <p class="price-note">2026.06.13 SAT · 13:00 – 16:30 · 비대면 라이브 · 정원 200명<br>참가비 <strong>990원</strong> · 강의 후 요약 메뉴얼 · 강의안 · 명령어 치트시트 별도 전달</p>
     <div id="payment-method" style="margin:32px auto 0;max-width:480px;border-radius:8px;overflow:hidden"></div>
     <div id="agreement" style="max-width:480px;margin:0 auto"></div>
-    <button id="payment-button" style="display:block;width:100%;max-width:480px;margin:16px auto 0;padding:18px;background:var(--gold);color:var(--bg);border:none;border-radius:2px;font-family:'Noto Serif KR',serif;font-weight:700;font-size:15px;letter-spacing:1px;cursor:pointer;transition:all .25s">9,900원 결제하고 좌석 확보</button>
+    <button id="payment-button" style="display:block;width:100%;max-width:480px;margin:16px auto 0;padding:18px;background:var(--gold);color:var(--bg);border:none;border-radius:2px;font-family:'Noto Serif KR',serif;font-weight:700;font-size:15px;letter-spacing:1px;cursor:pointer;transition:all .25s">990원 결제하고 좌석 확보</button>
     <p style="margin-top:16px;font-size:12px;color:var(--ink-mute);line-height:1.7">결제 완료 시 입력 이메일로 Zoom 링크 발송 · 환불: 행사 3일 전 전액 / 당일 불가 · 문의: sjshin@cdsa.or.kr</p>
     <div class="meta-line">Attention Is All You Need · 9th Anniversary + 1</div>
   </div>
@@ -611,7 +611,7 @@ footer{background:#0f0c08;padding:60px 40px 50px;border-top:1px solid var(--line
 <script>
 (function(){
   var pw = PaymentWidget('live_gck_Gv6LjeKD8ab7wdXZRBEw3wYxAdXy', PaymentWidget.ANONYMOUS);
-  pw.renderPaymentMethods('#payment-method', { value: 9900 });
+  pw.renderPaymentMethods('#payment-method', { value: 990 });
   pw.renderAgreement('#agreement', { variantKey: 'AGREEMENT' });
   document.getElementById('payment-button').addEventListener('click', function(){
     var oid = 'FB26-' + Date.now() + '-' + Math.random().toString(36).slice(2,8);
