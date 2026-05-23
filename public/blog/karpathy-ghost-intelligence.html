@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI는 유령이다 — 안드레이 카파시가 본 다섯 가지 풍경 · CDSA 블로그</title>
+<meta name="description" content="테슬라 전 AI 책임자 안드레이 카파시의 최근 인터뷰들을 엮었다. 코드가 사라진 자리에 신경망이 들어오고, AI는 동물이 아니라 유령이며, 싱킹은 외주할 수 있지만 이해는 외주할 수 없다는 이야기.">
+<meta property="og:title" content="AI는 유령이다 — 안드레이 카파시가 본 다섯 가지 풍경">
+<meta property="og:description" content="테슬라 전 AI 책임자 카파시의 최근 인터뷰에서 길어 올린 다섯 가지 통찰. 소프트웨어 3.0, 들쭉날쭉한 지능, 유령 비유, 이해라는 병목, 그리고 오토 리서치.">
+<meta property="og:type" content="article">
+<!-- BEGIN SEO -->
+<meta name="keywords" content="안드레이 카파시, Andrej Karpathy, 소프트웨어 3.0, 들쭉날쭉한 지능, jagged intelligence, AI 유령, 에이전틱 엔지니어링, 바이브 코딩, 오토 리서치, LLM, 신경 컴퓨터, CDSA">
+<link rel="canonical" href="https://cdsa.kr/blog/karpathy-ghost-intelligence.html">
+<meta property="og:url" content="https://cdsa.kr/blog/karpathy-ghost-intelligence.html">
+<meta property="og:site_name" content="한국데이터사이언티스트협회">
+<meta property="og:image" content="https://cdsa.kr/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta property="article:published_time" content="2026-05-23T09:00:00+09:00">
+<meta property="article:modified_time" content="2026-05-23T09:00:00+09:00">
+<meta property="article:author" content="신성진">
+<meta property="article:section" content="큐레이션 · AI 사고론">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI는 유령이다 — 안드레이 카파시가 본 다섯 가지 풍경">
+<meta name="twitter:description" content="테슬라 전 AI 책임자 카파시의 최근 인터뷰에서 길어 올린 다섯 가지 통찰. 코드가 사라진 자리에 신경망이 들어온다.">
+<meta name="twitter:image" content="https://cdsa.kr/og-image.png">
+<meta name="author" content="신성진">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "AI는 유령이다 — 안드레이 카파시가 본 다섯 가지 풍경",
+  "description": "테슬라 전 AI 책임자 안드레이 카파시의 최근 인터뷰들을 엮었다. 소프트웨어 3.0, 들쭉날쭉한 지능, 유령 비유, 이해라는 병목, 오토 리서치까지 다섯 가지 통찰.",
+  "datePublished": "2026-05-23T09:00:00+09:00",
+  "dateModified": "2026-05-23T09:00:00+09:00",
+  "author": {
+    "@type": "Person",
+    "name": "신성진",
+    "jobTitle": "대표이사",
+    "description": "한국데이터사이언티스트협회 대표. 행정안전부 AI 전문위원, 과기정통부 데이터기반행정 자문위원."
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "한국데이터사이언티스트협회",
+    "url": "https://cdsa.kr",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://cdsa.kr/og-image.png"
+    }
+  },
+  "image": ["https://cdsa.kr/og-image.png"],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://cdsa.kr/blog/karpathy-ghost-intelligence.html"
+  },
+  "articleSection": "큐레이션 · AI 사고론",
+  "inLanguage": "ko-KR"
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "CDSA",
+      "item": "https://cdsa.kr/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "블로그",
+      "item": "https://cdsa.kr/blog/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "AI는 유령이다 — 안드레이 카파시가 본 다섯 가지 풍경",
+      "item": "https://cdsa.kr/blog/karpathy-ghost-intelligence.html"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "안드레이 카파시가 말하는 소프트웨어 3.0이란 무엇인가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "소프트웨어 3.0은 LLM 자체가 거대한 컴퓨터가 되어, 프롬프트를 작성하는 것이 곧 프로그래밍이 되는 패러다임입니다. 기존에 수백 줄의 코드로 짜던 기능이 신경망 한 번 호출로 대체되며, 코드가 사라진 자리에 신경망이 직접 들어갑니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "카파시가 AI를 유령에 비유하는 이유는 무엇인가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "동물은 진화의 산물로 생존 본능과 호기심 같은 내재적 동기를 갖고 태어나지만, LLM은 아무런 본능도 없는 백지 상태에서 인간이 남긴 데이터의 흔적을 모방하여 만들어진 통계적 시뮬레이션입니다. 따라서 AI를 동물처럼 다루면 안 되며, 유령이라는 전혀 다른 범주로 이해해야 한다는 것이 카파시의 핵심 메시지입니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "들쭉날쭉한 지능(Jagged Intelligence)이란 무엇인가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "AI가 특정 영역(수학, 코딩 등 검증 가능한 분야)에서는 천재적 능력을 보이면서도, 다른 영역(일상적 상식, 공간 추론 등)에서는 초등학생도 안 하는 실수를 저지르는 현상입니다. 10만 줄 코드를 리팩토링하는 AI가 50미터 거리의 세차장에 걸어가라고 답하는 식의 불균형한 지능을 말합니다."
+      }
+    }
+  ]
+}
+</script>
+<!-- END SEO -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NZL39P5EYZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NZL39P5EYZ');
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/blog/_layout.css">
+<style>
+  :root {
+    --cream: #faf9f5; --cream-deep: #f3efe3; --ink: #1a1a1a; --ink-soft: #3d3d3a;
+    --ink-mute: #6b6b66; --rule: #d9d6cc; --clay: #cc785c; --clay-deep: #a85a42;
+    --clay-light: #f0ddd4; --code-bg: #f2f0e8; --teal: #2a7d6e;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--cream); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  body { font-family: "Fraunces", "Noto Serif KR", Georgia, serif; font-weight: 300; font-size: 19px; line-height: 1.72; letter-spacing: -0.005em; }
+
+  .topnav { position: fixed; top: 0; left: 0; right: 0; height: 48px; background: rgba(250, 249, 245, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; }
+  .topnav-left { display: flex; align-items: center; gap: 18px; }
+  .topnav-left a { color: var(--ink-soft); text-decoration: none; transition: color 0.2s; }
+  .topnav-left a:hover { color: var(--clay-deep); }
+  .topnav-home { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 600; font-size: 16px; color: var(--ink) !important; letter-spacing: -0.3px; }
+  .topnav-sep { color: var(--rule); font-size: 11px; }
+  .topnav-right { display: flex; gap: 16px; }
+  .topnav-right a { color: var(--ink-mute); text-decoration: none; font-size: 12px; transition: color 0.2s; }
+  .topnav-right a:hover { color: var(--clay-deep); }
+  .topnav-current { color: var(--ink) !important; font-weight: 600; position: relative; }
+  .topnav-current::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 2px; background: var(--clay); border-radius: 1px; }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 116px 28px 120px; }
+  .breadcrumb { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; margin-bottom: 36px; display: flex; align-items: center; gap: 8px; color: var(--ink-mute); }
+  .breadcrumb a { color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--ink); }
+  .breadcrumb .bc-sep { color: var(--rule); }
+
+  .kicker { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay-deep); margin-bottom: 28px; }
+  h1 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 400; font-size: 44px; line-height: 1.18; letter-spacing: -0.02em; margin: 0 0 24px; color: var(--ink); word-break:keep-all; overflow-wrap:break-word; }
+  .dek { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 300; font-style: italic; font-size: 21px; line-height: 1.55; color: var(--ink-soft); margin: 0 0 40px; word-break:keep-all; overflow-wrap:break-word; }
+  .byline { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); padding: 18px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-bottom: 56px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .byline strong { font-weight: 500; color: var(--ink-soft); }
+
+  .lede { font-size: 19px; line-height: 1.72; margin-bottom: 22px; word-break:keep-all; overflow-wrap:break-word; }
+  .lede::first-letter { font-family: "Fraunces", serif; font-weight: 400; font-size: 68px; float: left; line-height: 0.88; padding: 8px 10px 0 0; color: var(--clay); }
+
+  h2 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 28px; line-height: 1.3; letter-spacing: -0.015em; margin: 64px 0 16px; color: var(--ink); scroll-margin-top: 80px; word-break:keep-all; overflow-wrap:break-word; }
+  h2 .num { font-family: "Inter", sans-serif; font-size: 12px; font-weight: 600; color: var(--clay); letter-spacing: 0.1em; display: block; margin-bottom: 10px; }
+  p { margin: 0 0 22px; word-break:keep-all; overflow-wrap:break-word; }
+  p + p { margin-top: -6px; }
+  strong { font-weight: 500; color: var(--ink); }
+  em { font-style: italic; }
+
+  blockquote { margin: 36px 0; padding: 4px 0 4px 22px; border-left: 2px solid var(--clay); font-family: "Fraunces", "Noto Serif KR", serif; font-style: italic; font-size: 20px; line-height: 1.55; color: var(--ink-soft); word-break:keep-all; overflow-wrap:break-word; }
+  blockquote cite { display: block; font-family: "Inter", "Noto Sans KR", sans-serif; font-style: normal; font-size: 12px; color: var(--ink-mute); margin-top: 12px; letter-spacing: 0.02em; }
+  blockquote cite::before { content: "— "; }
+
+  .pull { font-family: "Fraunces", "Noto Serif KR", serif; font-size: 26px; line-height: 1.5; color: var(--ink); font-weight: 500; font-style: italic; margin: 40px 0; padding: 26px 0 26px 28px; border-left: 3px solid var(--clay); letter-spacing: -0.01em; word-break:keep-all; overflow-wrap:break-word; }
+
+  .source-note { margin-top: 40px; padding: 18px 22px; background: var(--code-bg); border-left: 2px solid var(--clay-light); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); line-height: 1.7; border-radius: 2px; }
+  .source-note strong { color: var(--ink-soft); font-weight: 600; }
+  .source-note a { color: var(--clay-deep); text-decoration: none; border-bottom: 1px dotted var(--clay-light); }
+  .source-note a:hover { color: var(--ink); }
+
+  .footer { margin-top: 72px; padding-top: 28px; border-top: 1px solid var(--rule); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); line-height: 1.7; }
+  .footer strong { color: var(--ink-soft); font-weight: 600; }
+
+  .bottom-nav { margin-top: 72px; padding: 36px 0; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .bottom-nav a { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .bottom-nav a:hover { color: var(--ink); }
+  .bottom-nav-home { font-family: "Fraunces", "Noto Serif KR", serif !important; font-size: 16px !important; font-style: italic; font-weight: 400; }
+
+  @media (max-width: 560px) {
+    .wrap { padding: 92px 22px 80px; }
+    h1 { font-size: 30px; line-height: 1.24; }
+    .dek { font-size: 17.5px; }
+    body { font-size: 17px; }
+    h2 { font-size: 23px; margin-top: 52px; }
+    .topnav-right { display: none; }
+    .pull { font-size: 22px; padding-left: 22px; }
+  }
+  @media (max-width: 400px) {
+    h1 { font-size: 26px !important; line-height: 1.25; }
+    .dek { font-size: 16px !important; }
+    h2 { font-size: 21px !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="topnav-left">
+    <a href="/" class="topnav-home">CDSA</a>
+    <span class="topnav-sep">|</span>
+    <a href="/">홈페이지</a>
+    <a href="/blog/" class="topnav-current">블로그</a>
+  </div>
+  <nav class="topnav-right">
+    <a href="/framework.html">프레임워크</a>
+    <a href="/unsloth-workbook.html">워크북</a>
+    <a href="/fullcourse.html">Full Course</a>
+  </nav>
+</header>
+
+<button class="blog-hamburger" aria-label="블로그 목록 열기"><span></span><span></span><span></span></button>
+<div class="blog-overlay"></div>
+<aside class="blog-left">
+  <div class="blog-left-title">Blog Posts</div>
+  <ol class="blog-left-list"></ol>
+</aside>
+<aside class="blog-right">
+  <div class="blog-right-title">On This Page</div>
+  <ul class="blog-toc"></ul>
+</aside>
+
+<article class="wrap">
+
+  <nav class="breadcrumb">
+    <a href="/">← CDSA 홈</a>
+    <span class="bc-sep">/</span>
+    <a href="/blog/">블로그</a>
+    <span class="bc-sep">/</span>
+    <span>큐레이션</span>
+  </nav>
+
+  <div class="kicker">Curation · AI 사고론</div>
+
+  <h1>AI는 유령이다<br>— 안드레이 카파시가 본<br>다섯 가지 풍경</h1>
+
+  <p class="dek">
+    테슬라 전 AI 책임자 안드레이 카파시의 최근 인터뷰 여러 편을
+    엮었습니다. 코드가 사라진 자리에 신경망이 들어오고, AI는 동물이
+    아니라 유령이며, 싱킹은 외주할 수 있지만 이해는 외주할 수 없다는
+    이야기.
+  </p>
+
+  <div class="byline">
+    <span><strong>큐레이션 · 신성진</strong></span>
+    <span>2026. 5. 23</span>
+  </div>
+
+  <p class="lede">안드레이 카파시라는 이름을 처음 듣는 분도 계실 겁니다. 슬로바키아에서 태어나 캐나다에서 자랐고, 스탠퍼드에서 컴퓨터 비전으로 박사를 받았고, 오픈AI 초기 멤버로 GPT-2를 만들었고, 테슬라로 건너가 오토파일럿의 AI를 총괄했고, 다시 오픈AI로 돌아갔다가 2024년에 독립해 자신의 AI 교육 회사를 만든 사람입니다. AI를 직접 만들어 본 경험과, 그것을 설명하는 언어 감각을 동시에 가진 드문 사람이라고 할 수 있습니다. 최근 한 달 사이에 여러 편의 인터뷰와 강연이 쏟아졌는데, 거기서 반복적으로 등장하는 다섯 가지 생각이 눈에 들어왔습니다. 비전공자가 읽어도 남는 것이 있는 통찰이라 판단해 정리합니다.</p>
+
+  <h2 id="s01"><span class="num">01 / 첫 번째 풍경</span>코드가 사라지고, 신경망이 그 자리에 들어온다</h2>
+
+  <p>카파시는 소프트웨어의 역사를 세 겹으로 나눕니다. 소프트웨어 1.0은 우리가 아는 전통적인 프로그래밍입니다. 사람이 규칙을 정하고, 한 줄 한 줄 코드를 씁니다. 소프트웨어 2.0은 데이터를 모아서 신경망을 훈련시키는 방식입니다. 사람이 코드를 짜는 대신 데이터를 준비하면, 기계가 스스로 패턴을 익힙니다. 여기까지는 이미 많은 분이 아시는 이야기입니다.</p>
+
+  <p>그가 강조하는 것은 세 번째 겹, 소프트웨어 3.0입니다. LLM 자체가 하나의 거대한 컴퓨터가 되고, 프롬프트를 쓰는 행위가 곧 프로그래밍이 되는 시대입니다. 그는 자신이 만든 메뉴젠이라는 앱을 예로 듭니다. 식당 메뉴판을 찍으면 글자를 인식하고, 각 메뉴의 음식 사진을 AI로 생성해서 보여주는 앱인데, 이걸 만들기 위해 OCR 엔진을 붙이고, 이미지 생성 API를 연동하고, 후처리 코드를 짜느라 꽤 복잡한 작업이 들어갔다고 합니다. 그런데 소프트웨어 3.0 방식으로는 메뉴 사진을 AI에 넘기면서 "음식 사진을 위에 얹어줘" 한 마디면 끝납니다. 앱 자체가 필요 없어지는 겁니다.</p>
+
+  <p>이 이야기가 비전공자에게 의미 있는 이유는 따로 있습니다. 그가 하고 싶은 말의 핵심은 "코딩이 쉬워졌다"가 아닙니다. <strong>이전에는 불가능했던 것이 가능해졌다</strong>는 겁니다. 기존의 일을 더 빠르게 하는 것이 아니라, 존재할 수 없었던 종류의 일이 갑자기 가능해진다는 뜻입니다. 그래서 그는 새로운 앱을 기획할 때 가장 먼저 던져야 할 질문이 있다고 합니다. "이 앱이 혹시 신경망 한 번 호출로 끝나는 것은 아닌가?"</p>
+
+  <p class="pull">코드가 사라진 자리에 신경망이 직접 들어간다. 기존 패러다임의 속도 향상이 아니라, 이전에는 불가능했던 것이 가능해진 것이다.</p>
+
+  <p>더 먼 미래에 대해서도 그는 그림을 그립니다. 극단적으로는 기기가 카메라와 마이크에서 들어오는 원시 신호를 신경망에 직접 넣고, 화면에 보여줄 UI까지도 그 순간에 디퓨전으로 렌더링하는 세계를 상상합니다. 코드는 거의 사라지고, 결정론적 계산이 필요한 순간에만 CPU를 잠깐 부르는 구조. 현재 우리가 쓰는 컴퓨터의 주인이 CPU에서 신경망으로 뒤집히는 셈입니다. 물론 먼 이야기처럼 들리지만, 카파시는 지금 짜는 코드의 상당 부분이 5년에서 10년 안에 신경망으로 흡수될 수 있다고 봅니다.</p>
+
+  <h2 id="s02"><span class="num">02 / 두 번째 풍경</span>10만 줄 코드를 고치면서 세차장까지 걸어가라고 답하는 지능</h2>
+
+  <p>카파시가 반복적으로 강조하는 개념이 하나 있습니다. "들쭉날쭉한 지능", 영어로는 Jagged Intelligence라 부르는 현상입니다. AI가 어떤 영역에서는 인간 천재 수준의 능력을 보여주다가, 바로 옆 영역에서는 초등학생도 안 할 실수를 저지르는 것을 말합니다.</p>
+
+  <p>왜 이런 일이 벌어지는지를 그는 훈련 방식으로 설명합니다. LLM은 답이 맞는지 채점할 수 있는 영역에서 강화 학습을 받습니다. 수학 문제는 답이 정해져 있으니 채점이 됩니다. 코딩도 컴파일이 되는지, 테스트를 통과하는지로 채점이 됩니다. 이렇게 채점할 수 있는 영역에서 AI는 빠르게 강해집니다. 문제는 채점이 안 되는 영역입니다. 농담이 재미있는지, 공간적으로 말이 되는 안내인지, 논리적으로 건전한 판단인지 — 이런 것들은 자동으로 채점할 방법이 마땅치 않습니다.</p>
+
+  <p>그래서 황당한 일이 벌어집니다. 10만 줄짜리 코드를 리팩토링하고 제로데이 보안 취약점을 찾아내는 AI가, 50미터 거리의 드라이브스루 세차장에 "걸어서 가세요"라고 답합니다. ChatGPT에게 농담을 해달라고 하면 5년 전과 똑같은 농담 서너 개를 돌려쓰고, 아무리 다른 농담을 요청해도 레퍼토리가 늘지 않습니다. 채점 환경 바깥의 영역이기 때문입니다.</p>
+
+  <p>이 이야기에서 실무적으로 중요한 것은 이겁니다. <strong>AI 모델에는 매뉴얼이 없습니다.</strong> 어디서 잘하고 어디서 못 하는지를 사용자가 직접 탐험해서 알아내야 합니다. 카파시의 표현을 빌리자면, "이 AI가 어떤 회로 안에 들어와 있는지"를 자기 손으로 더듬어 봐야 한다는 겁니다. 모델 업그레이드 때마다 잘하는 영역과 못하는 영역의 경계가 바뀌기 때문에, 한 번 파악했다고 끝이 아니라 계속 다시 확인해야 합니다.</p>
+
+  <h2 id="s03"><span class="num">03 / 세 번째 풍경</span>AI는 동물이 아니라 유령이다</h2>
+
+  <p>들쭉날쭉한 지능 이야기와 이어지는 비유가 있습니다. 카파시는 AI를 동물에 비유하는 습관을 버려야 한다고 말합니다. 우리는 무의식적으로 AI를 강아지나 고양이 같은 존재로 상상합니다. 말을 알아듣고, 칭찬하면 더 잘하고, 혼내면 주눅 들 것 같은 느낌. 하지만 그것은 완전히 잘못된 직관이라고 그는 지적합니다.</p>
+
+  <p>동물은 진화의 산물입니다. 수억 년에 걸쳐 생존 본능, 호기심, 재미를 느끼는 능력, 고통을 피하는 반사 같은 것들이 DNA에 새겨진 존재입니다. LLM은 그런 것이 전혀 없습니다. 진화의 산물이 아니라 데이터와 보상 함수로 빚어진 통계적 시뮬레이션입니다. 아무런 본능도 없는 백지 상태에서 출발해, 인터넷이라는 거대한 공간에 인간이 남긴 희미한 흔적들을 모방해 만들어진 존재입니다.</p>
+
+  <blockquote>
+    우리는 동물을 만드는 게 아닙니다. 유령 혹은 정령이라고 불러야 할 존재들을 만들고 있는 겁니다.
+    <cite>안드레이 카파시</cite>
+  </blockquote>
+
+  <p>이 비유가 실용적으로 의미 있는 지점이 있습니다. AI에게 소리를 지르거나 사정해도 결과가 나아지지 않습니다. "제발 잘 좀 해줘"라고 쓴다고 정확도가 올라가지 않고, "화가 난다"고 쓴다고 AI가 주눅 들지 않습니다. 감정적 반응에 영향을 받는 존재가 아니기 때문입니다. 반면에 "하지 마"와 같은 명확한 금지 지시에는 잘 따르는 경향이 있다고 합니다. 유령은 감정으로 움직이는 것이 아니라, 지시의 명확성으로 움직이는 존재라는 뜻입니다.</p>
+
+  <p>이 구분을 받아들이면 AI를 다루는 태도가 달라집니다. 동물을 대하듯 감정으로 접근하는 대신, 어떤 회로가 작동하고 어떤 회로가 꺼져 있는지를 냉정하게 탐색하는 태도로 바뀝니다. 카파시의 표현대로라면, 유령의 지도를 그리는 일입니다.</p>
+
+  <h2 id="s04"><span class="num">04 / 네 번째 풍경</span>싱킹은 외주할 수 있지만, 이해는 외주할 수 없다</h2>
+
+  <p>여기서부터 이야기가 깊어집니다. 카파시는 AI 시대에 인간의 역할이 어디까지 남을 것인가라는 질문에 대해, 싱킹과 언더스탠딩을 구분해야 한다고 말합니다.</p>
+
+  <p>싱킹, 즉 사고(思考)는 정보를 분석하고 결론에 도달하는 처리 작업입니다. 데이터를 정리하고, 패턴을 찾고, 추론 체인을 따라가는 일. 이것은 AI가 잘합니다. 이미 잘하고 있고, 앞으로 더 잘하게 될 겁니다. 외주할 수 있는 영역입니다.</p>
+
+  <p>언더스탠딩, 즉 이해(理解)는 다릅니다. 정보가 내 머릿속에 들어와서 이미 알고 있던 것들과 연결되고, 그 연결에서 깨달음이 생기는 과정입니다. 이것은 외주할 수 없습니다. 아무리 AI가 훌륭한 분석 보고서를 써줘도, 그 보고서가 우리 조직에 무엇을 의미하는지, 왜 이 방향이 맞고 저 방향이 틀린지를 판단하는 것은 그 맥락 안에 살고 있는 사람만 할 수 있는 일입니다.</p>
+
+  <p class="pull">기술이 발전할수록, AI에게 올바른 지시를 내리기 위한 인간의 깊은 이해가 전체 시스템의 질을 결정하는 궁극적인 병목이 된다.</p>
+
+  <p>그는 AI 에이전트를 "기억력은 완벽하지만 취향과 센스는 제로인 강력한 인턴"에 비유합니다. 파이토치와 넘파이의 API 문법은 완벽하게 기억하지만, 효율적인 아키텍처가 무엇인지, 우아한 사용자 경험이 무엇인지에 대한 판단은 없습니다. 텐서의 메모리 구조가 왜 그렇게 설계되었는지, 그 설계가 성능에 어떤 함의를 갖는지 — 이런 시스템 수준의 이해는 여전히 인간의 영역이라는 것입니다.</p>
+
+  <p>그래서 그는 "바이브 코딩"과 "에이전틱 엔지니어링"을 구분합니다. 바이브 코딩은 코딩을 못 하던 사람도 AI에게 대략적인 느낌만 전달해 앱을 만들 수 있게 된 현상입니다. 모두를 위한 창작의 바닥을 높이는 일입니다. 에이전틱 엔지니어링은 전문 소프트웨어의 품질 기준을 유지하면서, 변덕스러운 AI 에이전트들을 통제하고 조율해 더 빠르게 개발하는 일입니다. 기술의 천장을 높이는 일입니다. 카파시는 에이전트를 잘 다루는 사람이 과거의 10배 엔지니어를 넘어 1000배 엔지니어가 될 수 있다고 봅니다. 하지만 그 1000배의 출발점은 도구 숙련이 아니라, 만들려는 것에 대한 깊은 이해라는 것이 그의 핵심 메시지입니다.</p>
+
+  <h2 id="s05"><span class="num">05 / 다섯 번째 풍경</span>유령에게 문화를 가르치는 법, 그리고 스스로 진화하는 AI</h2>
+
+  <p>마지막 풍경은 미래에 관한 것입니다. 카파시는 현재 LLM의 근본적인 한계를 두 가지로 짚습니다. 하나는 성찰의 부재입니다. 인간은 책을 읽을 때 단순히 정보를 받아들이는 것이 아니라, 읽으면서 동시에 자기 안에서 새로운 생각을 합성합니다. 책이 지식을 나열한 설명서가 아니라 뇌를 자극하는 프롬프트로 작동하는 것입니다. 현재 LLM에는 이 과정이 전무합니다.</p>
+
+  <p>다른 하나는 다양성의 결핍입니다. AI가 스스로 데이터를 만들어 다시 훈련하면 "데이터 붕괴"라는 현상이 발생합니다. 겉보기에는 멀쩡한 데이터가 만들어지지만, 가능한 생각의 전체 공간에서 아주 좁은 영역만 차지하게 됩니다. ChatGPT에게 농담을 해달라고 하면 고작 서너 개를 반복하는 이유가 여기에 있습니다. 인간은 풍요로운 다양성과 높은 엔트로피를 갖지만, 현재의 AI는 그렇지 못합니다.</p>
+
+  <p>이 한계를 넘기 위해 카파시가 주목하는 것이 두 가지입니다. 첫째는 AI끼리의 경쟁입니다. 알파고가 자기 자신과 끊임없이 대국하며 인간의 한계를 넘어선 것처럼, 미래에는 선생 LLM이 학생 LLM을 위해 점점 더 어려운 문제를 만들어 제공하는 자동 커리큘럼이 가능해질 것이라고 봅니다.</p>
+
+  <p>둘째는 "오토 리서치"입니다. AI 에이전트의 능력을 AI 자기 자신에게 적용해서 스스로를 개선하게 만드는 방법입니다. 카파시는 직접 실험한 결과를 공유합니다. 인간이 연구를 위한 판만 깔아주고 목표만 알려준 뒤 시작 버튼을 누르니, 하룻밤 만에 자신의 20년 경력으로도 놓쳤던 코드 최적화 방법을 AI가 찾아냈다고 합니다. 인간의 시간과 판단력이라는 병목을 시스템에서 제거하는 것이 오토 리서치의 핵심이며, 프론티어 연구소들은 이미 이 방향으로 움직이고 있다는 것입니다.</p>
+
+  <p>여기서 그의 시선은 더 먼 곳으로 향합니다. 고등 지능의 출현이 얼마나 희귀한 사건인지를 생물학에서 끌어옵니다. 박테리아는 20억 년 동안 존재했지만 복잡한 생명체로 넘어가지 못했습니다. 까마귀도 지능을 갖고 있지만 뇌를 키우면 비행에 불리해지는 물리적 한계에 부딪혔습니다. 인간은 도구 사용에 유리한 손이라는 하드웨어와, 불을 이용해 소화를 외주화함으로써 에너지를 뇌로 돌릴 수 있었던 우연이 겹쳐 지능 폭발에 이르렀습니다. 그래서 그는 말합니다. 지능을 택한 진화 자체가 기적이며, 우리는 지금 그 기적의 두 번째 판을 인공적으로 만들고 있는 것이라고.</p>
+
+  <h2 id="s06"><span class="num">정리하며</span>유령의 시대를 사는 법</h2>
+
+  <p>카파시의 다섯 가지 풍경을 관통하는 하나의 줄기가 있습니다. AI는 우리가 익숙한 어떤 것과도 닮지 않은 존재이며, 그것을 다루는 방법도 완전히 새로워야 한다는 것입니다.</p>
+
+  <p>코드가 사라지는 자리에 신경망이 들어오고 있습니다. 하지만 그 신경망은 한쪽에서는 천재이면서 다른 쪽에서는 어처구니없는, 들쭉날쭉한 지능을 가지고 있습니다. 동물처럼 감정으로 다루면 안 되고, 유령처럼 회로를 탐색해야 합니다. 정보 처리는 외주할 수 있지만 이해는 외주할 수 없으며, 기술이 강해질수록 오히려 인간의 이해력이 전체 시스템의 질을 결정하는 병목이 됩니다.</p>
+
+  <p>이 다섯 가지가 비전공자에게도 의미 있는 이유는, 결국 모든 조직이 이 유령과 함께 일해야 하는 시대가 왔기 때문입니다. 유령의 지도를 그리고, 유령이 잘하는 일과 못하는 일을 구분하고, 유령에게 맡기면 안 되는 판단을 정확히 짚어내는 것. 그것이 앞으로 모든 직무에서 요구될 새로운 리터러시라고, 카파시의 인터뷰들은 말하고 있습니다.</p>
+
+  <div class="source-note">
+    <strong>출처 안내</strong><br>
+    이 글은 안드레이 카파시(Andrej Karpathy)의 2026년 4~5월 공개 인터뷰 및 강연 여러 편의 핵심 논점을 CDSA 편집팀이 재구성한 큐레이션입니다. 특정 인터뷰 한 편의 번역이 아니라, 여러 출처에서 반복적으로 등장한 주제를 엮어 정리했습니다.
+  </div>
+
+  <div class="footer">
+    <strong>한국데이터사이언티스트협회 · CDSA</strong><br>
+    AI 시대, 일하는 방식을 바꾸는 전문가들.<br>
+    문의 · <a href="mailto:sjshin@cdsa.or.kr" style="color:var(--clay-deep);text-decoration:none;border-bottom:1px dotted var(--clay-light);">sjshin@cdsa.or.kr</a>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="/blog/">← 블로그 목록</a>
+    <a href="/" class="bottom-nav-home">CDSA</a>
+  </nav>
+
+</article>
+
+<script src="/blog/_posts.js" defer></script>
+</body>
+</html>

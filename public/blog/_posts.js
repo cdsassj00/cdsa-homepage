@@ -35,6 +35,17 @@
   // publishTime = '09:00:00' 같은 KST 시각. 미명시 시 '09:00:00'
   const POSTS = [
     {
+      slug: 'karpathy-ghost-intelligence',
+      title: 'AI는 유령이다 — 안드레이 카파시가 본 다섯 가지 풍경',
+      date: '2026. 5. 23',
+      category: '큐레이션 · AI 사고론',
+      href: '/blog/karpathy-ghost-intelligence.html',
+      author: '신성진',
+      publishTime: '09:00:00',
+      dek: '테슬라 전 AI 책임자 카파시의 최근 인터뷰에서 길어 올린 다섯 가지 통찰. 소프트웨어 3.0, 들쭉날쭉한 지능, 유령 비유, 싱킹과 이해의 구분, 그리고 오토 리서치. 비전공자가 읽어도 남는 것이 있는 이야기.',
+      views: { base: 20, daily: 8, publishedISO: '2026-05-23' },
+    },
+    {
       slug: 'google-io-2026-summary',
       title: 'Google I/O 2026 키노트 요약 — Gemini Omni·3.5 Flash·Spark가 그리는 다음 자리',
       date: '2026. 5. 21',

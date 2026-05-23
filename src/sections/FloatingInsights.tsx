@@ -2,6 +2,11 @@ import { useState } from 'react'
 
 const articles = [
   {
+    title: 'AI는 유령이다 — 카파시가 본 다섯 가지 풍경',
+    description: '소프트웨어 3.0, 들쭉날쭉한 지능, 유령 비유, 이해라는 병목, 오토 리서치',
+    href: '/blog/karpathy-ghost-intelligence.html',
+  },
+  {
     title: '허깅페이스 모델 페이지, 처음 봐야 할 다섯 가지',
     description: '라이선스·모델명·instruct·한국어·크기. 비개발자가 모델을 고를 때 정말 봐야 할 첫 다섯 가지 (시리즈 1편)',
     href: '/blog/huggingface-for-beginners-1.html',
