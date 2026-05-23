@@ -2,8 +2,8 @@ import { useState } from 'react'
 
 const articles = [
   {
-    title: 'AI는 유령이다 — 카파시가 본 다섯 가지 풍경',
-    description: '소프트웨어 3.0, 들쭉날쭉한 지능, 유령 비유, 이해라는 병목, 오토 리서치',
+    title: '코드가 사라진 자리에 무엇이 들어오는가 — 카파시 인터뷰 정리',
+    description: '소프트웨어 3.0, 들쭉날쭉한 지능, 유령 비유, 에이전틱 엔지니어링, 싱킹과 이해, 오토 리서치까지 여덟 가지',
     href: '/blog/karpathy-ghost-intelligence.html',
   },
   {
