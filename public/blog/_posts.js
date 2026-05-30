@@ -35,6 +35,17 @@
   // publishTime = '09:00:00' 같은 KST 시각. 미명시 시 '09:00:00'
   const POSTS = [
     {
+      slug: 'people-first-design',
+      title: '좋은 기획은 기능이 아니라 사람을 먼저 본다',
+      date: '2026. 5. 30',
+      category: 'AI 설계론',
+      href: '/blog/people-first-design.html',
+      author: '김태유',
+      publishTime: '09:00:00',
+      dek: 'AI 도구를 도입했는데 직원들이 안 쓴다면, 문제는 모델이 아니라 설계다. 도구를 도입하지 말고 사람의 하루를 재설계하라. 사람은 정답보다 통제감을 원하고, 신뢰는 성능이 아니라 예측 가능성에서 온다.',
+      views: { base: 10, daily: 6, publishedISO: '2026-05-30' },
+    },
+    {
       slug: 'karpathy-ghost-intelligence',
       title: '코드가 사라진 자리에 무엇이 들어오는가 — 안드레이 카파시 인터뷰 정리',
       date: '2026. 5. 23',
