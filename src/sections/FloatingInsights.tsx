@@ -2,6 +2,11 @@ import { useState } from 'react'
 
 const articles = [
   {
+    title: '하네스라는 말이 너무 쉬워졌다',
+    description: '하네스는 에이전트 팀 이름표가 아니다. 검색·실행·반복·검증·로그가 없으면 에이전트 오케스트레이션이다.',
+    href: '/blog/harness-is-not-a-label.html',
+  },
+  {
     title: '좋은 기획은 기능이 아니라 사람을 먼저 본다',
     description: '도구를 도입하지 말고 사람의 하루를 재설계하라. 통제감, 예측 가능성, 판단을 키우는 자동화.',
     href: '/blog/people-first-design.html',

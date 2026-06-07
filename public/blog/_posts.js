@@ -35,6 +35,17 @@
   // publishTime = '09:00:00' 같은 KST 시각. 미명시 시 '09:00:00'
   const POSTS = [
     {
+      slug: 'harness-is-not-a-label',
+      title: '하네스라는 말이 너무 쉬워졌다',
+      date: '2026. 6. 7',
+      category: '에이전트 운영론',
+      href: '/blog/harness-is-not-a-label.html',
+      author: '신성진',
+      publishTime: '09:00:00',
+      dek: '하네스는 에이전트 팀 이름표가 아니다. LLM이 grep으로 찾고, bash로 실행하고, loop로 고치고, verifier로 검증하고, trace로 증거를 남기게 만드는 실행 통제 구조다. 검색·실행·반복·검증·로그가 없으면 하네스가 아니라 에이전트 오케스트레이션이다.',
+      views: { base: 10, daily: 8, publishedISO: '2026-06-07' },
+    },
+    {
       slug: 'people-first-design',
       title: '좋은 기획은 기능이 아니라 사람을 먼저 본다',
       date: '2026. 5. 30',

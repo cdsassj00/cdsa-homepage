@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>하네스라는 말이 너무 쉬워졌다 · CDSA 블로그</title>
+<meta name="description" content="하네스는 에이전트 팀 이름표가 아니다. LLM이 grep으로 찾고, bash로 실행하고, loop로 고치고, verifier로 검증하고, trace로 증거를 남기게 만드는 실행 통제 구조다.">
+<meta property="og:title" content="하네스라는 말이 너무 쉬워졌다">
+<meta property="og:description" content="프롬프트 묶음, 에이전트 팀, 스킬 폴더, 플러그인 설치법 — 전부 하네스라고 부르기 시작하면, 정작 하네스가 필요한 이유는 사라진다. 하네스는 이름이 아니라 실행 흔적이다.">
+<meta property="og:type" content="article">
+<!-- BEGIN SEO -->
+<meta name="keywords" content="하네스, harness, 에이전트 하네스, 하네스 엔지니어링, 에이전트 오케스트레이션, LLM 실행, AI 자동화, 검증, 실행 통제, grep, bash, cron, verifier, trace, CDSA">
+<link rel="canonical" href="https://cdsa.kr/blog/harness-is-not-a-label.html">
+<meta property="og:url" content="https://cdsa.kr/blog/harness-is-not-a-label.html">
+<meta property="og:site_name" content="한국데이터사이언티스트협회">
+<meta property="og:image" content="https://cdsa.kr/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta property="article:published_time" content="2026-06-07T09:00:00+09:00">
+<meta property="article:modified_time" content="2026-06-07T09:00:00+09:00">
+<meta property="article:author" content="신성진">
+<meta property="article:section" content="에이전트 운영론">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="하네스라는 말이 너무 쉬워졌다">
+<meta name="twitter:description" content="하네스는 에이전트 팀 이름표가 아니다. 실행 통제 구조다. 검색, 실행, 반복, 검증, 로그가 없으면 하네스가 아니라 에이전트 오케스트레이션이다.">
+<meta name="twitter:image" content="https://cdsa.kr/og-image.png">
+<meta name="author" content="신성진">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "하네스라는 말이 너무 쉬워졌다",
+  "description": "하네스는 에이전트 팀 이름표가 아니다. LLM과 실제 작업 환경 사이에 놓이는 실행 통제층이다. 검색, 명령 실행, 반복, 검증, 로그에 해당하는 기능이 없다면 그것은 하네스가 아니라 에이전트 오케스트레이션이다.",
+  "datePublished": "2026-06-07T09:00:00+09:00",
+  "dateModified": "2026-06-07T09:00:00+09:00",
+  "author": {
+    "@type": "Person",
+    "name": "신성진",
+    "jobTitle": "대표이사",
+    "description": "한국데이터사이언티스트협회 대표. 행정안전부 AI 전문위원, 과기정통부 데이터기반행정 자문위원."
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "한국데이터사이언티스트협회",
+    "url": "https://cdsa.kr",
+    "logo": {"@type": "ImageObject", "url": "https://cdsa.kr/og-image.png"}
+  },
+  "image": ["https://cdsa.kr/og-image.png"],
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://cdsa.kr/blog/harness-is-not-a-label.html"},
+  "articleSection": "에이전트 운영론",
+  "inLanguage": "ko-KR"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "CDSA", "item": "https://cdsa.kr/"},
+    {"@type": "ListItem", "position": 2, "name": "블로그", "item": "https://cdsa.kr/blog/"},
+    {"@type": "ListItem", "position": 3, "name": "하네스라는 말이 너무 쉬워졌다", "item": "https://cdsa.kr/blog/harness-is-not-a-label.html"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "AI에서 하네스(harness)란 무엇인가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "하네스는 LLM과 실제 작업 환경 사이에 놓이는 실행 통제층입니다. 모델이 말만 하는 것을 넘어서 실제 파일을 읽고, 명령을 실행하고, 결과를 만들고, 검증하고, 실패하면 다시 돌고, 실행 기록을 남기게 만드는 운영 계층입니다. 검색, 명령 실행, 반복, 예약/트리거, 검증, 로그 기능이 핵심입니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "하네스와 에이전트 오케스트레이션의 차이는 무엇인가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "에이전트 오케스트레이션은 에이전트들에게 역할을 나누고 스킬을 붙이고 순서대로 실행하는 구성입니다. 하네스는 그보다 깊은 층위로, AI의 판단이 실제 실행 환경과 안전하게 연결되는 구조입니다. 파일 검색, 명령 실행, 검증, 실패 시 재시도, 재현 가능한 로그까지 포함합니다."
+      }
+    }
+  ]
+}
+</script>
+<!-- END SEO -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NZL39P5EYZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NZL39P5EYZ');
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/blog/_layout.css">
+<style>
+  :root {
+    --cream: #faf9f5; --cream-deep: #f3efe3; --ink: #1a1a1a; --ink-soft: #3d3d3a;
+    --ink-mute: #6b6b66; --rule: #d9d6cc; --clay: #cc785c; --clay-deep: #a85a42;
+    --clay-light: #f0ddd4; --code-bg: #f2f0e8; --teal: #2a7d6e;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--cream); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  body { font-family: "Fraunces", "Noto Serif KR", Georgia, serif; font-weight: 300; font-size: 19px; line-height: 1.72; letter-spacing: -0.005em; }
+  .topnav { position: fixed; top: 0; left: 0; right: 0; height: 48px; background: rgba(250, 249, 245, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; }
+  .topnav-left { display: flex; align-items: center; gap: 18px; }
+  .topnav-left a { color: var(--ink-soft); text-decoration: none; transition: color 0.2s; }
+  .topnav-left a:hover { color: var(--clay-deep); }
+  .topnav-home { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 600; font-size: 16px; color: var(--ink) !important; letter-spacing: -0.3px; }
+  .topnav-sep { color: var(--rule); font-size: 11px; }
+  .topnav-right { display: flex; gap: 16px; }
+  .topnav-right a { color: var(--ink-mute); text-decoration: none; font-size: 12px; transition: color 0.2s; }
+  .topnav-right a:hover { color: var(--clay-deep); }
+  .topnav-current { color: var(--ink) !important; font-weight: 600; position: relative; }
+  .topnav-current::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 2px; background: var(--clay); border-radius: 1px; }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 116px 28px 120px; }
+  .breadcrumb { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; margin-bottom: 36px; display: flex; align-items: center; gap: 8px; color: var(--ink-mute); }
+  .breadcrumb a { color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--ink); }
+  .breadcrumb .bc-sep { color: var(--rule); }
+  .kicker { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay-deep); margin-bottom: 28px; }
+  h1 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 400; font-size: 44px; line-height: 1.18; letter-spacing: -0.02em; margin: 0 0 24px; color: var(--ink); word-break:keep-all; overflow-wrap:break-word; }
+  .dek { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 300; font-style: italic; font-size: 21px; line-height: 1.55; color: var(--ink-soft); margin: 0 0 40px; word-break:keep-all; overflow-wrap:break-word; }
+  .byline { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); padding: 18px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-bottom: 56px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .byline strong { font-weight: 500; color: var(--ink-soft); }
+  .lede { font-size: 19px; line-height: 1.72; margin-bottom: 22px; word-break:keep-all; overflow-wrap:break-word; }
+  .lede::first-letter { font-family: "Fraunces", serif; font-weight: 400; font-size: 68px; float: left; line-height: 0.88; padding: 8px 10px 0 0; color: var(--clay); }
+  h2 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 28px; line-height: 1.3; letter-spacing: -0.015em; margin: 64px 0 16px; color: var(--ink); scroll-margin-top: 80px; word-break:keep-all; overflow-wrap:break-word; }
+  h2 .num { font-family: "Inter", sans-serif; font-size: 12px; font-weight: 600; color: var(--clay); letter-spacing: 0.1em; display: block; margin-bottom: 10px; }
+  p { margin: 0 0 22px; word-break:keep-all; overflow-wrap:break-word; }
+  p + p { margin-top: -6px; }
+  strong { font-family: "Inter", "Noto Sans KR", sans-serif; font-weight: 600; color: var(--ink); letter-spacing: -0.01em; }
+  em { font-style: italic; }
+  blockquote { margin: 36px 0; padding: 4px 0 4px 22px; border-left: 2px solid var(--clay); font-family: "Fraunces", "Noto Serif KR", serif; font-style: italic; font-size: 20px; line-height: 1.55; color: var(--ink-soft); word-break:keep-all; overflow-wrap:break-word; }
+  blockquote cite { display: block; font-family: "Inter", "Noto Sans KR", sans-serif; font-style: normal; font-size: 12px; color: var(--ink-mute); margin-top: 12px; letter-spacing: 0.02em; }
+  blockquote cite::before { content: "— "; }
+  .pull { font-family: "Fraunces", "Noto Serif KR", serif; font-size: 26px; line-height: 1.5; color: var(--ink); font-weight: 500; font-style: italic; margin: 40px 0; padding: 26px 0 26px 28px; border-left: 3px solid var(--clay); letter-spacing: -0.01em; word-break:keep-all; overflow-wrap:break-word; }
+  code { font-family: "JetBrains Mono", monospace; font-size: 0.88em; background: var(--code-bg); padding: 2px 6px; border-radius: 3px; color: var(--clay-deep); }
+
+  .check-table { margin: 32px 0; border-collapse: collapse; width: 100%; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 14.5px; }
+  .check-table th { text-align: left; padding: 12px 16px; border-bottom: 2px solid var(--clay); color: var(--clay-deep); font-weight: 600; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
+  .check-table td { padding: 12px 16px; border-bottom: 1px solid var(--rule); color: var(--ink-soft); line-height: 1.6; vertical-align: top; }
+  .check-table tr:last-child td { border-bottom: none; }
+  .check-table td:first-child { font-weight: 600; color: var(--ink); white-space: nowrap; }
+
+  .arch-block { margin: 36px 0; padding: 28px 28px; background: var(--code-bg); border: 1px solid var(--rule); border-radius: 4px; font-family: "JetBrains Mono", monospace; font-size: 15px; line-height: 2; color: var(--ink); letter-spacing: 0.02em; }
+  .arch-block .label { color: var(--ink-mute); }
+  .arch-block .arrow { color: var(--clay); }
+  .arch-block .desc { color: var(--ink-soft); }
+
+  .footer { margin-top: 72px; padding-top: 28px; border-top: 1px solid var(--rule); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); line-height: 1.7; }
+  .footer strong { color: var(--ink-soft); font-weight: 600; }
+  .bottom-nav { margin-top: 72px; padding: 36px 0; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .bottom-nav a { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .bottom-nav a:hover { color: var(--ink); }
+  .bottom-nav-home { font-family: "Fraunces", "Noto Serif KR", serif !important; font-size: 16px !important; font-style: italic; font-weight: 400; }
+  @media (max-width: 560px) {
+    .wrap { padding: 92px 22px 80px; }
+    h1 { font-size: 30px; line-height: 1.24; }
+    .dek { font-size: 17.5px; }
+    body { font-size: 17px; }
+    h2 { font-size: 23px; margin-top: 52px; }
+    .topnav-right { display: none; }
+    .pull { font-size: 22px; padding-left: 22px; }
+    .check-table { font-size: 13px; }
+    .arch-block { font-size: 13px; padding: 20px 18px; }
+  }
+  @media (max-width: 400px) {
+    h1 { font-size: 26px !important; line-height: 1.25; }
+    .dek { font-size: 16px !important; }
+    h2 { font-size: 21px !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="topnav-left">
+    <a href="/" class="topnav-home">CDSA</a>
+    <span class="topnav-sep">|</span>
+    <a href="/">홈페이지</a>
+    <a href="/blog/" class="topnav-current">블로그</a>
+  </div>
+  <nav class="topnav-right">
+    <a href="/framework.html">프레임워크</a>
+    <a href="/unsloth-workbook.html">워크북</a>
+    <a href="/fullcourse.html">Full Course</a>
+  </nav>
+</header>
+
+<button class="blog-hamburger" aria-label="블로그 목록 열기"><span></span><span></span><span></span></button>
+<div class="blog-overlay"></div>
+<aside class="blog-left">
+  <div class="blog-left-title">Blog Posts</div>
+  <ol class="blog-left-list"></ol>
+</aside>
+<aside class="blog-right">
+  <div class="blog-right-title">On This Page</div>
+  <ul class="blog-toc"></ul>
+</aside>
+
+<article class="wrap">
+
+  <nav class="breadcrumb">
+    <a href="/">← CDSA 홈</a>
+    <span class="bc-sep">/</span>
+    <a href="/blog/">블로그</a>
+    <span class="bc-sep">/</span>
+    <span>에이전트 운영론</span>
+  </nav>
+
+  <div class="kicker">에이전트 운영론</div>
+
+  <h1>하네스라는 말이<br>너무 쉬워졌다</h1>
+
+  <p class="dek">
+    "하네스는 에이전트 팀 이름표가 아니다. 하네스는 LLM이
+    grep으로 찾고, bash로 실행하고, loop로 고치고,
+    cron이나 trigger로 다시 돌고, verifier로 검증하고,
+    trace로 증거를 남기게 만드는 실행 통제 구조다."
+  </p>
+
+  <div class="byline">
+    <span><strong>신성진</strong> · CDSA 대표 · 행정안전부·과기정통부 자문위원</span>
+    <span>2026. 6. 7</span>
+  </div>
+
+  <!-- ────── 유행어가 된 단어 ────── -->
+  <p class="lede">요즘 AI 업계에서 "하네스 엔지니어링"이라는 말이 부쩍 자주 보인다. 그런데 막상 내용을 열어보면 이상하다. 하네스라기보다 플러그인 설치, 스킬 조합, 에이전트 역할 분담, 오케스트레이터 구성에 가까운 경우가 대부분이다.</p>
+
+  <p>물론 그런 구성도 유용하다. 에이전트에게 역할을 나누고, 스킬을 정의하고, 작업 순서를 설계하는 일은 분명 중요하다. 하지만 그것만으로 하네스라고 부르기에는 한참 부족하다.</p>
+
+  <p>하네스(harness)는 원래 무언가를 붙잡고, 연결하고, 제어하고, 안전하게 작동하도록 만드는 구조다. 등산용 안전벨트가 그렇고, 마구(馬具)가 그렇다. <strong>힘을 흘려보내되, 통제 안에서 흐르게 한다.</strong></p>
+
+  <p>AI 작업에서의 하네스도 다르지 않다. 모델이 말만 하는 것을 넘어서 실제 파일을 읽고, 명령을 실행하고, 결과를 만들고, 검증하고, 실패하면 다시 돌고, 실행 기록을 남기게 만드는 운영 계층이어야 한다.</p>
+
+  <!-- ────── 하네스가 아닌 것들 ────── -->
+  <h2 id="s01"><span class="num">01</span>하네스가 아닌 것들</h2>
+
+  <p>먼저 무엇이 하네스가 아닌지부터 분명히 해두자.</p>
+
+  <p>하네스는 단순한 프롬프트 묶음이 아니다.<br>
+  하네스는 단순한 에이전트 팀이 아니다.<br>
+  하네스는 단순한 스킬 폴더가 아니다.<br>
+  하네스는 단순한 플러그인 설치법이 아니다.</p>
+
+  <p>이것들은 하네스의 재료일 수는 있어도, 하네스 그 자체는 아니다. <strong>재료를 쌓아놓는다고 구조가 되지는 않는다.</strong></p>
+
+  <!-- ────── 진짜 하네스에는 실행성이 있다 ────── -->
+  <h2 id="s02"><span class="num">02</span>진짜 하네스에는 실행성이 있다</h2>
+
+  <p>진짜 하네스의 핵심은 실행성이다. 말로 끝나지 않고 실제 환경에 손을 대는 능력. 구체적으로는 다음 다섯 가지 기능이 있어야 한다.</p>
+
+  <p><strong>파일을 찾는 기능.</strong> <code>grep</code>, 검색 인덱스, AST 분석, 벡터 검색 — AI가 작업 대상을 실제로 찾아낼 수 있어야 한다.</p>
+
+  <p><strong>반복 실행 구조.</strong> <code>loop</code>, <code>retry</code>, self-check, refine cycle — 한 번에 끝나지 않는 일을 돌려가며 고칠 수 있어야 한다.</p>
+
+  <p><strong>시간·조건 기반 재실행.</strong> <code>cron</code>, scheduler, webhook, event trigger — 사람이 매번 누르지 않아도 다시 돌아가는 구조가 있어야 한다.</p>
+
+  <p><strong>실제 환경을 건드리는 실행 계층.</strong> <code>bash</code>, shell command, filesystem API, browser automation, database query, API call — 판단을 행동으로 바꿀 수 있어야 한다.</p>
+
+  <p><strong>그리고 무엇보다, 검증.</strong> 파일이 실제로 만들어졌는지, 테스트가 통과했는지, 결과가 비어 있지는 않은지, 이전 단계의 오류가 다음 단계로 전파되지는 않았는지 — 이것을 확인해야 한다.</p>
+
+  <p class="pull">이것이 없으면 하네스가 아니라 "그럴듯한 에이전트 설정집"이다.</p>
+
+  <!-- ────── 오케스트레이션과 하네스는 다르다 ────── -->
+  <h2 id="s03"><span class="num">03</span>오케스트레이션과 하네스는 다르다</h2>
+
+  <p>요즘 일부 자료들은 하네스를 너무 쉽게 말한다. 에이전트 몇 개 만들고, 역할을 나누고, 스킬을 붙이고, 오케스트레이터가 순서대로 실행한다고 해서 곧바로 하네스가 되는 것은 아니다.</p>
+
+  <p>그것은 <strong>에이전트 오케스트레이션</strong>이다. 그 자체로 충분히 가치 있는 개념이지만, 거기에 "하네스"라는 이름을 붙이는 순간 초점이 흐려진다.</p>
+
+  <p>하네스의 핵심은 <strong>"누가 무슨 역할을 맡느냐"</strong>가 아니다. 핵심은 <strong>"AI의 판단이 실제 실행 환경과 어떻게 안전하게 연결되는가"</strong>다.</p>
+
+  <p>그래서 하네스인지 아닌지는 다음 질문들로 판별된다.</p>
+
+  <p>AI가 파일을 읽는가?<br>
+  AI가 필요한 도구를 선택하는가?<br>
+  도구 호출의 입력과 출력이 기록되는가?<br>
+  중간 산출물이 남는가?<br>
+  검증 결과가 다음 판단에 반영되는가?<br>
+  실패했을 때 멈추는가, 되돌리는가, 다시 시도하는가?<br>
+  이 모든 과정이 재현 가능한 로그로 남는가?</p>
+
+  <p><strong>이 질문에 답하지 못한다면, 그것은 하네스라고 부르기 어렵다.</strong></p>
+
+  <!-- ────── 하네스는 이름이 아니라 흔적이다 ────── -->
+  <h2 id="s04"><span class="num">04</span>하네스는 이름이 아니라 흔적이다</h2>
+
+  <p>이제 우리는 하네스 개념의 홍수에서 벗어날 필요가 있다. 새로운 용어를 더 많이 만드는 것이 중요한 게 아니다.</p>
+
+  <p>기존의 프롬프트, 플러그인, 스킬, 에이전트, 워크플로우, 자동화 스크립트를 전부 하네스라고 부르기 시작하면, 정작 하네스가 필요한 이유 자체가 사라진다. <strong>모든 것이 하네스가 되는 순간, 하네스라는 말은 아무 의미도 갖지 못한다.</strong></p>
+
+  <p>하네스는 이름이 아니라 구조다.<br>
+  하네스는 멋진 다이어그램이 아니라 실행 흔적이다.<br>
+  하네스는 AI가 <em>"할 수 있다"</em>고 말하는 것이 아니라, 실제로 <em>"했다"</em>는 기록이다.</p>
+
+  <p>좋은 하네스는 다음을 남긴다.</p>
+
+  <table class="check-table">
+    <tr><th>무엇을</th><th>왜</th></tr>
+    <tr><td>목표</td><td>무엇을 하려 했는가</td></tr>
+    <tr><td>입력</td><td>무엇을 가지고 시작했는가</td></tr>
+    <tr><td>사용한 도구</td><td>어떻게 접근했는가</td></tr>
+    <tr><td>실행 명령</td><td>정확히 무엇을 실행했는가</td></tr>
+    <tr><td>중간 결과</td><td>무엇이 만들어졌는가</td></tr>
+    <tr><td>검증 결과</td><td>그것이 맞는가</td></tr>
+    <tr><td>실패 이유</td><td>왜 안 됐는가</td></tr>
+    <tr><td>재시도 기록</td><td>어떻게 고쳤는가</td></tr>
+    <tr><td>최종 산출물</td><td>결국 무엇이 남았는가</td></tr>
+  </table>
+
+  <p>이런 것들이 있어야 AI 작업은 말에서 실행으로 넘어간다.</p>
+
+  <!-- ────── 내가 말하는 하네스 아키텍처 ────── -->
+  <h2 id="s05"><span class="num">05</span>내가 말하는 하네스 아키텍처</h2>
+
+  <p>그래서 내가 말하는 하네스 아키텍처는 에이전트 역할표가 아니다. 프롬프트 모음집도, 스킬 폴더 구조도 아니다.</p>
+
+  <p>내가 말하는 하네스 아키텍처는 <strong>LLM과 실제 작업 환경 사이에 놓이는 실행 통제층</strong>이다.</p>
+
+  <div class="arch-block">
+    <span class="label">LLM</span>      <span class="arrow">→</span> <span class="desc">판단한다</span><br>
+    <span class="label">하네스</span>    <span class="arrow">→</span> <span class="desc">실행한다</span><br>
+    <span class="label">도구</span>      <span class="arrow">→</span> <span class="desc">작업한다</span><br>
+    <span class="label">검증기</span>    <span class="arrow">→</span> <span class="desc">확인한다</span><br>
+    <span class="label">로그</span>      <span class="arrow">→</span> <span class="desc">증거를 남긴다</span><br>
+    <span class="label">루프</span>      <span class="arrow">→</span> <span class="desc">실패를 개선한다</span>
+  </div>
+
+  <p>이 구분이 무너지면 모든 것이 하네스가 되고, 모든 것이 하네스가 되면 하네스는 사라진다.</p>
+
+  <!-- ────── 결국 필요한 것 ────── -->
+  <h2 id="s06"><span class="num">정리하며</span>필요한 것은 유행어가 아니라 작동하는 구조다</h2>
+
+  <p>이제 필요한 것은 "하네스"라는 유행어가 아니다. 필요한 것은 작동하는 구조다.</p>
+
+  <p>말하는 AI에서 실행하는 AI로 넘어가려면, 에이전트 이름을 늘리는 것이 아니라 <strong>실행 · 검증 · 반복 · 기록의 구조를 만들어야 한다.</strong> 그게 진짜 하네스다.</p>
+
+  <p>마지막으로, 오해를 막기 위해 한 가지만 덧붙인다. <code>grep</code>, <code>bash</code>, <code>cron</code>이 반드시 그 이름 그대로 들어가야 하는 것은 아니다. <strong>하지만 검색, 명령 실행, 반복, 예약·트리거, 검증, 로그에 해당하는 기능이 없다면, 그것은 하네스라기보다 에이전트 오케스트레이션 또는 스킬 조합에 가깝다.</strong></p>
+
+  <p>하네스는 이름이 아니라 구조다. 멋진 다이어그램이 아니라 실행 흔적이다. 그리고 <em>"할 수 있다"</em>가 아니라 <em>"했다"</em>는 기록이다.</p>
+
+  <div class="footer">
+    <strong>한국데이터사이언티스트협회 · CDSA</strong><br>
+    AI 시대, 일하는 방식을 바꾸는 전문가들.<br>
+    문의 · <a href="mailto:sjshin@cdsa.or.kr" style="color:var(--clay-deep);text-decoration:none;border-bottom:1px dotted var(--clay-light);">sjshin@cdsa.or.kr</a>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="/blog/">← 블로그 목록</a>
+    <a href="/" class="bottom-nav-home">CDSA</a>
+  </nav>
+
+</article>
+
+<script src="/blog/_posts.js" defer></script>
+</body>
+</html>
