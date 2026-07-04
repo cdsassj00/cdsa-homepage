@@ -2,6 +2,11 @@ import { useState } from 'react'
 
 const articles = [
   {
+    title: '옵시디언을 깔기 전에, 검색 문장 세 개를 먼저 써라',
+    description: '위키는 저장소가 아니라 검색 계약이다. RAG vs Wiki vs DB는 가짜 논쟁. LLM 위키의 해부학.',
+    href: '/blog/llm-wiki-anatomy.html',
+  },
+  {
     title: '하네스라는 말이 너무 쉬워졌다',
     description: '하네스는 에이전트 팀 이름표가 아니다. 검색·실행·반복·검증·로그가 없으면 에이전트 오케스트레이션이다.',
     href: '/blog/harness-is-not-a-label.html',

@@ -35,6 +35,17 @@
   // publishTime = '09:00:00' 같은 KST 시각. 미명시 시 '09:00:00'
   const POSTS = [
     {
+      slug: 'llm-wiki-anatomy',
+      title: '옵시디언을 깔기 전에, 검색 문장 세 개를 먼저 써라',
+      date: '2026. 7. 4',
+      category: '에이전트 운영론',
+      href: '/blog/llm-wiki-anatomy.html',
+      author: '신성진',
+      publishTime: '09:00:00',
+      dek: '위키는 저장소가 아니라 검색 계약이다. RAG vs Wiki vs DB 논쟁은 가짜 논쟁이다 — 같은 온톨로지의 다른 물질화일 뿐. 카파시가 말한 것은 패턴이지 도구가 아니었다. 구글 OKF가 같은 결론에 도달한 이유.',
+      views: { base: 10, daily: 8, publishedISO: '2026-07-04' },
+    },
+    {
       slug: 'harness-is-not-a-label',
       title: '하네스라는 말이 너무 쉬워졌다',
       date: '2026. 6. 7',
