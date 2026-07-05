@@ -1,44 +1,32 @@
 import { Suspense, useEffect, useRef, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import {
-  Environment,
-  MeshDistortMaterial,
-  MeshTransmissionMaterial,
-} from '@react-three/drei'
-import {
-  EffectComposer,
-  Bloom,
-  ChromaticAberration,
-} from '@react-three/postprocessing'
-import { BlendFunction } from 'postprocessing'
-import { MathUtils, Vector2 } from 'three'
+import { MeshDistortMaterial } from '@react-three/drei'
+import { MathUtils } from 'three'
 import type { Mesh } from 'three'
 import { hero } from '../data/content'
 import { useInquiry } from './InquiryModal'
 
 /**
- * Hero 3D background — scroll-scrubbed water droplets over warm-brown light.
+ * Hero geometric 3D background.
+ * Two organic distorted meshes floating in warm-brown light —
+ * "예술적이면서 기술적인" (editorial + geometric) feel.
+ * Palette stays Anthropic-cream so the 3D never competes with the title.
  *
- * Quality gate (top of the component) picks one of three renderers on mount:
- *   - 'off'       → prefers-reduced-motion; render nothing 3D, keep static overlay
- *   - 'downgrade' → mobile / low-power; current MeshDistortMaterial + scroll scrub only
- *   - 'full'      → desktop; MeshTransmissionMaterial + HDRI + Bloom + ChromaticAberration
- *
- * Layout, text, functionality, and content are untouched — only the visual
- * layer inside <Canvas> changes.
+ * The canvas is a FIXED viewport layer (z-index -1) so the meshes follow
+ * the reader down the whole page; scroll progress scrubs camera dolly,
+ * orbit and mesh drift. With prefers-reduced-motion the layer falls back
+ * to the original absolute-in-hero, time-only animation.
  */
 
-type Quality = 'off' | 'downgrade' | 'full'
-
-// Shared scroll progress ref — hero enter-and-leave normalized to 0..1
+// 0..1 progress across the whole document, lerped per-frame for iOS smoothness
 type ProgressRef = { current: number }
 
 function useScrollProgress(): ProgressRef {
   const ref = useRef(0)
   useEffect(() => {
     const onScroll = () => {
-      const vh = window.innerHeight || 1
-      ref.current = Math.min(1, Math.max(0, window.scrollY / vh))
+      const max = document.documentElement.scrollHeight - window.innerHeight
+      ref.current = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0
     }
     window.addEventListener('scroll', onScroll, { passive: true })
     onScroll()
@@ -47,159 +35,41 @@ function useScrollProgress(): ProgressRef {
   return ref
 }
 
-// Camera moves through the droplets on scroll — dolly + gentle orbit + fov widen
+// Camera scrub — dolly in, slight orbit, fov widen as the page scrolls
 function ScrollCamera({ progress }: { progress: ProgressRef }) {
   const smooth = useRef(0)
   useFrame(({ camera }) => {
-    smooth.current = MathUtils.lerp(smooth.current, progress.current, 0.08)
+    smooth.current = MathUtils.lerp(smooth.current, progress.current, 0.07)
     const p = smooth.current
-    // Dolly forward + tiny orbit + fov widen for perspective drama
-    camera.position.x = MathUtils.lerp(0, -0.8, p)
-    camera.position.y = MathUtils.lerp(0, 0.4, p)
-    camera.position.z = MathUtils.lerp(6, 3.2, p)
+    camera.position.x = MathUtils.lerp(0, -0.9, p)
+    camera.position.y = MathUtils.lerp(0, 0.5, p)
+    camera.position.z = MathUtils.lerp(6, 4.4, p)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const cam = camera as any
     if (typeof cam.fov === 'number') {
-      cam.fov = MathUtils.lerp(48, 60, p)
+      cam.fov = MathUtils.lerp(48, 56, p)
       cam.updateProjectionMatrix()
     }
-    camera.lookAt(1.6 - p * 0.4, -0.1, 0)
+    camera.lookAt(1.6 - p * 1.2, -0.2 + p * 0.3, 0)
   })
   return null
 }
 
-// ============ FULL quality — water droplets with transmission ============
-
-function GlassDrop({
-  scale,
-  position,
-  progress,
-  speed,
-  color,
-}: {
-  scale: number
-  position: [number, number, number]
-  progress: ProgressRef
-  speed: number
-  color: string
-}) {
+function MorphBlob({ progress }: { progress?: ProgressRef }) {
   const ref = useRef<Mesh>(null)
   useFrame(({ clock }) => {
     if (!ref.current) return
     const t = clock.getElapsedTime()
-    const p = progress.current
-    ref.current.rotation.y = t * 0.06 * speed + p * 0.6
-    ref.current.rotation.x = Math.sin(t * 0.18 * speed) * 0.22 + p * 0.3
-    ref.current.position.x = position[0] + Math.sin(t * 0.3 * speed) * 0.15
-    ref.current.position.y = position[1] + Math.cos(t * 0.24 * speed) * 0.18 - p * 0.4
-    ref.current.position.z = position[2] + p * 1.2
-  })
-  return (
-    <mesh ref={ref} scale={scale} position={position}>
-      <icosahedronGeometry args={[1, 24]} />
-      <MeshTransmissionMaterial
-        color={color}
-        samples={4}
-        thickness={1.2}
-        roughness={0.14}
-        transmission={1}
-        ior={1.33}
-        chromaticAberration={0.06}
-        distortion={0.28}
-        distortionScale={0.4}
-        temporalDistortion={0.08}
-        anisotropy={0.6}
-        clearcoat={1}
-        clearcoatRoughness={0.1}
-        backside={false}
-      />
-    </mesh>
-  )
-}
-
-function OrbitRingFull({ progress }: { progress: ProgressRef }) {
-  const ref = useRef<Mesh>(null)
-  useFrame(({ clock }) => {
-    if (!ref.current) return
-    const t = clock.getElapsedTime()
-    const p = progress.current
-    ref.current.rotation.x = t * 0.05 + 0.9 + p * 0.3
-    ref.current.rotation.z = -t * 0.04 - p * 0.5
-  })
-  return (
-    <mesh ref={ref} position={[1.8, -0.3, 0]} scale={3.6}>
-      <torusGeometry args={[1, 0.008, 8, 128]} />
-      <meshStandardMaterial color="#6E3710" roughness={0.8} transparent opacity={0.5} />
-    </mesh>
-  )
-}
-
-function FullScene({ progress }: { progress: ProgressRef }) {
-  return (
-    <>
-      <ambientLight intensity={0.4} />
-      <directionalLight position={[6, 6, 5]} intensity={1.0} color="#FAF7F1" />
-      <directionalLight position={[-5, -2, 3]} intensity={0.35} color="#F4DBB9" />
-      <pointLight position={[3, -2, 4]} intensity={0.35} color="#C17A3B" />
-      <Suspense fallback={null}>
-        <Environment preset="sunset" background={false} />
-        <GlassDrop
-          scale={2.5}
-          position={[1.6, -0.2, 0]}
-          progress={progress}
-          speed={1.0}
-          color="#F4DBB9"
-        />
-        <GlassDrop
-          scale={0.82}
-          position={[3.8, 1.7, -0.4]}
-          progress={progress}
-          speed={1.4}
-          color="#E8C39A"
-        />
-        <GlassDrop
-          scale={0.6}
-          position={[-2.4, 1.2, -0.2]}
-          progress={progress}
-          speed={1.7}
-          color="#F1D1AB"
-        />
-        <OrbitRingFull progress={progress} />
-      </Suspense>
-      <ScrollCamera progress={progress} />
-      <EffectComposer multisampling={0}>
-        <Bloom
-          intensity={0.55}
-          luminanceThreshold={0.45}
-          luminanceSmoothing={0.4}
-          mipmapBlur
-        />
-        <ChromaticAberration
-          offset={new Vector2(0.0009, 0.0014)}
-          radialModulation={false}
-          modulationOffset={0}
-          blendFunction={BlendFunction.NORMAL}
-        />
-      </EffectComposer>
-    </>
-  )
-}
-
-// ============ DOWNGRADE quality — current distort material + scrub ============
-
-function DowngradeBlob({ progress }: { progress: ProgressRef }) {
-  const ref = useRef<Mesh>(null)
-  useFrame(({ clock }) => {
-    if (!ref.current) return
-    const t = clock.getElapsedTime()
-    const p = progress.current
-    ref.current.rotation.y = t * 0.08 + p * 0.4
-    ref.current.rotation.x = Math.sin(t * 0.18) * 0.22
-    ref.current.position.y = Math.sin(t * 0.3) * 0.2 - p * 0.4
+    const p = progress?.current ?? 0
+    ref.current.rotation.y = t * 0.08 + p * 1.4
+    ref.current.rotation.x = Math.sin(t * 0.18) * 0.22 + p * 0.5
+    // travels across the frame as the reader scrolls the page
+    ref.current.position.x = 1.6 - p * 2.4
+    ref.current.position.y = Math.sin(t * 0.3) * 0.2 + p * 0.6
   })
   return (
     <mesh ref={ref} scale={2.5} position={[1.6, -0.2, 0]}>
-      <icosahedronGeometry args={[1, 16]} />
+      <icosahedronGeometry args={[1, 24]} />
       <MeshDistortMaterial
         color="#C17A3B"
         distort={0.45}
@@ -211,16 +81,17 @@ function DowngradeBlob({ progress }: { progress: ProgressRef }) {
   )
 }
 
-function DowngradeSatellite({ progress }: { progress: ProgressRef }) {
+function SmallSatellite({ progress }: { progress?: ProgressRef }) {
   const ref = useRef<Mesh>(null)
   useFrame(({ clock }) => {
     if (!ref.current) return
     const t = clock.getElapsedTime()
-    const p = progress.current
-    ref.current.rotation.y = -t * 0.14 - p * 0.3
+    const p = progress?.current ?? 0
+    ref.current.rotation.y = -t * 0.14 - p * 1.0
     ref.current.rotation.x = t * 0.1
-    ref.current.position.x = 3.8 + Math.sin(t * 0.4) * 0.2
-    ref.current.position.y = 1.7 + Math.cos(t * 0.3) * 0.15 - p * 0.3
+    ref.current.position.x = 3.8 + Math.sin(t * 0.4) * 0.2 - p * 1.6
+    ref.current.position.y = 1.7 + Math.cos(t * 0.3) * 0.15 - p * 2.6
+    ref.current.position.z = -0.4 + p * 1.4
   })
   return (
     <mesh ref={ref} scale={0.82} position={[3.8, 1.7, -0.4]}>
@@ -236,13 +107,15 @@ function DowngradeSatellite({ progress }: { progress: ProgressRef }) {
   )
 }
 
-function DowngradeRing() {
+function OrbitRing({ progress }: { progress?: ProgressRef }) {
   const ref = useRef<Mesh>(null)
   useFrame(({ clock }) => {
     if (!ref.current) return
     const t = clock.getElapsedTime()
-    ref.current.rotation.x = t * 0.05 + 0.9
-    ref.current.rotation.z = -t * 0.04
+    const p = progress?.current ?? 0
+    ref.current.rotation.x = t * 0.05 + 0.9 + p * 0.6
+    ref.current.rotation.z = -t * 0.04 - p * 0.8
+    ref.current.position.x = 1.8 - p * 2.4
   })
   return (
     <mesh ref={ref} position={[1.8, -0.3, 0]} scale={3.6}>
@@ -252,57 +125,46 @@ function DowngradeRing() {
   )
 }
 
-function DowngradeScene({ progress }: { progress: ProgressRef }) {
+function SceneLights() {
   return (
     <>
       <ambientLight intensity={0.5} />
       <directionalLight position={[6, 6, 5]} intensity={1.1} color="#FAF7F1" />
       <directionalLight position={[-5, -2, 3]} intensity={0.4} color="#F4DBB9" />
       <pointLight position={[3, -2, 4]} intensity={0.3} color="#C17A3B" />
-      <Suspense fallback={null}>
-        <DowngradeBlob progress={progress} />
-        <DowngradeSatellite progress={progress} />
-        <DowngradeRing />
-      </Suspense>
-      <ScrollCamera progress={progress} />
     </>
   )
 }
 
-// ============ Quality detector ============
-
-function useQuality(): Quality {
-  const [q, setQ] = useState<Quality>('downgrade')
+function useReducedMotion(): boolean {
+  const [reduced, setReduced] = useState(false)
   useEffect(() => {
-    if (typeof window === 'undefined') return
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (reducedMotion) {
-      setQ('off')
-      return
-    }
-    const isMobile = window.matchMedia('(max-width: 768px)').matches
-    const cores = navigator.hardwareConcurrency ?? 4
-    if (isMobile || cores < 4) {
-      setQ('downgrade')
-      return
-    }
-    setQ('full')
+    setReduced(window.matchMedia('(prefers-reduced-motion: reduce)').matches)
   }, [])
-  return q
+  return reduced
 }
-
-// ============ Hero ============
 
 export default function Hero() {
   const { openInquiry } = useInquiry()
   const progress = useScrollProgress()
-  const quality = useQuality()
+  const reducedMotion = useReducedMotion()
 
-  const canvasOpacityClass =
-    quality === 'full'
-      ? 'opacity-[0.55]'
-      : 'opacity-[0.18] md:opacity-[0.32]'
-  const canvasBlendMode = quality === 'full' ? 'normal' : 'multiply'
+  const canvas = (
+    <Canvas
+      camera={{ position: [0, 0, 6], fov: 48 }}
+      dpr={[1, 1.5]}
+      gl={{ antialias: true, alpha: true }}
+      style={{ background: 'transparent' }}
+    >
+      <SceneLights />
+      <Suspense fallback={null}>
+        <MorphBlob progress={reducedMotion ? undefined : progress} />
+        <SmallSatellite progress={reducedMotion ? undefined : progress} />
+        <OrbitRing progress={reducedMotion ? undefined : progress} />
+      </Suspense>
+      {!reducedMotion && <ScrollCamera progress={progress} />}
+    </Canvas>
+  )
 
   return (
     <section
@@ -319,26 +181,15 @@ export default function Hero() {
         }}
       />
 
-      {/* Three.js scroll-scrubbed 3D layer — skipped entirely when quality === 'off' */}
-      {quality !== 'off' && (
-        <div
-          className={`absolute inset-0 pointer-events-none ${canvasOpacityClass}`}
-          style={{ mixBlendMode: canvasBlendMode }}
-        >
-          <Canvas
-            camera={{ position: [0, 0, 6], fov: 48 }}
-            dpr={quality === 'full' ? [1, 1.5] : [1, 1]}
-            gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
-            style={{ background: 'transparent' }}
-          >
-            {quality === 'full' ? (
-              <FullScene progress={progress} />
-            ) : (
-              <DowngradeScene progress={progress} />
-            )}
-          </Canvas>
-        </div>
-      )}
+      {/* Three.js geometric background — watermark opacity (dimmer on mobile).
+          Fixed to the viewport so it scrubs along the entire page scroll;
+          z-[-1] keeps it beneath every section's content. */}
+      <div
+        className={`${reducedMotion ? 'absolute' : 'fixed -z-10'} inset-0 pointer-events-none opacity-[0.18] md:opacity-[0.32]`}
+        style={{ mixBlendMode: 'multiply' }}
+      >
+        {canvas}
+      </div>
 
       {/* soft overlay to protect text legibility (desktop) */}
       <div
