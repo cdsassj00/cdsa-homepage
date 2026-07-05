@@ -1,24 +1,23 @@
 import { Suspense, useEffect, useRef, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { MeshDistortMaterial } from '@react-three/drei'
+import { MarchingCubes, MarchingCube } from '@react-three/drei'
 import { MathUtils } from 'three'
-import type { Mesh } from 'three'
+import type { Group, Mesh } from 'three'
 import { hero } from '../data/content'
 import { useInquiry } from './InquiryModal'
 
 /**
- * Hero geometric 3D background.
- * Two organic distorted meshes floating in warm-brown light —
- * "예술적이면서 기술적인" (editorial + geometric) feel.
- * Palette stays Anthropic-cream so the 3D never competes with the title.
+ * Hero fluid 3D background — metaball droplets in the warm-clay palette.
  *
- * The canvas is a FIXED viewport layer (z-index -1) so the meshes follow
- * the reader down the whole page; scroll progress scrubs camera dolly,
- * orbit and mesh drift. With prefers-reduced-motion the layer falls back
- * to the original absolute-in-hero, time-only animation.
+ * At the top of the page the droplets sit fused into one soft blob on the
+ * right (the familiar 몽글몽글 silhouette). As the reader scrolls, the blob
+ * shrinks and splits into separate droplets that drift apart, gain depth
+ * (per-droplet z parallax + camera dolly), and increasingly chase the
+ * mouse like a trailing fluid. The canvas is a fixed viewport layer at
+ * z-index -1 with multiply blend, so text/layout above is never touched.
+ * prefers-reduced-motion falls back to a calm, hero-only fused blob.
  */
 
-// 0..1 progress across the whole document, lerped per-frame for iOS smoothness
 type ProgressRef = { current: number }
 
 function useScrollProgress(): ProgressRef {
@@ -35,87 +34,120 @@ function useScrollProgress(): ProgressRef {
   return ref
 }
 
-// Camera scrub — dolly in, slight orbit, fov widen as the page scrolls
-function ScrollCamera({ progress }: { progress: ProgressRef }) {
-  const smooth = useRef(0)
-  useFrame(({ camera }) => {
-    smooth.current = MathUtils.lerp(smooth.current, progress.current, 0.07)
-    const p = smooth.current
-    camera.position.x = MathUtils.lerp(0, -0.9, p)
-    camera.position.y = MathUtils.lerp(0, 0.5, p)
-    camera.position.z = MathUtils.lerp(6, 4.4, p)
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const cam = camera as any
-    if (typeof cam.fov === 'number') {
-      cam.fov = MathUtils.lerp(48, 56, p)
-      cam.updateProjectionMatrix()
+// Per-droplet character: split direction, wobble speed/phase, follow lag.
+// dir is in marching-cubes local space (kept within ±0.85 to avoid clipping).
+const DROPLETS = [
+  { dir: [0.55, 0.12, -0.2], speed: 0.9, phase: 0.0, lag: 0.055 },
+  { dir: [-0.62, 0.42, 0.35], speed: 1.3, phase: 1.1, lag: 0.04 },
+  { dir: [0.28, -0.6, 0.3], speed: 1.1, phase: 2.3, lag: 0.07 },
+  { dir: [-0.4, -0.38, -0.45], speed: 0.8, phase: 3.4, lag: 0.03 },
+  { dir: [0.5, 0.55, 0.25], speed: 1.5, phase: 4.2, lag: 0.05 },
+  { dir: [-0.72, -0.1, 0.15], speed: 1.0, phase: 5.0, lag: 0.06 },
+  { dir: [0.08, 0.68, 0.4], speed: 1.2, phase: 0.7, lag: 0.038 },
+  { dir: [-0.2, 0.16, -0.6], speed: 0.7, phase: 2.9, lag: 0.075 },
+  { dir: [0.6, -0.3, 0.5], speed: 1.4, phase: 4.8, lag: 0.048 },
+]
+
+const clamp = (v: number, lim: number) => Math.max(-lim, Math.min(lim, v))
+
+// The canvas wrapper is pointer-events:none, so R3F never receives pointer
+// events itself — track the mouse globally instead (normalized -1..1).
+function useMouse(): { current: { x: number; y: number } } {
+  const ref = useRef({ x: 0, y: 0 })
+  useEffect(() => {
+    const onMove = (e: PointerEvent) => {
+      ref.current.x = (e.clientX / window.innerWidth) * 2 - 1
+      ref.current.y = -((e.clientY / window.innerHeight) * 2 - 1)
     }
-    camera.lookAt(1.6 - p * 1.2, -0.2 + p * 0.3, 0)
-  })
-  return null
+    window.addEventListener('pointermove', onMove, { passive: true })
+    return () => window.removeEventListener('pointermove', onMove)
+  }, [])
+  return ref
 }
 
-function MorphBlob({ progress }: { progress?: ProgressRef }) {
-  const ref = useRef<Mesh>(null)
+function FluidDroplets({
+  progress,
+  count,
+  resolution,
+  interactive,
+}: {
+  progress?: ProgressRef
+  count: number
+  resolution: number
+  interactive: boolean
+}) {
+  const cubeRefs = useRef<(Group | null)[]>([])
+  const smoothP = useRef(0)
+  const center = useRef({ x: 0.35, y: 0.05 })
+  const mouse = useMouse()
+
   useFrame(({ clock }) => {
-    if (!ref.current) return
     const t = clock.getElapsedTime()
-    const p = progress?.current ?? 0
-    ref.current.rotation.y = t * 0.08 + p * 1.4
-    ref.current.rotation.x = Math.sin(t * 0.18) * 0.22 + p * 0.5
-    // travels across the frame as the reader scrolls the page
-    ref.current.position.x = 1.6 - p * 2.4
-    ref.current.position.y = Math.sin(t * 0.3) * 0.2 + p * 0.6
+    smoothP.current = MathUtils.lerp(smoothP.current, progress?.current ?? 0, 0.06)
+    const p = smoothP.current
+    const eased = p * p * (3 - 2 * p) // smoothstep — gentle start, gentle end
+
+    // fused blob (0.1) → scattered droplets (0.62)
+    const spread = MathUtils.lerp(0.1, 0.62, eased)
+    // mouse pull ramps in once the hero is left behind
+    const follow = interactive ? Math.min(1, p * 2.2) * 0.8 : 0
+
+    const tx = MathUtils.lerp(0.35, mouse.current.x * 0.7, follow)
+    const ty = MathUtils.lerp(0.05, mouse.current.y * 0.55, follow)
+    center.current.x = MathUtils.lerp(center.current.x, tx, 0.04)
+    center.current.y = MathUtils.lerp(center.current.y, ty, 0.04)
+
+    const wob = 0.05 + spread * 0.14
+    for (let i = 0; i < count; i++) {
+      const d = DROPLETS[i]
+      const cube = cubeRefs.current[i]
+      if (!cube) continue
+      const gx = center.current.x + d.dir[0] * spread + Math.sin(t * d.speed + d.phase) * wob
+      const gy =
+        center.current.y + d.dir[1] * spread * 0.85 + Math.cos(t * d.speed * 0.9 + d.phase) * wob
+      const gz = d.dir[2] * spread * 0.9 + Math.sin(t * d.speed * 0.6 + d.phase * 2) * 0.08
+      // per-droplet lag → trailing, fluid-like chase
+      const k = d.lag + eased * 0.05
+      cube.position.x = clamp(MathUtils.lerp(cube.position.x, gx, k), 0.85)
+      cube.position.y = clamp(MathUtils.lerp(cube.position.y, gy, k), 0.8)
+      cube.position.z = clamp(MathUtils.lerp(cube.position.z, gz, k), 0.8)
+    }
   })
+
   return (
-    <mesh ref={ref} scale={2.5} position={[1.6, -0.2, 0]}>
-      <icosahedronGeometry args={[1, 24]} />
-      <MeshDistortMaterial
-        color="#C17A3B"
-        distort={0.45}
-        speed={1.1}
-        roughness={0.42}
-        metalness={0.14}
-      />
-    </mesh>
+    <MarchingCubes
+      resolution={resolution}
+      maxPolyCount={40000}
+      scale={[4.6, 2.9, 2.2]}
+    >
+      <meshStandardMaterial color="#C17A3B" roughness={0.42} metalness={0.14} />
+      {DROPLETS.slice(0, count).map((d, i) => (
+        <MarchingCube
+          key={i}
+          ref={(el) => {
+            cubeRefs.current[i] = el
+          }}
+          strength={0.42}
+          subtract={11}
+          position={[0.35 + d.dir[0] * 0.1, 0.05 + d.dir[1] * 0.1, 0]}
+        />
+      ))}
+    </MarchingCubes>
   )
 }
 
-function SmallSatellite({ progress }: { progress?: ProgressRef }) {
-  const ref = useRef<Mesh>(null)
-  useFrame(({ clock }) => {
-    if (!ref.current) return
-    const t = clock.getElapsedTime()
-    const p = progress?.current ?? 0
-    ref.current.rotation.y = -t * 0.14 - p * 1.0
-    ref.current.rotation.x = t * 0.1
-    ref.current.position.x = 3.8 + Math.sin(t * 0.4) * 0.2 - p * 1.6
-    ref.current.position.y = 1.7 + Math.cos(t * 0.3) * 0.15 - p * 2.6
-    ref.current.position.z = -0.4 + p * 1.4
-  })
-  return (
-    <mesh ref={ref} scale={0.82} position={[3.8, 1.7, -0.4]}>
-      <octahedronGeometry args={[1, 4]} />
-      <MeshDistortMaterial
-        color="#8B4A18"
-        distort={0.28}
-        speed={0.9}
-        roughness={0.55}
-        metalness={0.08}
-      />
-    </mesh>
-  )
-}
-
+// Thin editorial ring from the original hero — fades away as droplets scatter
 function OrbitRing({ progress }: { progress?: ProgressRef }) {
   const ref = useRef<Mesh>(null)
   useFrame(({ clock }) => {
     if (!ref.current) return
     const t = clock.getElapsedTime()
     const p = progress?.current ?? 0
-    ref.current.rotation.x = t * 0.05 + 0.9 + p * 0.6
-    ref.current.rotation.z = -t * 0.04 - p * 0.8
-    ref.current.position.x = 1.8 - p * 2.4
+    ref.current.rotation.x = t * 0.05 + 0.9
+    ref.current.rotation.z = -t * 0.04
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const mat = ref.current.material as any
+    if (mat) mat.opacity = 0.55 * Math.max(0, 1 - p * 1.6)
   })
   return (
     <mesh ref={ref} position={[1.8, -0.3, 0]} scale={3.6}>
@@ -123,6 +155,26 @@ function OrbitRing({ progress }: { progress?: ProgressRef }) {
       <meshStandardMaterial color="#6E3710" roughness={0.8} transparent opacity={0.55} />
     </mesh>
   )
+}
+
+// Camera scrub — noticeable dolly + orbit + fov widen for real depth change
+function ScrollCamera({ progress }: { progress: ProgressRef }) {
+  const smooth = useRef(0)
+  useFrame(({ camera }) => {
+    smooth.current = MathUtils.lerp(smooth.current, progress.current, 0.07)
+    const p = smooth.current
+    camera.position.x = MathUtils.lerp(0, -0.7, p)
+    camera.position.y = MathUtils.lerp(0, 0.35, p)
+    camera.position.z = MathUtils.lerp(6, 3.8, p)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const cam = camera as any
+    if (typeof cam.fov === 'number') {
+      cam.fov = MathUtils.lerp(48, 60, p)
+      cam.updateProjectionMatrix()
+    }
+    camera.lookAt(MathUtils.lerp(1.6, 0, p), MathUtils.lerp(-0.2, 0.1, p), 0)
+  })
+  return null
 }
 
 function SceneLights() {
@@ -136,35 +188,24 @@ function SceneLights() {
   )
 }
 
-function useReducedMotion(): boolean {
-  const [reduced, setReduced] = useState(false)
+function useDisplayMode(): { reducedMotion: boolean; isMobile: boolean } {
+  const [mode, setMode] = useState({ reducedMotion: false, isMobile: false })
   useEffect(() => {
-    setReduced(window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+    setMode({
+      reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+      isMobile: window.matchMedia('(max-width: 768px)').matches,
+    })
   }, [])
-  return reduced
+  return mode
 }
 
 export default function Hero() {
   const { openInquiry } = useInquiry()
   const progress = useScrollProgress()
-  const reducedMotion = useReducedMotion()
+  const { reducedMotion, isMobile } = useDisplayMode()
 
-  const canvas = (
-    <Canvas
-      camera={{ position: [0, 0, 6], fov: 48 }}
-      dpr={[1, 1.5]}
-      gl={{ antialias: true, alpha: true }}
-      style={{ background: 'transparent' }}
-    >
-      <SceneLights />
-      <Suspense fallback={null}>
-        <MorphBlob progress={reducedMotion ? undefined : progress} />
-        <SmallSatellite progress={reducedMotion ? undefined : progress} />
-        <OrbitRing progress={reducedMotion ? undefined : progress} />
-      </Suspense>
-      {!reducedMotion && <ScrollCamera progress={progress} />}
-    </Canvas>
-  )
+  const dropletCount = isMobile ? 6 : 9
+  const resolution = isMobile ? 28 : 42
 
   return (
     <section
@@ -181,14 +222,30 @@ export default function Hero() {
         }}
       />
 
-      {/* Three.js geometric background — watermark opacity (dimmer on mobile).
-          Fixed to the viewport so it scrubs along the entire page scroll;
-          z-[-1] keeps it beneath every section's content. */}
+      {/* Fluid metaball layer — fixed to the viewport so it follows the whole
+          page scroll; z-[-1] keeps it beneath every section's content. */}
       <div
         className={`${reducedMotion ? 'absolute' : 'fixed -z-10'} inset-0 pointer-events-none opacity-[0.18] md:opacity-[0.32]`}
         style={{ mixBlendMode: 'multiply' }}
       >
-        {canvas}
+        <Canvas
+          camera={{ position: [0, 0, 6], fov: 48 }}
+          dpr={[1, 1.5]}
+          gl={{ antialias: true, alpha: true }}
+          style={{ background: 'transparent' }}
+        >
+          <SceneLights />
+          <Suspense fallback={null}>
+            <FluidDroplets
+              progress={reducedMotion ? undefined : progress}
+              count={dropletCount}
+              resolution={resolution}
+              interactive={!reducedMotion && !isMobile}
+            />
+            <OrbitRing progress={reducedMotion ? undefined : progress} />
+          </Suspense>
+          {!reducedMotion && <ScrollCamera progress={progress} />}
+        </Canvas>
       </div>
 
       {/* soft overlay to protect text legibility (desktop) */}
