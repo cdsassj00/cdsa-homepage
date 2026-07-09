@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 120" width="600" height="120">
+  <rect width="600" height="120" fill="transparent"/>
+  <text x="0" y="52" font-family="'Noto Serif KR', Georgia, serif" font-weight="700" font-size="36" fill="#1e1610" letter-spacing="-0.5">한국데이터사이언티스트협회</text>
+  <text x="0" y="90" font-family="'Cormorant Garamond', Georgia, serif" font-style="italic" font-weight="500" font-size="22" fill="#8c6842" letter-spacing="4">CDSA</text>
+  <line x1="72" y1="82" x2="600" y2="82" stroke="#d6c8b6" stroke-width="1"/>
+</svg>
