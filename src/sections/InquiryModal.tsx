@@ -13,7 +13,12 @@ export function useInquiry() {
 
 export function InquiryProvider({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false)
-  const openInquiry = useCallback(() => setOpen(true), [])
+  const openInquiry = useCallback(() => {
+    setOpen(true)
+    if (typeof window !== 'undefined' && (window as any).oaiq) {
+      (window as any).oaiq('measure', 'lead_created', { type: 'customer_action' })
+    }
+  }, [])
 
   return (
     <InquiryCtx.Provider value={{ openInquiry }}>
