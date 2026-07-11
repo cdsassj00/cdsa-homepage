@@ -757,4 +757,7 @@ export const videos = [
   { id: 'A1S19JzHN2M', title: '10분 생성형 AI 트렌드' },
   { id: 'KsDDaAUoqfE', title: '생성형 AI 활용 엑셀 함수' },
   { id: 'GFcAeC2O_D8', title: '생성형 AI 활용 PPT 제어' },
+  { id: 'ibHaiA8dRwA', title: '7개 AI에 똑같이 시켰더니 결과가 완전히 달랐습니다' },
+  { id: '3w8CVXmzFUI', title: 'GPT-5.6 사용법 — Chat과 Work의 결정적 차이' },
+  { id: 'JdwtRzZKlNg', title: '생성형 AI 실무 완벽 마스터 — AI 챔피언 그린 명강의' },
 ]
