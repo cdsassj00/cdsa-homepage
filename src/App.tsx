@@ -12,6 +12,7 @@ import CTA from './sections/CTA'
 import Footer from './sections/Footer'
 import FullCourse from './sections/FullCourse'
 import FloatingInsights from './sections/FloatingInsights'
+import FloatingSites from './sections/FloatingSites'
 import ExecutiveLoungeStrip from './sections/FloatingLounge'
 
 function SectionDots() {
@@ -43,6 +44,7 @@ function App() {
       <CTA />
       <Footer />
       <FloatingInsights />
+      <FloatingSites />
     </div>
   )
 }
