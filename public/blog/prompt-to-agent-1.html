@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>질문의 시대는 끝났다 ① 기술은 네 번 이동했다 — 프롬프트 · 컨텍스트 · 하네스 · 피지컬 AI · CDSA 블로그</title>
+<meta name="description" content="프롬프트 엔지니어링에서 컨텍스트로, 하네스로, 그리고 피지컬 AI로. 지난 3년 AI 활용의 중심이 네 번 이동한 궤적을 공공부문 관리자·실무자의 눈높이로 정리한 특강 시리즈 1편.">
+<meta property="og:title" content="질문의 시대는 끝났다 ① 기술은 네 번 이동했다 — 프롬프트 · 컨텍스트 · 하네스 · 피지컬 AI">
+<meta property="og:description" content="빅3가 같은 달에 내놓은 것은 챗봇이 아니라 에이전트였다. 계획·맥락·도구 — 챗봇과 에이전트를 가르는 세 가지, 그리고 모델이 화면 밖으로 나오는 피지컬 AI까지. 공공부문 AI 전환 특강 원고 1편.">
+<meta property="og:type" content="article">
+<!-- BEGIN SEO -->
+<meta name="keywords" content="프롬프트 엔지니어링, 컨텍스트 엔지니어링, 하네스, 피지컬 AI, AI 에이전트, ChatGPT Work, Claude Cowork, Gemini Spark, Gemini Robotics 2, 코딩 에이전트, Claude Code, 공공부문 AI, 공공 AX, AI 전환 특강, 신성진, CDSA">
+<link rel="canonical" href="https://cdsa.kr/blog/prompt-to-agent-1.html">
+<meta property="og:url" content="https://cdsa.kr/blog/prompt-to-agent-1.html">
+<meta property="og:site_name" content="한국데이터사이언티스트협회">
+<meta property="og:image" content="https://cdsa.kr/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta property="article:published_time" content="2026-08-01T09:00:00+09:00">
+<meta property="article:modified_time" content="2026-08-01T09:00:00+09:00">
+<meta property="article:author" content="신성진">
+<meta property="article:section" content="시리즈 · 질문의 시대는 끝났다 · 1편">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="질문의 시대는 끝났다 ① 기술은 네 번 이동했다">
+<meta name="twitter:description" content="프롬프트 → 컨텍스트 → 하네스 → 피지컬 AI. 지난 3년 AI 활용의 중심이 네 번 이동한 궤적. 공공부문 AI 전환 특강 시리즈 1편.">
+<meta name="twitter:image" content="https://cdsa.kr/og-image.png">
+<meta name="author" content="신성진">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "질문의 시대는 끝났다 ① 기술은 네 번 이동했다 — 프롬프트 · 컨텍스트 · 하네스 · 피지컬 AI",
+  "description": "프롬프트 엔지니어링에서 컨텍스트로, 하네스로, 그리고 피지컬 AI로. 지난 3년 AI 활용의 중심이 네 번 이동한 궤적을 공공부문 관리자·실무자의 눈높이로 정리한 특강 시리즈 1편.",
+  "datePublished": "2026-08-01T09:00:00+09:00",
+  "dateModified": "2026-08-01T09:00:00+09:00",
+  "author": {"@type": "Person", "name": "신성진", "url": "https://cdsa.kr"},
+  "publisher": {
+    "@type": "Organization",
+    "name": "한국데이터사이언티스트협회",
+    "url": "https://cdsa.kr",
+    "logo": {"@type": "ImageObject", "url": "https://cdsa.kr/og-image.png"}
+  },
+  "image": ["https://cdsa.kr/og-image.png"],
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://cdsa.kr/blog/prompt-to-agent-1.html"},
+  "isPartOf": {"@type": "CreativeWorkSeries", "name": "질문의 시대는 끝났다 — 프롬프트에서 에이전트로"},
+  "articleSection": "시리즈 · 질문의 시대는 끝났다 · 1편",
+  "inLanguage": "ko-KR"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "CDSA", "item": "https://cdsa.kr/"},
+    {"@type": "ListItem", "position": 2, "name": "블로그", "item": "https://cdsa.kr/blog/"},
+    {"@type": "ListItem", "position": 3, "name": "질문의 시대는 끝났다 ① 기술은 네 번 이동했다", "item": "https://cdsa.kr/blog/prompt-to-agent-1.html"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "하네스(Harness)란 무엇인가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "AI를 파일시스템·터미널·브라우저·API·MCP 같은 도구와 연결해 실제로 일하게 만드는 실행 체계입니다. Claude Code, OpenAI Codex, Google Antigravity 같은 코딩 에이전트가 하네스의 대표적 실체이며, 코딩은 그 첫 번째 응용일 뿐입니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "챗봇과 에이전트는 무엇이 다른가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "계획·맥락·도구 세 가지가 갖춰지면 에이전트입니다. 목표를 받아 스스로 작업을 단계로 쪼개 계획을 세우고, 수십만 토큰의 문서·데이터를 읽는 컨텍스트 해석력으로 계획을 현실에 붙잡아 두고, 검색·코드 실행·파일 편집·API 호출로 계획을 실행으로 바꿉니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "프롬프트 엔지니어링은 이제 필요 없나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "아닙니다. 프롬프트 → 컨텍스트 → 하네스 → 피지컬 AI의 이동은 대체가 아니라 누적입니다. 하네스 시대에도 프롬프트는 여전히 필요하고 컨텍스트 설계는 오히려 더 중요해졌습니다. 네 단계는 층층이 쌓이는 구조로 이해해야 합니다."
+      }
+    }
+  ]
+}
+</script>
+<!-- END SEO -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NZL39P5EYZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NZL39P5EYZ');
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/blog/_layout.css">
+<style>
+  :root {
+    --cream: #faf9f5; --cream-deep: #f3efe3; --ink: #1a1a1a; --ink-soft: #3d3d3a;
+    --ink-mute: #6b6b66; --rule: #d9d6cc; --clay: #cc785c; --clay-deep: #a85a42;
+    --clay-light: #f0ddd4; --code-bg: #f2f0e8; --teal: #2a7d6e;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--cream); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  body { font-family: "Fraunces", "Noto Serif KR", Georgia, serif; font-weight: 300; font-size: 19px; line-height: 1.72; letter-spacing: -0.005em; }
+
+  .topnav { position: fixed; top: 0; left: 0; right: 0; height: 48px; background: rgba(250, 249, 245, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; }
+  .topnav-left { display: flex; align-items: center; gap: 18px; }
+  .topnav-left a { color: var(--ink-soft); text-decoration: none; transition: color 0.2s; }
+  .topnav-left a:hover { color: var(--clay-deep); }
+  .topnav-home { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 600; font-size: 16px; color: var(--ink) !important; letter-spacing: -0.3px; }
+  .topnav-sep { color: var(--rule); font-size: 11px; }
+  .topnav-right { display: flex; gap: 16px; }
+  .topnav-right a { color: var(--ink-mute); text-decoration: none; font-size: 12px; transition: color 0.2s; }
+  .topnav-right a:hover { color: var(--clay-deep); }
+  .topnav-current { color: var(--ink) !important; font-weight: 600; position: relative; }
+  .topnav-current::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 2px; background: var(--clay); border-radius: 1px; }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 116px 28px 120px; }
+  .breadcrumb { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; margin-bottom: 36px; display: flex; align-items: center; gap: 8px; color: var(--ink-mute); }
+  .breadcrumb a { color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--ink); }
+  .breadcrumb .bc-sep { color: var(--rule); }
+
+  .kicker { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay-deep); margin-bottom: 28px; }
+  h1 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 400; font-size: 44px; line-height: 1.18; letter-spacing: -0.02em; margin: 0 0 24px; color: var(--ink); word-break:keep-all; overflow-wrap:break-word; }
+  .dek { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 300; font-style: italic; font-size: 21px; line-height: 1.55; color: var(--ink-soft); margin: 0 0 40px; word-break:keep-all; overflow-wrap:break-word; }
+  .byline { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); padding: 18px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-bottom: 56px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .byline strong { font-weight: 500; color: var(--ink-soft); }
+
+  .lede { font-size: 19px; line-height: 1.72; margin-bottom: 22px; word-break:keep-all; overflow-wrap:break-word; }
+  .lede::first-letter { font-family: "Fraunces", serif; font-weight: 400; font-size: 68px; float: left; line-height: 0.88; padding: 8px 10px 0 0; color: var(--clay); }
+
+  h2 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 28px; line-height: 1.3; letter-spacing: -0.015em; margin: 64px 0 16px; color: var(--ink); scroll-margin-top: 80px; word-break:keep-all; overflow-wrap:break-word; }
+  h2 .num { font-family: "Inter", sans-serif; font-size: 12px; font-weight: 600; color: var(--clay); letter-spacing: 0.1em; display: block; margin-bottom: 10px; }
+  p { margin: 0 0 22px; }
+  p + p { margin-top: -6px; }
+  strong { font-weight: 500; color: var(--ink); }
+  em { font-style: italic; }
+
+  /* 시리즈 안내 박스 */
+  .series-box { margin: 0 0 48px; padding: 20px 24px; background: var(--code-bg); border: 1px solid var(--rule); border-radius: 4px; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13.5px; line-height: 1.75; color: var(--ink-soft); }
+  .series-box .series-title { font-weight: 600; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay-deep); display: block; margin-bottom: 10px; }
+  .series-box ol { margin: 0; padding-left: 20px; }
+  .series-box li { margin: 3px 0; }
+  .series-box a { color: var(--clay-deep); text-decoration: none; border-bottom: 1px dotted var(--clay-light); }
+  .series-box a:hover { color: var(--ink); }
+  .series-box .current { color: var(--ink); font-weight: 600; }
+
+  /* 키노트 문장 */
+  blockquote { margin: 36px 0; padding: 4px 0 4px 22px; border-left: 2px solid var(--clay); font-family: "Fraunces", "Noto Serif KR", serif; font-style: italic; font-size: 20px; line-height: 1.55; color: var(--ink-soft); word-break:keep-all; overflow-wrap:break-word; }
+
+  .pull { font-family: "Fraunces", "Noto Serif KR", serif; font-size: 26px; line-height: 1.5; color: var(--ink); font-weight: 500; font-style: italic; margin: 40px 0; padding: 26px 0 26px 28px; border-left: 3px solid var(--clay); letter-spacing: -0.01em; word-break:keep-all; overflow-wrap:break-word; }
+
+  /* 시연 노트 */
+  .demo { margin: 28px 0; padding: 18px 22px; background: var(--code-bg); border-left: 3px solid var(--teal); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 14.5px; line-height: 1.7; color: var(--ink-soft); border-radius: 2px; word-break:keep-all; overflow-wrap:break-word; }
+  .demo .demo-label { font-weight: 600; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); display: block; margin-bottom: 6px; }
+
+  /* 덧붙임 */
+  .addendum { margin: 28px 0 40px; padding: 18px 22px; background: transparent; border: 1px solid var(--rule); border-left: 3px solid var(--clay); font-size: 16.5px; line-height: 1.75; color: var(--ink-soft); border-radius: 2px; word-break:keep-all; overflow-wrap:break-word; }
+  .addendum .add-label { font-family: "Inter", "Noto Sans KR", sans-serif; font-weight: 600; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay-deep); display: block; margin-bottom: 8px; }
+
+  .data-table { width: 100%; margin: 28px 0; border-collapse: collapse; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 14.5px; line-height: 1.55; }
+  .data-table thead th { text-align: left; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--clay-deep); padding: 12px 14px; border-bottom: 2px solid var(--clay); background: var(--code-bg); }
+  .data-table tbody td { padding: 12px 14px; border-bottom: 1px solid var(--rule); color: var(--ink-soft); vertical-align: top; }
+  .data-table tbody tr:last-child td { border-bottom: 2px solid var(--rule); }
+  .data-table .model-name { color: var(--ink); font-weight: 500; }
+
+  .source-note { margin-top: 40px; padding: 18px 22px; background: var(--code-bg); border-left: 2px solid var(--clay-light); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); line-height: 1.7; border-radius: 2px; }
+  .source-note strong { color: var(--ink-soft); font-weight: 600; }
+  .source-note a { color: var(--clay-deep); text-decoration: none; border-bottom: 1px dotted var(--clay-light); }
+  .source-note a:hover { color: var(--ink); }
+
+  .footer { margin-top: 72px; padding-top: 28px; border-top: 1px solid var(--rule); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); line-height: 1.7; }
+  .footer strong { color: var(--ink-soft); font-weight: 600; }
+  .footer a { color: var(--clay-deep); text-decoration: none; }
+
+  .bottom-nav { margin-top: 72px; padding: 36px 0; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .bottom-nav a { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .bottom-nav a:hover { color: var(--ink); }
+  .bottom-nav-home { font-family: "Fraunces", "Noto Serif KR", serif !important; font-size: 16px !important; font-style: italic; font-weight: 400; }
+
+  @media (max-width: 560px) {
+    .wrap { padding: 92px 22px 80px; }
+    h1 { font-size: 30px; line-height: 1.24; }
+    .dek { font-size: 17.5px; }
+    body { font-size: 17px; }
+    h2 { font-size: 23px; margin-top: 52px; }
+    .topnav-right { display: none; }
+    .pull { font-size: 22px; padding-left: 22px; }
+    .data-table { font-size: 13px; }
+    .data-table thead th, .data-table tbody td { padding: 10px 8px; }
+  }
+  @media (max-width: 400px) {
+    h1 { font-size: 26px !important; line-height: 1.25; }
+    .dek { font-size: 16px !important; }
+    h2 { font-size: 21px !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="topnav-left">
+    <a href="/" class="topnav-home">CDSA</a>
+    <span class="topnav-sep">|</span>
+    <a href="/">홈페이지</a>
+    <a href="/blog/" class="topnav-current">블로그</a>
+  </div>
+  <nav class="topnav-right">
+    <a href="/framework.html">프레임워크</a>
+    <a href="/unsloth-workbook.html">워크북</a>
+    <a href="/fullcourse.html">Full Course</a>
+  </nav>
+</header>
+
+<button class="blog-hamburger" aria-label="블로그 목록 열기"><span></span><span></span><span></span></button>
+<div class="blog-overlay"></div>
+<aside class="blog-left">
+  <div class="blog-left-title">Blog Posts</div>
+  <ol class="blog-left-list"></ol>
+</aside>
+<aside class="blog-right">
+  <div class="blog-right-title">On This Page</div>
+  <ul class="blog-toc"></ul>
+</aside>
+
+<article class="wrap">
+
+  <nav class="breadcrumb">
+    <a href="/">← CDSA 홈</a>
+    <span class="bc-sep">/</span>
+    <a href="/blog/">블로그</a>
+    <span class="bc-sep">/</span>
+    <span>시리즈 · 질문의 시대는 끝났다 · 1편</span>
+  </nav>
+
+  <div class="kicker">Series · 질문의 시대는 끝났다 · 1편</div>
+
+  <h1>기술은 네 번 이동했다<br>프롬프트 · 컨텍스트 · 하네스 · 피지컬 AI</h1>
+
+  <p class="dek">
+    질문을 잘 쓰는 기술의 시대가 끝나고, 일을 끝내는
+    에이전트의 시대가 왔습니다. 지난 3년 AI 활용의 중심이
+    네 번 이동한 궤적을, 공공기관 관리자와 실무자의
+    눈높이로 따라가 봅니다.
+  </p>
+
+  <div class="byline">
+    <span><strong>신성진 · 한국데이터사이언티스트협회</strong>  ·  공공부문 AI 전환 특강 원고</span>
+    <span>2026. 8. 1</span>
+  </div>
+
+  <div class="series-box">
+    <span class="series-title">시리즈 · 질문의 시대는 끝났다 — 14개의 명제</span>
+    공공기관 관리자·실무자 대상 특강 원고를 4편으로 나눠 싣습니다.
+    <ol>
+      <li><span class="current">1편 · 기술의 이동 — 프롬프트에서 피지컬 AI까지 (명제 01–05)</span></li>
+      <li><a href="/blog/prompt-to-agent-2.html">2편 · RAG 구축의 시대를 지나, 에이전트를 향해 (명제 06–08)</a></li>
+      <li><a href="/blog/prompt-to-agent-3.html">3편 · 중간관리자, AX팀, 그리고 튀는 사람 (명제 09–11)</a></li>
+      <li><a href="/blog/prompt-to-agent-4.html">4편 · 바이브코딩, 골목길, 그리고 네 개의 질문 (명제 12–14)</a></li>
+    </ol>
+  </div>
+
+  <p class="lede">모델 성능이 낮던 시기의 답은 프롬프트였습니다. 같은 모델이라도 질문을 어떻게 쓰느냐가 결과를 갈랐고, 그래서 프롬프트 엔지니어링이 하나의 기술로 취급됐습니다. 그 시대가 끝나 가고 있습니다. 질문을 다듬는 손끝이 아니라, 일을 맡기고 결과를 검증하는 눈이 새로운 역량이 되고 있습니다. 이 변화를 이해하려면 지난 3년 동안 AI 활용의 중심이 어디에서 어디로 옮겨 왔는지를 먼저 봐야 합니다.</p>
+
+  <h2 id="s01"><span class="num">명제 01</span>프롬프트 → 컨텍스트 → 하네스 → 피지컬 AI</h2>
+
+  <blockquote>지난 3년, AI 활용의 중심은 네 번 이동했다.</blockquote>
+
+  <p>멀티모달과 긴 컨텍스트 윈도우, 리즈닝이 갖춰지면서 중심은 <strong>컨텍스트</strong>로 옮겨 갔습니다. 질문을 다듬는 것보다 <em>무엇을 읽게 할 것인가</em>가 중요해진 것입니다. 규정·원문·데이터를 통째로 주면 모델이 알아서 해석하는 시대가 열렸습니다.</p>
+
+  <p>지금의 붐은 <strong>하네스</strong>입니다. AI를 파일시스템·터미널·브라우저·API·MCP 같은 도구와 연결해 실제로 일하게 만드는 실행 체계를 말합니다. 그 연결이 화면 밖 물리 세계의 인지와 행동으로 확장된 것이 <strong>피지컬 AI</strong>입니다.</p>
+
+  <p>컨텍스트와 하네스가 맞물리면서 에이전트가 폭발적으로 늘고 있습니다. 이 네 단계가 이 시리즈 전체를 관통하는 축입니다.</p>
+
+  <div class="addendum">
+    <span class="add-label">덧붙임</span>
+    이 이동은 대체가 아니라 <strong>누적</strong>이다. 하네스 시대에도 프롬프트는 여전히 필요하고, 컨텍스트 설계는 오히려 더 중요해졌다. 새 단계가 등장할 때마다 앞 단계가 사라졌다고 오해하면, 기관은 "우리는 프롬프트 교육 이미 했다"며 다음 단계를 건너뛴다. 네 단계는 층층이 쌓이는 구조로 이해해야 한다.
+  </div>
+
+  <h2 id="s02"><span class="num">명제 02</span>이제는 Chat이 아니라 Action이다</h2>
+
+  <blockquote>빅3가 같은 달에 내놓은 것은 챗봇이 아니라 에이전트였다.</blockquote>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>제품</th><th>출시</th><th>무엇이 다른가</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="model-name">OpenAI ChatGPT Work</td>
+        <td>2026.7.9</td>
+        <td>GPT-5.6과 Codex를 결합해 여러 앱과 파일을 넘나들며 몇 시간짜리 프로젝트를 스스로 진행. 문서·스프레드시트·슬라이드·웹앱을 완성해 돌려준다.</td>
+      </tr>
+      <tr>
+        <td class="model-name">Anthropic Claude Cowork</td>
+        <td>2026</td>
+        <td>비개발자를 위한 에이전트형 데스크톱 앱.</td>
+      </tr>
+      <tr>
+        <td class="model-name">Google Gemini Spark</td>
+        <td>국내 2026.7.30</td>
+        <td>노트북을 덮거나 화면이 잠겨 있어도 클라우드에서 백그라운드로 작업을 이어가는 24시간 개인 에이전트. Gmail·Docs·Sheets와 별도 설정 없이 연동.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>세 회사 모두 '질문에 답하는 챗봇'이 아니라 <strong>'일을 끝내는 에이전트'</strong>를 제품의 전면에 세웠습니다. 대화가 아니라 산출물이, 답변이 아니라 실행이 경쟁의 단위가 됐습니다.</p>
+
+  <div class="demo">
+    <span class="demo-label">특강 시연</span>
+    ChatGPT Work와 Claude Desktop으로 한국방송통신전파진흥원 공개 데이터를 분석 → 분석 결과보고서 → 인포그래픽까지 한 흐름으로 진행.
+  </div>
+
+  <div class="addendum">
+    <span class="add-label">덧붙임</span>
+    실행 단위가 바뀌면 검증 단위도 바뀐다. 챗봇 시대에는 답변 한 문단을 눈으로 훑으면 됐지만, 에이전트는 몇 시간 동안 여러 파일을 만들고 고친다. 무엇을 어디까지 확인할 것인지를 미리 정해 두지 않으면, 검토 부담이 실무자에게 통째로 넘어간다. <strong>에이전트 도입은 검증 절차 설계와 한 세트다.</strong>
+  </div>
+
+  <h2 id="s03"><span class="num">명제 03</span>계획하고, 맥락을 읽고, 도구를 호출한다</h2>
+
+  <blockquote>그래서 우리는 그것을 에이전트라 부른다.</blockquote>
+
+  <p>LLM은 이제 목표를 받으면 스스로 작업을 단계로 쪼개 <strong>계획</strong>을 세웁니다. 수십만 토큰의 문서·데이터·이력을 읽어내는 <strong>컨텍스트 해석력</strong>이 그 계획을 현실에 붙잡아 두고, 검색·코드 실행·파일 편집·API 같은 <strong>도구 호출</strong>이 계획을 실행으로 바꿉니다.</p>
+
+  <p class="pull">계획 · 맥락 · 도구. 이 세 가지가 갖춰진 순간부터 챗봇이 아니라 에이전트입니다.</p>
+
+  <div class="demo">
+    <span class="demo-label">특강 시연</span>
+    ChatGPT에 명령을 내리고, 오른쪽 사이드 패널에서 생각 → 도구 실행 → 검증이 흘러가는 과정을 실시간으로 관찰. 말로 설명하는 것보다 화면을 한 번 보는 것이 빠르다.
+  </div>
+
+  <div class="addendum">
+    <span class="add-label">덧붙임</span>
+    이 사이드 패널을 보여주는 이유는 신기해서가 아니다. <strong>AI가 어디서 틀렸는지를 추적할 수 있다는 것</strong>을 보여주기 위해서다. 계획 단계에서 잘못 쪼갰는지, 맥락을 잘못 읽었는지, 도구 호출이 실패했는지가 화면에 남는다. 이 추적 가능성이 공공에서 AI를 쓸 수 있게 만드는 최소 조건이다.
+  </div>
+
+  <h2 id="s04"><span class="num">명제 04</span>코딩에이전트가 곧 하네스의 실체다</h2>
+
+  <blockquote>쏟아지는 코딩에이전트, 그것이 하네스다.</blockquote>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>구분</th><th>도구</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="model-name">상용 데스크톱·IDE</td>
+        <td>Claude Code, Claude Desktop, OpenAI Codex, ChatGPT 데스크톱, Google Antigravity, Cursor, VS Code + GitHub Copilot, xAI Grok</td>
+      </tr>
+      <tr>
+        <td class="model-name">오픈소스</td>
+        <td>OpenClaw, Hermes Agent(Nous Research, 2026.2 공개 · GitHub 스타 6만+), OpenHands, Cline</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>이들의 공통점은 코드를 잘 쓰는 것이 아닙니다. 파일시스템·터미널·브라우저·MCP를 쥐고 <strong>계획 → 실행 → 검증 → 재실행</strong>의 루프를 도는 실행 체계라는 점입니다. 하네스의 실체가 바로 이것이고, 코딩은 그 첫 번째 응용일 뿐입니다.</p>
+
+  <div class="demo">
+    <span class="demo-label">특강 시연</span>
+    Claude Code로 한국방송통신전파진흥원 데이터를 3D 인터랙티브 시각화로 변환. 코드를 몰라도 한 문장의 지시로 완성된다.
+  </div>
+
+  <div class="addendum">
+    <span class="add-label">덧붙임</span>
+    "코딩에이전트"라는 이름이 오해를 만든다. 개발자용 도구로 들리기 때문이다. 실제로는 <strong>파일을 다루는 모든 업무의 도구</strong>다. 한글 문서 일괄 편집, 엑셀 수백 개 병합, 스캔 PDF 정리, 홈페이지 자료 수집 — 공공 업무의 상당수가 여기 해당한다. 명칭 때문에 비개발 부서가 스스로 배제하지 않도록, 교육에서는 "업무 자동화 에이전트"로 소개하는 편이 낫다.
+  </div>
+
+  <h2 id="s05"><span class="num">명제 05</span>모델이 화면 밖으로 나오고 있다</h2>
+
+  <blockquote>LLM에는 손·발·눈이 없었다. 이제 몸을 얻는 중이다.</blockquote>
+
+  <p>2026년 7월 30일 Google DeepMind가 <strong>Gemini Robotics 2</strong>를 발표했습니다. 세 개의 모델로 구성됩니다.</p>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>모델</th><th>역할</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="model-name">Gemini Robotics ER 2</td>
+        <td>계획을 세우는 두뇌. 공간 추론, 다단계 작업 계획, 로봇 간 협업 담당. Gemini API와 AI Studio에서 지금 사용 가능.</td>
+      </tr>
+      <tr>
+        <td class="model-name">Gemini Robotics 2 (VLA)</td>
+        <td>시각·언어 입력을 모터 제어로 바꾸는 모델. 휴머노이드를 발끝부터 손끝까지 제어.</td>
+      </tr>
+      <tr>
+        <td class="model-name">On-Device 2</td>
+        <td>로봇에 직접 올라가는 경량 모델. 새로운 로봇 형태에 몇 시간 만에 적응.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>이전 세대가 상반신·팔 위주였다면, 이번에는 걷고 앉고 균형을 잡는 <strong>전신 제어</strong>와 <strong>멀티 로봇 협업</strong>까지 들어왔습니다. 다만 DeepMind 스스로 "아직 느리고 진정한 손재주는 먼 목표"라고 밝혔다는 점도 함께 봐야 합니다.</p>
+
+  <p>하네스가 AI를 디지털 도구와 연결했다면, 피지컬 AI는 그 연결을 물리 세계의 인지와 행동으로 확장합니다. 프롬프트에서 출발한 이동이 지금 도착한 지점입니다.</p>
+
+  <div class="addendum">
+    <span class="add-label">덧붙임</span>
+    공공에서 피지컬 AI는 당장의 도입 과제가 아니다. 하지만 <strong>왜 지금 이 이야기를 하는가</strong>는 분명하다. 시설 점검, 재난 현장 확인, 도로·상하수도 순찰처럼 사람이 직접 가야만 했던 업무의 성격이 5년 안에 달라진다. 지금 필요한 것은 로봇 구매가 아니라, <strong>현장 데이터를 어떤 형태로 쌓아 둘 것인가</strong>에 대한 판단이다.
+  </div>
+
+  <div class="source-note">
+    <strong>근거 자료</strong> · ChatGPT Work 출시 — OpenAI 공식 발표(2026.7.9) · Gemini Spark 국내 출시 — Google Korea 블로그(2026.7.30) · Gemini Robotics 2 — Google DeepMind 블로그(2026.7.30) · Hermes Agent — Nous Research GitHub·공식 문서(2026.2 공개). 본 시리즈는 공공기관 관리자·실무자 대상 특강 원고(2026년 8월 1일 기준)를 블로그 연재용으로 재구성한 것입니다. 기술 변화 속도를 고려해 인용된 제품 정보는 열람 시점에 재확인을 권합니다.
+  </div>
+
+  <div class="footer">
+    <p><strong>신성진</strong> — 한국데이터사이언티스트협회 대표이사. 행정안전부 전문위원, 과학기술정보통신부 자문위원. 행정·공공·민간 현장의 골목길 문제를 작은 AI로 직접 풀어내는 바이브 코딩 교육에 집중한다.</p>
+    <p>이 시리즈는 1편(기술의 이동) → 2편(RAG를 넘어 에이전트로) → 3편(사람과 조직) → 4편(바이브코딩과 골목길) 순으로 이어집니다. 의견·질문은 <a href="mailto:sjshin@cdsa.or.kr">sjshin@cdsa.or.kr</a>로 보내 주세요.</p>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="/blog/" class="bottom-nav-home">← 블로그 목록</a>
+    <a href="/blog/prompt-to-agent-2.html">2편 · RAG 구축의 시대를 지나 →</a>
+  </nav>
+
+</article>
+
+<script src="/blog/_posts.js" defer></script>
+
+</body>
+</html>

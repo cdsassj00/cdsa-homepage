@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>질문의 시대는 끝났다 ② RAG 구축의 시대를 지나, 에이전트를 향해 · CDSA 블로그</title>
+<meta name="description" content="청크 RAG, 문서 통째 읽기, 에이전틱 검색, MCP 직접 연결 — 넓어진 선택지와 갈아타는 힘. 용역 발주가 아닌 협업으로 만드는 AI 사업, 그리고 기술보다 업무와 사람을 먼저 보는 리더의 순서. 특강 시리즈 2편.">
+<meta property="og:title" content="질문의 시대는 끝났다 ② RAG 구축의 시대를 지나, 에이전트를 향해">
+<meta property="og:description" content="문서를 쪼개는 방식 자체를 다시 물어야 한다. 발주서에 무엇을 만들지보다 누가 함께 만들지를 먼저 쓴다 — 기관의 전환을 다루는 특강 시리즈 2편.">
+<meta property="og:type" content="article">
+<!-- BEGIN SEO -->
+<meta name="keywords" content="RAG, 청크 RAG, 에이전틱 검색, Agentic Search, MCP, 긴 컨텍스트, 공공 AI 사업, AI 용역, AI 발주, 내재화, 오케스트레이션 설계, 업무 분석, 병목, 공공부문 AI, 공공 AX, 신성진, CDSA">
+<link rel="canonical" href="https://cdsa.kr/blog/prompt-to-agent-2.html">
+<meta property="og:url" content="https://cdsa.kr/blog/prompt-to-agent-2.html">
+<meta property="og:site_name" content="한국데이터사이언티스트협회">
+<meta property="og:image" content="https://cdsa.kr/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta property="article:published_time" content="2026-08-01T09:30:00+09:00">
+<meta property="article:modified_time" content="2026-08-01T09:30:00+09:00">
+<meta property="article:author" content="신성진">
+<meta property="article:section" content="시리즈 · 질문의 시대는 끝났다 · 2편">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="질문의 시대는 끝났다 ② RAG 구축의 시대를 지나, 에이전트를 향해">
+<meta name="twitter:description" content="문서를 쪼개는 방식 자체를 다시 물어야 한다. 발주서에 무엇을 만들지보다 누가 함께 만들지를 먼저 쓴다 — 기관의 전환을 다루는 특강 시리즈 2편.">
+<meta name="twitter:image" content="https://cdsa.kr/og-image.png">
+<meta name="author" content="신성진">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "질문의 시대는 끝났다 ② RAG 구축의 시대를 지나, 에이전트를 향해",
+  "description": "청크 RAG, 문서 통째 읽기, 에이전틱 검색, MCP 직접 연결 — 넓어진 선택지와 갈아타는 힘. 용역 발주가 아닌 협업으로 만드는 AI 사업, 그리고 기술보다 업무와 사람을 먼저 보는 리더의 순서. 특강 시리즈 2편.",
+  "datePublished": "2026-08-01T09:30:00+09:00",
+  "dateModified": "2026-08-01T09:30:00+09:00",
+  "author": {"@type": "Person", "name": "신성진", "url": "https://cdsa.kr"},
+  "publisher": {
+    "@type": "Organization",
+    "name": "한국데이터사이언티스트협회",
+    "url": "https://cdsa.kr",
+    "logo": {"@type": "ImageObject", "url": "https://cdsa.kr/og-image.png"}
+  },
+  "image": ["https://cdsa.kr/og-image.png"],
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://cdsa.kr/blog/prompt-to-agent-2.html"},
+  "isPartOf": {"@type": "CreativeWorkSeries", "name": "질문의 시대는 끝났다 — 프롬프트에서 에이전트로"},
+  "articleSection": "시리즈 · 질문의 시대는 끝났다 · 2편",
+  "inLanguage": "ko-KR"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "CDSA", "item": "https://cdsa.kr/"},
+    {"@type": "ListItem", "position": 2, "name": "블로그", "item": "https://cdsa.kr/blog/"},
+    {"@type": "ListItem", "position": 3, "name": "질문의 시대는 끝났다 ② RAG 구축의 시대를 지나, 에이전트를 향해", "item": "https://cdsa.kr/blog/prompt-to-agent-2.html"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "기존에 구축한 RAG 시스템은 이제 쓸모없어지나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "아닙니다. 문서를 정리하고 메타데이터를 붙이고 접근 권한을 정한 작업은 청크 RAG·문서 통째 읽기·에이전틱 검색·MCP 직접 연결 어떤 방식으로 가든 그대로 쓰입니다. 버려야 할 것은 '한 번 구축하면 끝'이라는 전제이지, 축적된 자산이 아닙니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "AI 사업 발주 계약서에 무엇이 들어가야 하나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "세 가지입니다. 첫째, 내부 담당자의 공동 개발 참여 시간을 과업에 명시할 것. 둘째, 산출물에 소스코드와 프롬프트·설정값을 포함시킬 것. 셋째, 준공 후 기관이 직접 수정할 수 있는 범위를 문서로 남길 것. 이 세 가지가 빠지면 다음 해에 같은 업체에 다시 의존하게 됩니다."
+      }
+    }
+  ]
+}
+</script>
+<!-- END SEO -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NZL39P5EYZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NZL39P5EYZ');
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/blog/_layout.css">
+<style>
+  :root {
+    --cream: #faf9f5; --cream-deep: #f3efe3; --ink: #1a1a1a; --ink-soft: #3d3d3a;
+    --ink-mute: #6b6b66; --rule: #d9d6cc; --clay: #cc785c; --clay-deep: #a85a42;
+    --clay-light: #f0ddd4; --code-bg: #f2f0e8; --teal: #2a7d6e;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--cream); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  body { font-family: "Fraunces", "Noto Serif KR", Georgia, serif; font-weight: 300; font-size: 19px; line-height: 1.72; letter-spacing: -0.005em; }
+
+  .topnav { position: fixed; top: 0; left: 0; right: 0; height: 48px; background: rgba(250, 249, 245, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; }
+  .topnav-left { display: flex; align-items: center; gap: 18px; }
+  .topnav-left a { color: var(--ink-soft); text-decoration: none; transition: color 0.2s; }
+  .topnav-left a:hover { color: var(--clay-deep); }
+  .topnav-home { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 600; font-size: 16px; color: var(--ink) !important; letter-spacing: -0.3px; }
+  .topnav-sep { color: var(--rule); font-size: 11px; }
+  .topnav-right { display: flex; gap: 16px; }
+  .topnav-right a { color: var(--ink-mute); text-decoration: none; font-size: 12px; transition: color 0.2s; }
+  .topnav-right a:hover { color: var(--clay-deep); }
+  .topnav-current { color: var(--ink) !important; font-weight: 600; position: relative; }
+  .topnav-current::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 2px; background: var(--clay); border-radius: 1px; }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 116px 28px 120px; }
+  .breadcrumb { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; margin-bottom: 36px; display: flex; align-items: center; gap: 8px; color: var(--ink-mute); }
+  .breadcrumb a { color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--ink); }
+  .breadcrumb .bc-sep { color: var(--rule); }
+
+  .kicker { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay-deep); margin-bottom: 28px; }
+  h1 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 400; font-size: 44px; line-height: 1.18; letter-spacing: -0.02em; margin: 0 0 24px; color: var(--ink); word-break:keep-all; overflow-wrap:break-word; }
+  .dek { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 300; font-style: italic; font-size: 21px; line-height: 1.55; color: var(--ink-soft); margin: 0 0 40px; word-break:keep-all; overflow-wrap:break-word; }
+  .byline { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); padding: 18px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-bottom: 56px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .byline strong { font-weight: 500; color: var(--ink-soft); }
+
+  .lede { font-size: 19px; line-height: 1.72; margin-bottom: 22px; word-break:keep-all; overflow-wrap:break-word; }
+  .lede::first-letter { font-family: "Fraunces", serif; font-weight: 400; font-size: 68px; float: left; line-height: 0.88; padding: 8px 10px 0 0; color: var(--clay); }
+
+  h2 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 28px; line-height: 1.3; letter-spacing: -0.015em; margin: 64px 0 16px; color: var(--ink); scroll-margin-top: 80px; word-break:keep-all; overflow-wrap:break-word; }
+  h2 .num { font-family: "Inter", sans-serif; font-size: 12px; font-weight: 600; color: var(--clay); letter-spacing: 0.1em; display: block; margin-bottom: 10px; }
+  p { margin: 0 0 22px; }
+  p + p { margin-top: -6px; }
+  strong { font-weight: 500; color: var(--ink); }
+  em { font-style: italic; }
+
+  /* 시리즈 안내 박스 */
+  .series-box { margin: 0 0 48px; padding: 20px 24px; background: var(--code-bg); border: 1px solid var(--rule); border-radius: 4px; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13.5px; line-height: 1.75; color: var(--ink-soft); }
+  .series-box .series-title { font-weight: 600; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay-deep); display: block; margin-bottom: 10px; }
+  .series-box ol { margin: 0; padding-left: 20px; }
+  .series-box li { margin: 3px 0; }
+  .series-box a { color: var(--clay-deep); text-decoration: none; border-bottom: 1px dotted var(--clay-light); }
+  .series-box a:hover { color: var(--ink); }
+  .series-box .current { color: var(--ink); font-weight: 600; }
+
+  /* 키노트 문장 */
+  blockquote { margin: 36px 0; padding: 4px 0 4px 22px; border-left: 2px solid var(--clay); font-family: "Fraunces", "Noto Serif KR", serif; font-style: italic; font-size: 20px; line-height: 1.55; color: var(--ink-soft); word-break:keep-all; overflow-wrap:break-word; }
+
+  .pull { font-family: "Fraunces", "Noto Serif KR", serif; font-size: 26px; line-height: 1.5; color: var(--ink); font-weight: 500; font-style: italic; margin: 40px 0; padding: 26px 0 26px 28px; border-left: 3px solid var(--clay); letter-spacing: -0.01em; word-break:keep-all; overflow-wrap:break-word; }
+
+  /* 시연 노트 */
+  .demo { margin: 28px 0; padding: 18px 22px; background: var(--code-bg); border-left: 3px solid var(--teal); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 14.5px; line-height: 1.7; color: var(--ink-soft); border-radius: 2px; word-break:keep-all; overflow-wrap:break-word; }
+  .demo .demo-label { font-weight: 600; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); display: block; margin-bottom: 6px; }
+
+  /* 덧붙임 */
+  .addendum { margin: 28px 0 40px; padding: 18px 22px; background: transparent; border: 1px solid var(--rule); border-left: 3px solid var(--clay); font-size: 16.5px; line-height: 1.75; color: var(--ink-soft); border-radius: 2px; word-break:keep-all; overflow-wrap:break-word; }
+  .addendum .add-label { font-family: "Inter", "Noto Sans KR", sans-serif; font-weight: 600; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay-deep); display: block; margin-bottom: 8px; }
+
+  .data-table { width: 100%; margin: 28px 0; border-collapse: collapse; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 14.5px; line-height: 1.55; }
+  .data-table thead th { text-align: left; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--clay-deep); padding: 12px 14px; border-bottom: 2px solid var(--clay); background: var(--code-bg); }
+  .data-table tbody td { padding: 12px 14px; border-bottom: 1px solid var(--rule); color: var(--ink-soft); vertical-align: top; }
+  .data-table tbody tr:last-child td { border-bottom: 2px solid var(--rule); }
+  .data-table .model-name { color: var(--ink); font-weight: 500; }
+
+  .source-note { margin-top: 40px; padding: 18px 22px; background: var(--code-bg); border-left: 2px solid var(--clay-light); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); line-height: 1.7; border-radius: 2px; }
+  .source-note strong { color: var(--ink-soft); font-weight: 600; }
+  .source-note a { color: var(--clay-deep); text-decoration: none; border-bottom: 1px dotted var(--clay-light); }
+  .source-note a:hover { color: var(--ink); }
+
+  .footer { margin-top: 72px; padding-top: 28px; border-top: 1px solid var(--rule); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); line-height: 1.7; }
+  .footer strong { color: var(--ink-soft); font-weight: 600; }
+  .footer a { color: var(--clay-deep); text-decoration: none; }
+
+  .bottom-nav { margin-top: 72px; padding: 36px 0; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .bottom-nav a { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .bottom-nav a:hover { color: var(--ink); }
+  .bottom-nav-home { font-family: "Fraunces", "Noto Serif KR", serif !important; font-size: 16px !important; font-style: italic; font-weight: 400; }
+
+  @media (max-width: 560px) {
+    .wrap { padding: 92px 22px 80px; }
+    h1 { font-size: 30px; line-height: 1.24; }
+    .dek { font-size: 17.5px; }
+    body { font-size: 17px; }
+    h2 { font-size: 23px; margin-top: 52px; }
+    .topnav-right { display: none; }
+    .pull { font-size: 22px; padding-left: 22px; }
+    .data-table { font-size: 13px; }
+    .data-table thead th, .data-table tbody td { padding: 10px 8px; }
+  }
+  @media (max-width: 400px) {
+    h1 { font-size: 26px !important; line-height: 1.25; }
+    .dek { font-size: 16px !important; }
+    h2 { font-size: 21px !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="topnav-left">
+    <a href="/" class="topnav-home">CDSA</a>
+    <span class="topnav-sep">|</span>
+    <a href="/">홈페이지</a>
+    <a href="/blog/" class="topnav-current">블로그</a>
+  </div>
+  <nav class="topnav-right">
+    <a href="/framework.html">프레임워크</a>
+    <a href="/unsloth-workbook.html">워크북</a>
+    <a href="/fullcourse.html">Full Course</a>
+  </nav>
+</header>
+
+<button class="blog-hamburger" aria-label="블로그 목록 열기"><span></span><span></span><span></span></button>
+<div class="blog-overlay"></div>
+<aside class="blog-left">
+  <div class="blog-left-title">Blog Posts</div>
+  <ol class="blog-left-list"></ol>
+</aside>
+<aside class="blog-right">
+  <div class="blog-right-title">On This Page</div>
+  <ul class="blog-toc"></ul>
+</aside>
+
+<article class="wrap">
+
+  <nav class="breadcrumb">
+    <a href="/">← CDSA 홈</a>
+    <span class="bc-sep">/</span>
+    <a href="/blog/">블로그</a>
+    <span class="bc-sep">/</span>
+    <span>시리즈 · 질문의 시대는 끝났다 · 2편</span>
+  </nav>
+
+  <div class="kicker">Series · 질문의 시대는 끝났다 · 2편</div>
+
+  <h1>RAG 구축의 시대를 지나,<br>에이전트를 향해</h1>
+
+  <p class="dek">
+    문서를 쪼개는 방식 자체를 다시 물어야 할 때가 왔습니다.
+    넓어진 기술 선택지에서 출발해, 용역이 아닌 협업으로
+    만드는 AI 사업, 그리고 기술보다 업무와 사람을 먼저 보는
+    리더의 순서까지 — 기관의 전환을 다룹니다.
+  </p>
+
+  <div class="byline">
+    <span><strong>신성진 · 한국데이터사이언티스트협회</strong>  ·  공공부문 AI 전환 특강 원고</span>
+    <span>2026. 8. 1</span>
+  </div>
+
+  <div class="series-box">
+    <span class="series-title">시리즈 · 질문의 시대는 끝났다 — 14개의 명제</span>
+    공공기관 관리자·실무자 대상 특강 원고를 4편으로 나눠 싣습니다.
+    <ol>
+      <li><a href="/blog/prompt-to-agent-1.html">1편 · 기술의 이동 — 프롬프트에서 피지컬 AI까지 (명제 01–05)</a></li>
+      <li><span class="current">2편 · RAG 구축의 시대를 지나, 에이전트를 향해 (명제 06–08)</span></li>
+      <li><a href="/blog/prompt-to-agent-3.html">3편 · 중간관리자, AX팀, 그리고 튀는 사람 (명제 09–11)</a></li>
+      <li><a href="/blog/prompt-to-agent-4.html">4편 · 바이브코딩, 골목길, 그리고 네 개의 질문 (명제 12–14)</a></li>
+    </ol>
+  </div>
+
+  <p class="lede">공공부문은 지난 몇 년, 문서를 쪼개고 청크를 나누고 임베딩하는 RAG 시스템 구축에 바빴습니다. 그런데 컨텍스트 윈도우가 길어지고 모델의 맥락 해석력이 강해지면서, 그 전제가 흔들리고 있습니다. 기관의 전환을 다루는 2편은 기술 스택의 선택지에서 출발해, 사업을 발주하는 방식과 리더의 우선순위까지 내려갑니다.</p>
+
+  <h2 id="s06"><span class="num">명제 06</span>RAG 구축의 시대를 지나, 에이전트를 향해</h2>
+
+  <blockquote>문서를 쪼개는 방식 자체를 다시 물어야 한다.</blockquote>
+
+  <p>선택지가 넓어졌습니다.</p>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>방식</th><th>특징</th><th>적합한 경우</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="model-name">청크 기반 RAG</td><td>문서를 조각내 검색</td><td>문서량이 매우 많고 질의가 정형적일 때</td></tr>
+      <tr><td class="model-name">문서 통째 읽기</td><td>긴 컨텍스트에 원문 전체 투입</td><td>규정·계약서처럼 맥락이 끊기면 안 되는 문서</td></tr>
+      <tr><td class="model-name">에이전틱 검색</td><td>AI가 스스로 탐색·재질의</td><td>어디에 답이 있는지 모를 때</td></tr>
+      <tr><td class="model-name">MCP 직접 연결</td><td>원천 데이터·API에 직결</td><td>통계·법령처럼 원본이 구조화돼 있을 때</td></tr>
+    </tbody>
+  </table>
+
+  <p>더 넓고 더 최신화된 정보를 습득하는 구조로, 변화에 맞춰 계속 갈아타며 적응해야 합니다.</p>
+
+  <div class="demo">
+    <span class="demo-label">특강 시연</span>
+    같은 질문을 청크 기반 RAG와 에이전틱 검색으로 각각 처리해 답의 품질을 비교.
+  </div>
+
+  <div class="addendum">
+    <span class="add-label">덧붙임</span>
+    이 말은 기존 RAG 투자가 헛되었다는 뜻이 아니다. 문서를 정리하고 메타데이터를 붙이고 접근 권한을 정한 작업은 어떤 방식으로 가든 그대로 쓰인다. 버려야 할 것은 <strong>"한 번 구축하면 끝"이라는 전제</strong>이지, 축적된 자산이 아니다.
+  </div>
+
+  <h2 id="s07"><span class="num">명제 07</span>용역회사에 맡기는 AI사업에서, 협업으로 만드는 AI사업으로</h2>
+
+  <blockquote>AI 사업은 구축이 끝이 아니라 시작이다.</blockquote>
+
+  <p>AI 사업은 트렌드에 따라 양태가 계속 바뀝니다. 구축이 끝이 아니라 유지보수와 개편이 상시 과제가 된다는 뜻이고, 이를 쫓아가려면 외주만으로는 부족합니다. <strong>내부 전문인재 양성</strong>이 전제 조건입니다.</p>
+
+  <p>기관의 AI 도입은 실무자가 AI를 잘 쓰는 것을 넘어, <strong>'쓸 수 있는 · 써야 하는 · 쓰고 싶은' AI 서비스</strong>를 만드는 일입니다. 그 설계는 직원과 업무를 아는 사람만 할 수 있습니다. 인터뷰 몇 번과 보고자료만으로 외부 업체가 조직의 맥락을 이해하기는 어렵습니다.</p>
+
+  <p class="pull">발주서에 '무엇을 만들지'보다 '누가 함께 만들지'를 먼저 씁니다. 내부 인력의 역할과 투입 시간을 사업 구조에 포함시킵니다.</p>
+
+  <div class="addendum">
+    <span class="add-label">덧붙임</span>
+    실무적으로는 세 가지가 계약서에 들어가야 한다. ① 내부 담당자의 <strong>공동 개발 참여 시간</strong>을 과업에 명시할 것 ② 산출물에 <strong>소스코드와 프롬프트·설정값</strong>을 포함시킬 것 ③ 준공 후 <strong>기관이 직접 수정할 수 있는 범위</strong>를 문서로 남길 것. 이 세 가지가 빠지면 다음 해에 같은 업체에 다시 의존하게 된다.
+  </div>
+
+  <h2 id="s08"><span class="num">명제 08</span>리더는 기술이 아니라 업무와 사람부터 본다</h2>
+
+  <blockquote>AI가 도울 지점을 찾는 순서는 정해져 있다.</blockquote>
+
+  <p>업무를 단위로 <strong>쪼개서 분석</strong>하고, 그 안에서 <strong>병목 · 어려움 · 막힌 곳</strong>을 찾아내는 일. 이것이 리더가 먼저 해야 할 일입니다. 어떤 AI를 살지는 그다음 문제입니다.</p>
+
+  <p>'AI가 잘한다'의 범위가 글을 읽고 쓰는 것에서 도구를 다루는 것으로 넓어졌기 때문에, 어떤 도구·어떤 기존 시스템과 엮을지 정하는 <strong>오케스트레이션 설계</strong>가 도입의 성패를 가릅니다. 모델 선택보다 조합 설계가 리더의 의사결정입니다.</p>
+
+  <p>부서 업무 1개를 단계로 쪼개고, 단계마다 아래 세 칸을 채워 봅니다.</p>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>업무 단계</th><th>병목인가</th><th>AI가 도울 수 있나</th><th>어떤 도구·시스템과 엮나</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="model-name">(예) 민원 접수 분류</td><td>○ 하루 200건 수작업</td><td>○ 분류·요약</td><td>민원시스템 API + LLM</td></tr>
+      <tr><td class="model-name">(예) 결재 문서 작성</td><td>△</td><td>○ 초안 생성</td><td>한글 문서 + 과거 결재문</td></tr>
+      <tr><td class="model-name">(예) 대면 상담</td><td>×</td><td>×</td><td>—</td></tr>
+    </tbody>
+  </table>
+
+  <div class="addendum">
+    <span class="add-label">덧붙임</span>
+    이 표를 채우다 보면 대개 "AI가 도울 수 있나"에 ○가 몰린다. 그래서 한 칸을 더 두는 것이 좋다 — <strong>"이 단계가 개선되면 무엇이 달라지는가"</strong>. 여기에 답할 수 없는 항목은 기술적으로 가능해도 우선순위에서 내려야 한다.
+  </div>
+
+  <div class="source-note">
+    <strong>이 글은</strong> 공공기관 관리자·실무자 대상 특강 「질문의 시대는 끝났다 — 프롬프트에서 에이전트로」 원고의 2편(명제 06–08)입니다. 기술의 이동을 다룬 <a href="/blog/prompt-to-agent-1.html">1편</a>에서 이어지며, 사람과 조직을 다루는 <a href="/blog/prompt-to-agent-3.html">3편</a>으로 이어집니다.
+  </div>
+
+  <div class="footer">
+    <p><strong>신성진</strong> — 한국데이터사이언티스트협회 대표이사. 행정안전부 전문위원, 과학기술정보통신부 자문위원. 행정·공공·민간 현장의 골목길 문제를 작은 AI로 직접 풀어내는 바이브 코딩 교육에 집중한다.</p>
+    <p>이 시리즈는 1편(기술의 이동) → 2편(RAG를 넘어 에이전트로) → 3편(사람과 조직) → 4편(바이브코딩과 골목길) 순으로 이어집니다. 의견·질문은 <a href="mailto:sjshin@cdsa.or.kr">sjshin@cdsa.or.kr</a>로 보내 주세요.</p>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="/blog/prompt-to-agent-1.html" class="bottom-nav-home">← 1편 · 기술은 네 번 이동했다</a>
+    <a href="/blog/prompt-to-agent-3.html">3편 · 중간관리자, AX팀, 그리고 튀는 사람 →</a>
+  </nav>
+
+</article>
+
+<script src="/blog/_posts.js" defer></script>
+
+</body>
+</html>

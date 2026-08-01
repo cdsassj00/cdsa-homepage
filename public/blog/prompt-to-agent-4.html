@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>질문의 시대는 끝났다 ④ 바이브코딩, 골목길, 그리고 네 개의 질문 · CDSA 블로그</title>
+<meta name="description" content="바이브코딩의 의미는 도전이다. 광진구 류승인 주무관의 국가법령정보 MCP에서 국가데이터처 KOSIS MCP까지 — 골목길 혁신의 전국 확산, 그리고 Cheaper·Better·Faster·Easier 네 개의 판정 질문. 특강 시리즈 완결편.">
+<meta property="og:title" content="질문의 시대는 끝났다 ④ 바이브코딩, 골목길, 그리고 네 개의 질문">
+<meta property="og:description" content="한 개인이 자기 골목길을 치웠더니, 중앙부처가 같은 방식으로 국가 데이터를 열었다. 코닥·국가법령정보 MCP·KOSIS MCP — 그리고 AI 전환을 판정하는 네 개의 질문.">
+<meta property="og:type" content="article">
+<!-- BEGIN SEO -->
+<meta name="keywords" content="바이브코딩, 바이브 코딩, 골목길 혁신, 류승인, 코닥, Kordoc, 국가법령정보 MCP, Korean Law MCP, KOSIS MCP, 국가데이터처, 광진구청, 공공 혁신 사례, Cheaper Better Faster Easier, AI 전환 판정, 공공부문 AI, 신성진, CDSA">
+<link rel="canonical" href="https://cdsa.kr/blog/prompt-to-agent-4.html">
+<meta property="og:url" content="https://cdsa.kr/blog/prompt-to-agent-4.html">
+<meta property="og:site_name" content="한국데이터사이언티스트협회">
+<meta property="og:image" content="https://cdsa.kr/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta property="article:published_time" content="2026-08-01T10:30:00+09:00">
+<meta property="article:modified_time" content="2026-08-01T10:30:00+09:00">
+<meta property="article:author" content="신성진">
+<meta property="article:section" content="시리즈 · 질문의 시대는 끝났다 · 4편">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="질문의 시대는 끝났다 ④ 바이브코딩, 골목길, 그리고 네 개의 질문">
+<meta name="twitter:description" content="한 개인이 자기 골목길을 치웠더니, 중앙부처가 같은 방식으로 국가 데이터를 열었다. 코닥·국가법령정보 MCP·KOSIS MCP — 그리고 AI 전환을 판정하는 네 개의 질문.">
+<meta name="twitter:image" content="https://cdsa.kr/og-image.png">
+<meta name="author" content="신성진">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "질문의 시대는 끝났다 ④ 바이브코딩, 골목길, 그리고 네 개의 질문",
+  "description": "바이브코딩의 의미는 도전이다. 광진구 류승인 주무관의 국가법령정보 MCP에서 국가데이터처 KOSIS MCP까지 — 골목길 혁신의 전국 확산, 그리고 Cheaper·Better·Faster·Easier 네 개의 판정 질문. 특강 시리즈 완결편.",
+  "datePublished": "2026-08-01T10:30:00+09:00",
+  "dateModified": "2026-08-01T10:30:00+09:00",
+  "author": {"@type": "Person", "name": "신성진", "url": "https://cdsa.kr"},
+  "publisher": {
+    "@type": "Organization",
+    "name": "한국데이터사이언티스트협회",
+    "url": "https://cdsa.kr",
+    "logo": {"@type": "ImageObject", "url": "https://cdsa.kr/og-image.png"}
+  },
+  "image": ["https://cdsa.kr/og-image.png"],
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://cdsa.kr/blog/prompt-to-agent-4.html"},
+  "isPartOf": {"@type": "CreativeWorkSeries", "name": "질문의 시대는 끝났다 — 프롬프트에서 에이전트로"},
+  "articleSection": "시리즈 · 질문의 시대는 끝났다 · 4편",
+  "inLanguage": "ko-KR"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "CDSA", "item": "https://cdsa.kr/"},
+    {"@type": "ListItem", "position": 2, "name": "블로그", "item": "https://cdsa.kr/blog/"},
+    {"@type": "ListItem", "position": 3, "name": "질문의 시대는 끝났다 ④ 바이브코딩, 골목길, 그리고 네 개의 질문", "item": "https://cdsa.kr/blog/prompt-to-agent-4.html"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "AI 도입 성과는 무엇으로 판정하나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "네 개의 질문입니다. Cheaper(비용·투입 인력이 실제로 줄었는가), Better(결과물의 품질과 정확도가 올라갔는가), Faster(처리 시간이 짧아졌는가), Easier(담당자가 실제로 더 편해졌는가). 넷 모두 '그렇다'고 답할 수 있어야 진짜 쓰이는 AI 전환입니다. 공공에서 가장 자주 빠지는 항목은 Easier이며, 이것만은 실제 사용자에게 직접 물어서 채워야 합니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "KOSIS MCP 시범서비스란 무엇인가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "국가데이터처가 2026년 7월 8일 개시한 서비스로, 국가통계포털(KOSIS)에 수록된 1,360여 종의 국가승인통계와 26만여 개 통계표를 Claude·Gemini·ChatGPT에 직접 연결합니다. 일상언어 질의만으로 원하는 통계표를 만들 수 있으며, 7월 16일 설정 가이드가 공지로 배포됐습니다."
+      }
+    }
+  ]
+}
+</script>
+<!-- END SEO -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NZL39P5EYZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NZL39P5EYZ');
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/blog/_layout.css">
+<style>
+  :root {
+    --cream: #faf9f5; --cream-deep: #f3efe3; --ink: #1a1a1a; --ink-soft: #3d3d3a;
+    --ink-mute: #6b6b66; --rule: #d9d6cc; --clay: #cc785c; --clay-deep: #a85a42;
+    --clay-light: #f0ddd4; --code-bg: #f2f0e8; --teal: #2a7d6e;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--cream); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  body { font-family: "Fraunces", "Noto Serif KR", Georgia, serif; font-weight: 300; font-size: 19px; line-height: 1.72; letter-spacing: -0.005em; }
+
+  .topnav { position: fixed; top: 0; left: 0; right: 0; height: 48px; background: rgba(250, 249, 245, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; }
+  .topnav-left { display: flex; align-items: center; gap: 18px; }
+  .topnav-left a { color: var(--ink-soft); text-decoration: none; transition: color 0.2s; }
+  .topnav-left a:hover { color: var(--clay-deep); }
+  .topnav-home { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 600; font-size: 16px; color: var(--ink) !important; letter-spacing: -0.3px; }
+  .topnav-sep { color: var(--rule); font-size: 11px; }
+  .topnav-right { display: flex; gap: 16px; }
+  .topnav-right a { color: var(--ink-mute); text-decoration: none; font-size: 12px; transition: color 0.2s; }
+  .topnav-right a:hover { color: var(--clay-deep); }
+  .topnav-current { color: var(--ink) !important; font-weight: 600; position: relative; }
+  .topnav-current::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 2px; background: var(--clay); border-radius: 1px; }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 116px 28px 120px; }
+  .breadcrumb { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; margin-bottom: 36px; display: flex; align-items: center; gap: 8px; color: var(--ink-mute); }
+  .breadcrumb a { color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--ink); }
+  .breadcrumb .bc-sep { color: var(--rule); }
+
+  .kicker { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay-deep); margin-bottom: 28px; }
+  h1 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 400; font-size: 44px; line-height: 1.18; letter-spacing: -0.02em; margin: 0 0 24px; color: var(--ink); word-break:keep-all; overflow-wrap:break-word; }
+  .dek { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 300; font-style: italic; font-size: 21px; line-height: 1.55; color: var(--ink-soft); margin: 0 0 40px; word-break:keep-all; overflow-wrap:break-word; }
+  .byline { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); padding: 18px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-bottom: 56px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .byline strong { font-weight: 500; color: var(--ink-soft); }
+
+  .lede { font-size: 19px; line-height: 1.72; margin-bottom: 22px; word-break:keep-all; overflow-wrap:break-word; }
+  .lede::first-letter { font-family: "Fraunces", serif; font-weight: 400; font-size: 68px; float: left; line-height: 0.88; padding: 8px 10px 0 0; color: var(--clay); }
+
+  h2 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 28px; line-height: 1.3; letter-spacing: -0.015em; margin: 64px 0 16px; color: var(--ink); scroll-margin-top: 80px; word-break:keep-all; overflow-wrap:break-word; }
+  h2 .num { font-family: "Inter", sans-serif; font-size: 12px; font-weight: 600; color: var(--clay); letter-spacing: 0.1em; display: block; margin-bottom: 10px; }
+  p { margin: 0 0 22px; }
+  p + p { margin-top: -6px; }
+  strong { font-weight: 500; color: var(--ink); }
+  em { font-style: italic; }
+
+  /* 시리즈 안내 박스 */
+  .series-box { margin: 0 0 48px; padding: 20px 24px; background: var(--code-bg); border: 1px solid var(--rule); border-radius: 4px; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13.5px; line-height: 1.75; color: var(--ink-soft); }
+  .series-box .series-title { font-weight: 600; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay-deep); display: block; margin-bottom: 10px; }
+  .series-box ol { margin: 0; padding-left: 20px; }
+  .series-box li { margin: 3px 0; }
+  .series-box a { color: var(--clay-deep); text-decoration: none; border-bottom: 1px dotted var(--clay-light); }
+  .series-box a:hover { color: var(--ink); }
+  .series-box .current { color: var(--ink); font-weight: 600; }
+
+  /* 키노트 문장 */
+  blockquote { margin: 36px 0; padding: 4px 0 4px 22px; border-left: 2px solid var(--clay); font-family: "Fraunces", "Noto Serif KR", serif; font-style: italic; font-size: 20px; line-height: 1.55; color: var(--ink-soft); word-break:keep-all; overflow-wrap:break-word; }
+
+  .pull { font-family: "Fraunces", "Noto Serif KR", serif; font-size: 26px; line-height: 1.5; color: var(--ink); font-weight: 500; font-style: italic; margin: 40px 0; padding: 26px 0 26px 28px; border-left: 3px solid var(--clay); letter-spacing: -0.01em; word-break:keep-all; overflow-wrap:break-word; }
+
+  /* 시연 노트 */
+  .demo { margin: 28px 0; padding: 18px 22px; background: var(--code-bg); border-left: 3px solid var(--teal); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 14.5px; line-height: 1.7; color: var(--ink-soft); border-radius: 2px; word-break:keep-all; overflow-wrap:break-word; }
+  .demo .demo-label { font-weight: 600; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); display: block; margin-bottom: 6px; }
+
+  /* 덧붙임 */
+  .addendum { margin: 28px 0 40px; padding: 18px 22px; background: transparent; border: 1px solid var(--rule); border-left: 3px solid var(--clay); font-size: 16.5px; line-height: 1.75; color: var(--ink-soft); border-radius: 2px; word-break:keep-all; overflow-wrap:break-word; }
+  .addendum .add-label { font-family: "Inter", "Noto Sans KR", sans-serif; font-weight: 600; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay-deep); display: block; margin-bottom: 8px; }
+
+  .data-table { width: 100%; margin: 28px 0; border-collapse: collapse; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 14.5px; line-height: 1.55; }
+  .data-table thead th { text-align: left; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--clay-deep); padding: 12px 14px; border-bottom: 2px solid var(--clay); background: var(--code-bg); }
+  .data-table tbody td { padding: 12px 14px; border-bottom: 1px solid var(--rule); color: var(--ink-soft); vertical-align: top; }
+  .data-table tbody tr:last-child td { border-bottom: 2px solid var(--rule); }
+  .data-table .model-name { color: var(--ink); font-weight: 500; }
+
+  .source-note { margin-top: 40px; padding: 18px 22px; background: var(--code-bg); border-left: 2px solid var(--clay-light); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); line-height: 1.7; border-radius: 2px; }
+  .source-note strong { color: var(--ink-soft); font-weight: 600; }
+  .source-note a { color: var(--clay-deep); text-decoration: none; border-bottom: 1px dotted var(--clay-light); }
+  .source-note a:hover { color: var(--ink); }
+
+  .footer { margin-top: 72px; padding-top: 28px; border-top: 1px solid var(--rule); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); line-height: 1.7; }
+  .footer strong { color: var(--ink-soft); font-weight: 600; }
+  .footer a { color: var(--clay-deep); text-decoration: none; }
+
+  .bottom-nav { margin-top: 72px; padding: 36px 0; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .bottom-nav a { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .bottom-nav a:hover { color: var(--ink); }
+  .bottom-nav-home { font-family: "Fraunces", "Noto Serif KR", serif !important; font-size: 16px !important; font-style: italic; font-weight: 400; }
+
+  @media (max-width: 560px) {
+    .wrap { padding: 92px 22px 80px; }
+    h1 { font-size: 30px; line-height: 1.24; }
+    .dek { font-size: 17.5px; }
+    body { font-size: 17px; }
+    h2 { font-size: 23px; margin-top: 52px; }
+    .topnav-right { display: none; }
+    .pull { font-size: 22px; padding-left: 22px; }
+    .data-table { font-size: 13px; }
+    .data-table thead th, .data-table tbody td { padding: 10px 8px; }
+  }
+  @media (max-width: 400px) {
+    h1 { font-size: 26px !important; line-height: 1.25; }
+    .dek { font-size: 16px !important; }
+    h2 { font-size: 21px !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="topnav-left">
+    <a href="/" class="topnav-home">CDSA</a>
+    <span class="topnav-sep">|</span>
+    <a href="/">홈페이지</a>
+    <a href="/blog/" class="topnav-current">블로그</a>
+  </div>
+  <nav class="topnav-right">
+    <a href="/framework.html">프레임워크</a>
+    <a href="/unsloth-workbook.html">워크북</a>
+    <a href="/fullcourse.html">Full Course</a>
+  </nav>
+</header>
+
+<button class="blog-hamburger" aria-label="블로그 목록 열기"><span></span><span></span><span></span></button>
+<div class="blog-overlay"></div>
+<aside class="blog-left">
+  <div class="blog-left-title">Blog Posts</div>
+  <ol class="blog-left-list"></ol>
+</aside>
+<aside class="blog-right">
+  <div class="blog-right-title">On This Page</div>
+  <ul class="blog-toc"></ul>
+</aside>
+
+<article class="wrap">
+
+  <nav class="breadcrumb">
+    <a href="/">← CDSA 홈</a>
+    <span class="bc-sep">/</span>
+    <a href="/blog/">블로그</a>
+    <span class="bc-sep">/</span>
+    <span>시리즈 · 질문의 시대는 끝났다 · 4편</span>
+  </nav>
+
+  <div class="kicker">Series · 질문의 시대는 끝났다 · 4편 · 完</div>
+
+  <h1>바이브코딩, 골목길,<br>그리고 네 개의 질문</h1>
+
+  <p class="dek">
+    한 공무원이 자기 골목길을 치웠더니, 중앙부처가 같은
+    방식으로 국가 데이터를 열었습니다. 바이브코딩이 결국
+    무엇을 의미하는지, 그리고 모든 AI 도입 안건 앞에 붙여야
+    할 네 개의 질문 — 시리즈 완결편입니다.
+  </p>
+
+  <div class="byline">
+    <span><strong>신성진 · 한국데이터사이언티스트협회</strong>  ·  공공부문 AI 전환 특강 원고</span>
+    <span>2026. 8. 1</span>
+  </div>
+
+  <div class="series-box">
+    <span class="series-title">시리즈 · 질문의 시대는 끝났다 — 14개의 명제</span>
+    공공기관 관리자·실무자 대상 특강 원고를 4편으로 나눠 싣습니다.
+    <ol>
+      <li><a href="/blog/prompt-to-agent-1.html">1편 · 기술의 이동 — 프롬프트에서 피지컬 AI까지 (명제 01–05)</a></li>
+      <li><a href="/blog/prompt-to-agent-2.html">2편 · RAG 구축의 시대를 지나, 에이전트를 향해 (명제 06–08)</a></li>
+      <li><a href="/blog/prompt-to-agent-3.html">3편 · 중간관리자, AX팀, 그리고 튀는 사람 (명제 09–11)</a></li>
+      <li><span class="current">4편 · 바이브코딩, 골목길, 그리고 네 개의 질문 (명제 12–14)</span></li>
+    </ol>
+  </div>
+
+  <p class="lede">기술의 이동을 읽고(1편), 기관의 전환을 설계했다면(2·3편), 마지막은 사람과 문화입니다. 바이브코딩이 결국 무엇을 의미하는지, 한 공무원의 골목길 청소가 어떻게 중앙부처의 응답으로 이어졌는지, 그리고 모든 AI 도입 안건 앞에 붙여야 할 네 개의 질문까지 — 시리즈의 완결편입니다.</p>
+
+  <h2 id="s12"><span class="num">명제 12</span>바이브코딩의 의미는 도전이다</h2>
+
+  <blockquote>한 번도 해보지 않은 일에 도전하는 것.</blockquote>
+
+  <p>바이브코딩의 의미, AI 도입의 의미는 결국 이것입니다.</p>
+
+  <p>개발자와 소수 IT 담당자만 보던 기술이 모두에게 공유되어 <strong>다양한 관점</strong>이 생기는 것. 지금껏 도전해 본 적 없는 일에 도전해 <strong>내 영역의 경계를 확장</strong>하는 것. <strong>Try &amp; Error</strong>, 그리고 중간에 포기하지 않고 끝까지 <strong>완수</strong>하는 경험.</p>
+
+  <p>생성형 AI 시대가 우리에게 주는 메시지는 도구의 사용법이 아니라 이 태도입니다.</p>
+
+  <div class="demo">
+    <span class="demo-label">특강 시연</span>
+    콘솔(터미널)로 브라우저를 직접 제어해 보기. 그리고 생애 첫 Python 코드를 실행해 보기.
+  </div>
+
+  <div class="addendum">
+    <span class="add-label">덧붙임</span>
+    이 시연에서 중요한 것은 성공이 아니라 <strong>실패를 보여주는 것</strong>이다. 에러 메시지가 뜨고, 그것을 AI에게 붙여 넣고, 고쳐서 다시 실행되는 장면. 대부분의 사람이 코딩을 포기하는 지점이 첫 에러이기 때문이다. "에러는 실패가 아니라 다음 단계의 입력"이라는 것을 한 번 체험하면, 그다음부터는 혼자 간다.
+  </div>
+
+  <h2 id="s13"><span class="num">명제 13</span>고속도로는 국가가 닦지만, 골목길은 내가 치운다</h2>
+
+  <blockquote>작은 혁신은 어떻게 전국의 표준이 되었나.</blockquote>
+
+  <p>조직과 국가는 생각보다 당신의 엑셀과 한글 파일에 관심이 없습니다. 고속도로는 국가가 닦지만 골목길은 누가 치워주지 않습니다. 내 책상의 불편을 AI로 해소하는 일에서 시작해야 합니다.</p>
+
+  <p><strong>개인의 시작</strong> — 광진구청 7년차 일반행정 류승인 주무관은 법제처를 수백 번 수동 검색하다 지쳐서 도구를 직접 만들었습니다.</p>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>도구</th><th>무엇을 하나</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="model-name">코닥(Kordoc)</td>
+        <td>공공기관이 쓰는 HWP·HWPX·PDF를 자동 분석해 텍스트를 추출하고 비교·정리·생성까지 지원. 공개 공문서와 법령 별표·서식 수천 건을 처리하며 성능을 입증.</td>
+      </tr>
+      <tr>
+        <td class="model-name">국가법령정보 MCP<br>(Korean Law MCP)</td>
+        <td>법률 1,600여 개, 행정규칙 1만여 개, 대법원·헌법재판소·조세심판원 판례까지 이어지는 법령 체계를 64개의 구조화된 도구로 감쌌다. 약칭 자동 인식("화관법" → "화학물질관리법"), 조문번호 변환, 별표·별지 서식 자동 추출 같은 실무 기능 완비.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>관련 전공자가 아닌 현직 공무원이 실무 경험만으로 만들었고, 이 사례는 국회의원 SNS를 통해 전국에 알려졌습니다.</p>
+
+  <p><strong>국가의 응답</strong> — 그리고 사례는 사례로 끝나지 않았습니다. 국가데이터처가 2026년 7월 8일 <strong>KOSIS MCP 시범서비스</strong>를 개시했습니다. 국가통계포털에 수록된 1,360여 종의 국가승인통계와 26만여 개 통계표를 Claude·Gemini·ChatGPT에 직접 연결하는 방식입니다. 이용자는 통계를 일일이 검색하고 여러 표를 비교·가공하는 과정 없이, 일상언어 질의만으로 원하는 통계표를 만들 수 있습니다. 7월 16일에는 설정 가이드까지 공지로 배포됐습니다.</p>
+
+  <p class="pull">한 개인이 자기 골목길을 치웠더니, 중앙부처가 같은 방식으로 국가 데이터를 열었습니다. 이만한 혁신 확산 사례가 또 있는가.</p>
+
+  <div class="demo">
+    <span class="demo-label">사례 링크</span>
+    GitHub korean-law-mcp · KOSIS 공지 「AI 연계 개방형 표준 프로토콜 MCP 설정 가이드」(2026.7.16) — 지금 바로 연결해 볼 수 있다.
+  </div>
+
+  <div class="addendum">
+    <span class="add-label">덧붙임</span>
+    이 사례에서 배울 것은 "공무원도 개발할 수 있다"가 아니다. <strong>불편을 겪은 사람이 만들었기 때문에 잘 만들어졌다</strong>는 것이다. 약칭 자동 인식이나 별표 추출 같은 기능은 법령을 매일 찾아본 사람만 필요성을 안다. 외부 업체가 요구사항 정의서만 보고 만들었다면 절대 들어가지 않았을 기능이다.
+    <br><br>
+    그리고 확산에는 조건이 있었다. 광진구는 세종사이버대학교와 AI 분야 업무협약을 맺고 직원 대상 실습교육과 공모전을 지속해 왔다. <strong>개인의 시도를 받아 줄 기관의 그릇이 먼저 있었다.</strong> 사례를 부러워하기 전에, 우리 기관에 그 그릇이 있는지를 먼저 물어야 한다.
+  </div>
+
+  <h2 id="s14"><span class="num">명제 14</span>AI 전환을 판정하는 네 개의 질문</h2>
+
+  <blockquote>더 싸졌는가, 더 나아졌는가, 더 빨라졌는가, 더 쉬워졌는가.</blockquote>
+
+  <p>다시 한번, AI는 만능 키가 아닙니다. 우리 업무 사이사이의 공백과 비효율을 메워 주는 최첨단 도구입니다.</p>
+
+  <p>도입 전에는 <strong>'이것으로 무엇을 풀고 싶은가'</strong>를 되묻고, 도입 후에는 네 가지로 판정합니다.</p>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>기준</th><th>확인할 것</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="model-name">Cheaper</td><td>비용·투입 인력이 실제로 줄었는가</td></tr>
+      <tr><td class="model-name">Better</td><td>결과물의 품질과 정확도가 올라갔는가</td></tr>
+      <tr><td class="model-name">Faster</td><td>처리 시간과 대기 시간이 짧아졌는가</td></tr>
+      <tr><td class="model-name">Easier</td><td>담당자가 실제로 더 편해졌는가</td></tr>
+    </tbody>
+  </table>
+
+  <p>네 질문에 '그렇다'고 답할 수 있어야 진짜 쓰이는 AI 전환입니다.</p>
+
+  <p>기술의 이동을 읽고(명제 01–05), 기관의 전환을 설계하고(06–11), 내 책상의 골목길부터 치우는 일(12–13). 14개 명제는 결국 이 네 질문으로 수렴합니다.</p>
+
+  <p class="pull">도입 안건마다 '무엇을 풀고 싶은가' 한 줄 + Cheaper / Better / Faster / Easier 4문항 판정표를 붙입니다.</p>
+
+  <div class="addendum">
+    <span class="add-label">덧붙임</span>
+    이 네 가지 중 공공에서 가장 자주 빠지는 것이 <strong>Easier</strong>다. 비용과 시간은 보고서에 숫자로 쓰기 좋지만, "담당자가 편해졌는가"는 측정이 애매해서 생략된다. 그런데 도입한 시스템이 6개월 뒤 방치되는 이유는 거의 언제나 여기에 있다. 판정표에서 이 항목만은 <strong>실제 사용자에게 직접 물어서</strong> 채워야 한다.
+  </div>
+
+  <div class="source-note">
+    <strong>근거 자료</strong> · 코닥(Kordoc)·국가법령정보 MCP — 헤럴드경제 등 언론 보도(2026.4.3) · KOSIS MCP 시범서비스 — 국가데이터처/KOSIS 공지(2026.7.8 개시, 7.16 가이드). 본 시리즈는 공공기관 관리자·실무자 대상 특강 원고(2026년 8월 1일 기준)를 블로그 연재용으로 재구성했습니다. <a href="/blog/prompt-to-agent-1.html">1편(기술의 이동)</a> · <a href="/blog/prompt-to-agent-2.html">2편(RAG를 넘어)</a> · <a href="/blog/prompt-to-agent-3.html">3편(사람과 조직)</a>에서 전체 흐름을 확인할 수 있습니다.
+  </div>
+
+  <div class="footer">
+    <p><strong>신성진</strong> — 한국데이터사이언티스트협회 대표이사. 행정안전부 전문위원, 과학기술정보통신부 자문위원. 행정·공공·민간 현장의 골목길 문제를 작은 AI로 직접 풀어내는 바이브 코딩 교육에 집중한다.</p>
+    <p>이 시리즈는 1편(기술의 이동) → 2편(RAG를 넘어 에이전트로) → 3편(사람과 조직) → 4편(바이브코딩과 골목길) 순으로 이어집니다. 의견·질문은 <a href="mailto:sjshin@cdsa.or.kr">sjshin@cdsa.or.kr</a>로 보내 주세요.</p>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="/blog/prompt-to-agent-3.html" class="bottom-nav-home">← 3편 · 중간관리자, AX팀, 튀는 사람</a>
+    <a href="/blog/">블로그 목록 →</a>
+  </nav>
+
+</article>
+
+<script src="/blog/_posts.js" defer></script>
+
+</body>
+</html>

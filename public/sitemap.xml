@@ -14,7 +14,7 @@
   </url>
   <url>
     <loc>https://cdsa.kr/blog/</loc>
-    <lastmod>2026-05-21</lastmod>
+    <lastmod>2026-08-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -45,6 +45,30 @@
     <priority>0.9</priority>
   </url>
   <!-- Blog Posts -->
+  <url>
+    <loc>https://cdsa.kr/blog/prompt-to-agent-1.html</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://cdsa.kr/blog/prompt-to-agent-2.html</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://cdsa.kr/blog/prompt-to-agent-3.html</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://cdsa.kr/blog/prompt-to-agent-4.html</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
   <url>
     <loc>https://cdsa.kr/blog/llm-wiki-anatomy.html</loc>
     <lastmod>2026-07-04</lastmod>
@@ -231,5 +255,11 @@
     <lastmod>2026-05-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cdsa.kr/privacy.html</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
 </urlset>

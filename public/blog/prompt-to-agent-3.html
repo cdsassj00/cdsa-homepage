@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>질문의 시대는 끝났다 ③ 중간관리자, AX팀, 그리고 튀는 사람 · CDSA 블로그</title>
+<meta name="description" content="중간관리자는 컨텍스트를 만드는 사람이다. AX팀은 IT 개발자만으로 만들 수 없다. AI를 잘 쓰는 사람은 뽑는 것이 아니라 교육으로 발굴하는 것이다 — 기관 전환에서 사람의 자리를 다루는 특강 시리즈 3편.">
+<meta property="og:title" content="질문의 시대는 끝났다 ③ 중간관리자, AX팀, 그리고 튀는 사람">
+<meta property="og:description" content="일이 많아졌다, 검토만 는다는 호소에 대한 답. 중간관리자의 재정의, AX팀의 3인 최소 조합, 교육으로 발굴하는 부서 AI 리더 — 특강 시리즈 3편.">
+<meta property="og:type" content="article">
+<!-- BEGIN SEO -->
+<meta name="keywords" content="중간관리자, 컨텍스트, AX팀, AI 전환 조직, 공공 AX, AI 인재 발굴, 부서 AI 리더, 조직 개편, AI 교육, 업무 재설계, 국민권익위원회, 공공부문 AI, 신성진, CDSA">
+<link rel="canonical" href="https://cdsa.kr/blog/prompt-to-agent-3.html">
+<meta property="og:url" content="https://cdsa.kr/blog/prompt-to-agent-3.html">
+<meta property="og:site_name" content="한국데이터사이언티스트협회">
+<meta property="og:image" content="https://cdsa.kr/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta property="article:published_time" content="2026-08-01T10:00:00+09:00">
+<meta property="article:modified_time" content="2026-08-01T10:00:00+09:00">
+<meta property="article:author" content="신성진">
+<meta property="article:section" content="시리즈 · 질문의 시대는 끝났다 · 3편">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="질문의 시대는 끝났다 ③ 중간관리자, AX팀, 그리고 튀는 사람">
+<meta name="twitter:description" content="일이 많아졌다, 검토만 는다는 호소에 대한 답. 중간관리자의 재정의, AX팀의 3인 최소 조합, 교육으로 발굴하는 부서 AI 리더 — 특강 시리즈 3편.">
+<meta name="twitter:image" content="https://cdsa.kr/og-image.png">
+<meta name="author" content="신성진">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "질문의 시대는 끝났다 ③ 중간관리자, AX팀, 그리고 튀는 사람",
+  "description": "중간관리자는 컨텍스트를 만드는 사람이다. AX팀은 IT 개발자만으로 만들 수 없다. AI를 잘 쓰는 사람은 뽑는 것이 아니라 교육으로 발굴하는 것이다 — 기관 전환에서 사람의 자리를 다루는 특강 시리즈 3편.",
+  "datePublished": "2026-08-01T10:00:00+09:00",
+  "dateModified": "2026-08-01T10:00:00+09:00",
+  "author": {"@type": "Person", "name": "신성진", "url": "https://cdsa.kr"},
+  "publisher": {
+    "@type": "Organization",
+    "name": "한국데이터사이언티스트협회",
+    "url": "https://cdsa.kr",
+    "logo": {"@type": "ImageObject", "url": "https://cdsa.kr/og-image.png"}
+  },
+  "image": ["https://cdsa.kr/og-image.png"],
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://cdsa.kr/blog/prompt-to-agent-3.html"},
+  "isPartOf": {"@type": "CreativeWorkSeries", "name": "질문의 시대는 끝났다 — 프롬프트에서 에이전트로"},
+  "articleSection": "시리즈 · 질문의 시대는 끝났다 · 3편",
+  "inLanguage": "ko-KR"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "CDSA", "item": "https://cdsa.kr/"},
+    {"@type": "ListItem", "position": 2, "name": "블로그", "item": "https://cdsa.kr/blog/"},
+    {"@type": "ListItem", "position": 3, "name": "질문의 시대는 끝났다 ③ 중간관리자, AX팀, 그리고 튀는 사람", "item": "https://cdsa.kr/blog/prompt-to-agent-3.html"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "AI 시대에 중간관리자는 필요 없어지나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "방향이 반대입니다. AI는 조직의 암묵지, 지시의 맥락과 의도 같은 컨텍스트를 받기 전까지는 할루시네이션이며, 그 컨텍스트를 만들어내는 사람이 중간관리자입니다. 역할은 축소가 아니라 재정의됩니다 — 결재 경로의 한 칸에서, 조직의 맥락을 생산하는 자리로."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "AX팀은 어떻게 구성해야 하나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "최소 조합은 세 사람입니다. 업무를 아는 사람(문제 정의), 도구를 아는 사람(구현), 조직을 아는 사람(확산과 제도화). IT 개발자만으로 구성된 팀은 무엇을 만들 수는 있어도 무엇을 풀어야 하는지를 정하지 못합니다."
+      }
+    }
+  ]
+}
+</script>
+<!-- END SEO -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NZL39P5EYZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NZL39P5EYZ');
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/blog/_layout.css">
+<style>
+  :root {
+    --cream: #faf9f5; --cream-deep: #f3efe3; --ink: #1a1a1a; --ink-soft: #3d3d3a;
+    --ink-mute: #6b6b66; --rule: #d9d6cc; --clay: #cc785c; --clay-deep: #a85a42;
+    --clay-light: #f0ddd4; --code-bg: #f2f0e8; --teal: #2a7d6e;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--cream); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  body { font-family: "Fraunces", "Noto Serif KR", Georgia, serif; font-weight: 300; font-size: 19px; line-height: 1.72; letter-spacing: -0.005em; }
+
+  .topnav { position: fixed; top: 0; left: 0; right: 0; height: 48px; background: rgba(250, 249, 245, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; }
+  .topnav-left { display: flex; align-items: center; gap: 18px; }
+  .topnav-left a { color: var(--ink-soft); text-decoration: none; transition: color 0.2s; }
+  .topnav-left a:hover { color: var(--clay-deep); }
+  .topnav-home { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 600; font-size: 16px; color: var(--ink) !important; letter-spacing: -0.3px; }
+  .topnav-sep { color: var(--rule); font-size: 11px; }
+  .topnav-right { display: flex; gap: 16px; }
+  .topnav-right a { color: var(--ink-mute); text-decoration: none; font-size: 12px; transition: color 0.2s; }
+  .topnav-right a:hover { color: var(--clay-deep); }
+  .topnav-current { color: var(--ink) !important; font-weight: 600; position: relative; }
+  .topnav-current::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 2px; background: var(--clay); border-radius: 1px; }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 116px 28px 120px; }
+  .breadcrumb { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; margin-bottom: 36px; display: flex; align-items: center; gap: 8px; color: var(--ink-mute); }
+  .breadcrumb a { color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--ink); }
+  .breadcrumb .bc-sep { color: var(--rule); }
+
+  .kicker { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay-deep); margin-bottom: 28px; }
+  h1 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 400; font-size: 44px; line-height: 1.18; letter-spacing: -0.02em; margin: 0 0 24px; color: var(--ink); word-break:keep-all; overflow-wrap:break-word; }
+  .dek { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 300; font-style: italic; font-size: 21px; line-height: 1.55; color: var(--ink-soft); margin: 0 0 40px; word-break:keep-all; overflow-wrap:break-word; }
+  .byline { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); padding: 18px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-bottom: 56px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .byline strong { font-weight: 500; color: var(--ink-soft); }
+
+  .lede { font-size: 19px; line-height: 1.72; margin-bottom: 22px; word-break:keep-all; overflow-wrap:break-word; }
+  .lede::first-letter { font-family: "Fraunces", serif; font-weight: 400; font-size: 68px; float: left; line-height: 0.88; padding: 8px 10px 0 0; color: var(--clay); }
+
+  h2 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 28px; line-height: 1.3; letter-spacing: -0.015em; margin: 64px 0 16px; color: var(--ink); scroll-margin-top: 80px; word-break:keep-all; overflow-wrap:break-word; }
+  h2 .num { font-family: "Inter", sans-serif; font-size: 12px; font-weight: 600; color: var(--clay); letter-spacing: 0.1em; display: block; margin-bottom: 10px; }
+  p { margin: 0 0 22px; }
+  p + p { margin-top: -6px; }
+  strong { font-weight: 500; color: var(--ink); }
+  em { font-style: italic; }
+
+  /* 시리즈 안내 박스 */
+  .series-box { margin: 0 0 48px; padding: 20px 24px; background: var(--code-bg); border: 1px solid var(--rule); border-radius: 4px; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13.5px; line-height: 1.75; color: var(--ink-soft); }
+  .series-box .series-title { font-weight: 600; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay-deep); display: block; margin-bottom: 10px; }
+  .series-box ol { margin: 0; padding-left: 20px; }
+  .series-box li { margin: 3px 0; }
+  .series-box a { color: var(--clay-deep); text-decoration: none; border-bottom: 1px dotted var(--clay-light); }
+  .series-box a:hover { color: var(--ink); }
+  .series-box .current { color: var(--ink); font-weight: 600; }
+
+  /* 키노트 문장 */
+  blockquote { margin: 36px 0; padding: 4px 0 4px 22px; border-left: 2px solid var(--clay); font-family: "Fraunces", "Noto Serif KR", serif; font-style: italic; font-size: 20px; line-height: 1.55; color: var(--ink-soft); word-break:keep-all; overflow-wrap:break-word; }
+
+  .pull { font-family: "Fraunces", "Noto Serif KR", serif; font-size: 26px; line-height: 1.5; color: var(--ink); font-weight: 500; font-style: italic; margin: 40px 0; padding: 26px 0 26px 28px; border-left: 3px solid var(--clay); letter-spacing: -0.01em; word-break:keep-all; overflow-wrap:break-word; }
+
+  /* 시연 노트 */
+  .demo { margin: 28px 0; padding: 18px 22px; background: var(--code-bg); border-left: 3px solid var(--teal); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 14.5px; line-height: 1.7; color: var(--ink-soft); border-radius: 2px; word-break:keep-all; overflow-wrap:break-word; }
+  .demo .demo-label { font-weight: 600; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); display: block; margin-bottom: 6px; }
+
+  /* 덧붙임 */
+  .addendum { margin: 28px 0 40px; padding: 18px 22px; background: transparent; border: 1px solid var(--rule); border-left: 3px solid var(--clay); font-size: 16.5px; line-height: 1.75; color: var(--ink-soft); border-radius: 2px; word-break:keep-all; overflow-wrap:break-word; }
+  .addendum .add-label { font-family: "Inter", "Noto Sans KR", sans-serif; font-weight: 600; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay-deep); display: block; margin-bottom: 8px; }
+
+  .data-table { width: 100%; margin: 28px 0; border-collapse: collapse; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 14.5px; line-height: 1.55; }
+  .data-table thead th { text-align: left; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--clay-deep); padding: 12px 14px; border-bottom: 2px solid var(--clay); background: var(--code-bg); }
+  .data-table tbody td { padding: 12px 14px; border-bottom: 1px solid var(--rule); color: var(--ink-soft); vertical-align: top; }
+  .data-table tbody tr:last-child td { border-bottom: 2px solid var(--rule); }
+  .data-table .model-name { color: var(--ink); font-weight: 500; }
+
+  .source-note { margin-top: 40px; padding: 18px 22px; background: var(--code-bg); border-left: 2px solid var(--clay-light); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); line-height: 1.7; border-radius: 2px; }
+  .source-note strong { color: var(--ink-soft); font-weight: 600; }
+  .source-note a { color: var(--clay-deep); text-decoration: none; border-bottom: 1px dotted var(--clay-light); }
+  .source-note a:hover { color: var(--ink); }
+
+  .footer { margin-top: 72px; padding-top: 28px; border-top: 1px solid var(--rule); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); line-height: 1.7; }
+  .footer strong { color: var(--ink-soft); font-weight: 600; }
+  .footer a { color: var(--clay-deep); text-decoration: none; }
+
+  .bottom-nav { margin-top: 72px; padding: 36px 0; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .bottom-nav a { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .bottom-nav a:hover { color: var(--ink); }
+  .bottom-nav-home { font-family: "Fraunces", "Noto Serif KR", serif !important; font-size: 16px !important; font-style: italic; font-weight: 400; }
+
+  @media (max-width: 560px) {
+    .wrap { padding: 92px 22px 80px; }
+    h1 { font-size: 30px; line-height: 1.24; }
+    .dek { font-size: 17.5px; }
+    body { font-size: 17px; }
+    h2 { font-size: 23px; margin-top: 52px; }
+    .topnav-right { display: none; }
+    .pull { font-size: 22px; padding-left: 22px; }
+    .data-table { font-size: 13px; }
+    .data-table thead th, .data-table tbody td { padding: 10px 8px; }
+  }
+  @media (max-width: 400px) {
+    h1 { font-size: 26px !important; line-height: 1.25; }
+    .dek { font-size: 16px !important; }
+    h2 { font-size: 21px !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="topnav-left">
+    <a href="/" class="topnav-home">CDSA</a>
+    <span class="topnav-sep">|</span>
+    <a href="/">홈페이지</a>
+    <a href="/blog/" class="topnav-current">블로그</a>
+  </div>
+  <nav class="topnav-right">
+    <a href="/framework.html">프레임워크</a>
+    <a href="/unsloth-workbook.html">워크북</a>
+    <a href="/fullcourse.html">Full Course</a>
+  </nav>
+</header>
+
+<button class="blog-hamburger" aria-label="블로그 목록 열기"><span></span><span></span><span></span></button>
+<div class="blog-overlay"></div>
+<aside class="blog-left">
+  <div class="blog-left-title">Blog Posts</div>
+  <ol class="blog-left-list"></ol>
+</aside>
+<aside class="blog-right">
+  <div class="blog-right-title">On This Page</div>
+  <ul class="blog-toc"></ul>
+</aside>
+
+<article class="wrap">
+
+  <nav class="breadcrumb">
+    <a href="/">← CDSA 홈</a>
+    <span class="bc-sep">/</span>
+    <a href="/blog/">블로그</a>
+    <span class="bc-sep">/</span>
+    <span>시리즈 · 질문의 시대는 끝났다 · 3편</span>
+  </nav>
+
+  <div class="kicker">Series · 질문의 시대는 끝났다 · 3편</div>
+
+  <h1>중간관리자, AX팀,<br>그리고 튀는 사람</h1>
+
+  <p class="dek">
+    에이전트가 실무를 대신할수록, 사람의 자리는 어디로
+    가는가. 컨텍스트를 생산하는 중간관리자, 세 사람의
+    최소 조합으로 꾸리는 AX팀, 그리고 교육에서 발굴해
+    첨병으로 세우는 인재까지.
+  </p>
+
+  <div class="byline">
+    <span><strong>신성진 · 한국데이터사이언티스트협회</strong>  ·  공공부문 AI 전환 특강 원고</span>
+    <span>2026. 8. 1</span>
+  </div>
+
+  <div class="series-box">
+    <span class="series-title">시리즈 · 질문의 시대는 끝났다 — 14개의 명제</span>
+    공공기관 관리자·실무자 대상 특강 원고를 4편으로 나눠 싣습니다.
+    <ol>
+      <li><a href="/blog/prompt-to-agent-1.html">1편 · 기술의 이동 — 프롬프트에서 피지컬 AI까지 (명제 01–05)</a></li>
+      <li><a href="/blog/prompt-to-agent-2.html">2편 · RAG 구축의 시대를 지나, 에이전트를 향해 (명제 06–08)</a></li>
+      <li><span class="current">3편 · 중간관리자, AX팀, 그리고 튀는 사람 (명제 09–11)</span></li>
+      <li><a href="/blog/prompt-to-agent-4.html">4편 · 바이브코딩, 골목길, 그리고 네 개의 질문 (명제 12–14)</a></li>
+    </ol>
+  </div>
+
+  <p class="lede">"일이 많아졌다, 검토만 는다"는 호소가 곳곳에서 들립니다. 에이전트가 실무를 대신할수록 조직의 사람들은 무엇을 해야 하는가 — 3편은 이 질문에 답합니다. 중간관리자의 재정의에서 출발해, AX팀의 구성, 그리고 교육으로 인재를 발굴하는 방법까지. 기관의 전환에서 가장 자주 놓치는 것은 기술이 아니라 사람의 자리입니다.</p>
+
+  <h2 id="s09"><span class="num">명제 09</span>중간관리자는 컨텍스트를 만드는 사람이다</h2>
+
+  <blockquote>'일이 많아졌다, 검토만 는다'는 호소에 대한 답.</blockquote>
+
+  <p>AI는 맥락정보를 받기 전까지는 할루시네이션입니다. 여기서 맥락정보란 조직의 암묵지적인 분위기, 상하관계에서의 지시 맥락과 의도, 판단과 의사결정의 환경을 말합니다. 이런 정보는 팔란티어 같은 시스템으로도 <strong>데이터화하기 어렵습니다</strong>.</p>
+
+  <p>그 컨텍스트를 만들어내는 사람이 중간관리자입니다. 최상위의 지시를 해석하고 판단해서 직원들에게 <strong>역할과 책임과 권한</strong>으로 번역해 주는 일. 이것은 AI가 대체할 수 없습니다.</p>
+
+  <p>"중간관리자를 둬야 하느냐"는 질문은 방향이 반대입니다. AI 시대에 중간관리자의 역할은 축소되는 것이 아니라 <strong>재정의</strong>되어야 합니다. 결재 경로의 한 칸에서, 조직의 맥락을 생산하는 자리로.</p>
+
+  <p class="pull">지시를 그대로 전달하지 않습니다. 배경·의도·판단 기준을 붙여 컨텍스트로 전달합니다.</p>
+
+  <div class="addendum">
+    <span class="add-label">덧붙임</span>
+    이것을 개인의 역량 문제로 두지 말고 <strong>기록의 문제</strong>로 바꾸면 실행 가능해진다. 지시를 전달할 때 배경 두 줄, 판단 기준 두 줄을 함께 남기는 것을 부서의 기본 양식으로 만들면, 그 기록이 그대로 AI에 넣을 컨텍스트가 된다. 중간관리자의 판단이 조직의 자산으로 축적되는 유일한 방법이다.
+  </div>
+
+  <h2 id="s10"><span class="num">명제 10</span>AX팀은 IT 개발자만으로 만들 수 없다</h2>
+
+  <blockquote>순서는 '기술 도입'이 아니라 '해결할 문제 먼저 찾기'다.</blockquote>
+
+  <p>IT 개발자로만 구성된 AX팀은 무엇을 만들 수는 있어도 <strong>무엇을 풀어야 하는지</strong>를 정하지 못합니다. 업무를 이해하고 여러 부서를 경험한 사람이 팀에 들어와 업무 재설계를 맡고, 직원들과 소통하며 해결할 과제를 골라야 합니다.</p>
+
+  <div class="demo">
+    <span class="demo-label">사례</span>
+    국민권익위원회 해결과제 발굴 사이트 — public-task.lovable.app. 현장의 불편을 과제 목록으로 만들어 공유하는 것부터가 AX의 출발점이 될 수 있다. 문제를 먼저 목록화하고, 도구는 그다음이다.
+  </div>
+
+  <div class="addendum">
+    <span class="add-label">덧붙임</span>
+    AX팀 구성의 최소 조합은 세 사람이다. <strong>업무를 아는 사람</strong>(문제 정의), <strong>도구를 아는 사람</strong>(구현), <strong>조직을 아는 사람</strong>(확산과 제도화). 세 번째가 빠진 팀이 가장 흔하고, 가장 자주 실패한다. 좋은 도구를 만들어 놓고 아무도 쓰지 않는 상황이 여기서 나온다.
+  </div>
+
+  <h2 id="s11"><span class="num">명제 11</span>교육에서 튀는 사람을 찾아 첨병으로 세운다</h2>
+
+  <blockquote>AI를 잘 쓰는 사람은 뽑는 것이 아니라 발굴하는 것이다.</blockquote>
+
+  <p>AX팀 하나로 끝나지 않습니다. 각 팀과 조직에 업무전문가가 있어야 하고, AI를 잘 쓰는 사람은 <strong>교육을 통해 발굴</strong>해야 합니다.</p>
+
+  <p>교육을 해 보면 반드시 튀는 사람이 나옵니다. IT·SaaS·웹서비스를 본능적으로 잘 다루는 사람들입니다. 전공이나 직렬과 무관한 경우가 많습니다. 그들을 각 부서의 최전방 첨병으로 세우고, 발굴 결과가 <strong>인사와 조직개편에 반영</strong>되게 해야 합니다.</p>
+
+  <p>교육이 이수 실적이 아니라 인재 발굴의 채널이 될 때 조직의 AI 역량이 자랍니다.</p>
+
+  <p class="pull">교육 과정마다 산출물 경진·과제 해결 세션을 넣고, 상위 수행자를 부서 AI 리더로 지정해 실제 권한을 부여합니다.</p>
+
+  <div class="addendum">
+    <span class="add-label">덧붙임</span>
+    발굴한 사람에게 반드시 붙여야 할 것이 두 가지 있다. <strong>시간</strong>(본 업무를 줄여 주는 공식 배정)과 <strong>명분</strong>(직무기술서나 부서 업무분장에 명시). 이 둘 없이 "잘하니까 좀 도와줘"로 운영하면 6개월 안에 지쳐서 손을 뗀다. 발굴보다 유지가 어렵다.
+  </div>
+
+  <div class="source-note">
+    <strong>이 글은</strong> 공공기관 관리자·실무자 대상 특강 「질문의 시대는 끝났다 — 프롬프트에서 에이전트로」 원고의 3편(명제 09–11)입니다. 기관의 전환 전반부를 다룬 <a href="/blog/prompt-to-agent-2.html">2편</a>에서 이어지며, 사람과 문화를 다루는 <a href="/blog/prompt-to-agent-4.html">4편(완결)</a>으로 이어집니다.
+  </div>
+
+  <div class="footer">
+    <p><strong>신성진</strong> — 한국데이터사이언티스트협회 대표이사. 행정안전부 전문위원, 과학기술정보통신부 자문위원. 행정·공공·민간 현장의 골목길 문제를 작은 AI로 직접 풀어내는 바이브 코딩 교육에 집중한다.</p>
+    <p>이 시리즈는 1편(기술의 이동) → 2편(RAG를 넘어 에이전트로) → 3편(사람과 조직) → 4편(바이브코딩과 골목길) 순으로 이어집니다. 의견·질문은 <a href="mailto:sjshin@cdsa.or.kr">sjshin@cdsa.or.kr</a>로 보내 주세요.</p>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="/blog/prompt-to-agent-2.html" class="bottom-nav-home">← 2편 · RAG 구축의 시대를 지나</a>
+    <a href="/blog/prompt-to-agent-4.html">4편 · 바이브코딩, 골목길, 네 개의 질문 →</a>
+  </nav>
+
+</article>
+
+<script src="/blog/_posts.js" defer></script>
+
+</body>
+</html>
