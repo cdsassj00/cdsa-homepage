@@ -12,9 +12,9 @@ const sites = [
     href: 'https://stockontology.cc/',
   },
   {
-    name: 'Skill MCP',
-    desc: 'skill.sh 스킬 검색·설치 MCP',
-    href: 'https://skill-mcp-api.vercel.app/api/mcp',
+    name: 'Skills.sh',
+    desc: '스킬 검색·설치 MCP — Claude Code에 바로 연결',
+    href: 'https://skills.sh',
   },
   {
     name: 'CDSA.site',
