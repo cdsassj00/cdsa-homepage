@@ -30,7 +30,10 @@ export default function Footer() {
         </div>
         <div className="mt-10 pt-6 border-t border-ink-700/10 flex flex-wrap items-center justify-between gap-3 text-xs text-ink-500">
           <span>© 2026 한국데이터사이언티스트협회. All rights reserved.</span>
-          <span className="font-mono">Built with 바이브 코딩.</span>
+          <div className="flex gap-4 items-center">
+            <a href="/privacy.html" className="hover:text-ink-700">개인정보처리방침</a>
+            <span className="font-mono">Built with 바이브 코딩.</span>
+          </div>
         </div>
       </div>
     </footer>
