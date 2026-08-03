@@ -9,12 +9,22 @@
     <atom:link href="https://cdsa.kr/rss.xml" rel="self" type="application/rss+xml"/>
     <description>AI 시대, 일하는 방식을 바꾸는 전문가들. 공공·대기업 150여 기관에서 AI·데이터 교육을 직접 설계하고 실행합니다.</description>
     <language>ko</language>
-    <lastBuildDate>Sat, 01 Aug 2026 01:30:00 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 03 Aug 2026 00:00:00 GMT</lastBuildDate>
     <image>
       <url>https://cdsa.kr/og-image.png</url>
       <title>한국데이터사이언티스트협회 · CDSA 블로그</title>
       <link>https://cdsa.kr/blog/</link>
     </image>
+    <item>
+      <title>미시적 AI 혁신은 어떻게 국가적 AX로 이어지는가</title>
+      <link>https://cdsa.kr/blog/micro-innovation-to-national-ax.html</link>
+      <guid isPermaLink="true">https://cdsa.kr/blog/micro-innovation-to-national-ax.html</guid>
+      <pubDate>Mon, 03 Aug 2026 00:00:00 GMT</pubDate>
+      <dc:creator>신성진</dc:creator>
+      <category>AX 전략론</category>
+      <description>국가 전략은 거시적 혁신을 말하지만, 현장은 법령 검색의 불편 같은 작은 문제에서 출발한다. 광진구 주무관의 MCP, 국가 데이터 MCP 개방, 아래에서 위로 올라가는 AX의 다섯 단계.</description>
+      <content:encoded><![CDATA[<h1>미시적 AI 혁신은 어떻게 국가적 AX로 이어지는가</h1><p>거시적 혁신은 국가와 산업 단위의 버티컬 AI, 미시적 혁신은 개인과 부서 단위의 호라이즌털 AI다. 광진구 주무관의 MCP 사례가 보여주듯 사용자가 소비자를 넘어 업무 시스템의 설계자가 되기 시작했고, 국가 데이터 MCP 개방은 이 미시적 혁신을 거시적 혁신으로 확장하는 기반이 된다. 불편의 문제 정의 → 작은 도구 검증 → 팀의 도구 → 조직의 표준 → 공공 인프라 연결의 다섯 단계, 그리고 그 사이에서 교육자가 서야 할 자리.</p>]]></content:encoded>
+    </item>
     <item>
       <title>질문의 시대는 끝났다 ④ 바이브코딩, 골목길, 그리고 네 개의 질문</title>
       <link>https://cdsa.kr/blog/prompt-to-agent-4.html</link>

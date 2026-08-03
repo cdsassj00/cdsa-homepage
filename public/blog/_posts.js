@@ -35,6 +35,17 @@
   // publishTime = '09:00:00' 같은 KST 시각. 미명시 시 '09:00:00'
   const POSTS = [
     {
+      slug: 'micro-innovation-to-national-ax',
+      title: '미시적 AI 혁신은 어떻게 국가적 AX로 이어지는가',
+      date: '2026. 8. 3',
+      category: 'AX 전략론',
+      href: '/blog/micro-innovation-to-national-ax.html',
+      author: '신성진',
+      publishTime: '09:00:00',
+      dek: '국가 전략은 거시적 혁신을 말하지만, 현장은 법령 검색의 불편 같은 작은 문제에서 출발한다. 광진구 주무관의 MCP, 국가 데이터 MCP 개방, 그리고 아래에서 위로 올라가는 AX의 다섯 단계 — 거대한 전략과 직원 업무 사이의 간극을 메우는 경로.',
+      views: { base: 10, daily: 8, publishedISO: '2026-08-03' },
+    },
+    {
       slug: 'prompt-to-agent-4',
       title: '질문의 시대는 끝났다 ④ 바이브코딩, 골목길, 그리고 네 개의 질문',
       date: '2026. 8. 1',
