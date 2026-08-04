@@ -10,7 +10,7 @@ export const site = {
   builderUrl: 'https://aicurri.lovable.app',
   marketUrl: 'https://vivecoding.lovable.app/',
   youtubeChannel: 'https://www.youtube.com/@workbyax',
-  email: 'sjshin@cdsa.or.kr',
+  email: 'sjshin@cdsa.kr',
   address: '서울특별시 금천구 가산동 디지털로9길 73, 622호',
 }
 
