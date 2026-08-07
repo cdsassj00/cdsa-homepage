@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 에이전트 시대의 '하네스(Harness)', 도대체 무엇인가 — 공식 문서로 정리한 용어 지도 · CDSA 블로그</title>
+<meta name="description" content="Microsoft·Anthropic·OpenAI 공식 문서를 나란히 놓고 확인한 하네스의 실제 경계. Model·Harness·Extension·Environment·Orchestrator 5층 분류와 test harness에서 이어진 용어의 계보까지 — 출처 15개로 정리한 에이전트 용어 지도.">
+<meta property="og:title" content="AI 에이전트 시대의 '하네스(Harness)', 도대체 무엇인가">
+<meta property="og:description" content="핵심 질문은 하네스라는 단어의 정답이 아니라, 모델 바깥의 무엇이 에이전트의 행동을 결정하는가다. 빅3 공식 문서와 논문 15편으로 그린 용어 지도.">
+<meta property="og:type" content="article">
+<!-- BEGIN SEO -->
+<meta name="keywords" content="하네스, Harness, Agent Harness, 에이전트 하네스, 하네스 엔지니어링, Harness Engineering, AI 에이전트, Claude Code, Codex CLI, Agent SDK, MCP, 플러그인, 스킬, 오케스트레이터, Orchestrator, 스캐폴딩, test harness, Microsoft Agent Framework, Anthropic, OpenAI, 신성진, CDSA">
+<link rel="canonical" href="https://cdsa.kr/blog/agent-harness-terminology.html">
+<meta property="og:url" content="https://cdsa.kr/blog/agent-harness-terminology.html">
+<meta property="og:site_name" content="한국데이터사이언티스트협회">
+<meta property="og:image" content="https://cdsa.kr/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta property="article:published_time" content="2026-08-07T09:00:00+09:00">
+<meta property="article:modified_time" content="2026-08-07T09:00:00+09:00">
+<meta property="article:author" content="신성진">
+<meta property="article:section" content="에이전트 운영론">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI 에이전트 시대의 '하네스(Harness)', 도대체 무엇인가">
+<meta name="twitter:description" content="핵심 질문은 하네스라는 단어의 정답이 아니라, 모델 바깥의 무엇이 에이전트의 행동을 결정하는가다. 빅3 공식 문서와 논문 15편으로 그린 용어 지도.">
+<meta name="twitter:image" content="https://cdsa.kr/og-image.png">
+<meta name="author" content="신성진">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "AI 에이전트 시대의 '하네스(Harness)', 도대체 무엇인가",
+  "description": "Microsoft·Anthropic·OpenAI 공식 문서를 나란히 놓고 확인한 하네스의 실제 경계. Model·Harness·Extension·Environment·Orchestrator 5층 분류와 test harness에서 이어진 용어의 계보까지 — 출처 15개로 정리한 에이전트 용어 지도.",
+  "datePublished": "2026-08-07T09:00:00+09:00",
+  "dateModified": "2026-08-07T09:00:00+09:00",
+  "author": {"@type": "Person", "name": "신성진", "url": "https://cdsa.kr"},
+  "publisher": {
+    "@type": "Organization",
+    "name": "한국데이터사이언티스트협회",
+    "url": "https://cdsa.kr",
+    "logo": {"@type": "ImageObject", "url": "https://cdsa.kr/og-image.png"}
+  },
+  "image": ["https://cdsa.kr/og-image.png"],
+  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://cdsa.kr/blog/agent-harness-terminology.html"},
+  "articleSection": "에이전트 운영론",
+  "inLanguage": "ko-KR"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "CDSA", "item": "https://cdsa.kr/"},
+    {"@type": "ListItem", "position": 2, "name": "블로그", "item": "https://cdsa.kr/blog/"},
+    {"@type": "ListItem", "position": 3, "name": "AI 에이전트 시대의 '하네스(Harness)', 도대체 무엇인가", "item": "https://cdsa.kr/blog/agent-harness-terminology.html"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "에이전트 하네스(Agent Harness)란 무엇인가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Microsoft Agent Framework 문서는 하네스를 '모델을 실제로 일하는 에이전트로 바꾸는 스캐폴딩'으로 정의합니다. 모델 호출 루프, 도구 실행, 대화 기록과 컨텍스트 관리, 승인과 안전 정책을 맡는 런타임입니다. 다만 Anthropic 문서들은 문맥에 따라 조금 다른 경계를 사용하므로, 업계에 단일한 공식 정의가 있다고 말하기는 어렵습니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "MCP나 플러그인도 하네스인가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "문서마다 다릅니다. Anthropic의 한 연구 글은 harness를 instructions와 guardrails 중심으로 좁게 잡고 tools를 별도 층으로 분리하는 반면, Co-Harness 같은 연구는 prompts·tools·skills·middleware·memory까지 하네스에 포함합니다. 일상적인 기술 커뮤니케이션에서는 Claude Code·Codex 같은 실행 런타임을 Harness, Skill·Plugin·Hook·MCP를 Extension/Component로 구분하면 덜 헷갈립니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "하네스와 오케스트레이터는 무엇이 다른가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "하네스가 한 모델/에이전트가 어떻게 행동하는가를 책임진다면, 오케스트레이터는 여러 에이전트에게 어떤 일을 언제 배분하고 상태를 어떻게 관리할 것인가를 맡는 상위 제어층입니다. OpenAI가 2026년 공개한 Symphony가 스스로를 agent orchestrator라고 부르는 것이 대표적 사례입니다."
+      }
+    }
+  ]
+}
+</script>
+<!-- END SEO -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NZL39P5EYZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NZL39P5EYZ');
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/blog/_layout.css">
+<style>
+  :root {
+    --cream: #faf9f5; --cream-deep: #f3efe3; --ink: #1a1a1a; --ink-soft: #3d3d3a;
+    --ink-mute: #6b6b66; --rule: #d9d6cc; --clay: #cc785c; --clay-deep: #a85a42;
+    --clay-light: #f0ddd4; --code-bg: #f2f0e8; --teal: #2a7d6e;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--cream); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  body { font-family: "Fraunces", "Noto Serif KR", Georgia, serif; font-weight: 300; font-size: 19px; line-height: 1.72; letter-spacing: -0.005em; }
+
+  .topnav { position: fixed; top: 0; left: 0; right: 0; height: 48px; background: rgba(250, 249, 245, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; }
+  .topnav-left { display: flex; align-items: center; gap: 18px; }
+  .topnav-left a { color: var(--ink-soft); text-decoration: none; transition: color 0.2s; }
+  .topnav-left a:hover { color: var(--clay-deep); }
+  .topnav-home { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 600; font-size: 16px; color: var(--ink) !important; letter-spacing: -0.3px; }
+  .topnav-sep { color: var(--rule); font-size: 11px; }
+  .topnav-right { display: flex; gap: 16px; }
+  .topnav-right a { color: var(--ink-mute); text-decoration: none; font-size: 12px; transition: color 0.2s; }
+  .topnav-right a:hover { color: var(--clay-deep); }
+  .topnav-current { color: var(--ink) !important; font-weight: 600; position: relative; }
+  .topnav-current::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 2px; background: var(--clay); border-radius: 1px; }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 116px 28px 120px; }
+  .breadcrumb { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; margin-bottom: 36px; display: flex; align-items: center; gap: 8px; color: var(--ink-mute); }
+  .breadcrumb a { color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--ink); }
+  .breadcrumb .bc-sep { color: var(--rule); }
+
+  .kicker { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay-deep); margin-bottom: 28px; }
+  h1 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 400; font-size: 44px; line-height: 1.18; letter-spacing: -0.02em; margin: 0 0 24px; color: var(--ink); word-break:keep-all; overflow-wrap:break-word; }
+  .dek { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 300; font-style: italic; font-size: 21px; line-height: 1.55; color: var(--ink-soft); margin: 0 0 40px; word-break:keep-all; overflow-wrap:break-word; }
+  .byline { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); padding: 18px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-bottom: 56px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .byline strong { font-weight: 500; color: var(--ink-soft); }
+
+  .lede { font-size: 19px; line-height: 1.72; margin-bottom: 22px; word-break:keep-all; overflow-wrap:break-word; }
+  .lede::first-letter { font-family: "Fraunces", serif; font-weight: 400; font-size: 68px; float: left; line-height: 0.88; padding: 8px 10px 0 0; color: var(--clay); }
+
+  h2 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 28px; line-height: 1.3; letter-spacing: -0.015em; margin: 64px 0 16px; color: var(--ink); scroll-margin-top: 80px; word-break:keep-all; overflow-wrap:break-word; }
+  h2 .num { font-family: "Inter", sans-serif; font-size: 12px; font-weight: 600; color: var(--clay); letter-spacing: 0.1em; display: block; margin-bottom: 10px; }
+  p { margin: 0 0 22px; }
+  p + p { margin-top: -6px; }
+  strong { font-weight: 500; color: var(--ink); }
+  em { font-style: italic; }
+
+  /* 시리즈 안내 박스 */
+  .series-box { margin: 0 0 48px; padding: 20px 24px; background: var(--code-bg); border: 1px solid var(--rule); border-radius: 4px; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13.5px; line-height: 1.75; color: var(--ink-soft); }
+  .series-box .series-title { font-weight: 600; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay-deep); display: block; margin-bottom: 10px; }
+  .series-box ol { margin: 0; padding-left: 20px; }
+  .series-box li { margin: 3px 0; }
+  .series-box a { color: var(--clay-deep); text-decoration: none; border-bottom: 1px dotted var(--clay-light); }
+  .series-box a:hover { color: var(--ink); }
+  .series-box .current { color: var(--ink); font-weight: 600; }
+
+  /* 키노트 문장 */
+  blockquote { margin: 36px 0; padding: 4px 0 4px 22px; border-left: 2px solid var(--clay); font-family: "Fraunces", "Noto Serif KR", serif; font-style: italic; font-size: 20px; line-height: 1.55; color: var(--ink-soft); word-break:keep-all; overflow-wrap:break-word; }
+
+  .pull { font-family: "Fraunces", "Noto Serif KR", serif; font-size: 26px; line-height: 1.5; color: var(--ink); font-weight: 500; font-style: italic; margin: 40px 0; padding: 26px 0 26px 28px; border-left: 3px solid var(--clay); letter-spacing: -0.01em; word-break:keep-all; overflow-wrap:break-word; }
+
+  /* 시연 노트 */
+  .demo { margin: 28px 0; padding: 18px 22px; background: var(--code-bg); border-left: 3px solid var(--teal); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 14.5px; line-height: 1.7; color: var(--ink-soft); border-radius: 2px; word-break:keep-all; overflow-wrap:break-word; }
+  .demo .demo-label { font-weight: 600; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); display: block; margin-bottom: 6px; }
+
+  /* 덧붙임 */
+  .addendum { margin: 28px 0 40px; padding: 18px 22px; background: transparent; border: 1px solid var(--rule); border-left: 3px solid var(--clay); font-size: 16.5px; line-height: 1.75; color: var(--ink-soft); border-radius: 2px; word-break:keep-all; overflow-wrap:break-word; }
+  .addendum .add-label { font-family: "Inter", "Noto Sans KR", sans-serif; font-weight: 600; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay-deep); display: block; margin-bottom: 8px; }
+
+  .data-table { width: 100%; margin: 28px 0; border-collapse: collapse; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 14.5px; line-height: 1.55; }
+  .data-table thead th { text-align: left; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--clay-deep); padding: 12px 14px; border-bottom: 2px solid var(--clay); background: var(--code-bg); }
+  .data-table tbody td { padding: 12px 14px; border-bottom: 1px solid var(--rule); color: var(--ink-soft); vertical-align: top; }
+  .data-table tbody tr:last-child td { border-bottom: 2px solid var(--rule); }
+  .data-table .model-name { color: var(--ink); font-weight: 500; }
+
+  .source-note { margin-top: 40px; padding: 18px 22px; background: var(--code-bg); border-left: 2px solid var(--clay-light); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); line-height: 1.7; border-radius: 2px; }
+  .source-note strong { color: var(--ink-soft); font-weight: 600; }
+  .source-note a { color: var(--clay-deep); text-decoration: none; border-bottom: 1px dotted var(--clay-light); }
+  .source-note a:hover { color: var(--ink); }
+
+  .footer { margin-top: 72px; padding-top: 28px; border-top: 1px solid var(--rule); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); line-height: 1.7; }
+  .footer strong { color: var(--ink-soft); font-weight: 600; }
+  .footer a { color: var(--clay-deep); text-decoration: none; }
+
+  .bottom-nav { margin-top: 72px; padding: 36px 0; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .bottom-nav a { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .bottom-nav a:hover { color: var(--ink); }
+  .bottom-nav-home { font-family: "Fraunces", "Noto Serif KR", serif !important; font-size: 16px !important; font-style: italic; font-weight: 400; }
+
+  @media (max-width: 560px) {
+    .wrap { padding: 92px 22px 80px; }
+    h1 { font-size: 30px; line-height: 1.24; }
+    .dek { font-size: 17.5px; }
+    body { font-size: 17px; }
+    h2 { font-size: 23px; margin-top: 52px; }
+    .topnav-right { display: none; }
+    .pull { font-size: 22px; padding-left: 22px; }
+    .data-table { font-size: 13px; }
+    .data-table thead th, .data-table tbody td { padding: 10px 8px; }
+  }
+  @media (max-width: 400px) {
+    h1 { font-size: 26px !important; line-height: 1.25; }
+    .dek { font-size: 16px !important; }
+    h2 { font-size: 21px !important; }
+  }
+
+  /* 다이어그램 — 다크 모노스페이스 박스 */
+  .diagram { font-family: "JetBrains Mono", Consolas, monospace; white-space: pre; overflow-x: auto; background: #201b16; color: #ece5da; border-radius: 6px; padding: 20px 22px; font-size: 13px; line-height: 1.6; margin: 26px 0; }
+  /* 출처 위첨자 */
+  .src { font-family: "Inter", sans-serif; font-size: 11px; color: var(--clay-deep); vertical-align: super; text-decoration: none; }
+  a.src:hover { color: var(--ink); }
+  /* 참고문헌 */
+  .refs { margin: 20px 0 0; padding-left: 20px; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12.5px; color: var(--ink-mute); line-height: 1.6; }
+  .refs li { margin-bottom: 8px; word-break: break-all; }
+  .refs a { color: var(--clay-deep); text-decoration: none; }
+  .refs a:hover { color: var(--ink); }
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="topnav-left">
+    <a href="/" class="topnav-home">CDSA</a>
+    <span class="topnav-sep">|</span>
+    <a href="/">홈페이지</a>
+    <a href="/blog/" class="topnav-current">블로그</a>
+  </div>
+  <nav class="topnav-right">
+    <a href="/framework.html">프레임워크</a>
+    <a href="/unsloth-workbook.html">워크북</a>
+    <a href="/fullcourse.html">Full Course</a>
+  </nav>
+</header>
+
+<button class="blog-hamburger" aria-label="블로그 목록 열기"><span></span><span></span><span></span></button>
+<div class="blog-overlay"></div>
+<aside class="blog-left">
+  <div class="blog-left-title">Blog Posts</div>
+  <ol class="blog-left-list"></ol>
+</aside>
+<aside class="blog-right">
+  <div class="blog-right-title">On This Page</div>
+  <ul class="blog-toc"></ul>
+</aside>
+
+<article class="wrap">
+
+  <nav class="breadcrumb">
+    <a href="/">← CDSA 홈</a>
+    <span class="bc-sep">/</span>
+    <a href="/blog/">블로그</a>
+    <span class="bc-sep">/</span>
+    <span>에이전트 운영론</span>
+  </nav>
+
+  <div class="kicker">AI Agent Terminology · 2026</div>
+
+  <h1>AI 에이전트 시대의 '하네스',<br>도대체 무엇인가</h1>
+
+  <p class="dek">
+    용어가 중요한 건 아니지만, 커뮤니케이션의 원활함을
+    위해 요즘 떠돌고 있는 키워드를 정리합니다. Microsoft ·
+    Anthropic · OpenAI 공식 문서를 나란히 놓고 확인한
+    하네스의 실제 경계 — 그리고 헷갈리지 않기 위한
+    5층 분류.
+  </p>
+
+  <div class="byline">
+    <span><strong>신성진 · 한국데이터사이언티스트협회</strong>  ·  용어 정리 · 출처 15</span>
+    <span>2026. 8. 7</span>
+  </div>
+
+  <p class="lede">최근 Claude Code, Codex, OpenCode, Agent SDK, 플러그인, MCP, 심지어 여러 에이전트를 관리하는 오케스트레이터까지 '하네스'라는 말로 묶여 설명되는 경우가 많습니다. 그런데 공식 문서들을 나란히 보면, 실제로 업계의 경계가 완전히 통일되어 있지는 않습니다. 용어가 중요한 건 아니지만 커뮤니케이션의 원활함을 위해, 요즘 떠돌고 있는 이 키워드를 출처와 함께 정리합니다.</p>
+
+  <p>이 글의 목표는 "누가 맞고 누가 틀리다"를 가르는 것이 아닙니다. <strong>Model, Harness, Tool/Extension, Environment, Orchestrator가 어떤 관계에 있는지</strong>를 이해하고, 서로 다른 문서를 읽을 때 혼란을 줄이는 데 목적이 있습니다.</p>
+
+  <p class="pull">핵심 질문은 "하네스라는 단어의 정답"이 아니라, 모델 바깥의 무엇이 에이전트의 행동을 결정하는가입니다.</p>
+
+  <h2 id="s01"><span class="num">01 · 가장 명확한 공식 정의</span>Microsoft: "모델을 실제로 일하는 에이전트로 바꾸는 스캐폴딩"</h2>
+
+  <p>2026년 Microsoft Agent Framework 문서는 Agent Harness를 매우 직접적으로 정의합니다. 모델 자체는 텍스트를 생성할 뿐이며, 실제 도구 호출과 다단계 작업, 기억, 완료까지의 진행을 위해서는 모델을 둘러싼 런타임이 필요하다고 설명합니다.<a class="src" href="#refs">[1]</a></p>
+
+  <div class="diagram">Language Model
+     ↓
+Agent Harness
+ ├─ model/tool loop
+ ├─ context &amp; history
+ ├─ planning / todo
+ ├─ tool approval
+ ├─ safety policy
+ ├─ file access / memory
+ └─ completion control
+     ↓
+Action / Result</div>
+
+  <p>Microsoft 문서에서는 하네스가 <strong>모델 호출 루프, 도구 실행, 대화 기록과 컨텍스트 관리, 승인과 안전 정책</strong>을 맡는다고 설명합니다.<a class="src" href="#refs">[1][2]</a></p>
+
+  <p>이 정의를 기준으로 보면 Claude Code나 Codex CLI처럼 파일을 읽고, 코드를 바꾸고, 명령을 실행하고, 결과를 확인하며 작업을 계속하는 코딩 에이전트는 넓은 의미에서 '하네스형 런타임'으로 이해하기 쉽습니다. OpenAI는 Codex CLI를 로컬에서 코드를 읽고 수정하고 실행하는 "coding agent"로 공식 설명합니다.<a class="src" href="#refs">[3]</a></p>
+
+  <blockquote>정리하면: LLM + 실행 루프 + 도구 + 상태/컨텍스트 관리가 결합되면서 '에이전트'가 된다.</blockquote>
+
+  <h2 id="s02"><span class="num">02 · 그런데 Anthropic은 조금 다르게 말한다</span>같은 회사 문서 안에서도 '하네스'의 경계가 문맥에 따라 달라진다</h2>
+
+  <p>Anthropic의 평가(Evals) 글은 <strong>agent harness 또는 scaffold</strong>를 "모델이 에이전트처럼 행동하도록 해주는 시스템"이라고 설명하며, 입력 처리와 tool call orchestration을 포함합니다. 그리고 Claude Code를 "flexible agent harness"의 사례로 직접 언급합니다.<a class="src" href="#refs">[4]</a></p>
+
+  <p>반면 Anthropic의 2026년 연구 글 <em>Trustworthy agents in practice</em>는 에이전트 시스템을 <strong>model / harness / tools / environment</strong> 네 층으로 나눕니다. 이 글에서는 harness를 주로 모델이 따르는 <strong>instructions와 guardrails</strong>로 설명하고, tools와 environment는 별도 구성요소로 분리합니다.<a class="src" href="#refs">[5]</a></p>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>출처</th><th>Harness의 범위</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="model-name">Microsoft Agent Framework</td><td>루프, context, tool 실행, 승인, 안전정책 등을 포함하는 runtime</td></tr>
+      <tr><td class="model-name">Anthropic Evals</td><td>모델이 agent처럼 행동하도록 하는 system/scaffold, tool orchestration 포함</td></tr>
+      <tr><td class="model-name">Anthropic Trustworthy Agents</td><td>instructions + guardrails 중심, tools/environment는 별도 층</td></tr>
+    </tbody>
+  </table>
+
+  <div class="addendum">
+    <span class="add-label">노트</span>
+    따라서 <strong>"하네스의 공식 경계는 하나다"라고 말하면 부정확하다.</strong> 실제 선도 기업들도 문서의 목적에 따라 조금 다른 추상화 경계를 사용한다. 이 차이를 알고 나면 왜 어떤 사람은 플러그인까지 하네스라고 부르고, 또 어떤 사람은 Claude Code 전체를 하네스라고 부르는지 이해하기 쉬워진다.
+  </div>
+
+  <h2 id="s03"><span class="num">03 · 어디서 갑자기 나온 말인가</span>'Harness' 자체는 AI가 만든 신조어가 아니다</h2>
+
+  <p>소프트웨어 분야에서는 오래전부터 <strong>test harness</strong>라는 표현을 사용해 왔습니다. NIST가 공개한 오래된 테스트 문서에서도 test harness를 여러 테스트를 실행할 수 있게 하는 소프트웨어로 설명하고 있으며, Python 공식 문서에서도 end-user test harness라는 표현이 여전히 사용됩니다.<a class="src" href="#refs">[6][7]</a> 즉 '어떤 대상의 주변을 감싸 입력을 주고, 실행시키고, 결과를 관찰하는 구조'라는 비유는 AI보다 훨씬 오래되었습니다.</p>
+
+  <div class="diagram">Test Harness
+  대상 소프트웨어를 감싸
+  입력 → 실행 → 관찰 → 검증
+
+        ↓ 개념적 확장
+
+Evaluation Harness
+  모델/시스템을 실행하고 평가
+
+        ↓
+
+Agent Harness
+  LLM을 감싸
+  context → tools → action → feedback → repeat</div>
+
+  <p>다만 <strong>"Agent Harness라는 말을 누가 최초로 만들었다"는 단일 창시자를 확인할 만한 공인된 출처는 찾기 어렵습니다.</strong> 현재 확인 가능한 자료만 놓고 보면, 기존 소프트웨어의 harness/scaffold 개념이 LLM evaluation과 agent runtime 문맥으로 자연스럽게 확장됐다고 보는 편이 안전합니다.</p>
+
+  <p>최근 연구도 harness를 독립적인 연구 대상으로 다룹니다. 예를 들어 2026년 <em>MemoHarness</em>는 agent harness를 "base LLM을 executable agent로 바꾸는 external control layer"로 정의하고 context, tools, orchestration, memory, decoding, output handling을 관리하는 층으로 설명합니다.<a class="src" href="#refs">[8]</a></p>
+
+  <h2 id="s04"><span class="num">04 · 2025~2026, 왜 갑자기 중요해졌나</span>모델 성능만으로 에이전트 성능을 설명하기 어려워졌기 때문이다</h2>
+
+  <p>Anthropic은 2025년 장기 실행 에이전트를 다룬 글에서 Claude Agent SDK를 "general-purpose agent harness"라고 부르며, 긴 작업에서 context compaction만으로는 충분하지 않고 세션 간 진행상태를 이어주는 구조가 필요하다고 설명했습니다.<a class="src" href="#refs">[9]</a> 2026년에는 더 직접적인 표현이 등장합니다. Anthropic은 <em>Harness design for long-running application development</em>에서 frontier agentic coding의 성능에 harness design이 중요하다고 강조합니다.<a class="src" href="#refs">[10]</a></p>
+
+  <p>OpenAI 역시 2026년 2월 공식 엔지니어링 글의 제목을 아예 <strong>"Harness engineering"</strong>이라고 붙였습니다. 여기서 핵심은 에이전트에게 단순히 더 좋은 프롬프트를 주는 것이 아니라, 저장소 구조·문서·테스트·관측성·가드레일·피드백 루프처럼 <strong>에이전트가 안정적으로 일할 수 있는 환경 자체를 설계하는 일</strong>입니다.<a class="src" href="#refs">[11]</a></p>
+
+  <p class="pull">모델이 좋아지는 것과 별개로, 모델이 일하는 환경을 얼마나 잘 설계했는가가 성능을 크게 좌우합니다.</p>
+
+  <p>Martin Fowler 사이트에서도 2026년 들어 "Harness engineering"을 별도의 엔지니어링 관점으로 다루기 시작했고, OpenAI 사례를 바탕으로 테스트·구조적 검증·피드백 장치의 중요성을 논의하고 있습니다.<a class="src" href="#refs">[12]</a></p>
+
+  <h2 id="s05"><span class="num">05 · 실무에서 헷갈리지 않는 분류</span>커뮤니케이션을 위한 5층 구분</h2>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>층</th><th>예시</th><th>역할</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="model-name">1. Model</td><td>GPT · Claude · Gemini · Qwen</td><td>언어를 읽고 생성하며 추론하는 기반 모델</td></tr>
+      <tr><td class="model-name">2. Agent Harness / Runtime</td><td>Claude Code · Codex CLI · Agent SDK 기반 런타임</td><td>모델을 반복 실행하고 행동시키는 실행 골격</td></tr>
+      <tr><td class="model-name">3. Extensions / Components</td><td>Skill · Plugin · Hook · Rules · MCP client/server 연결</td><td>하네스의 능력·지침·연결 범위를 확장하는 구성요소</td></tr>
+      <tr><td class="model-name">4. Environment</td><td>파일시스템 · Git · Shell · 브라우저 · 사내망</td><td>에이전트가 실제로 접근하고 영향을 미치는 작업 공간</td></tr>
+      <tr><td class="model-name">5. Orchestrator</td><td>다수 agent/session/workflow 관리</td><td>여러 에이전트와 작업을 라우팅하고 관리하는 상위 제어층</td></tr>
+    </tbody>
+  </table>
+
+  <p>이것은 업계 표준을 선언하는 분류가 아니라 <strong>대화를 명확하게 하기 위한 실무적 분류</strong>입니다. 특히 Anthropic이 harness/tools/environment를 분리해서 설명하는 사례가 있기 때문에, "MCP나 plugin은 무조건 harness가 아니다"라고 단정하기보다는 "이 글에서는 extension/component라고 부르겠다"고 먼저 범위를 정하는 편이 좋습니다.<a class="src" href="#refs">[5]</a></p>
+
+  <div class="diagram">MODEL
+  ↓
+HARNESS / RUNTIME
+  ├─ Extensions (Skills / Plugins / Hooks / MCP)
+  ↓
+ENVIRONMENT (Files / Shell / Git / Browser)
+  ↓
+RESULT
+
+여러 Harness / Agent
+  ↑
+ORCHESTRATOR</div>
+
+  <h2 id="s06"><span class="num">06 · Claude Code와 Plugin을 둘 다 Harness라고 부르는 이유</span>'제품'과 '행동을 규정하는 주변 구조'를 같은 단어로 부르기 시작했기 때문이다</h2>
+
+  <p>Claude Code는 Anthropic 공식 문서에서 터미널에서 작동하며 파일을 직접 편집하고 명령을 실행하고 MCP를 통해 외부 데이터에 접근할 수 있는 agentic coding tool로 설명됩니다.<a class="src" href="#refs">[13]</a> Anthropic의 Evals 글은 더 직접적으로 Claude Code를 flexible agent harness라고 부릅니다.<a class="src" href="#refs">[4]</a></p>
+
+  <p>하지만 최근 연구에서는 harness의 범위를 prompts, tools, skills, middleware, memory 같은 주변 제어 요소까지 넓게 잡기도 합니다. <em>Co-Harness</em>는 runtime harness가 prompts, tools, skills, middleware, memory를 포함한다고 명시합니다.<a class="src" href="#refs">[14]</a> 그래서 강력한 플러그인 하나가 지침·툴·스킬·워크플로·메모리를 함께 가져오면, 누군가는 그것을 "작은 하네스" 또는 "하네스 레이어"라고 표현할 수 있습니다.</p>
+
+  <div class="addendum">
+    <span class="add-label">노트</span>
+    다만 일상적인 기술 커뮤니케이션에서는 <strong>Claude Code/Codex 같은 실행 런타임을 Harness, 그 안에 붙이는 Skill·Plugin·Hook·MCP를 Extension/Component</strong>라고 구분하면 훨씬 덜 헷갈린다.
+  </div>
+
+  <blockquote>용어의 경계보다 중요한 것은 누가 모델의 행동 루프와 컨텍스트, 도구, 검증을 통제하느냐다.</blockquote>
+
+  <h2 id="s07"><span class="num">07 · 그리고 Harness 위에 Orchestration이 올라온다</span>한 에이전트를 잘 돌리는 문제와 여러 에이전트를 관리하는 문제는 다르다</h2>
+
+  <p>OpenAI는 2026년 4월 Symphony를 공개하며 이를 명시적으로 <strong>agent orchestrator</strong>라고 표현했습니다. 프로젝트 관리 보드를 coding agent의 control plane으로 사용해 여러 작업을 관리하는 구조입니다.<a class="src" href="#refs">[15]</a></p>
+
+  <p>이 구분은 중요합니다. 하네스가 보통 <strong>한 모델/에이전트가 어떻게 행동하는가</strong>를 책임진다면, 오케스트레이터는 <strong>여러 에이전트에게 어떤 일을 언제 배분하고 어떻게 상태를 관리할 것인가</strong>에 더 가깝습니다.</p>
+
+  <div class="diagram">               ORCHESTRATOR
+          routing / sessions / jobs
+                    │
+        ┌───────────┼───────────┐
+        ↓           ↓           ↓
+   Harness A    Harness B    Harness C
+   Claude Code  Codex        Other
+        │           │           │
+   Extensions   Extensions   Extensions
+        └───────────┼───────────┘
+                    ↓
+               Environment</div>
+
+  <p>따라서 여러 코딩 에이전트를 한곳에서 실행하고 세션이나 작업을 관리하는 제품을 설명할 때는 <strong>Harness Orchestrator 또는 Agent Orchestrator</strong>라고 부르는 편이 기능적 역할을 더 명확히 전달할 수 있습니다. 특정 제품이 스스로 어떤 용어를 쓰는지는 별도로 확인해야 합니다.</p>
+
+  <h2 id="s08"><span class="num">08 · 결론</span>모델을 고르는 시대에서, 모델이 일하는 구조를 설계하는 시대로</h2>
+
+  <p>몇 년 전까지 생성형 AI를 비교하는 핵심 질문은 "어떤 모델이 더 좋은가?"였습니다. 하지만 에이전트 시대에는 같은 모델이라도 context, tools, runtime loop, permissions, tests, memory, environment가 어떻게 설계되어 있느냐에 따라 결과가 크게 달라집니다. Microsoft, Anthropic, OpenAI의 최근 공식 글들이 공통적으로 강조하는 지점도 바로 이 주변 실행 구조입니다.<a class="src" href="#refs">[1][9][11]</a></p>
+
+  <p class="pull">Agent 성능 = Model만의 성능이 아니다. Model × Harness × Tools × Context × Environment × Feedback의 결과에 가깝다.</p>
+
+  <p>그래서 'Harness'라는 단어의 완벽한 사전적 경계를 외우는 것보다, 대화할 때 <strong>"여기서 하네스라고 부르는 범위가 어디까지인가?"</strong>를 확인하는 것이 더 중요합니다. 제가 기술 커뮤니케이션에서 사용할 기준은 위 5층 분류입니다 — Model(기반 모델), Harness(실행 런타임/스캐폴딩), Extension(Skill·Plugin·Hook·MCP), Environment(파일·Shell·Git·브라우저), Orchestrator(다수 에이전트의 작업·세션 관리). 이 분류는 표준화 문서가 아니라 현재 공식 문서들의 서로 다른 용례를 바탕으로 한 실무적 커뮤니케이션 프레임입니다.</p>
+
+  <div class="demo">
+    <span class="demo-label">함께 읽기</span>
+    하네스를 실행 통제 구조의 관점에서 더 깊이 판별하는 글 — <a href="/blog/harness-is-not-a-label.html" style="color: var(--clay-deep);">「하네스라는 말이 너무 쉬워졌다」</a>. 기술 이동의 큰 흐름 속 하네스의 위치는 <a href="/blog/prompt-to-agent-1.html" style="color: var(--clay-deep);">「질문의 시대는 끝났다 ①」</a>에서 다룹니다.
+  </div>
+
+  <h2 id="refs"><span class="num">References</span>주요 출처</h2>
+
+  <ol class="refs">
+    <li>[1] Microsoft Learn, "Agent Harnesses", Agent Framework, updated 2026-07-08. <a href="https://learn.microsoft.com/en-us/agent-framework/agents/harness">learn.microsoft.com/en-us/agent-framework/agents/harness</a></li>
+    <li>[2] Microsoft Learn, "Step 6: Agent Harness", updated 2026-07-10. <a href="https://learn.microsoft.com/en-us/agent-framework/get-started/harness">learn.microsoft.com/en-us/agent-framework/get-started/harness</a></li>
+    <li>[3] OpenAI Help Center, "OpenAI Codex CLI – Getting Started". <a href="https://help.openai.com/en/articles/11096431">help.openai.com/en/articles/11096431</a></li>
+    <li>[4] Anthropic Engineering, "Demystifying evals for AI agents". <a href="https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents">anthropic.com/engineering/demystifying-evals-for-ai-agents</a></li>
+    <li>[5] Anthropic Research, "Trustworthy agents in practice", 2026. <a href="https://www.anthropic.com/research/trustworthy-agents">anthropic.com/research/trustworthy-agents</a></li>
+    <li>[6] NIST-hosted Best Practice Guide, "Testing Spreadsheet Applications", test harness definition. <a href="https://www.nist.gov/system/files/documents/2017/05/09/NPL-Best-Practice-Guide-No-7-Testing-Spreadsheet-Applications-Dec2006.pdf">nist.gov (PDF)</a></li>
+    <li>[7] Python Documentation, unittest — Unit testing framework. <a href="https://docs.python.org/3/library/unittest.html">docs.python.org/3/library/unittest.html</a></li>
+    <li>[8] Huang et al., "MemoHarness: Agent Harnesses That Learn from Experience", arXiv:2607.14159, 2026. <a href="https://arxiv.org/abs/2607.14159">arxiv.org/abs/2607.14159</a></li>
+    <li>[9] Anthropic Engineering, "Effective harnesses for long-running agents", 2025-11-26. <a href="https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents">anthropic.com/engineering/effective-harnesses-for-long-running-agents</a></li>
+    <li>[10] Anthropic Engineering, "Harness design for long-running application development", 2026-03-24. <a href="https://www.anthropic.com/engineering/harness-design-long-running-apps">anthropic.com/engineering/harness-design-long-running-apps</a></li>
+    <li>[11] OpenAI Engineering, Ryan Lopopolo, "Harness engineering: leveraging Codex in an agent-first world", 2026-02-11. <a href="https://openai.com/index/harness-engineering/">openai.com/index/harness-engineering</a></li>
+    <li>[12] Martin Fowler, "Harness Engineering - first thoughts", 2026. <a href="https://martinfowler.com/articles/exploring-gen-ai/harness-engineering-memo.html">martinfowler.com/articles/exploring-gen-ai/harness-engineering-memo.html</a></li>
+    <li>[13] Anthropic Docs, "Claude Code overview". <a href="https://docs.anthropic.com/en/docs/claude-code/overview">docs.anthropic.com/en/docs/claude-code/overview</a></li>
+    <li>[14] Chen et al., "Co-Harness: Co-Evolving Harnesses and Model Weights for LLM Agents", arXiv:2607.22688, 2026. <a href="https://arxiv.org/abs/2607.22688">arxiv.org/abs/2607.22688</a></li>
+    <li>[15] OpenAI Engineering, "An open-source spec for Codex orchestration: Symphony", 2026-04-27. <a href="https://openai.com/index/open-source-codex-orchestration-symphony/">openai.com/index/open-source-codex-orchestration-symphony</a></li>
+  </ol>
+
+  <div class="source-note">
+    <strong>출처 사용 원칙</strong> — 제품 정의는 해당 기업의 공식 문서를 우선했고, 범용적 개념 정리는 논문과 소프트웨어 공학의 오래된 'test harness' 용례로 보강했습니다. "Agent Harness 최초 창시자"는 신뢰할 만한 단일 근거가 없어 특정 인물이나 회사를 최초로 단정하지 않았습니다.
+  </div>
+
+  <div class="footer">
+    <p><strong>신성진</strong> — 한국데이터사이언티스트협회 대표이사. 행정안전부 전문위원, 과학기술정보통신부 자문위원. 행정·공공·민간 현장의 골목길 문제를 작은 AI로 직접 풀어내는 바이브 코딩 교육에 집중한다.</p>
+    <p>의견·질문은 <a href="mailto:sjshin@cdsa.or.kr">sjshin@cdsa.or.kr</a>로 보내 주세요.</p>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="/blog/" class="bottom-nav-home">← 블로그 목록</a>
+    <a href="/blog/harness-is-not-a-label.html">하네스라는 말이 너무 쉬워졌다 →</a>
+  </nav>
+
+</article>
+
+<script src="/blog/_posts.js" defer></script>
+
+</body>
+</html>

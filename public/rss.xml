@@ -9,12 +9,22 @@
     <atom:link href="https://cdsa.kr/rss.xml" rel="self" type="application/rss+xml"/>
     <description>AI 시대, 일하는 방식을 바꾸는 전문가들. 공공·대기업 150여 기관에서 AI·데이터 교육을 직접 설계하고 실행합니다.</description>
     <language>ko</language>
-    <lastBuildDate>Mon, 03 Aug 2026 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 07 Aug 2026 00:00:00 GMT</lastBuildDate>
     <image>
       <url>https://cdsa.kr/og-image.png</url>
       <title>한국데이터사이언티스트협회 · CDSA 블로그</title>
       <link>https://cdsa.kr/blog/</link>
     </image>
+    <item>
+      <title>AI 에이전트 시대의 '하네스(Harness)', 도대체 무엇인가</title>
+      <link>https://cdsa.kr/blog/agent-harness-terminology.html</link>
+      <guid isPermaLink="true">https://cdsa.kr/blog/agent-harness-terminology.html</guid>
+      <pubDate>Fri, 07 Aug 2026 00:00:00 GMT</pubDate>
+      <dc:creator>신성진</dc:creator>
+      <category>에이전트 운영론</category>
+      <description>Microsoft·Anthropic·OpenAI 공식 문서를 나란히 놓고 확인한 하네스의 실제 경계. test harness에서 이어진 용어의 계보, Model·Harness·Extension·Environment·Orchestrator 5층 분류 — 출처 15개로 정리한 에이전트 용어 지도.</description>
+      <content:encoded><![CDATA[<h1>AI 에이전트 시대의 '하네스(Harness)', 도대체 무엇인가</h1><p>핵심 질문은 "하네스라는 단어의 정답"이 아니라, 모델 바깥의 무엇이 에이전트의 행동을 결정하는가다. Microsoft는 하네스를 "모델을 실제로 일하는 에이전트로 바꾸는 스캐폴딩"으로 정의하지만, Anthropic 문서들은 문맥에 따라 다른 경계를 쓴다. test harness에서 evaluation harness, agent harness로 이어진 용어의 계보와, 실무 커뮤니케이션을 위한 Model·Harness·Extension·Environment·Orchestrator 5층 분류를 출처 15개와 함께 정리한다.</p>]]></content:encoded>
+    </item>
     <item>
       <title>미시적 AI 혁신은 어떻게 국가적 AX로 이어지는가</title>
       <link>https://cdsa.kr/blog/micro-innovation-to-national-ax.html</link>

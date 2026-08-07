@@ -35,6 +35,17 @@
   // publishTime = '09:00:00' 같은 KST 시각. 미명시 시 '09:00:00'
   const POSTS = [
     {
+      slug: 'agent-harness-terminology',
+      title: "AI 에이전트 시대의 '하네스(Harness)', 도대체 무엇인가",
+      date: '2026. 8. 7',
+      category: '에이전트 운영론',
+      href: '/blog/agent-harness-terminology.html',
+      author: '신성진',
+      publishTime: '09:00:00',
+      dek: 'Claude Code도 하네스, 플러그인도 하네스? Microsoft·Anthropic·OpenAI 공식 문서를 나란히 놓고 확인한 하네스의 실제 경계. test harness에서 이어진 용어의 계보, 그리고 Model·Harness·Extension·Environment·Orchestrator 5층 분류 — 출처 15개로 정리한 용어 지도.',
+      views: { base: 10, daily: 8, publishedISO: '2026-08-07' },
+    },
+    {
       slug: 'micro-innovation-to-national-ax',
       title: '미시적 AI 혁신은 어떻게 국가적 AX로 이어지는가',
       date: '2026. 8. 3',
