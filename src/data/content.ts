@@ -11,7 +11,7 @@ export const site = {
   marketUrl: 'https://vivecoding.lovable.app/',
   youtubeChannel: 'https://www.youtube.com/@workbyax',
   email: 'sjshin@cdsa.kr',
-  address: '서울특별시 금천구 가산동 디지털로9길 73, 622호',
+  address: '서울특별시 금천구 벚꽃로36길 30, 6층 622호(가산동, 가산 KS TOWER)',
 }
 
 export const hero = {

@@ -1196,7 +1196,7 @@ function Footer() {
             한국데이터사이언티스트협회
           </div>
           <div className="text-[12px] font-mono text-ink-500 mt-1">
-            서울특별시 금천구 가산동 디지털로9길 73, 622호 · sjshin@cdsa.kr
+            서울특별시 금천구 벚꽃로36길 30, 6층 622호(가산동, 가산 KS TOWER) · sjshin@cdsa.kr
           </div>
         </div>
         <div className="flex items-center gap-5 text-[13px] text-ink-700">
