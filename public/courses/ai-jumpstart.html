@@ -34,12 +34,23 @@ body{font-family:"Pretendard Variable",Pretendard,-apple-system,"Noto Sans KR",s
 h1,h2,h3{letter-spacing:-.028em;font-variation-settings:"wght" 600}
 h1{font-variation-settings:"wght" 650}
 
-body::before{content:'';position:fixed;inset:0;z-index:-2;background-image:radial-gradient(circle,rgba(255,255,255,.025) 1px,transparent 1px);background-size:28px 28px;pointer-events:none}
-body::after{content:'';position:fixed;inset:0;z-index:-1;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(10,132,255,.04),transparent 50%);pointer-events:none}
+body::before{content:'';position:fixed;inset:0;z-index:-2;background-image:radial-gradient(circle,rgba(255,255,255,.025) 1px,transparent 1px);background-size:28px 28px;background-position:0 var(--gy,0);pointer-events:none}
+body::after{content:'';position:fixed;inset:0;z-index:-1;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(10,132,255,.055),transparent 50%),radial-gradient(ellipse 60% 40% at 85% 100%,rgba(64,156,255,.03),transparent 50%);pointer-events:none}
 
 #glow{position:fixed;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(10,132,255,.06),transparent 70%);pointer-events:none;z-index:-1;transform:translate(-50%,-50%);transition:opacity .3s}
 @keyframes aurora{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-.aurora-bg{position:fixed;inset:0;z-index:-1;background:linear-gradient(135deg,rgba(10,132,255,.02) 0%,transparent 30%,rgba(64,156,255,.015) 60%,transparent 100%);background-size:400% 400%;animation:aurora 20s ease infinite;pointer-events:none}
+.aurora-bg{position:fixed;inset:0;z-index:-1;background:linear-gradient(135deg,rgba(10,132,255,.07) 0%,transparent 30%,rgba(64,156,255,.05) 60%,transparent 100%);background-size:400% 400%;animation:aurora 16s ease infinite;pointer-events:none}
+/* 떠다니는 오브 */
+.orb{position:fixed;border-radius:50%;filter:blur(70px);pointer-events:none;z-index:-1;will-change:transform}
+.orb-1{width:640px;height:640px;background:radial-gradient(circle,rgba(10,132,255,.20),transparent 62%);top:-12%;left:-10%;animation:drift1 26s ease-in-out infinite alternate}
+.orb-2{width:720px;height:720px;background:radial-gradient(circle,rgba(64,156,255,.14),transparent 62%);bottom:-16%;right:-12%;animation:drift2 32s ease-in-out infinite alternate}
+.orb-3{width:460px;height:460px;background:radial-gradient(circle,rgba(100,210,255,.11),transparent 62%);top:38%;left:52%;animation:drift3 38s ease-in-out infinite alternate}
+@keyframes drift1{0%{transform:translate(0,0) scale(1)}50%{transform:translate(38vw,26vh) scale(1.18)}100%{transform:translate(12vw,52vh) scale(.9)}}
+@keyframes drift2{0%{transform:translate(0,0) scale(1)}50%{transform:translate(-34vw,-24vh) scale(1.15)}100%{transform:translate(-10vw,-48vh) scale(1.05)}}
+@keyframes drift3{0%{transform:translate(0,0) scale(1)}33%{transform:translate(-22vw,14vh) scale(1.12)}66%{transform:translate(16vw,-18vh) scale(.92)}100%{transform:translate(-8vw,8vh) scale(1.06)}}
+/* 떠오르는 입자 */
+.pt{position:fixed;bottom:-12px;border-radius:50%;background:var(--accent-hi);pointer-events:none;z-index:-1;animation:rise linear infinite}
+@keyframes rise{0%{transform:translate(0,0);opacity:0}8%{opacity:var(--po,.4)}88%{opacity:var(--po,.4)}100%{transform:translate(var(--px,0),-108vh);opacity:0}}
 
 .topbar{position:fixed;top:0;left:0;right:0;height:48px;background:rgba(0,0,0,.8);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--hair);z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,40px);font-size:13px}
 .topbar a{color:var(--mut);text-decoration:none;transition:color .2s}.topbar a:hover{color:var(--accent)}
@@ -62,8 +73,8 @@ h2 .blue{color:var(--accent-hi)}h2 .red{color:var(--red)}h2 .gold{color:var(--go
 .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 60% 30%,rgba(10,132,255,.07),transparent 60%),radial-gradient(ellipse 50% 60% at 30% 70%,rgba(64,156,255,.04),transparent 50%);pointer-events:none}
 .hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(to top,var(--paper),transparent);pointer-events:none}
 .hero>*{position:relative;z-index:1}
-.hero h1{font-size:clamp(26px,4.5vw,52px);line-height:1.15;max-width:780px;margin-bottom:24px}
-.hero-sub{font-size:clamp(15px,1.8vw,18px);line-height:1.8;color:var(--body);max-width:620px;margin-bottom:40px}
+.hero h1{font-size:clamp(31px,5.6vw,66px);line-height:1.13;max-width:900px;margin-bottom:26px}
+.hero-sub{font-size:clamp(16px,1.9vw,19px);line-height:1.8;color:var(--body);max-width:660px;margin-bottom:40px}
 .hero-sub strong{color:var(--ink);font-weight:600}
 
 .stats{display:flex;gap:32px;margin-bottom:48px;flex-wrap:wrap;justify-content:center}
@@ -151,11 +162,62 @@ h2 .blue{color:var(--accent-hi)}h2 .red{color:var(--red)}h2 .gold{color:var(--go
 .footer{padding:40px clamp(24px,6vw,80px);border-top:1px solid var(--hair);text-align:center;font-size:12px;color:var(--faint);line-height:1.8}
 .footer a{color:var(--mut);text-decoration:none}
 
+/* 심리 콜아웃 밴드 */
+.callout{position:relative;padding:clamp(72px,10vw,120px) clamp(24px,6vw,80px);text-align:center;overflow:hidden}
+.callout::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 50% 50%,rgba(10,132,255,.06),transparent 70%);pointer-events:none}
+.callout>*{position:relative;z-index:1}
+.callout h2{max-width:860px;margin-left:auto;margin-right:auto}
+.co-label{font-size:11px;font-weight:700;letter-spacing:.22em;color:var(--accent);text-transform:uppercase;margin-bottom:16px}
+.co-sub{font-size:clamp(14px,1.7vw,17px);color:var(--body);max-width:660px;margin:0 auto;line-height:1.95}
+.co-sub strong{color:var(--ink)}
+.tools-line{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:26px 0 30px}
+.tool-x{font-size:clamp(13px,1.5vw,16px);font-weight:600;color:var(--mut);border:1px solid var(--hair);border-radius:100px;padding:9px 20px;text-decoration:line-through;text-decoration-color:rgba(255,69,58,.75);text-decoration-thickness:2px}
+
+/* 600+ 마퀴 */
+.marquee-wrap{padding:clamp(64px,9vw,100px) 0;overflow:hidden}
+.marquee-head{text-align:center;margin-bottom:40px;padding:0 24px}
+.mnum{font-size:clamp(56px,9vw,110px);font-weight:800;letter-spacing:-.03em;line-height:1;color:var(--ink)}
+.marquee-mask{display:flex;flex-direction:column;gap:14px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
+.marquee{display:flex;gap:14px;width:max-content;animation:marq 60s linear infinite}
+.marquee.rev{animation:marqr 70s linear infinite}
+.marquee span{font-size:13.5px;font-weight:600;color:var(--body);background:var(--surf);border:1px solid var(--hair);border-radius:100px;padding:11px 24px;white-space:nowrap}
+@keyframes marq{to{transform:translateX(-50%)}}
+@keyframes marqr{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+
+/* 방법론 선언 */
+.mx-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:32px 0 8px}
+.mx{background:var(--surf);border:1px solid var(--hair);border-radius:16px;padding:26px;transition:border-color .3s}
+.mx:hover{border-color:rgba(10,132,255,.4)}
+.mx-num{font-size:11px;font-weight:700;color:var(--accent);letter-spacing:.12em;margin-bottom:10px}
+.mx h3{font-size:17px;margin-bottom:10px}
+.mx p{font-size:13.5px;color:var(--body);line-height:1.85}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.chip{font-size:11.5px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--accent-hi);background:rgba(10,132,255,.07);border:1px solid rgba(10,132,255,.2);border-radius:6px;padding:4px 10px}
+
+/* 유튜브 카드 */
+.vid-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:8px}
+.vid{background:var(--surf);border:1px solid var(--hair);border-radius:16px;overflow:hidden;cursor:pointer;transition:border-color .3s,transform .3s}
+.vid:hover{border-color:var(--accent);transform:translateY(-4px)}
+.vid-thumb{position:relative;aspect-ratio:16/9;overflow:hidden}
+.vid-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.vid:hover .vid-thumb img{transform:scale(1.05)}
+.vid-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.22);transition:background .3s}
+.vid:hover .vid-play{background:rgba(0,0,0,.05)}
+.vid-play i{width:52px;height:52px;border-radius:50%;background:rgba(0,0,0,.65);border:1px solid rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;font-style:normal;font-size:17px;color:#fff;padding-left:4px;backdrop-filter:blur(4px)}
+.vid-title{padding:14px 16px;font-size:14px;font-weight:600;color:var(--ink);line-height:1.5}
+
+/* CTA 펄스 */
+@keyframes ctapulse{0%,100%{box-shadow:0 0 0 0 rgba(10,132,255,.4)}50%{box-shadow:0 0 0 16px rgba(10,132,255,0)}}
+.btn-pulse{animation:ctapulse 2.8s ease-out infinite}
+#payment-button.btn-pulse{animation:ctapulse 2.8s ease-out infinite}
+
+@media(prefers-reduced-motion:reduce){.orb,.aurora-bg,.marquee,.btn-pulse{animation:none!important}}
+
 [data-reveal]{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1)}
 [data-reveal].show{opacity:1;transform:none}
 
 @media(max-width:700px){
-  .ev-grid,.ba,.job-grid{grid-template-columns:1fr}
+  .ev-grid,.ba,.job-grid,.mx-grid,.vid-grid{grid-template-columns:1fr}
   .team-grid{grid-template-columns:repeat(2,1fr)}
   .cur{grid-template-columns:1fr}
 }
@@ -165,6 +227,9 @@ h2 .blue{color:var(--accent-hi)}h2 .red{color:var(--red)}h2 .gold{color:var(--go
 
 <div id="glow"></div>
 <div class="aurora-bg"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
 
 <header class="topbar">
   <a href="/" class="topbar-brand">CDSA</a>
@@ -187,6 +252,13 @@ h2 .blue{color:var(--accent-hi)}h2 .red{color:var(--red)}h2 .gold{color:var(--go
   </div>
 </section>
 
+<!-- ═══ 패러다임 콜아웃 — 세상이 바뀌었다 ═══ -->
+<section class="callout" data-reveal>
+  <div class="co-label">The Shift</div>
+  <h2>세상이 <span class="blue">바뀌었습니다.</span></h2>
+  <p class="co-sub">미국 채용시장은 이미 직무 중심에서 <strong>역량 중심(skills-based)</strong>으로 이동하고 있습니다. 학위와 스펙 한 줄이 아니라 "무엇을 할 수 있는가"를 봅니다. AI 역량도 마찬가지입니다. 말로는 증명되지 않습니다. <strong>포트폴리오로 증명해야 합니다.</strong></p>
+</section>
+
 <!-- ═══ 2. 시장 변화 근거 ═══ -->
 <section class="s" data-reveal>
   <h2>채용시장이 보고 있는 것은<br><span class="blue">'AI 전공'만이 아닙니다.</span></h2>
@@ -202,6 +274,16 @@ h2 .blue{color:var(--accent-hi)}h2 .red{color:var(--red)}h2 .gold{color:var(--go
   <p class="t" style="font-size:14px;color:var(--faint)">SK의 2026 하반기 AI솔루션기획 신입(인턴) 공고에서는 CODEX·CLAUDE 등 AI 코딩도구 경험과 프로젝트·포트폴리오, 생성형 AI 도구를 활용한 업무 효율화 경험을 우대사항으로 명시했습니다.</p>
 
   <div class="q">기업은 "AI를 배웠는가"보다 "AI로 무엇을 해봤는가"를 보고 싶어합니다.</div>
+</section>
+
+<!-- ═══ 도발 콜아웃 — 차별화의 한계 ═══ -->
+<section class="callout" data-reveal>
+  <div class="co-label">솔직한 이야기</div>
+  <h2>유튜브에서 잠깐 본 AI 활용법으로는<br><span class="red">차별화되지 않습니다.</span></h2>
+  <div class="tools-line">
+    <span class="tool-x">ChatGPT 활용법</span><span class="tool-x">Claude 활용법</span><span class="tool-x">Gemini 활용법</span><span class="tool-x">NotebookLM 활용법</span>
+  </div>
+  <p class="co-sub">이런 강의는 누구나 듣고, 누구나 씁니다. 모두가 아는 것은 역량이 아닙니다. 이 과정은 <strong>AI 코딩에이전트 활용법과 AI 역량을 인증하는 포트폴리오 방법론</strong>을 가르칩니다. 옆 지원자가 아직 모르는 것을 배워야 차별화가 됩니다.</p>
 </section>
 
 <hr class="divider">
@@ -289,10 +371,26 @@ h2 .blue{color:var(--accent-hi)}h2 .red{color:var(--red)}h2 .gold{color:var(--go
   <div class="cur" style="border-bottom:none"><div class="cur-time">17:20–18:00</div><div><div class="cur-title">AI 역량을 자소서·포트폴리오·면접으로 바꾸기</div><div class="cur-desc">결과물 정리 · 직무와 AI 연결 · 프로젝트 경험 문장화 · 예상 질문 답변 · AI 윤리·검증</div><div class="cur-result">→ OUTPUT: 나의 AI 역량 설명서</div></div></div>
 </section>
 
+<hr class="divider">
+
+<!-- ═══ 방법론 선언 ═══ -->
+<section class="s-wide" data-reveal>
+  <div class="overline">Our Method</div>
+  <h2>개발자를 만드는 하루가 아닙니다.<br><span class="blue">AI 시대에 PC를 보는 눈</span>을 바꾸는 하루입니다.</h2>
+  <p class="t">생성형 AI 자체를 가르치는 것이 아닙니다. LLM을 활용해 내가 쓰는 PC와 업무도구의 능력을 확장하고, 반복업무를 자동화하고, 생산성을 높이는 방법을 가르칩니다. 그 과정이 그대로 당신의 포트폴리오가 됩니다.</p>
+  <div class="mx-grid">
+    <div class="mx"><div class="mx-num">SCOPE 1</div><h3>PC와 오피스를 제어합니다</h3><p>PowerShell·CMD로 윈도우와 파일을 제어하고, Excel VBA·Power Query로 엑셀 업무를 자동화하며, Python과 라이브러리로 '개발자 영역'이라 여겼던 업무자동화 프로그램과 데이터 처리 도구를 직접 만들어봅니다.</p><div class="chips"><span class="chip">PowerShell</span><span class="chip">CMD</span><span class="chip">Excel VBA</span><span class="chip">Power Query</span><span class="chip">Python</span></div></div>
+    <div class="mx"><div class="mx-num">SCOPE 2</div><h3>브라우저를 실행 환경으로 다룹니다</h3><p>HTML·CSS·JavaScript, Node.js, 브라우저 콘솔로 웹페이지형 업무도구·데이터 분석기·파일변환기·문서편집기를 만들고, API·MCP·RSS·XML·JSON으로 외부 데이터와 프로그램을 연결합니다.</p><div class="chips"><span class="chip">HTML·CSS·JS</span><span class="chip">Node.js</span><span class="chip">Console</span><span class="chip">API</span><span class="chip">RSS·XML·JSON</span></div></div>
+    <div class="mx"><div class="mx-num">SCOPE 3</div><h3>AI 코딩에이전트를 활용합니다</h3><p>채팅창에 질문하는 수준을 넘어, AI 코딩에이전트에게 일을 시키고 결과물을 받아내는 방법을 익힙니다. Ollama, llama.cpp 같은 로컬 AI, MCP와 Skill을 통한 기능 확장, AI Harness까지 개념과 시연으로 다룹니다.</p><div class="chips"><span class="chip">코딩에이전트</span><span class="chip">Ollama</span><span class="chip">llama.cpp</span><span class="chip">MCP</span><span class="chip">Skill</span><span class="chip">AI Harness</span></div></div>
+    <div class="mx"><div class="mx-num">SCOPE 4</div><h3>확장자를 읽는 눈을 만듭니다</h3><p>코딩을 잘하는 개발자가 되라는 것이 아닙니다. 확장자의 역할을 이해하고, 필요한 코드와 자동화 로직은 LLM과 함께 만들어 직접 실행해보는 것. 그 경험이 면접에서 말할 수 있는 진짜 역량이 됩니다.</p><div class="chips"><span class="chip">.py</span><span class="chip">.ps1</span><span class="chip">.bas</span><span class="chip">.html</span><span class="chip">.js</span><span class="chip">.json</span><span class="chip">.xml</span></div></div>
+  </div>
+  <div class="q q-sm">AI를 채팅창 안에서만 쓰는 것이 아니라, PC와 프로그램, 데이터, 로컬 모델을 연결해 실제로 일을 수행하는 시스템으로 확장합니다. 이것이 옆 지원자와의 차이가 됩니다.</div>
+</section>
+
 <!-- ═══ 8. CDSA 신뢰 ═══ -->
 <section style="padding:clamp(60px,10vw,80px) clamp(24px,6vw,80px);background:var(--surf);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)" data-reveal>
   <div style="max-width:880px;margin:0 auto">
-    <h2>150여 기업·공공기관 현장에서<br>AI·데이터 교육을 수행해온 <span class="blue">CDSA</span></h2>
+    <h2>600개 이상 기업·공공기관 현장에서<br>AI·데이터 교육을 수행해온 <span class="blue">CDSA</span></h2>
     <p class="t">취준생만을 가르쳐온 교육기관이 아니라, 실제 기업과 공공기관의 현직자에게 AI·데이터·업무자동화 교육을 수행해온 경험을 취업준비생이 이해할 수 있는 수준으로 다시 설계했습니다.</p>
 
     <div class="tags">
@@ -307,6 +405,40 @@ h2 .blue{color:var(--accent-hi)}h2 .red{color:var(--red)}h2 .gold{color:var(--go
       <div class="team-card"><img src="/tutors/kim-yongjae.jpg" alt="김용재"><div class="team-info"><div class="team-name">김용재</div><div class="team-spec">공공AI교육 · 컨설팅</div></div></div>
     </div>
   </div>
+</section>
+
+<!-- ═══ 600+ 검증 마퀴 ═══ -->
+<section class="marquee-wrap" data-reveal>
+  <div class="marquee-head">
+    <div class="overline" style="text-align:center">Proven</div>
+    <div class="mnum">600<span style="color:var(--accent-hi)">+</span></div>
+    <p style="font-size:14.5px;color:var(--mut);margin-top:10px">600개 이상 기관 현장에서 검증된 교수법과 교육 커리큘럼</p>
+  </div>
+  <div class="marquee-mask">
+    <div class="marquee"><span>행정안전부</span><span>한국지능정보사회진흥원(NIA)</span><span>인사혁신처</span><span>법무부</span><span>통계청</span><span>병무청</span><span>소방청</span><span>방위사업청</span><span>통일부</span><span>농촌진흥청</span><span>식품의약품안전처</span><span>국민건강보험공단</span><span>국민연금공단</span><span>한국토지주택공사(LH)</span><span>한국도로공사</span><span>한국전력공사</span><span>KOTRA</span><span>한국국제협력단(KOICA)</span><span>행정안전부</span><span>한국지능정보사회진흥원(NIA)</span><span>인사혁신처</span><span>법무부</span><span>통계청</span><span>병무청</span><span>소방청</span><span>방위사업청</span><span>통일부</span><span>농촌진흥청</span><span>식품의약품안전처</span><span>국민건강보험공단</span><span>국민연금공단</span><span>한국토지주택공사(LH)</span><span>한국도로공사</span><span>한국전력공사</span><span>KOTRA</span><span>한국국제협력단(KOICA)</span></div>
+    <div class="marquee rev"><span>삼성전자 인재개발원</span><span>SK텔레콤</span><span>LG에너지솔루션</span><span>LG그룹(인화원)</span><span>카카오엔터테인먼트</span><span>한진그룹</span><span>KCC</span><span>풀무원</span><span>유한양행</span><span>CJ프레시웨이</span><span>롯데정밀화학</span><span>한화투자증권</span><span>신세계아이앤씨</span><span>코레일유통</span><span>KAIST</span><span>연세대학교</span><span>한양대학교 ERICA</span><span>한국기술교육대</span><span>삼성전자 인재개발원</span><span>SK텔레콤</span><span>LG에너지솔루션</span><span>LG그룹(인화원)</span><span>카카오엔터테인먼트</span><span>한진그룹</span><span>KCC</span><span>풀무원</span><span>유한양행</span><span>CJ프레시웨이</span><span>롯데정밀화학</span><span>한화투자증권</span><span>신세계아이앤씨</span><span>코레일유통</span><span>KAIST</span><span>연세대학교</span><span>한양대학교 ERICA</span><span>한국기술교육대</span></div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══ 유튜브 — Work by AX ═══ -->
+<section class="s-wide" data-reveal>
+  <div class="overline">Work by AX — YouTube</div>
+  <h2>어떻게 가르치는지<br><span class="blue">영상으로 먼저 확인하십시오.</span></h2>
+  <p class="t" style="font-size:15px">유튜브 「신성진 · Work by AX」 채널의 인기 영상입니다. 카드를 누르면 페이지 이탈 없이 바로 재생됩니다.</p>
+  <div class="vid-grid" id="vidGrid"></div>
+  <div style="display:flex;gap:10px;justify-content:center;margin-top:28px;flex-wrap:wrap">
+    <button class="btn btn-ghost" onclick="renderVids()" type="button">↻ 다른 인기 영상 보기</button>
+    <a class="btn btn-ghost" href="https://www.youtube.com/@workbyax" target="_blank" rel="noopener">유튜브 채널 전체 보기 ↗</a>
+  </div>
+</section>
+
+<!-- ═══ 1DAY 확신 콜아웃 ═══ -->
+<section class="callout" data-reveal>
+  <div class="co-label">Confidence</div>
+  <h2>"단, <span class="blue">1DAY</span>라도 충분합니다."</h2>
+  <p class="co-sub">우리는 AI가 어떻게 '체화'되는지 알고 있습니다. 600개 이상 기관 현장에서 검증한 교수법은, 하루 안에 '들은 것'이 아니라 <strong>'만들어본 것'</strong>을 남기도록 설계되어 있습니다. 오늘 저녁, 당신에게는 결과물 4개가 남습니다.</p>
 </section>
 
 <!-- ═══ 9. 가격 ═══ -->
@@ -324,7 +456,8 @@ h2 .blue{color:var(--accent-hi)}h2 .red{color:var(--red)}h2 .gold{color:var(--go
 
   <div id="payment-method"></div>
   <div id="agreement"></div>
-  <button id="payment-button">내 AI 실무역량 만들기 — 99,000원</button>
+  <button id="payment-button" class="btn-pulse">내 AI 실무역량 만들기 — 99,000원</button>
+  <button class="btn btn-ghost" style="width:100%;margin-top:10px;justify-content:center" onclick="openArticle('https://cdsapaper.lovable.app/inquiry/jobai')" type="button">결제 전에 궁금한 점 문의하기</button>
 
   <div class="pay-notice">
     결제 완료 시 입력 이메일로 Zoom 링크 발송<br>
@@ -339,7 +472,10 @@ h2 .blue{color:var(--accent-hi)}h2 .red{color:var(--red)}h2 .gold{color:var(--go
   <h2>그런데 한 사람은<br><span class="blue">AI로 일을 해본 경험이 있습니다.</span></h2>
   <p>앞으로 기업이 묻는 질문은 "AI를 아십니까?"에서 끝나지 않을 것입니다.<br><strong>"AI로 무엇을 해봤습니까?"</strong><br>그 질문에 보여줄 답을 하루 동안 만들어두십시오.</p>
   <p style="font-size:13px;color:var(--mut)">취업준비 AI 역량강화 과정</p>
-  <a href="#apply" class="btn" style="padding:18px 48px;font-size:16px">AI 실무역량 만들기 →</a>
+  <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+    <a href="#apply" class="btn btn-pulse" style="padding:18px 48px;font-size:16px">AI 실무역량 만들기 →</a>
+    <button class="btn btn-ghost" style="padding:18px 32px;font-size:14px" onclick="openArticle('https://cdsapaper.lovable.app/inquiry/jobai')" type="button">과정 문의하기</button>
+  </div>
 </div></section>
 
 <!-- 기사 모달 -->
@@ -368,9 +504,51 @@ h2 .blue{color:var(--accent-hi)}h2 .red{color:var(--red)}h2 .gold{color:var(--go
 })();
 var glow=document.getElementById('glow');document.addEventListener('mousemove',function(e){glow.style.left=e.clientX+'px';glow.style.top=e.clientY+'px'});
 
-function openArticle(url){document.getElementById('articleIframe').src=url;document.getElementById('articleModal').style.display='flex';document.body.style.overflow='hidden'}
+/* 스크롤 패럴랙스 — 배경 레이어별 깊이 */
+if(!matchMedia('(prefers-reduced-motion:reduce)').matches){
+  (function(){
+    var o1=document.querySelector('.orb-1'),o2=document.querySelector('.orb-2'),o3=document.querySelector('.orb-3');
+    var hero=document.querySelector('.hero'),hkids=hero?[].slice.call(hero.children):[];
+    var ticking=false;
+    function upd(){ticking=false;var y=window.scrollY;
+      if(o1)o1.style.translate='0 '+(y*0.10).toFixed(1)+'px';
+      if(o2)o2.style.translate='0 '+(-y*0.06).toFixed(1)+'px';
+      if(o3)o3.style.translate='0 '+(y*0.15).toFixed(1)+'px';
+      document.body.style.setProperty('--gy',(-y*0.05).toFixed(1)+'px');
+      var vh=window.innerHeight;
+      if(y<vh*1.2){var f=Math.max(0,1-y/(vh*0.9));
+        for(var k=0;k<hkids.length;k++){hkids[k].style.translate='0 '+(y*0.28).toFixed(1)+'px';hkids[k].style.opacity=f.toFixed(2)}}
+    }
+    addEventListener('scroll',function(){if(!ticking){ticking=true;requestAnimationFrame(upd)}},{passive:true});
+    upd();
+  })();
+}
+
+/* 떠오르는 입자 생성 */
+if(!matchMedia('(prefers-reduced-motion:reduce)').matches){
+  for(var pi=0;pi<26;pi++){
+    var p=document.createElement('div');p.className='pt';
+    var sz=(2+Math.random()*3).toFixed(1);
+    p.style.width=sz+'px';p.style.height=sz+'px';
+    p.style.left=(Math.random()*100).toFixed(2)+'vw';
+    p.style.setProperty('--po',(0.15+Math.random()*0.4).toFixed(2));
+    p.style.setProperty('--px',((Math.random()*160-80)|0)+'px');
+    p.style.animationDuration=(14+Math.random()*26).toFixed(1)+'s';
+    p.style.animationDelay='-'+(Math.random()*40).toFixed(1)+'s';
+    document.body.appendChild(p);
+  }
+}
+
+function openArticle(url){var f=document.getElementById('articleIframe');f.style.background='#fff';f.src=url;document.getElementById('articleModal').style.display='flex';document.body.style.overflow='hidden'}
 function closeArticle(e){if(e&&e.target!==e.currentTarget&&!e.target.closest('button'))return;document.getElementById('articleModal').style.display='none';document.getElementById('articleIframe').src='';document.body.style.overflow=''}
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeArticle()});
+
+/* Work by AX 인기 영상 — 랜덤 셔플 */
+var VIDS=[['JdwtRzZKlNg','생성형 AI 실무 완벽 마스터 — AI 챔피언 그린 명강의'],['ibHaiA8dRwA','7개 AI에 똑같이 시켰더니 결과가 완전히 달랐습니다'],['3w8CVXmzFUI','GPT-5.6 사용법 — Chat과 Work의 결정적 차이'],['s-HXqJdxEFs','파이썬 바이브코딩'],['3_NzfgZbC9U','엑셀 VBA 바이브코딩'],['clTItVDsr64','바이브코딩으로 데이터 분석하기'],['xDl9DZrZYqc','AI 에이전트로 데이터 분석'],['GFcAeC2O_D8','생성형 AI 활용 PPT 제어'],['KsDDaAUoqfE','생성형 AI 활용 엑셀 함수'],['A1S19JzHN2M','10분 생성형 AI 트렌드'],['PhdqYl5T3p0','구글 제미나이 특강']];
+function renderVids(){var a=VIDS.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}
+document.getElementById('vidGrid').innerHTML=a.slice(0,3).map(function(v){return '<div class="vid" onclick="openVideo(\''+v[0]+'\')"><div class="vid-thumb"><img src="https://i.ytimg.com/vi/'+v[0]+'/hqdefault.jpg" alt="'+v[1]+'" loading="lazy"><span class="vid-play"><i>▶</i></span></div><div class="vid-title">'+v[1]+'</div></div>'}).join('')}
+function openVideo(id){var f=document.getElementById('articleIframe');f.style.background='#000';f.src='https://www.youtube.com/embed/'+id+'?autoplay=1&rel=0';document.getElementById('articleModal').style.display='flex';document.body.style.overflow='hidden'}
+renderVids();
 
 const io=new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("show");io.unobserve(e.target)}}),{threshold:0,rootMargin:"0px 0px -8% 0px"});
 if(!matchMedia("(prefers-reduced-motion:reduce)").matches){document.querySelectorAll("[data-reveal]").forEach(el=>io.observe(el))}else{document.querySelectorAll("[data-reveal]").forEach(el=>el.classList.add("show"))}
