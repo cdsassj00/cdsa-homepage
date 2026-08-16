@@ -38,9 +38,9 @@ body::before{content:'';position:fixed;inset:0;z-index:-2;background-image:radia
 .topbar a{color:var(--mut);text-decoration:none;transition:color .2s}.topbar a:hover{color:var(--gold)}
 .topbar-brand{font-weight:600;font-size:15px;color:var(--ink)!important}
 
-.watermark{position:absolute;font-size:clamp(100px,18vw,260px);font-weight:800;letter-spacing:-.04em;color:rgba(255,255,255,.015);white-space:nowrap;pointer-events:none;user-select:none;z-index:0}
+.watermark{position:absolute;font-size:clamp(100px,18vw,260px);font-weight:800;letter-spacing:-.04em;color:rgba(255,255,255,.04);white-space:nowrap;pointer-events:none;user-select:none;z-index:0}
 
-.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:120px clamp(24px,6vw,80px) 80px;position:relative;overflow:hidden}
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:120px clamp(24px,6vw,80px) 80px;position:relative;overflow:hidden}
 .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 70% 30%,rgba(255,214,10,.06),transparent 60%),radial-gradient(ellipse 50% 60% at 20% 70%,rgba(255,159,10,.04),transparent 50%),radial-gradient(ellipse 40% 40% at 50% 90%,rgba(10,132,255,.04),transparent 50%);pointer-events:none}
 .hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(to top,var(--paper),transparent);pointer-events:none}
 .hero>*{position:relative;z-index:1}
@@ -163,8 +163,9 @@ body::before{content:'';position:fixed;inset:0;z-index:-2;background-image:radia
 
 <!-- ══════ 뉴스 ══════ -->
 <section class="section" data-reveal style="border-bottom:1px solid var(--hair);padding-bottom:60px">
-  <div class="overline">뉴스가 말하는 현실</div>
+  <div class="overline" style="display:flex;align-items:center;gap:10px">뉴스가 말하는 현실 <span style="background:var(--gold);color:#000;font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;letter-spacing:.08em">NOW</span></div>
   <h2>AI챔피언, <span class="gold">이미 움직이고 있습니다</span></h2>
+  <p class="body-text" style="margin-bottom:24px">당신이 고민하는 사이, 정부와 기관은 이미 실행에 들어갔습니다. 아래는 2026년 실제 보도입니다.</p>
   <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-top:24px">
     <a href="https://www.newspim.com/news/view/20260617000261" target="_blank" rel="noopener" style="background:var(--surf);border:1px solid var(--hair);border-radius:12px;padding:20px;text-decoration:none;display:block;transition:border-color .3s"><div style="font-size:11px;color:var(--gold);font-weight:600;letter-spacing:.06em;margin-bottom:8px">뉴스핌</div><div style="font-size:15px;font-weight:600;color:var(--ink);line-height:1.5;margin-bottom:8px">AI로 앱 개발하는 공무원 — '2026 AI챔피언 해커톤'에 200개팀 몰려</div><div style="font-size:12px;color:var(--faint)">행안부·NIA 공동 주최</div></a>
     <a href="https://www.dt.co.kr/article/12061230" target="_blank" rel="noopener" style="background:var(--surf);border:1px solid var(--hair);border-radius:12px;padding:20px;text-decoration:none;display:block;transition:border-color .3s"><div style="font-size:11px;color:var(--gold);font-weight:600;letter-spacing:.06em;margin-bottom:8px">디지털타임스</div><div style="font-size:15px;font-weight:600;color:var(--ink);line-height:1.5;margin-bottom:8px">행안부의 AI 리더 공무원 육성 '열기'</div><div style="font-size:12px;color:var(--faint)">공공 AI 인재 양성 가속화</div></a>

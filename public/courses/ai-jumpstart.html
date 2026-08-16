@@ -40,12 +40,12 @@ h1{font-variation-settings:"wght" 650}
 /* 배경 텍스처 — 도트그리드 + 노이즈 */
 body::before{content:'';position:fixed;inset:0;z-index:-2;background-image:radial-gradient(circle,rgba(255,255,255,.03) 1px,transparent 1px);background-size:24px 24px;pointer-events:none}
 
-.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:120px clamp(24px,6vw,80px) 80px;position:relative;overflow:hidden}
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:120px clamp(24px,6vw,80px) 80px;position:relative;overflow:hidden}
 .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 60% 30%,rgba(255,69,58,.08),transparent 60%),radial-gradient(ellipse 50% 60% at 30% 70%,rgba(10,132,255,.06),transparent 50%),radial-gradient(ellipse 40% 40% at 80% 80%,rgba(255,214,10,.03),transparent 50%);pointer-events:none}
 .hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(to top,var(--paper),transparent);pointer-events:none}
 
 /* 워터마크 대형 텍스트 */
-.watermark{position:absolute;font-size:clamp(120px,20vw,280px);font-weight:800;letter-spacing:-.04em;color:rgba(255,255,255,.015);white-space:nowrap;pointer-events:none;user-select:none;z-index:0}
+.watermark{position:absolute;font-size:clamp(120px,20vw,280px);font-weight:800;letter-spacing:-.04em;color:rgba(255,255,255,.04);white-space:nowrap;pointer-events:none;user-select:none;z-index:0}
 .wm-1{top:8%;right:-5%}
 .wm-2{bottom:15%;left:-3%;font-size:clamp(80px,14vw,200px)}
 .hero>*{position:relative;z-index:1}
@@ -54,7 +54,7 @@ body::before{content:'';position:fixed;inset:0;z-index:-2;background-image:radia
 .hero-chip .dot{width:6px;height:6px;background:var(--red);border-radius:50%;animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 
-.hero h1{font-size:clamp(28px,5vw,56px);line-height:1.12;max-width:720px;margin-bottom:24px}
+.hero h1{font-size:clamp(32px,5.5vw,64px);line-height:1.12;max-width:800px;margin-bottom:24px}
 .hero h1 .accent{color:var(--accent-hi)}
 .hero h1 .red{color:var(--red)}
 
@@ -66,7 +66,7 @@ body::before{content:'';position:fixed;inset:0;z-index:-2;background-image:radia
 .stat-num{font-size:28px;font-weight:700;color:var(--accent-hi);font-variant-numeric:tabular-nums}
 .stat-label{font-size:11px;color:var(--mut);letter-spacing:.04em;margin-top:2px}
 
-.btn-cta{display:inline-flex;align-items:center;gap:8px;padding:16px 40px;background:var(--accent);color:#fff;font-size:15px;font-weight:700;border:none;border-radius:12px;cursor:pointer;text-decoration:none;transition:all .2s;align-self:flex-start}
+.btn-cta{display:inline-flex;align-items:center;gap:8px;padding:16px 40px;background:var(--accent);color:#fff;font-size:15px;font-weight:700;border:none;border-radius:12px;cursor:pointer;text-decoration:none;transition:all .2s}
 .btn-cta:hover{background:var(--accent-hi);transform:translateY(-1px);box-shadow:0 8px 32px rgba(10,132,255,.3)}
 
 .section{padding:clamp(60px,10vw,100px) clamp(24px,6vw,80px);max-width:880px;margin:0 auto}
@@ -155,8 +155,9 @@ body::before{content:'';position:fixed;inset:0;z-index:-2;background-image:radia
 
 <!-- ══════ 뉴스 ══════ -->
 <section class="section" data-reveal style="border-bottom:1px solid var(--hair);padding-bottom:60px">
-  <div class="overline">뉴스가 말하는 현실</div>
+  <div class="overline" style="display:flex;align-items:center;gap:10px">뉴스가 말하는 현실 <span style="background:var(--red);color:#fff;font-size:10px;padding:3px 8px;border-radius:4px;letter-spacing:.08em;animation:pulse 2s infinite">TREND</span></div>
   <h2>지금 <span class="red">채용 시장</span>에서 벌어지고 있는 일</h2>
+  <p class="body-text" style="margin-bottom:24px">AI를 안 쓰는 지원자는 서류에서 걸러지는 시대가 왔습니다. 아래는 2026년 실제 뉴스입니다.</p>
   <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-top:24px">
     <a href="https://platum.kr/archives/276662" target="_blank" rel="noopener" style="background:var(--surf);border:1px solid var(--hair);border-radius:12px;padding:20px;text-decoration:none;transition:border-color .3s;display:block"><div style="font-size:11px;color:var(--red);font-weight:600;letter-spacing:.06em;margin-bottom:8px">플래텀</div><div style="font-size:15px;font-weight:600;color:var(--ink);line-height:1.5;margin-bottom:8px">2026년 기업 채용, AI 역량 선호 — 4~7년차 경력직 중심</div><div style="font-size:12px;color:var(--faint)">기업 78%가 AI 활용 능력을 채용 우대 조건으로 꼽았다</div></a>
     <a href="https://magazine.hankyung.com/job-joy/article/202512290531d" target="_blank" rel="noopener" style="background:var(--surf);border:1px solid var(--hair);border-radius:12px;padding:20px;text-decoration:none;transition:border-color .3s;display:block"><div style="font-size:11px;color:var(--red);font-weight:600;letter-spacing:.06em;margin-bottom:8px">한경잡앤조이</div><div style="font-size:15px;font-weight:600;color:var(--ink);line-height:1.5;margin-bottom:8px">'소규모 질적 채용' 전환 — AI 잘 활용하는 인재 선호</div><div style="font-size:12px;color:var(--faint)">2026 채용트렌드 핵심 키워드</div></a>
