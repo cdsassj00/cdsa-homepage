@@ -213,11 +213,23 @@ h2 .blue{color:var(--accent-hi)}h2 .red{color:var(--red)}h2 .gold{color:var(--go
 
 @media(prefers-reduced-motion:reduce){.orb,.aurora-bg,.marquee,.btn-pulse{animation:none!important}}
 
+/* 문의 폼 모달 */
+.form-card{background:var(--surf);border:1px solid var(--hair);border-radius:16px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;position:relative;padding:36px 32px;text-align:left}
+.form-card h3{font-size:20px;margin-bottom:6px}
+.form-card .fsub{font-size:13px;color:var(--mut);margin-bottom:24px}
+.frow{margin-bottom:14px}
+.frow label{display:block;font-size:12px;font-weight:600;color:var(--body);margin-bottom:6px}
+.frow input,.frow textarea{width:100%;background:var(--tint);border:1px solid var(--hair);border-radius:10px;padding:12px 14px;font-size:14px;color:var(--ink);font-family:inherit;outline:none;transition:border-color .2s}
+.frow input:focus,.frow textarea:focus{border-color:var(--accent)}
+.frow2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-done{text-align:center;padding:28px 0;display:none}
+.form-done .fd-icon{width:52px;height:52px;border-radius:50%;background:rgba(48,209,88,.12);border:1px solid rgba(48,209,88,.4);color:var(--green);font-size:22px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+
 [data-reveal]{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1)}
 [data-reveal].show{opacity:1;transform:none}
 
 @media(max-width:700px){
-  .ev-grid,.ba,.job-grid,.mx-grid,.vid-grid{grid-template-columns:1fr}
+  .ev-grid,.ba,.job-grid,.mx-grid,.vid-grid,.frow2{grid-template-columns:1fr}
   .team-grid{grid-template-columns:repeat(2,1fr)}
   .cur{grid-template-columns:1fr}
 }
@@ -457,7 +469,7 @@ h2 .blue{color:var(--accent-hi)}h2 .red{color:var(--red)}h2 .gold{color:var(--go
   <div id="payment-method"></div>
   <div id="agreement"></div>
   <button id="payment-button" class="btn-pulse">내 AI 실무역량 만들기 — 99,000원</button>
-  <button class="btn btn-ghost" style="width:100%;margin-top:10px;justify-content:center" onclick="openArticle('https://cdsapaper.lovable.app/inquiry/jobai')" type="button">결제 전에 궁금한 점 문의하기</button>
+  <button class="btn btn-ghost" style="width:100%;margin-top:10px;justify-content:center" onclick="openInquiry()" type="button">결제 전에 궁금한 점 문의하기</button>
 
   <div class="pay-notice">
     결제 완료 시 입력 이메일로 Zoom 링크 발송<br>
@@ -474,7 +486,7 @@ h2 .blue{color:var(--accent-hi)}h2 .red{color:var(--red)}h2 .gold{color:var(--go
   <p style="font-size:13px;color:var(--mut)">취업준비 AI 역량강화 과정</p>
   <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
     <a href="#apply" class="btn btn-pulse" style="padding:18px 48px;font-size:16px">AI 실무역량 만들기 →</a>
-    <button class="btn btn-ghost" style="padding:18px 32px;font-size:14px" onclick="openArticle('https://cdsapaper.lovable.app/inquiry/jobai')" type="button">과정 문의하기</button>
+    <button class="btn btn-ghost" style="padding:18px 32px;font-size:14px" onclick="openInquiry()" type="button">과정 문의하기</button>
   </div>
 </div></section>
 
@@ -483,6 +495,33 @@ h2 .blue{color:var(--accent-hi)}h2 .red{color:var(--red)}h2 .gold{color:var(--go
   <div style="background:var(--surf);border:1px solid var(--hair);border-radius:12px;width:100%;max-width:900px;height:80vh;overflow:hidden;position:relative">
     <button onclick="closeArticle()" style="position:absolute;top:12px;right:12px;z-index:10;width:36px;height:36px;background:var(--tint2);border:none;border-radius:50%;color:var(--ink);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center">&times;</button>
     <iframe id="articleIframe" src="" title="기사" style="width:100%;height:100%;border:none;background:#fff"></iframe>
+  </div>
+</div>
+
+<!-- 문의 폼 모달 -->
+<div id="inquiryModal" style="display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:24px" onclick="closeInquiry(event)">
+  <div class="form-card">
+    <button onclick="closeInquiry()" style="position:absolute;top:12px;right:12px;z-index:10;width:36px;height:36px;background:var(--tint2);border:none;border-radius:50%;color:var(--ink);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center">&times;</button>
+    <h3>취업준비 AI 역량강화 과정 문의</h3>
+    <p class="fsub">결제 전에 궁금한 점을 남겨주시면 확인 후 바로 안내드립니다.</p>
+    <form id="inqForm" onsubmit="submitInquiry(event)">
+      <input name="website" style="display:none" tabindex="-1" autocomplete="off">
+      <div class="frow2">
+        <div class="frow"><label>이름 *</label><input name="name" required maxlength="50" placeholder="홍길동"></div>
+        <div class="frow"><label>이메일 *</label><input type="email" name="email" required maxlength="100" placeholder="hong@gmail.com"></div>
+      </div>
+      <div class="frow2">
+        <div class="frow"><label>소속/학교</label><input name="org" maxlength="100" placeholder="선택 입력"></div>
+        <div class="frow"><label>연락처</label><input name="phone" maxlength="20" placeholder="010-0000-0000"></div>
+      </div>
+      <div class="frow"><label>문의 내용</label><textarea name="message" rows="5" maxlength="1500" placeholder="궁금하신 내용을 자유롭게 남겨주세요."></textarea></div>
+      <button type="submit" class="btn" id="inqSubmit" style="width:100%;justify-content:center">문의 접수하기</button>
+    </form>
+    <div class="form-done" id="inqDone">
+      <div class="fd-icon">✓</div>
+      <div style="font-size:17px;font-weight:600;margin-bottom:8px">접수되었습니다</div>
+      <div style="font-size:13px;color:var(--mut)">남겨주신 연락처로 곧 안내드리겠습니다.</div>
+    </div>
   </div>
 </div>
 
@@ -549,6 +588,15 @@ function renderVids(){var a=VIDS.slice();for(var i=a.length-1;i>0;i--){var j=Mat
 document.getElementById('vidGrid').innerHTML=a.slice(0,3).map(function(v){return '<div class="vid" onclick="openVideo(\''+v[0]+'\')"><div class="vid-thumb"><img src="https://i.ytimg.com/vi/'+v[0]+'/hqdefault.jpg" alt="'+v[1]+'" loading="lazy"><span class="vid-play"><i>▶</i></span></div><div class="vid-title">'+v[1]+'</div></div>'}).join('')}
 function openVideo(id){var f=document.getElementById('articleIframe');f.style.background='#000';f.src='https://www.youtube.com/embed/'+id+'?autoplay=1&rel=0';document.getElementById('articleModal').style.display='flex';document.body.style.overflow='hidden'}
 renderVids();
+
+/* 문의 폼 */
+function openInquiry(){document.getElementById('inquiryModal').style.display='flex';document.body.style.overflow='hidden'}
+function closeInquiry(e){if(e&&e.target!==e.currentTarget&&!e.target.closest('button'))return;document.getElementById('inquiryModal').style.display='none';document.body.style.overflow=''}
+function submitInquiry(ev){ev.preventDefault();var f=ev.target,b=document.getElementById('inqSubmit');b.disabled=true;b.textContent='접수 중…';
+  fetch('/api/inquiry',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({course:'취업준비 AI역량강화',name:f.name.value,email:f.email.value,org:f.org.value,phone:f.phone.value,message:f.message.value,website:f.website.value})})
+  .then(function(r){if(!r.ok)throw 0;f.style.display='none';document.getElementById('inqDone').style.display='block';if(typeof gtag==='function')gtag('event','inquiry_submit',{course:'ai-jumpstart'})})
+  .catch(function(){b.disabled=false;b.textContent='다시 시도하기';alert('전송에 실패했습니다. 잠시 후 다시 시도해 주세요.')})}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeInquiry()});
 
 const io=new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("show");io.unobserve(e.target)}}),{threshold:0,rootMargin:"0px 0px -8% 0px"});
 if(!matchMedia("(prefers-reduced-motion:reduce)").matches){document.querySelectorAll("[data-reveal]").forEach(el=>io.observe(el))}else{document.querySelectorAll("[data-reveal]").forEach(el=>el.classList.add("show"))}

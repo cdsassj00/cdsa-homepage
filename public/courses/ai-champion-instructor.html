@@ -167,6 +167,18 @@ h2 .gold{color:var(--gold)}h2 .red{color:var(--red)}h2 .accent{color:var(--accen
 .modal-close:hover{background:var(--accent)}
 .modal-frame iframe{width:100%;height:100%;border:none;background:#fff}
 
+/* 문의 폼 모달 */
+.form-card{background:var(--surf);border:1px solid var(--hair);border-radius:16px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;position:relative;padding:36px 32px;text-align:left}
+.form-card h3{font-size:20px;margin-bottom:6px}
+.form-card .fsub{font-size:13px;color:var(--mut);margin-bottom:24px}
+.frow{margin-bottom:14px}
+.frow label{display:block;font-size:12px;font-weight:600;color:var(--body);margin-bottom:6px}
+.frow input,.frow textarea{width:100%;background:var(--tint);border:1px solid var(--hair);border-radius:10px;padding:12px 14px;font-size:14px;color:var(--ink);font-family:inherit;outline:none;transition:border-color .2s}
+.frow input:focus,.frow textarea:focus{border-color:var(--gold)}
+.frow2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-done{text-align:center;padding:28px 0;display:none}
+.form-done .fd-icon{width:52px;height:52px;border-radius:50%;background:rgba(48,209,88,.12);border:1px solid rgba(48,209,88,.4);color:var(--green);font-size:22px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+
 .footer a{color:var(--mut);text-decoration:none}
 
 /* 심리 콜아웃 밴드 */
@@ -224,7 +236,7 @@ h2 .gold{color:var(--gold)}h2 .red{color:var(--red)}h2 .accent{color:var(--accen
 [data-reveal].show{opacity:1;transform:none}
 
 @media(max-width:700px){
-  .pain-grid,.ba,.money-grid,.mx-grid,.vid-grid{grid-template-columns:1fr}
+  .pain-grid,.ba,.money-grid,.mx-grid,.vid-grid,.frow2{grid-template-columns:1fr}
   .team-grid{grid-template-columns:repeat(2,1fr)}
   .mod{grid-template-columns:1fr}
   .chat{max-width:100%}
@@ -255,7 +267,7 @@ h2 .gold{color:var(--gold)}h2 .red{color:var(--red)}h2 .accent{color:var(--accen
     <div class="stat"><div class="stat-num">지금 필요한 것</div><div class="stat-label">교육을 수행할 전문강사</div></div>
   </div>
   <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
-    <button class="btn" onclick="openArticle('https://cdsapaper.lovable.app/inquiry/aichampion')" type="button">AI 입문강사에서 공공 AX 전문강사로 올라가기</button>
+    <button class="btn" onclick="openInquiry()" type="button">AI 입문강사에서 공공 AX 전문강사로 올라가기</button>
     <a href="#curriculum" class="btn btn-ghost">과정 내용 먼저 보기</a>
   </div>
 </section>
@@ -553,7 +565,7 @@ h2 .gold{color:var(--gold)}h2 .red{color:var(--red)}h2 .accent{color:var(--accen
   <h2>다음 강의 요청에<br><span class="gold">"네. 가능합니다"</span>라고<br>답할 수 있도록.</h2>
   <p>ChatGPT 강사에서 AI 실무강사로.<br>AI 실무강사에서 공공 AX 전문강사로.</p>
   <p style="font-size:13px;color:var(--mut);margin-bottom:8px">CDSA AI챔피언 전문강사 양성과정</p>
-  <button class="btn btn-pulse" style="padding:18px 48px;font-size:16px" onclick="openArticle('https://cdsapaper.lovable.app/inquiry/aichampion')" type="button">전문강사 과정 신청하기 →</button>
+  <button class="btn btn-pulse" style="padding:18px 48px;font-size:16px" onclick="openInquiry()" type="button">전문강사 과정 신청하기 →</button>
 
   <div class="info-row">
     <div class="info-item"><div class="il">교육 일정</div><div class="iv">추후 공지</div></div>
@@ -570,6 +582,33 @@ h2 .gold{color:var(--gold)}h2 .red{color:var(--red)}h2 .accent{color:var(--accen
   <div class="modal-frame">
     <button class="modal-close" onclick="closeArticle()">&times;</button>
     <iframe id="articleIframe" src="" title="기사"></iframe>
+  </div>
+</div>
+
+<!-- 문의 폼 모달 -->
+<div class="modal-overlay" id="inquiryModal" onclick="closeInquiry(event)">
+  <div class="form-card">
+    <button class="modal-close" onclick="closeInquiry()">&times;</button>
+    <h3>AI챔피언 전문강사 양성과정 문의</h3>
+    <p class="fsub">남겨주시면 확인 후 바로 연락드립니다. 일정·교육비·장소를 안내해 드립니다.</p>
+    <form id="inqForm" onsubmit="submitInquiry(event)">
+      <input name="website" style="display:none" tabindex="-1" autocomplete="off">
+      <div class="frow2">
+        <div class="frow"><label>이름 *</label><input name="name" required maxlength="50" placeholder="홍길동"></div>
+        <div class="frow"><label>이메일 *</label><input type="email" name="email" required maxlength="100" placeholder="hong@company.co.kr"></div>
+      </div>
+      <div class="frow2">
+        <div class="frow"><label>소속 기관/회사</label><input name="org" maxlength="100" placeholder="선택 입력"></div>
+        <div class="frow"><label>연락처</label><input name="phone" maxlength="20" placeholder="010-0000-0000"></div>
+      </div>
+      <div class="frow"><label>문의 내용</label><textarea name="message" rows="5" maxlength="1500" placeholder="궁금하신 내용을 자유롭게 남겨주세요."></textarea></div>
+      <button type="submit" class="btn" id="inqSubmit" style="width:100%;justify-content:center">문의 접수하기</button>
+    </form>
+    <div class="form-done" id="inqDone">
+      <div class="fd-icon">✓</div>
+      <div style="font-size:17px;font-weight:600;margin-bottom:8px">접수되었습니다</div>
+      <div style="font-size:13px;color:var(--mut)">남겨주신 연락처로 곧 안내드리겠습니다.</div>
+    </div>
   </div>
 </div>
 
@@ -627,6 +666,15 @@ function renderVids(){var a=VIDS.slice();for(var i=a.length-1;i>0;i--){var j=Mat
 document.getElementById('vidGrid').innerHTML=a.slice(0,3).map(function(v){return '<div class="vid" onclick="openVideo(\''+v[0]+'\')"><div class="vid-thumb"><img src="https://i.ytimg.com/vi/'+v[0]+'/hqdefault.jpg" alt="'+v[1]+'" loading="lazy"><span class="vid-play"><i>▶</i></span></div><div class="vid-title">'+v[1]+'</div></div>'}).join('')}
 function openVideo(id){var f=document.getElementById('articleIframe');f.style.background='#000';f.src='https://www.youtube.com/embed/'+id+'?autoplay=1&rel=0';document.getElementById('articleModal').classList.add('open');document.body.style.overflow='hidden'}
 renderVids();
+
+/* 문의 폼 */
+function openInquiry(){document.getElementById('inquiryModal').classList.add('open');document.body.style.overflow='hidden'}
+function closeInquiry(e){if(e&&e.target!==e.currentTarget&&!e.target.classList.contains('modal-close'))return;document.getElementById('inquiryModal').classList.remove('open');document.body.style.overflow=''}
+function submitInquiry(ev){ev.preventDefault();var f=ev.target,b=document.getElementById('inqSubmit');b.disabled=true;b.textContent='접수 중…';
+  fetch('/api/inquiry',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({course:'AI챔피언 강사양성',name:f.name.value,email:f.email.value,org:f.org.value,phone:f.phone.value,message:f.message.value,website:f.website.value})})
+  .then(function(r){if(!r.ok)throw 0;f.style.display='none';document.getElementById('inqDone').style.display='block';if(typeof gtag==='function')gtag('event','inquiry_submit',{course:'ai-champion-instructor'})})
+  .catch(function(){b.disabled=false;b.textContent='다시 시도하기';alert('전송에 실패했습니다. 잠시 후 다시 시도해 주세요.')})}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeInquiry()});
 
 const io=new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("show");io.unobserve(e.target)}}),{threshold:0,rootMargin:"0px 0px -8% 0px"});
 if(!matchMedia("(prefers-reduced-motion:reduce)").matches){document.querySelectorAll("[data-reveal]").forEach(el=>io.observe(el))}else{document.querySelectorAll("[data-reveal]").forEach(el=>el.classList.add("show"))}
