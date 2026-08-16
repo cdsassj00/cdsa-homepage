@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/courses/favicon-jumpstart.svg">
 <title>취업준비 AI 역량강화 과정 · CDSA</title>
 <meta name="description" content="AI 할 줄 압니다 — 이제 이 말만으로는 부족합니다. AI로 실제 일을 더 잘할 수 있습니까? 하루 동안 취업에서 보여줄 AI 실무역량의 증거를 만드십시오.">
 <link rel="canonical" href="https://cdsa.kr/courses/ai-jumpstart.html">
@@ -35,6 +36,10 @@ h1{font-variation-settings:"wght" 650}
 
 body::before{content:'';position:fixed;inset:0;z-index:-2;background-image:radial-gradient(circle,rgba(255,255,255,.025) 1px,transparent 1px);background-size:28px 28px;pointer-events:none}
 body::after{content:'';position:fixed;inset:0;z-index:-1;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(10,132,255,.04),transparent 50%);pointer-events:none}
+
+#glow{position:fixed;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(10,132,255,.06),transparent 70%);pointer-events:none;z-index:-1;transform:translate(-50%,-50%);transition:opacity .3s}
+@keyframes aurora{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.aurora-bg{position:fixed;inset:0;z-index:-1;background:linear-gradient(135deg,rgba(10,132,255,.02) 0%,transparent 30%,rgba(64,156,255,.015) 60%,transparent 100%);background-size:400% 400%;animation:aurora 20s ease infinite;pointer-events:none}
 
 .topbar{position:fixed;top:0;left:0;right:0;height:48px;background:rgba(0,0,0,.8);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--hair);z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,40px);font-size:13px}
 .topbar a{color:var(--mut);text-decoration:none;transition:color .2s}.topbar a:hover{color:var(--accent)}
@@ -118,7 +123,7 @@ h2 .blue{color:var(--accent-hi)}h2 .red{color:var(--red)}h2 .gold{color:var(--go
 .team-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:28px}
 .team-card{background:var(--surf);border:1px solid var(--hair);border-radius:16px;overflow:hidden;text-align:center;transition:border-color .3s,transform .3s}
 .team-card:hover{border-color:var(--accent);transform:translateY(-4px)}
-.team-card img{width:100%;aspect-ratio:3/4;object-fit:cover;filter:grayscale(.15) brightness(.92)}
+.team-card img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top;filter:grayscale(.15) brightness(.92)}
 .team-info{padding:14px 10px}
 .team-name{font-size:16px;font-weight:700}
 .team-spec{font-size:11px;color:var(--accent);margin-top:4px}
@@ -157,6 +162,9 @@ h2 .blue{color:var(--accent-hi)}h2 .red{color:var(--red)}h2 .gold{color:var(--go
 </style>
 </head>
 <body>
+
+<div id="glow"></div>
+<div class="aurora-bg"></div>
 
 <header class="topbar">
   <a href="/" class="topbar-brand">CDSA</a>
@@ -358,6 +366,8 @@ h2 .blue{color:var(--accent-hi)}h2 .red{color:var(--red)}h2 .gold{color:var(--go
     pw.requestPayment({orderId:oid,orderName:'취업준비 AI 역량강화 과정 — CDSA',successUrl:window.location.origin+'/courses/success.html',failUrl:window.location.origin+'/courses/fail.html',customerEmail:'',customerName:''});
   });
 })();
+var glow=document.getElementById('glow');document.addEventListener('mousemove',function(e){glow.style.left=e.clientX+'px';glow.style.top=e.clientY+'px'});
+
 function openArticle(url){document.getElementById('articleIframe').src=url;document.getElementById('articleModal').style.display='flex';document.body.style.overflow='hidden'}
 function closeArticle(e){if(e&&e.target!==e.currentTarget&&!e.target.closest('button'))return;document.getElementById('articleModal').style.display='none';document.getElementById('articleIframe').src='';document.body.style.overflow=''}
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeArticle()});
