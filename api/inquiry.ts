@@ -58,6 +58,40 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(502).json({ error: 'Failed to save inquiry' });
     }
 
+    // 이메일 알림 (실패해도 문의 접수 자체는 성공 처리)
+    const resendKey = process.env.RESEND_API_KEY;
+    if (resendKey) {
+      const esc = (s: unknown) => String(s || '').replace(/[<>&"]/g, (c) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;' }[c] as string));
+      const row = (label: string, value: string) =>
+        `<tr><td style="padding:8px 12px;border-bottom:1px solid #eee;color:#888;width:90px;white-space:nowrap">${label}</td><td style="padding:8px 12px;border-bottom:1px solid #eee">${value}</td></tr>`;
+      try {
+        await fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: { 'Authorization': 'Bearer ' + resendKey, 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            from: 'CDSA 문의 알림 <notify@aicapa.kr>',
+            to: ['sjshin@cdsa.kr'],
+            reply_to: email,
+            subject: `[CDSA 문의] ${courseName} — ${String(name).slice(0, 30)}`,
+            html: `<div style="font-family:sans-serif;max-width:560px;margin:0 auto;padding:24px;border:1px solid #eee;border-radius:12px">`
+              + `<h2 style="margin:0 0 16px;font-size:18px">새 문의가 접수되었습니다</h2>`
+              + `<table style="width:100%;border-collapse:collapse;font-size:14px">`
+              + row('과정', esc(courseName))
+              + row('이름', esc(name))
+              + row('이메일', esc(email))
+              + row('소속', esc(org))
+              + row('연락처', esc(phone))
+              + row('문의 내용', esc(message).replace(/\n/g, '<br>'))
+              + `</table>`
+              + `<p style="font-size:12px;color:#999;margin-top:20px">이 메일에 답장하면 문의자에게 바로 전달됩니다. 전체 목록은 노션 &lsquo;CDSA 문의함&rsquo;에서 확인하세요.</p>`
+              + `</div>`,
+          }),
+        });
+      } catch (mailError) {
+        console.error('Resend notify error:', mailError);
+      }
+    }
+
     return res.status(200).json({ ok: true });
   } catch (error) {
     console.error('Inquiry error:', error);
