@@ -69,7 +69,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           method: 'POST',
           headers: { 'Authorization': 'Bearer ' + resendKey, 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            from: 'CDSA 문의 알림 <notify@aicapa.kr>',
+            from: 'CDSA 문의 알림 <notify@cdsa.kr>',
             to: ['sjshin@cdsa.kr'],
             reply_to: email,
             subject: `[CDSA 문의] ${courseName} — ${String(name).slice(0, 30)}`,
