@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LLM은 아무것도 못한다 — 도구를 쥐는 순간 에이전트가 된다 · CDSA 블로그</title>
+<meta name="description" content="LLM 홀로는 글을 읽고 쓸 뿐이다. 검색 API, 파워쉘·CMD, 파이썬, 브라우저, MCP, RAG 같은 도구를 쥐어줄 때 에이전트가 완성된다. 바이브코딩의 실체를 일곱 가지로 정리한다.">
+<meta property="og:title" content="LLM은 아무것도 못한다 — 도구를 쥐는 순간 에이전트가 된다">
+<meta property="og:description" content="챗봇의 시대, 프롬프트의 시대가 막을 내린다. LLM이 내 컴퓨터와 디바이스를 제어하게 만드는 것 — 그것이 바이브코딩이고, 에이전트의 원리다.">
+<meta property="og:type" content="article">
+<!-- BEGIN SEO -->
+<meta name="keywords" content="LLM, AI 에이전트, 바이브코딩, 파워쉘, CMD, 파이썬, 엑셀 VBA, 브라우저 콘솔, MCP, API, 확장자, 업무자동화, 신성진">
+
+<link rel="canonical" href="https://cdsa.kr/blog/llm-does-nothing.html">
+<meta property="og:url" content="https://cdsa.kr/blog/llm-does-nothing.html">
+<meta property="og:site_name" content="한국데이터사이언티스트협회">
+<meta property="og:image" content="https://cdsa.kr/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta property="article:published_time" content="2026-08-19T09:00:00+09:00">
+<meta property="article:modified_time" content="2026-08-19T09:00:00+09:00">
+<meta property="article:author" content="신성진">
+<meta property="article:section" content="바이브코딩">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="LLM은 아무것도 못한다 — 도구를 쥐는 순간 에이전트가 된다">
+<meta name="twitter:description" content="챗봇의 시대, 프롬프트의 시대가 막을 내린다. LLM이 내 컴퓨터와 디바이스를 제어하게 만드는 것 — 그것이 바이브코딩이고, 에이전트의 원리다.">
+<meta name="twitter:image" content="https://cdsa.kr/og-image.png">
+<meta name="author" content="신성진">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "LLM은 아무것도 못한다 — 도구를 쥐는 순간 에이전트가 된다",
+  "description": "LLM 홀로는 글을 읽고 쓸 뿐이다. 검색 API, 파워쉘·CMD, 파이썬, 브라우저, MCP, RAG 같은 도구를 쥐어줄 때 에이전트가 완성된다. 바이브코딩의 실체를 일곱 가지로 정리한다.",
+  "datePublished": "2026-08-19T09:00:00+09:00",
+  "dateModified": "2026-08-19T09:00:00+09:00",
+  "author": {
+    "@type": "Person",
+    "name": "신성진",
+    "affiliation": {
+      "@type": "Organization",
+      "name": "한국데이터사이언티스트협회",
+      "url": "https://cdsa.kr"
+    }
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "한국데이터사이언티스트협회",
+    "url": "https://cdsa.kr",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://cdsa.kr/og-image.png"
+    }
+  },
+  "image": [
+    "https://cdsa.kr/og-image.png"
+  ],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://cdsa.kr/blog/llm-does-nothing.html"
+  },
+  "articleSection": "바이브코딩",
+  "inLanguage": "ko-KR"
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "CDSA",
+      "item": "https://cdsa.kr/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "블로그",
+      "item": "https://cdsa.kr/blog/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "LLM은 아무것도 못한다 — 도구를 쥐는 순간 에이전트가 된다",
+      "item": "https://cdsa.kr/blog/llm-does-nothing.html"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "AI 에이전트의 원리는 무엇인가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "LLM은 홀로는 글을 읽고 쓸 뿐 아무것도 실행하지 못합니다. LLM에게 검색 API, 운영체제 제어(파워쉘·CMD), 파이썬, 브라우저, MCP, 웹크롤러, RAG 문서 읽기·쓰기 같은 도구를 쥐어주고 계획-실행-관찰-수정의 루프를 돌게 하면 에이전트가 완성됩니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "바이브코딩이란 무엇인가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "사람의 자연어를 컴퓨터 언어로 번역하고 글을 읽고 쓰는 LLM에게 나의 컴퓨터와 디바이스를 자동화시키는 것입니다. 멋진 웹사이트 개발이나 복잡한 프로그래밍이 아니라, 파워쉘로 파일을 정리하고 엑셀 VBA로 반복업무를 없애는 것부터가 바이브코딩입니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "확장자를 이해하는 것이 왜 중요한가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "파이썬은 py, VBA는 bas, 파워쉘은 ps1, 브라우저는 html·xml·json·svg처럼 확장자마다 실행되는 무대가 다릅니다. 확장자의 역할을 이해하면 LLM이 만들어준 코드를 어디서 어떻게 실행할지 알게 되고, PC에서 LLM을 폭넓게 활용하는 시야가 열립니다."
+      }
+    }
+  ]
+}
+</script>
+<!-- END SEO -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NZL39P5EYZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NZL39P5EYZ');
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/blog/_layout.css">
+<style>
+  :root {
+    --cream: #faf9f5;
+    --cream-deep: #f3efe3;
+    --ink: #1a1a1a;
+    --ink-soft: #3d3d3a;
+    --ink-mute: #6b6b66;
+    --rule: #d9d6cc;
+    --clay: #cc785c;
+    --clay-deep: #a85a42;
+    --code-bg: #f2f0e8;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--cream); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  body { font-family: "Fraunces", "Noto Serif KR", Georgia, serif; font-weight: 300; font-size: 19px; line-height: 1.72; letter-spacing: -0.005em; }
+
+  .topnav { position: fixed; top: 0; left: 0; right: 0; height: 48px; background: rgba(250, 249, 245, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; }
+  .topnav-left { display: flex; align-items: center; gap: 18px; }
+  .topnav-left a { color: var(--ink-soft); text-decoration: none; transition: color 0.2s; }
+  .topnav-left a:hover { color: var(--clay-deep); }
+  .topnav-home { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 600; font-size: 16px; color: var(--ink) !important; letter-spacing: -0.3px; }
+  .topnav-sep { color: var(--rule); font-size: 11px; }
+  .topnav-right { display: flex; gap: 16px; }
+  .topnav-right a { color: var(--ink-mute); text-decoration: none; font-size: 12px; transition: color 0.2s; }
+  .topnav-right a:hover { color: var(--clay-deep); }
+  .topnav-current { color: var(--ink) !important; font-weight: 600; position: relative; }
+  .topnav-current::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 2px; background: var(--clay); border-radius: 1px; }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 116px 28px 120px; }
+  .breadcrumb { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; margin-bottom: 36px; display: flex; align-items: center; gap: 8px; color: var(--ink-mute); }
+  .breadcrumb a { color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--ink); }
+  .breadcrumb .bc-sep { color: var(--rule); }
+
+  .kicker { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay-deep); margin-bottom: 28px; }
+  h1 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 400; font-size: 44px; line-height: 1.18; letter-spacing: -0.02em; margin: 0 0 24px; color: var(--ink); word-break:keep-all;overflow-wrap:break-word;}
+  .dek { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 300; font-style: italic; font-size: 21px; line-height: 1.55; color: var(--ink-soft); margin: 0 0 40px; word-break:keep-all;overflow-wrap:break-word;}
+  .byline { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); padding: 18px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-bottom: 56px; display: flex; justify-content: space-between; }
+  .byline strong { font-weight: 500; color: var(--ink-soft); }
+
+  .lede { font-size: 19px; line-height: 1.72; margin-bottom: 22px; word-break:keep-all;overflow-wrap:break-word;}
+  .lede::first-letter { font-family: "Fraunces", serif; font-weight: 400; font-size: 68px; float: left; line-height: 0.88; padding: 8px 10px 0 0; color: var(--clay); }
+
+  h2 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 28px; line-height: 1.25; letter-spacing: -0.015em; margin: 64px 0 8px; color: var(--ink); scroll-margin-top: 80px; word-break:keep-all;overflow-wrap:break-word;}
+  h2 .num { font-family: "Inter", sans-serif; font-size: 12px; font-weight: 600; color: var(--clay); letter-spacing: 0.1em; display: block; margin-bottom: 10px; }
+  h3 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 18px; margin: 34px 0 10px; color: var(--ink); letter-spacing: -0.01em; word-break:keep-all;overflow-wrap:break-word;}
+  p { margin: 0 0 22px; }
+  p + p { margin-top: -6px; }
+  strong { font-weight: 500; color: var(--ink); }
+  em { font-style: italic; }
+  code { font-family: "JetBrains Mono", monospace; font-size: 0.88em; background: var(--code-bg); padding: 2px 6px; border-radius: 3px; color: var(--clay-deep); }
+
+  blockquote {
+    margin: 32px 0;
+    padding: 4px 0 4px 22px;
+    border-left: 2px solid var(--clay);
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-style: italic;
+    font-size: 20px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+
+  .scenario-quote {
+    background: var(--code-bg);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 20px 24px;
+    margin: 20px 0 24px;
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-style: italic;
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
+  .key-box {
+    margin: 20px 0 26px;
+    padding: 14px 18px;
+    border-left: 2px solid var(--clay);
+    background: rgba(204, 120, 92, 0.06);
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .key-box .label {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--clay-deep);
+    margin-right: 8px;
+  }
+
+  ul.flow {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0 24px;
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 15.5px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    border-left: 2px solid var(--rule);
+    padding-left: 20px;
+  }
+  ul.flow li { margin-bottom: 5px; }
+  ul.flow li::before { content: "·"; color: var(--clay); font-weight: 700; margin-right: 8px; }
+
+  .diagram-box { margin: 32px 0 12px; }
+  .diagram-box svg { width: 100%; height: auto; display: block; }
+  .diagram-cap { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12.5px; color: var(--ink-mute); text-align: center; margin: 10px 0 32px; }
+
+  .rule { border: none; border-top: 1px solid var(--rule); margin: 56px 0; }
+  .footer { margin-top: 72px; padding-top: 28px; border-top: 1px solid var(--rule); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); line-height: 1.65; }
+  .footer strong { color: var(--ink-soft); font-weight: 600; }
+  .footer a { color: var(--clay-deep); text-decoration: none; }
+  .bottom-nav { margin-top: 72px; padding: 36px 0; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .bottom-nav a { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .bottom-nav a:hover { color: var(--ink); }
+  .bottom-nav-home { font-family: "Fraunces", "Noto Serif KR", serif !important; font-size: 16px !important; font-style: italic; font-weight: 400; }
+
+  @media (max-width: 560px) {
+    .wrap { padding: 92px 22px 80px; }
+    h1 { font-size: 34px; word-break:keep-all;overflow-wrap:break-word;}
+    .dek { font-size: 18px; word-break:keep-all;overflow-wrap:break-word;}
+    body { font-size: 17px; }
+    .topnav-right { display: none; }
+  }
+
+  @media (max-width: 400px) {
+    h1 { font-size: 26px !important; line-height: 1.22; }
+    .dek { font-size: 16px !important; }
+    h2 { font-size: 22px !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="topnav-left">
+    <a href="/" class="topnav-home">CDSA</a>
+    <span class="topnav-sep">|</span>
+    <a href="/">홈페이지</a>
+    <a href="/blog/" class="topnav-current">블로그</a>
+  </div>
+  <nav class="topnav-right">
+    <a href="/framework.html">프레임워크</a>
+    <a href="/fullcourse.html">Full Course</a>
+  </nav>
+</header>
+
+<button class="blog-hamburger" aria-label="블로그 목록 열기"><span></span><span></span><span></span></button>
+<div class="blog-overlay"></div>
+<aside class="blog-left">
+  <div class="blog-left-title">Blog Posts</div>
+  <ol class="blog-left-list"></ol>
+</aside>
+<aside class="blog-right">
+  <div class="blog-right-title">On This Page</div>
+  <ul class="blog-toc"></ul>
+</aside>
+
+<article class="wrap">
+
+  <nav class="breadcrumb">
+    <a href="/">← CDSA 홈</a>
+    <span class="bc-sep">/</span>
+    <a href="/blog/">블로그</a>
+    <span class="bc-sep">/</span>
+    <span>에이전트의 원리</span>
+  </nav>
+
+  <div class="kicker">Editorial &middot; 바이브코딩</div>
+
+  <h1>LLM은 아무것도 못한다<br>— 도구를 쥐는 순간<br>에이전트가 된다</h1>
+
+  <p class="dek">챗봇의 시대, 프롬프트의 시대가 막을 내린다. LLM이 내 컴퓨터와 디바이스를 제어하고 시야를 확장하게 만드는 것 — 그것이 바이브코딩이고, 에이전트의 원리다.</p>
+
+  <div class="byline">
+    <span><strong>신성진</strong>  &middot;  한국데이터사이언티스트협회</span>
+    <span>2026. 8. 19</span>
+  </div>
+
+  <p class="lede">도발적으로 시작하겠습니다. LLM은 아무것도 못합니다. 세계에서 가장 똑똑하다는 모델을 데려다 놓아도, 그 자체로는 파일 하나 만들지 못하고 이메일 한 통 보내지 못합니다. LLM이 할 줄 아는 것은 단 세 가지, 읽는 것, 쓰는 것, 그리고 사람의 언어를 컴퓨터의 언어로 번역하는 것뿐입니다.</p>
+
+  <p>그런데 이 무력한 존재에게 도구를 쥐어주는 순간 모든 것이 달라집니다. 검색 API를 쥐어주면 밖의 정보를 가져오고, 파워쉘과 CMD를 쥐어주면 윈도우를 제어하고, 파이썬을 쥐어주면 데이터를 처리하고, MCP를 쥐어주면 외부 프로그램과 연결되고, 웹크롤러를 쥐어주면 웹을 읽어오고, RAG와 파일 시스템을 쥐어주면 문서를 읽고 씁니다. <strong>이렇게 도구가 하나씩 붙을 때 에이전트가 완성됩니다.</strong></p>
+
+  <h2 id="s01"><span class="num">01  /  원리</span>에이전트는 이렇게 생겼다</h2>
+
+  <p>복잡한 아키텍처 도식은 잊어도 됩니다. 에이전트의 원리는 그림 한 장이면 충분합니다. 가운데에 읽고 쓰고 번역하는 LLM이 있고, 그 주위에 여섯 종류의 손발이 붙어 있고, 아래에 이것을 굴리는 반복 루프가 있습니다.</p>
+
+  <div class="diagram-box">
+  <svg viewBox="0 0 720 486" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="에이전트의 원리: 중앙의 LLM과 여섯 가지 도구, 그리고 반복 루프">
+    <!-- 연결선 -->
+    <g stroke="#d9d6cc" stroke-width="1.5">
+      <line x1="202" y1="66"  x2="284" y2="180"/>
+      <line x1="202" y1="206" x2="270" y2="210"/>
+      <line x1="202" y1="346" x2="284" y2="240"/>
+      <line x1="518" y1="66"  x2="436" y2="180"/>
+      <line x1="518" y1="206" x2="450" y2="210"/>
+      <line x1="518" y1="346" x2="436" y2="240"/>
+    </g>
+
+    <!-- 왼쪽 도구 -->
+    <g font-family="Inter, 'Noto Sans KR', sans-serif">
+      <rect x="16" y="37" width="186" height="58" rx="9" fill="#f2f0e8" stroke="#d9d6cc"/>
+      <text x="109" y="61" text-anchor="middle" font-size="13.5" font-weight="600" fill="#1a1a1a">검색 · 웹크롤러</text>
+      <text x="109" y="80" text-anchor="middle" font-size="10.5" fill="#6b6b66">밖의 정보를 가져온다</text>
+
+      <rect x="16" y="177" width="186" height="58" rx="9" fill="#f2f0e8" stroke="#d9d6cc"/>
+      <text x="109" y="201" text-anchor="middle" font-size="13.5" font-weight="600" fill="#1a1a1a">운영체제 제어</text>
+      <text x="109" y="220" text-anchor="middle" font-size="10.5" fill="#6b6b66">PowerShell · CMD</text>
+
+      <rect x="16" y="317" width="186" height="58" rx="9" fill="#f2f0e8" stroke="#d9d6cc"/>
+      <text x="109" y="341" text-anchor="middle" font-size="13.5" font-weight="600" fill="#1a1a1a">브라우저</text>
+      <text x="109" y="360" text-anchor="middle" font-size="10.5" fill="#6b6b66">HTML · JS · 콘솔(F12)</text>
+    </g>
+
+    <!-- 오른쪽 도구 -->
+    <g font-family="Inter, 'Noto Sans KR', sans-serif">
+      <rect x="518" y="37" width="186" height="58" rx="9" fill="#f2f0e8" stroke="#d9d6cc"/>
+      <text x="611" y="61" text-anchor="middle" font-size="13.5" font-weight="600" fill="#1a1a1a">문서 읽기 · 쓰기</text>
+      <text x="611" y="80" text-anchor="middle" font-size="10.5" fill="#6b6b66">RAG · 파일 시스템</text>
+
+      <rect x="518" y="177" width="186" height="58" rx="9" fill="#f2f0e8" stroke="#d9d6cc"/>
+      <text x="611" y="201" text-anchor="middle" font-size="13.5" font-weight="600" fill="#1a1a1a">Python</text>
+      <text x="611" y="220" text-anchor="middle" font-size="10.5" fill="#6b6b66">라이브러리 = 손발의 확장</text>
+
+      <rect x="518" y="317" width="186" height="58" rx="9" fill="#f2f0e8" stroke="#d9d6cc"/>
+      <text x="611" y="341" text-anchor="middle" font-size="13.5" font-weight="600" fill="#1a1a1a">외부 연동</text>
+      <text x="611" y="360" text-anchor="middle" font-size="10.5" fill="#6b6b66">API · MCP · RSS · XML · JSON</text>
+    </g>
+
+    <!-- 중앙 LLM -->
+    <rect x="270" y="168" width="180" height="84" rx="12" fill="#cc785c"/>
+    <text x="360" y="205" text-anchor="middle" font-family="Fraunces, serif" font-size="27" font-weight="600" fill="#ffffff">LLM</text>
+    <text x="360" y="230" text-anchor="middle" font-family="Inter, 'Noto Sans KR', sans-serif" font-size="11" fill="#f6e3db">읽는다 · 쓴다 · 번역한다</text>
+
+    <!-- 루프 -->
+    <g font-family="Inter, 'Noto Sans KR', sans-serif">
+      <text x="360" y="422" text-anchor="middle" font-size="10.5" font-weight="700" letter-spacing="2" fill="#a85a42">LOOP — 될 때까지 반복</text>
+      <rect x="96"  y="436" width="100" height="34" rx="17" fill="#faf9f5" stroke="#d9d6cc"/>
+      <text x="146" y="457" text-anchor="middle" font-size="12.5" font-weight="600" fill="#3d3d3a">계획</text>
+      <text x="212" y="458" text-anchor="middle" font-size="13" fill="#cc785c">→</text>
+      <rect x="228" y="436" width="100" height="34" rx="17" fill="#faf9f5" stroke="#d9d6cc"/>
+      <text x="278" y="457" text-anchor="middle" font-size="12.5" font-weight="600" fill="#3d3d3a">도구 실행</text>
+      <text x="344" y="458" text-anchor="middle" font-size="13" fill="#cc785c">→</text>
+      <rect x="360" y="436" width="100" height="34" rx="17" fill="#faf9f5" stroke="#d9d6cc"/>
+      <text x="410" y="457" text-anchor="middle" font-size="12.5" font-weight="600" fill="#3d3d3a">결과 관찰</text>
+      <text x="476" y="458" text-anchor="middle" font-size="13" fill="#cc785c">→</text>
+      <rect x="492" y="436" width="100" height="34" rx="17" fill="#faf9f5" stroke="#d9d6cc"/>
+      <text x="542" y="457" text-anchor="middle" font-size="12.5" font-weight="600" fill="#3d3d3a">수정</text>
+      <text x="614" y="459" text-anchor="middle" font-size="15" fill="#a85a42">↺</text>
+    </g>
+  </svg>
+  </div>
+  <p class="diagram-cap">에이전트의 원리 — LLM(뇌) + 도구(손발) + 반복 루프. 이것이 전부다.</p>
+
+  <p>가운데의 LLM은 뇌입니다. 그러나 뇌만으로는 아무 일도 일어나지 않습니다. 주위의 도구들이 손발이 되어줄 때, 그리고 계획하고, 도구를 실행하고, 결과를 관찰하고, 틀렸으면 수정하는 루프가 돌아갈 때 비로소 일이 됩니다.</p>
+
+  <div class="key-box">
+    <span class="label">한 줄 정리</span>LLM(뇌) + 도구(손발) + 반복 루프 = 에이전트. 챗창 안의 LLM은 말만 하는 챗봇이고, 도구를 쥔 LLM은 일을 하는 에이전트다.
+  </div>
+
+  <h2 id="s02"><span class="num">02  /  전환</span>판이 바뀌고 있다</h2>
+
+  <p>지금 이 원리를 가장 완성도 높게 구현한 것이 <strong>코딩에이전트 하네스 프로그램</strong>입니다. Claude Code, Codex 같은 도구들이 판도를 흔들고 있습니다. 직장에서는 보안상의 문제로 아직 잘 적용하지 못하고 있지만, 기업의 AI팀은 이미 이 에이전트 시스템을 구상하고, 상상하고, 개발하고 있습니다.</p>
+
+  <p>이제 챗봇의 시대, 프롬프트의 시대는 막이 내립니다. 좋은 질문을 다듬어 챗창에 붙여 넣고 답을 복사해 오는 방식은, LLM이 직접 내 컴퓨터와 디바이스를 제어하고 시야를 확장하는 방식으로 넘어가고 있습니다.</p>
+
+  <blockquote>질문을 잘하는 사람의 시대에서, 일을 맡길 줄 아는 사람의 시대로.</blockquote>
+
+  <h2 id="s03"><span class="num">03  /  편견</span>바이브코딩은 웹사이트 만들기가 아니다</h2>
+
+  <p>바이브코딩이란 무엇일까요. <strong>사람의 자연어를 컴퓨터 언어로 번역하고 글을 읽고 쓰는 LLM에게, 나의 컴퓨터와 디바이스를 자동화시키는 것</strong>입니다.</p>
+
+  <p>그런데 바이브코딩을 멋진 웹사이트 개발이나 복잡한 프로그래밍이라고 생각하는 경우가 많습니다. 그 편견을 버리는 것에서 시작해야 합니다. 바이브코딩의 본령은 화려한 결과물이 아니라, 평상시 어려워서 엄두를 못 내던 일에 LLM을 통해 쉽게 도전해 보는 것입니다. 아래 일곱 가지가 그 실체입니다.</p>
+
+  <h3>1. 파워쉘·CMD — LLM에게 윈도우를 제어하게 한다</h3>
+
+  <p>파워쉘로 파일을 제어하고, 특정 프로그램을 열고, 이메일을 작성하게 할 수 있습니다. 파워쉘로 버튼이 달린 GUI 업무자동화 프로그램을 만들 수도 있고, CMD 명령어 몇 개로 반복 업무를 편하게 만들 수도 있습니다. 윈도우를 쓰는 사람이라면 이미 손안에 자동화 도구가 깔려 있는 셈입니다.</p>
+
+  <h3>2. 엑셀 VBA·파워쿼리 — 어려웠던 것에 쉽게 도전한다</h3>
+
+  <p>엑셀 VBA나 파워쿼리 M함수를 이용해 엑셀 업무를 자동화합니다. 여기서 한 가지 요령이 중요합니다. <strong>엑셀의 각 시트에 어떤 데이터가 어떤 구조로 들어 있는지를 AI와 싱크를 맞추는 것</strong>입니다. 엑셀 표를 세 줄 정도 복사해 붙여 주거나, VBA나 파워쉘로 시트의 데이터 구조를 추출해서 AI에게 알려주면, AI가 내 파일을 정확히 이해한 상태에서 코드를 짭니다.</p>
+
+  <h3>3. 파이썬 — 에이전트는 파이썬이 전부라고 할 정도</h3>
+
+  <p>사실 AI 에이전트는 파이썬이 전부라고 이야기할 정도로, 파이썬은 파워풀한 기능을 가지고 있습니다. 파이썬과 라이브러리를 설치하고, 내 업무에서 자동화할 수 있는 사례를 LLM을 통해 도출하고, 받은 코드를 복사해 실행하면 됩니다. 저는 이 진입장벽을 낮추려고 파이썬 실행기를 직접 만들었습니다. <code>pip install pyclass-notebook</code> 한 줄로 설치됩니다.</p>
+
+  <h3>4. 브라우저는 프로그램이다</h3>
+
+  <p>브라우저에서 작동하는 확장자를 이해하면 시야가 넓어집니다. HTML, CSS, JS 중에서 기능을 담당하는 것은 JS인데, 파이썬처럼 라이브러리가 엄청납니다. 어떤 라이브러리를 쓰느냐에 따라 웹페이지 형태의 서비스와 웹사이트를 만들 수도 있고, 파일 탐색·변경·전환 같은 업무자동화 프로그램으로 활용할 수도 있습니다. HTML로 엑셀을 만들 수도 있고, 파워포인트를 만들 수도 있고, 문서편집기를 만들 수도 있습니다. 그리고 JS는 <strong>Node.js</strong>라는 프로그램 체계로 브라우저 밖, 내 컴퓨터에서 직접 구동할 수 있습니다.</p>
+
+  <h3>5. 브라우저 콘솔(F12) — 브라우저 자체를 제어한다</h3>
+
+  <p>F12를 누르면 나오는 콘솔 명령을 이용하면 브라우저를 제어하고, 웹사이트의 텍스트나 브라우저의 활동을 다룰 수 있습니다. 설치 없이, 지금 열려 있는 그 화면이 곧 실행 환경이 됩니다.</p>
+
+  <h3>6. API·MCP·RSS·ODS·XML·JSON — 밖과 연결한다</h3>
+
+  <p>이 형식과 규약들은 LLM을 외부의 데이터·프로그램과 연동시켜 능력을 크게 만들어 줍니다. 챗창 안에 갇혀 있던 LLM이 검색하고, 데이터를 받아오고, 다른 서비스에 일을 시키게 되는 것이 전부 이 연결 위에서 일어납니다.</p>
+
+  <h3>7. 확장자를 이해하라 — 가장 중요한 한 가지</h3>
+
+  <p>어차피 PC로 일하는 사무직에게 LLM은 자신의 역량을 증폭시키고 새로운 시야를 가져다줍니다. 그리고 PC에서 LLM을 폭넓게 활용하는 방법의 핵심은 <strong>확장자를 이해하는 것</strong>입니다. 파이썬은 <code>py</code>, VBA는 <code>bas</code>, 파워쉘은 <code>ps1</code>, 브라우저는 <code>html</code>·<code>xml</code>·<code>json</code>·<code>svg</code>. 확장자마다 실행되는 무대가 다르고, 그 무대를 알면 LLM이 만들어준 어떤 코드든 어디서 실행할지 보입니다. 이런 것을 직접 만들어 보고, 한번 적용해 보는 경험이 중요합니다.</p>
+
+  <hr class="rule">
+
+  <h2 id="s04"><span class="num">04  /  마무리</span>다시, LLM은 아무것도 못한다</h2>
+
+  <p>처음의 문장으로 돌아가겠습니다. LLM은 아무것도 못합니다. 그러나 그것은 절망이 아니라 사용 설명서입니다. 못하는 것이 명확하니, 해야 할 일도 명확해집니다. <strong>도구를 쥐어주면 됩니다.</strong> 파워쉘을, 파이썬을, 브라우저를, API와 MCP를 쥐어주고, 계획하고 실행하고 관찰하고 수정하는 루프를 돌게 하면, 챗창 안에서 말만 하던 LLM이 내 PC 위에서 일하는 에이전트가 됩니다.</p>
+
+  <blockquote>LLM을 채팅창 안에서만 쓰는 사람과, 자기 PC의 손발로 쓰는 사람. 앞으로 몇 년, 이 둘의 격차가 벌어질 것입니다.</blockquote>
+
+  <p>그리고 그 출발점은 거창하지 않습니다. 오늘 폴더 하나를 파워쉘로 정리해 보는 것. 엑셀 표 세 줄을 복사해 붙이고 VBA를 받아 실행해 보는 것. <code>py</code>와 <code>ps1</code>이 무엇인지 알아보는 것. 그 작은 실행이 에이전트 시대의 첫걸음입니다.</p>
+
+  <div class="footer">
+    <strong>신성진 (Shinsungjin)</strong><br>
+    한국데이터사이언티스트협회 대표 &middot; CDSA<br>
+    개인·조직 AX 변화관리 컨설턴트 &middot; AX/DX 교육 설계 &middot; 공공기관 커리큘럼 설계<br>
+    YouTube @workbyax<br>
+    의견·질문은 <a href="mailto:sjshin@cdsa.kr">sjshin@cdsa.kr</a> 로 보내주세요.
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="/" class="bottom-nav-home">← CDSA 홈으로</a>
+    <a href="/blog/">블로그 목록 →</a>
+  </nav>
+
+</article>
+
+<script src="/blog/_posts.js" defer></script>
+</body>
+</html>

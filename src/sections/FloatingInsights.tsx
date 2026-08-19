@@ -2,6 +2,11 @@ import { useState } from 'react'
 
 const articles = [
   {
+    title: 'LLM은 아무것도 못한다 — 도구를 쥐는 순간 에이전트가 된다',
+    description: '챗봇의 시대가 막을 내린다. 파워쉘·파이썬·브라우저·MCP를 쥐어줄 때 에이전트가 완성되는 원리와 바이브코딩 일곱 가지 경로.',
+    href: '/blog/llm-does-nothing.html',
+  },
+  {
     title: '옵시디언을 깔기 전에, 검색 문장 세 개를 먼저 써라',
     description: '위키는 저장소가 아니라 검색 계약이다. RAG vs Wiki vs DB는 가짜 논쟁. LLM 위키의 해부학.',
     href: '/blog/llm-wiki-anatomy.html',

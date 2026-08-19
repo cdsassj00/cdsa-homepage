@@ -9,12 +9,159 @@
     <atom:link href="https://cdsa.kr/rss.xml" rel="self" type="application/rss+xml"/>
     <description>AI 시대, 일하는 방식을 바꾸는 전문가들. 공공·대기업 150여 기관에서 AI·데이터 교육을 직접 설계하고 실행합니다.</description>
     <language>ko</language>
-    <lastBuildDate>Fri, 07 Aug 2026 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 18 Aug 2026 17:27:26 GMT</lastBuildDate>
     <image>
       <url>https://cdsa.kr/og-image.png</url>
       <title>한국데이터사이언티스트협회 · CDSA 블로그</title>
       <link>https://cdsa.kr/blog/</link>
     </image>
+    <item>
+      <title>LLM은 아무것도 못한다 — 도구를 쥐는 순간 에이전트가 된다</title>
+      <link>https://cdsa.kr/blog/llm-does-nothing.html</link>
+      <guid isPermaLink="true">https://cdsa.kr/blog/llm-does-nothing.html</guid>
+      <pubDate>Wed, 19 Aug 2026 00:00:00 GMT</pubDate>
+      <dc:creator>신성진</dc:creator>
+      <category>바이브코딩</category>
+      <description>LLM 홀로는 글을 읽고 쓸 뿐이다. 검색 API, 파워쉘·CMD, 파이썬, 브라우저, MCP, RAG를 쥐어줄 때 에이전트가 완성된다. 챗봇의 시대가 막을 내리는 이유, 바이브코딩에 대한 편견, 그리고 사무직이 LLM을 PC의 손발로 만드는 일곱 가지 경로 — 도식 한 장으로 정리한 에이전트의 원리.</description>
+      <content:encoded><![CDATA[<h1>LLM은 아무것도 못한다<br>— 도구를 쥐는 순간<br>에이전트가 된다</h1>
+
+  <p class="dek">챗봇의 시대, 프롬프트의 시대가 막을 내린다. LLM이 내 컴퓨터와 디바이스를 제어하고 시야를 확장하게 만드는 것 — 그것이 바이브코딩이고, 에이전트의 원리다.</p>
+
+  
+
+  <p class="lede">도발적으로 시작하겠습니다. LLM은 아무것도 못합니다. 세계에서 가장 똑똑하다는 모델을 데려다 놓아도, 그 자체로는 파일 하나 만들지 못하고 이메일 한 통 보내지 못합니다. LLM이 할 줄 아는 것은 단 세 가지, 읽는 것, 쓰는 것, 그리고 사람의 언어를 컴퓨터의 언어로 번역하는 것뿐입니다.</p>
+
+  <p>그런데 이 무력한 존재에게 도구를 쥐어주는 순간 모든 것이 달라집니다. 검색 API를 쥐어주면 밖의 정보를 가져오고, 파워쉘과 CMD를 쥐어주면 윈도우를 제어하고, 파이썬을 쥐어주면 데이터를 처리하고, MCP를 쥐어주면 외부 프로그램과 연결되고, 웹크롤러를 쥐어주면 웹을 읽어오고, RAG와 파일 시스템을 쥐어주면 문서를 읽고 씁니다. <strong>이렇게 도구가 하나씩 붙을 때 에이전트가 완성됩니다.</strong></p>
+
+  <h2 id="s01"><span class="num">01  /  원리</span>에이전트는 이렇게 생겼다</h2>
+
+  <p>복잡한 아키텍처 도식은 잊어도 됩니다. 에이전트의 원리는 그림 한 장이면 충분합니다. 가운데에 읽고 쓰고 번역하는 LLM이 있고, 그 주위에 여섯 종류의 손발이 붙어 있고, 아래에 이것을 굴리는 반복 루프가 있습니다.</p>
+
+  <div class="diagram-box">
+  <svg viewBox="0 0 720 486" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="에이전트의 원리: 중앙의 LLM과 여섯 가지 도구, 그리고 반복 루프">
+    
+    <g stroke="#d9d6cc" stroke-width="1.5">
+      <line x1="202" y1="66"  x2="284" y2="180"/>
+      <line x1="202" y1="206" x2="270" y2="210"/>
+      <line x1="202" y1="346" x2="284" y2="240"/>
+      <line x1="518" y1="66"  x2="436" y2="180"/>
+      <line x1="518" y1="206" x2="450" y2="210"/>
+      <line x1="518" y1="346" x2="436" y2="240"/>
+    </g>
+
+    
+    <g font-family="Inter, 'Noto Sans KR', sans-serif">
+      <rect x="16" y="37" width="186" height="58" rx="9" fill="#f2f0e8" stroke="#d9d6cc"/>
+      <text x="109" y="61" text-anchor="middle" font-size="13.5" font-weight="600" fill="#1a1a1a">검색 · 웹크롤러</text>
+      <text x="109" y="80" text-anchor="middle" font-size="10.5" fill="#6b6b66">밖의 정보를 가져온다</text>
+
+      <rect x="16" y="177" width="186" height="58" rx="9" fill="#f2f0e8" stroke="#d9d6cc"/>
+      <text x="109" y="201" text-anchor="middle" font-size="13.5" font-weight="600" fill="#1a1a1a">운영체제 제어</text>
+      <text x="109" y="220" text-anchor="middle" font-size="10.5" fill="#6b6b66">PowerShell · CMD</text>
+
+      <rect x="16" y="317" width="186" height="58" rx="9" fill="#f2f0e8" stroke="#d9d6cc"/>
+      <text x="109" y="341" text-anchor="middle" font-size="13.5" font-weight="600" fill="#1a1a1a">브라우저</text>
+      <text x="109" y="360" text-anchor="middle" font-size="10.5" fill="#6b6b66">HTML · JS · 콘솔(F12)</text>
+    </g>
+
+    
+    <g font-family="Inter, 'Noto Sans KR', sans-serif">
+      <rect x="518" y="37" width="186" height="58" rx="9" fill="#f2f0e8" stroke="#d9d6cc"/>
+      <text x="611" y="61" text-anchor="middle" font-size="13.5" font-weight="600" fill="#1a1a1a">문서 읽기 · 쓰기</text>
+      <text x="611" y="80" text-anchor="middle" font-size="10.5" fill="#6b6b66">RAG · 파일 시스템</text>
+
+      <rect x="518" y="177" width="186" height="58" rx="9" fill="#f2f0e8" stroke="#d9d6cc"/>
+      <text x="611" y="201" text-anchor="middle" font-size="13.5" font-weight="600" fill="#1a1a1a">Python</text>
+      <text x="611" y="220" text-anchor="middle" font-size="10.5" fill="#6b6b66">라이브러리 = 손발의 확장</text>
+
+      <rect x="518" y="317" width="186" height="58" rx="9" fill="#f2f0e8" stroke="#d9d6cc"/>
+      <text x="611" y="341" text-anchor="middle" font-size="13.5" font-weight="600" fill="#1a1a1a">외부 연동</text>
+      <text x="611" y="360" text-anchor="middle" font-size="10.5" fill="#6b6b66">API · MCP · RSS · XML · JSON</text>
+    </g>
+
+    
+    <rect x="270" y="168" width="180" height="84" rx="12" fill="#cc785c"/>
+    <text x="360" y="205" text-anchor="middle" font-family="Fraunces, serif" font-size="27" font-weight="600" fill="#ffffff">LLM</text>
+    <text x="360" y="230" text-anchor="middle" font-family="Inter, 'Noto Sans KR', sans-serif" font-size="11" fill="#f6e3db">읽는다 · 쓴다 · 번역한다</text>
+
+    
+    <g font-family="Inter, 'Noto Sans KR', sans-serif">
+      <text x="360" y="422" text-anchor="middle" font-size="10.5" font-weight="700" letter-spacing="2" fill="#a85a42">LOOP — 될 때까지 반복</text>
+      <rect x="96"  y="436" width="100" height="34" rx="17" fill="#faf9f5" stroke="#d9d6cc"/>
+      <text x="146" y="457" text-anchor="middle" font-size="12.5" font-weight="600" fill="#3d3d3a">계획</text>
+      <text x="212" y="458" text-anchor="middle" font-size="13" fill="#cc785c">→</text>
+      <rect x="228" y="436" width="100" height="34" rx="17" fill="#faf9f5" stroke="#d9d6cc"/>
+      <text x="278" y="457" text-anchor="middle" font-size="12.5" font-weight="600" fill="#3d3d3a">도구 실행</text>
+      <text x="344" y="458" text-anchor="middle" font-size="13" fill="#cc785c">→</text>
+      <rect x="360" y="436" width="100" height="34" rx="17" fill="#faf9f5" stroke="#d9d6cc"/>
+      <text x="410" y="457" text-anchor="middle" font-size="12.5" font-weight="600" fill="#3d3d3a">결과 관찰</text>
+      <text x="476" y="458" text-anchor="middle" font-size="13" fill="#cc785c">→</text>
+      <rect x="492" y="436" width="100" height="34" rx="17" fill="#faf9f5" stroke="#d9d6cc"/>
+      <text x="542" y="457" text-anchor="middle" font-size="12.5" font-weight="600" fill="#3d3d3a">수정</text>
+      <text x="614" y="459" text-anchor="middle" font-size="15" fill="#a85a42">↺</text>
+    </g>
+  </svg>
+  </div>
+  <p class="diagram-cap">에이전트의 원리 — LLM(뇌) + 도구(손발) + 반복 루프. 이것이 전부다.</p>
+
+  <p>가운데의 LLM은 뇌입니다. 그러나 뇌만으로는 아무 일도 일어나지 않습니다. 주위의 도구들이 손발이 되어줄 때, 그리고 계획하고, 도구를 실행하고, 결과를 관찰하고, 틀렸으면 수정하는 루프가 돌아갈 때 비로소 일이 됩니다.</p>
+
+  <div class="key-box">
+    <span class="label">한 줄 정리</span>LLM(뇌) + 도구(손발) + 반복 루프 = 에이전트. 챗창 안의 LLM은 말만 하는 챗봇이고, 도구를 쥔 LLM은 일을 하는 에이전트다.
+  </div>
+
+  <h2 id="s02"><span class="num">02  /  전환</span>판이 바뀌고 있다</h2>
+
+  <p>지금 이 원리를 가장 완성도 높게 구현한 것이 <strong>코딩에이전트 하네스 프로그램</strong>입니다. Claude Code, Codex 같은 도구들이 판도를 흔들고 있습니다. 직장에서는 보안상의 문제로 아직 잘 적용하지 못하고 있지만, 기업의 AI팀은 이미 이 에이전트 시스템을 구상하고, 상상하고, 개발하고 있습니다.</p>
+
+  <p>이제 챗봇의 시대, 프롬프트의 시대는 막이 내립니다. 좋은 질문을 다듬어 챗창에 붙여 넣고 답을 복사해 오는 방식은, LLM이 직접 내 컴퓨터와 디바이스를 제어하고 시야를 확장하는 방식으로 넘어가고 있습니다.</p>
+
+  <blockquote>질문을 잘하는 사람의 시대에서, 일을 맡길 줄 아는 사람의 시대로.</blockquote>
+
+  <h2 id="s03"><span class="num">03  /  편견</span>바이브코딩은 웹사이트 만들기가 아니다</h2>
+
+  <p>바이브코딩이란 무엇일까요. <strong>사람의 자연어를 컴퓨터 언어로 번역하고 글을 읽고 쓰는 LLM에게, 나의 컴퓨터와 디바이스를 자동화시키는 것</strong>입니다.</p>
+
+  <p>그런데 바이브코딩을 멋진 웹사이트 개발이나 복잡한 프로그래밍이라고 생각하는 경우가 많습니다. 그 편견을 버리는 것에서 시작해야 합니다. 바이브코딩의 본령은 화려한 결과물이 아니라, 평상시 어려워서 엄두를 못 내던 일에 LLM을 통해 쉽게 도전해 보는 것입니다. 아래 일곱 가지가 그 실체입니다.</p>
+
+  <h3>1. 파워쉘·CMD — LLM에게 윈도우를 제어하게 한다</h3>
+
+  <p>파워쉘로 파일을 제어하고, 특정 프로그램을 열고, 이메일을 작성하게 할 수 있습니다. 파워쉘로 버튼이 달린 GUI 업무자동화 프로그램을 만들 수도 있고, CMD 명령어 몇 개로 반복 업무를 편하게 만들 수도 있습니다. 윈도우를 쓰는 사람이라면 이미 손안에 자동화 도구가 깔려 있는 셈입니다.</p>
+
+  <h3>2. 엑셀 VBA·파워쿼리 — 어려웠던 것에 쉽게 도전한다</h3>
+
+  <p>엑셀 VBA나 파워쿼리 M함수를 이용해 엑셀 업무를 자동화합니다. 여기서 한 가지 요령이 중요합니다. <strong>엑셀의 각 시트에 어떤 데이터가 어떤 구조로 들어 있는지를 AI와 싱크를 맞추는 것</strong>입니다. 엑셀 표를 세 줄 정도 복사해 붙여 주거나, VBA나 파워쉘로 시트의 데이터 구조를 추출해서 AI에게 알려주면, AI가 내 파일을 정확히 이해한 상태에서 코드를 짭니다.</p>
+
+  <h3>3. 파이썬 — 에이전트는 파이썬이 전부라고 할 정도</h3>
+
+  <p>사실 AI 에이전트는 파이썬이 전부라고 이야기할 정도로, 파이썬은 파워풀한 기능을 가지고 있습니다. 파이썬과 라이브러리를 설치하고, 내 업무에서 자동화할 수 있는 사례를 LLM을 통해 도출하고, 받은 코드를 복사해 실행하면 됩니다. 저는 이 진입장벽을 낮추려고 파이썬 실행기를 직접 만들었습니다. <code>pip install pyclass-notebook</code> 한 줄로 설치됩니다.</p>
+
+  <h3>4. 브라우저는 프로그램이다</h3>
+
+  <p>브라우저에서 작동하는 확장자를 이해하면 시야가 넓어집니다. HTML, CSS, JS 중에서 기능을 담당하는 것은 JS인데, 파이썬처럼 라이브러리가 엄청납니다. 어떤 라이브러리를 쓰느냐에 따라 웹페이지 형태의 서비스와 웹사이트를 만들 수도 있고, 파일 탐색·변경·전환 같은 업무자동화 프로그램으로 활용할 수도 있습니다. HTML로 엑셀을 만들 수도 있고, 파워포인트를 만들 수도 있고, 문서편집기를 만들 수도 있습니다. 그리고 JS는 <strong>Node.js</strong>라는 프로그램 체계로 브라우저 밖, 내 컴퓨터에서 직접 구동할 수 있습니다.</p>
+
+  <h3>5. 브라우저 콘솔(F12) — 브라우저 자체를 제어한다</h3>
+
+  <p>F12를 누르면 나오는 콘솔 명령을 이용하면 브라우저를 제어하고, 웹사이트의 텍스트나 브라우저의 활동을 다룰 수 있습니다. 설치 없이, 지금 열려 있는 그 화면이 곧 실행 환경이 됩니다.</p>
+
+  <h3>6. API·MCP·RSS·ODS·XML·JSON — 밖과 연결한다</h3>
+
+  <p>이 형식과 규약들은 LLM을 외부의 데이터·프로그램과 연동시켜 능력을 크게 만들어 줍니다. 챗창 안에 갇혀 있던 LLM이 검색하고, 데이터를 받아오고, 다른 서비스에 일을 시키게 되는 것이 전부 이 연결 위에서 일어납니다.</p>
+
+  <h3>7. 확장자를 이해하라 — 가장 중요한 한 가지</h3>
+
+  <p>어차피 PC로 일하는 사무직에게 LLM은 자신의 역량을 증폭시키고 새로운 시야를 가져다줍니다. 그리고 PC에서 LLM을 폭넓게 활용하는 방법의 핵심은 <strong>확장자를 이해하는 것</strong>입니다. 파이썬은 <code>py</code>, VBA는 <code>bas</code>, 파워쉘은 <code>ps1</code>, 브라우저는 <code>html</code>·<code>xml</code>·<code>json</code>·<code>svg</code>. 확장자마다 실행되는 무대가 다르고, 그 무대를 알면 LLM이 만들어준 어떤 코드든 어디서 실행할지 보입니다. 이런 것을 직접 만들어 보고, 한번 적용해 보는 경험이 중요합니다.</p>
+
+  <hr class="rule">
+
+  <h2 id="s04"><span class="num">04  /  마무리</span>다시, LLM은 아무것도 못한다</h2>
+
+  <p>처음의 문장으로 돌아가겠습니다. LLM은 아무것도 못합니다. 그러나 그것은 절망이 아니라 사용 설명서입니다. 못하는 것이 명확하니, 해야 할 일도 명확해집니다. <strong>도구를 쥐어주면 됩니다.</strong> 파워쉘을, 파이썬을, 브라우저를, API와 MCP를 쥐어주고, 계획하고 실행하고 관찰하고 수정하는 루프를 돌게 하면, 챗창 안에서 말만 하던 LLM이 내 PC 위에서 일하는 에이전트가 됩니다.</p>
+
+  <blockquote>LLM을 채팅창 안에서만 쓰는 사람과, 자기 PC의 손발로 쓰는 사람. 앞으로 몇 년, 이 둘의 격차가 벌어질 것입니다.</blockquote>
+
+  <p>그리고 그 출발점은 거창하지 않습니다. 오늘 폴더 하나를 파워쉘로 정리해 보는 것. 엑셀 표 세 줄을 복사해 붙이고 VBA를 받아 실행해 보는 것. <code>py</code>와 <code>ps1</code>이 무엇인지 알아보는 것. 그 작은 실행이 에이전트 시대의 첫걸음입니다.</p>]]></content:encoded>
+    </item>
     <item>
       <title>AI 에이전트 시대의 '하네스(Harness)', 도대체 무엇인가</title>
       <link>https://cdsa.kr/blog/agent-harness-terminology.html</link>
@@ -22,8 +169,229 @@
       <pubDate>Fri, 07 Aug 2026 00:00:00 GMT</pubDate>
       <dc:creator>신성진</dc:creator>
       <category>에이전트 운영론</category>
-      <description>Microsoft·Anthropic·OpenAI 공식 문서를 나란히 놓고 확인한 하네스의 실제 경계. test harness에서 이어진 용어의 계보, Model·Harness·Extension·Environment·Orchestrator 5층 분류 — 출처 15개로 정리한 에이전트 용어 지도.</description>
-      <content:encoded><![CDATA[<h1>AI 에이전트 시대의 '하네스(Harness)', 도대체 무엇인가</h1><p>핵심 질문은 "하네스라는 단어의 정답"이 아니라, 모델 바깥의 무엇이 에이전트의 행동을 결정하는가다. Microsoft는 하네스를 "모델을 실제로 일하는 에이전트로 바꾸는 스캐폴딩"으로 정의하지만, Anthropic 문서들은 문맥에 따라 다른 경계를 쓴다. test harness에서 evaluation harness, agent harness로 이어진 용어의 계보와, 실무 커뮤니케이션을 위한 Model·Harness·Extension·Environment·Orchestrator 5층 분류를 출처 15개와 함께 정리한다.</p>]]></content:encoded>
+      <description>Claude Code도 하네스, 플러그인도 하네스? Microsoft·Anthropic·OpenAI 공식 문서를 나란히 놓고 확인한 하네스의 실제 경계. test harness에서 이어진 용어의 계보, 그리고 Model·Harness·Extension·Environment·Orchestrator 5층 분류 — 출처 15개로 정리한 용어 지도.</description>
+      <content:encoded><![CDATA[<h1>AI 에이전트 시대의 '하네스',<br>도대체 무엇인가</h1>
+
+  <p class="dek">
+    용어가 중요한 건 아니지만, 커뮤니케이션의 원활함을
+    위해 요즘 떠돌고 있는 키워드를 정리합니다. Microsoft ·
+    Anthropic · OpenAI 공식 문서를 나란히 놓고 확인한
+    하네스의 실제 경계 — 그리고 헷갈리지 않기 위한
+    5층 분류.
+  </p>
+
+  
+
+  <p class="lede">최근 Claude Code, Codex, OpenCode, Agent SDK, 플러그인, MCP, 심지어 여러 에이전트를 관리하는 오케스트레이터까지 '하네스'라는 말로 묶여 설명되는 경우가 많습니다. 그런데 공식 문서들을 나란히 보면, 실제로 업계의 경계가 완전히 통일되어 있지는 않습니다. 용어가 중요한 건 아니지만 커뮤니케이션의 원활함을 위해, 요즘 떠돌고 있는 이 키워드를 출처와 함께 정리합니다.</p>
+
+  <p>이 글의 목표는 "누가 맞고 누가 틀리다"를 가르는 것이 아닙니다. <strong>Model, Harness, Tool/Extension, Environment, Orchestrator가 어떤 관계에 있는지</strong>를 이해하고, 서로 다른 문서를 읽을 때 혼란을 줄이는 데 목적이 있습니다.</p>
+
+  <p class="pull">핵심 질문은 "하네스라는 단어의 정답"이 아니라, 모델 바깥의 무엇이 에이전트의 행동을 결정하는가입니다.</p>
+
+  <h2 id="s01"><span class="num">01 · 가장 명확한 공식 정의</span>Microsoft: "모델을 실제로 일하는 에이전트로 바꾸는 스캐폴딩"</h2>
+
+  <p>2026년 Microsoft Agent Framework 문서는 Agent Harness를 매우 직접적으로 정의합니다. 모델 자체는 텍스트를 생성할 뿐이며, 실제 도구 호출과 다단계 작업, 기억, 완료까지의 진행을 위해서는 모델을 둘러싼 런타임이 필요하다고 설명합니다.<a class="src" href="#refs">[1]</a></p>
+
+  <div class="diagram">Language Model
+     ↓
+Agent Harness
+ ├─ model/tool loop
+ ├─ context &amp; history
+ ├─ planning / todo
+ ├─ tool approval
+ ├─ safety policy
+ ├─ file access / memory
+ └─ completion control
+     ↓
+Action / Result</div>
+
+  <p>Microsoft 문서에서는 하네스가 <strong>모델 호출 루프, 도구 실행, 대화 기록과 컨텍스트 관리, 승인과 안전 정책</strong>을 맡는다고 설명합니다.<a class="src" href="#refs">[1][2]</a></p>
+
+  <p>이 정의를 기준으로 보면 Claude Code나 Codex CLI처럼 파일을 읽고, 코드를 바꾸고, 명령을 실행하고, 결과를 확인하며 작업을 계속하는 코딩 에이전트는 넓은 의미에서 '하네스형 런타임'으로 이해하기 쉽습니다. OpenAI는 Codex CLI를 로컬에서 코드를 읽고 수정하고 실행하는 "coding agent"로 공식 설명합니다.<a class="src" href="#refs">[3]</a></p>
+
+  <blockquote>정리하면: LLM + 실행 루프 + 도구 + 상태/컨텍스트 관리가 결합되면서 '에이전트'가 된다.</blockquote>
+
+  <h2 id="s02"><span class="num">02 · 그런데 Anthropic은 조금 다르게 말한다</span>같은 회사 문서 안에서도 '하네스'의 경계가 문맥에 따라 달라진다</h2>
+
+  <p>Anthropic의 평가(Evals) 글은 <strong>agent harness 또는 scaffold</strong>를 "모델이 에이전트처럼 행동하도록 해주는 시스템"이라고 설명하며, 입력 처리와 tool call orchestration을 포함합니다. 그리고 Claude Code를 "flexible agent harness"의 사례로 직접 언급합니다.<a class="src" href="#refs">[4]</a></p>
+
+  <p>반면 Anthropic의 2026년 연구 글 <em>Trustworthy agents in practice</em>는 에이전트 시스템을 <strong>model / harness / tools / environment</strong> 네 층으로 나눕니다. 이 글에서는 harness를 주로 모델이 따르는 <strong>instructions와 guardrails</strong>로 설명하고, tools와 environment는 별도 구성요소로 분리합니다.<a class="src" href="#refs">[5]</a></p>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>출처</th><th>Harness의 범위</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="model-name">Microsoft Agent Framework</td><td>루프, context, tool 실행, 승인, 안전정책 등을 포함하는 runtime</td></tr>
+      <tr><td class="model-name">Anthropic Evals</td><td>모델이 agent처럼 행동하도록 하는 system/scaffold, tool orchestration 포함</td></tr>
+      <tr><td class="model-name">Anthropic Trustworthy Agents</td><td>instructions + guardrails 중심, tools/environment는 별도 층</td></tr>
+    </tbody>
+  </table>
+
+  <div class="addendum">
+    <span class="add-label">노트</span>
+    따라서 <strong>"하네스의 공식 경계는 하나다"라고 말하면 부정확하다.</strong> 실제 선도 기업들도 문서의 목적에 따라 조금 다른 추상화 경계를 사용한다. 이 차이를 알고 나면 왜 어떤 사람은 플러그인까지 하네스라고 부르고, 또 어떤 사람은 Claude Code 전체를 하네스라고 부르는지 이해하기 쉬워진다.
+  </div>
+
+  <h2 id="s03"><span class="num">03 · 어디서 갑자기 나온 말인가</span>'Harness' 자체는 AI가 만든 신조어가 아니다</h2>
+
+  <p>소프트웨어 분야에서는 오래전부터 <strong>test harness</strong>라는 표현을 사용해 왔습니다. NIST가 공개한 오래된 테스트 문서에서도 test harness를 여러 테스트를 실행할 수 있게 하는 소프트웨어로 설명하고 있으며, Python 공식 문서에서도 end-user test harness라는 표현이 여전히 사용됩니다.<a class="src" href="#refs">[6][7]</a> 즉 '어떤 대상의 주변을 감싸 입력을 주고, 실행시키고, 결과를 관찰하는 구조'라는 비유는 AI보다 훨씬 오래되었습니다.</p>
+
+  <div class="diagram">Test Harness
+  대상 소프트웨어를 감싸
+  입력 → 실행 → 관찰 → 검증
+
+        ↓ 개념적 확장
+
+Evaluation Harness
+  모델/시스템을 실행하고 평가
+
+        ↓
+
+Agent Harness
+  LLM을 감싸
+  context → tools → action → feedback → repeat</div>
+
+  <p>다만 <strong>"Agent Harness라는 말을 누가 최초로 만들었다"는 단일 창시자를 확인할 만한 공인된 출처는 찾기 어렵습니다.</strong> 현재 확인 가능한 자료만 놓고 보면, 기존 소프트웨어의 harness/scaffold 개념이 LLM evaluation과 agent runtime 문맥으로 자연스럽게 확장됐다고 보는 편이 안전합니다.</p>
+
+  <p>최근 연구도 harness를 독립적인 연구 대상으로 다룹니다. 예를 들어 2026년 <em>MemoHarness</em>는 agent harness를 "base LLM을 executable agent로 바꾸는 external control layer"로 정의하고 context, tools, orchestration, memory, decoding, output handling을 관리하는 층으로 설명합니다.<a class="src" href="#refs">[8]</a></p>
+
+  <h2 id="s04"><span class="num">04 · 2025~2026, 왜 갑자기 중요해졌나</span>모델 성능만으로 에이전트 성능을 설명하기 어려워졌기 때문이다</h2>
+
+  <p>Anthropic은 2025년 장기 실행 에이전트를 다룬 글에서 Claude Agent SDK를 "general-purpose agent harness"라고 부르며, 긴 작업에서 context compaction만으로는 충분하지 않고 세션 간 진행상태를 이어주는 구조가 필요하다고 설명했습니다.<a class="src" href="#refs">[9]</a> 2026년에는 더 직접적인 표현이 등장합니다. Anthropic은 <em>Harness design for long-running application development</em>에서 frontier agentic coding의 성능에 harness design이 중요하다고 강조합니다.<a class="src" href="#refs">[10]</a></p>
+
+  <p>OpenAI 역시 2026년 2월 공식 엔지니어링 글의 제목을 아예 <strong>"Harness engineering"</strong>이라고 붙였습니다. 여기서 핵심은 에이전트에게 단순히 더 좋은 프롬프트를 주는 것이 아니라, 저장소 구조·문서·테스트·관측성·가드레일·피드백 루프처럼 <strong>에이전트가 안정적으로 일할 수 있는 환경 자체를 설계하는 일</strong>입니다.<a class="src" href="#refs">[11]</a></p>
+
+  <p class="pull">모델이 좋아지는 것과 별개로, 모델이 일하는 환경을 얼마나 잘 설계했는가가 성능을 크게 좌우합니다.</p>
+
+  <p>Martin Fowler 사이트에서도 2026년 들어 "Harness engineering"을 별도의 엔지니어링 관점으로 다루기 시작했고, OpenAI 사례를 바탕으로 테스트·구조적 검증·피드백 장치의 중요성을 논의하고 있습니다.<a class="src" href="#refs">[12]</a></p>
+
+  <h2 id="s05"><span class="num">05 · 실무에서 헷갈리지 않는 분류</span>커뮤니케이션을 위한 5층 구분</h2>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>층</th><th>예시</th><th>역할</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="model-name">1. Model</td><td>GPT · Claude · Gemini · Qwen</td><td>언어를 읽고 생성하며 추론하는 기반 모델</td></tr>
+      <tr><td class="model-name">2. Agent Harness / Runtime</td><td>Claude Code · Codex CLI · Agent SDK 기반 런타임</td><td>모델을 반복 실행하고 행동시키는 실행 골격</td></tr>
+      <tr><td class="model-name">3. Extensions / Components</td><td>Skill · Plugin · Hook · Rules · MCP client/server 연결</td><td>하네스의 능력·지침·연결 범위를 확장하는 구성요소</td></tr>
+      <tr><td class="model-name">4. Environment</td><td>파일시스템 · Git · Shell · 브라우저 · 사내망</td><td>에이전트가 실제로 접근하고 영향을 미치는 작업 공간</td></tr>
+      <tr><td class="model-name">5. Orchestrator</td><td>다수 agent/session/workflow 관리</td><td>여러 에이전트와 작업을 라우팅하고 관리하는 상위 제어층</td></tr>
+    </tbody>
+  </table>
+
+  <p>이것은 업계 표준을 선언하는 분류가 아니라 <strong>대화를 명확하게 하기 위한 실무적 분류</strong>입니다. 특히 Anthropic이 harness/tools/environment를 분리해서 설명하는 사례가 있기 때문에, "MCP나 plugin은 무조건 harness가 아니다"라고 단정하기보다는 "이 글에서는 extension/component라고 부르겠다"고 먼저 범위를 정하는 편이 좋습니다.<a class="src" href="#refs">[5]</a></p>
+
+  <div class="diagram">MODEL
+  ↓
+HARNESS / RUNTIME
+  ├─ Extensions (Skills / Plugins / Hooks / MCP)
+  ↓
+ENVIRONMENT (Files / Shell / Git / Browser)
+  ↓
+RESULT
+
+여러 Harness / Agent
+  ↑
+ORCHESTRATOR</div>
+
+  <h2 id="s06"><span class="num">06 · Claude Code와 Plugin을 둘 다 Harness라고 부르는 이유</span>'제품'과 '행동을 규정하는 주변 구조'를 같은 단어로 부르기 시작했기 때문이다</h2>
+
+  <p>Claude Code는 Anthropic 공식 문서에서 터미널에서 작동하며 파일을 직접 편집하고 명령을 실행하고 MCP를 통해 외부 데이터에 접근할 수 있는 agentic coding tool로 설명됩니다.<a class="src" href="#refs">[13]</a> Anthropic의 Evals 글은 더 직접적으로 Claude Code를 flexible agent harness라고 부릅니다.<a class="src" href="#refs">[4]</a></p>
+
+  <p>하지만 최근 연구에서는 harness의 범위를 prompts, tools, skills, middleware, memory 같은 주변 제어 요소까지 넓게 잡기도 합니다. <em>Co-Harness</em>는 runtime harness가 prompts, tools, skills, middleware, memory를 포함한다고 명시합니다.<a class="src" href="#refs">[14]</a> 그래서 강력한 플러그인 하나가 지침·툴·스킬·워크플로·메모리를 함께 가져오면, 누군가는 그것을 "작은 하네스" 또는 "하네스 레이어"라고 표현할 수 있습니다.</p>
+
+  <div class="addendum">
+    <span class="add-label">노트</span>
+    다만 일상적인 기술 커뮤니케이션에서는 <strong>Claude Code/Codex 같은 실행 런타임을 Harness, 그 안에 붙이는 Skill·Plugin·Hook·MCP를 Extension/Component</strong>라고 구분하면 훨씬 덜 헷갈린다.
+  </div>
+
+  <blockquote>용어의 경계보다 중요한 것은 누가 모델의 행동 루프와 컨텍스트, 도구, 검증을 통제하느냐다.</blockquote>
+
+  <h2 id="s07"><span class="num">07 · 자주 생기는 오해</span>하네스를 '설정'하는 것과 '개발'하는 것은 다른 작업이다</h2>
+
+  <p>이 지점에서 실무 커뮤니케이션의 오해가 하나 생깁니다. 플러그인·스킬·훅·MCP 설정을 정성껏 구성해 놓고 <strong>"하네스를 개발했다"</strong>고 말하는 경우입니다.</p>
+
+  <p>구분은 간단한 사실에서 출발합니다. <strong>플러그인만 가지고는 LLM이 돌지 않습니다.</strong> 스킬 파일, 훅 스크립트, MCP 설정, 규칙 문서는 전부 텍스트와 코드 조각일 뿐이고, 그것을 읽어 들여 모델 호출 루프를 실제로 돌리는 CLI나 런타임 — Claude Code, Codex CLI, Agent SDK로 만든 앱 — 이 있어야 비로소 작동합니다. 확장(Extension)은 정의상 <strong>숙주가 되는 런타임을 전제</strong>합니다. 앞의 5층 분류에서 2층(Harness/Runtime)과 3층(Extensions)을 나눈 이유가 바로 이것입니다.</p>
+
+  <p>그래서 '하네스'가 들어가는 작업은 실제로 세 가지로 갈라집니다.</p>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>작업</th><th>실제로 하는 일</th><th>결과물</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="model-name">하네스 개발<br>(runtime development)</td><td>모델 호출 루프, 도구 실행기, 컨텍스트 관리, 승인·안전 정책을 직접 구현. Agent SDK로 자체 런타임을 만들거나 오픈소스 하네스 코드를 수정</td><td>새로운 실행 런타임</td></tr>
+      <tr><td class="model-name">하네스 설정·확장<br>(configuration)</td><td>기존 런타임 위에 스킬·플러그인·훅·MCP·규칙을 조합하고 튜닝</td><td>더 유능해진 기존 하네스</td></tr>
+      <tr><td class="model-name">하네스 엔지니어링<br>(harness engineering)</td><td>저장소 구조·테스트·문서·관측성·가드레일 등 에이전트가 일하는 환경을 설계<a class="src" href="#refs">[11]</a></td><td>에이전트 친화적 작업 환경</td></tr>
+    </tbody>
+  </table>
+
+  <p>판별 질문은 하나면 충분합니다. <strong>"모델 호출 루프가 누구의 코드에서 돌고 있는가?"</strong> 루프가 Claude Code나 Codex 같은 남의 제품 안에서 돌고 있다면, 내가 한 일은 설정·확장이거나 하네스 엔지니어링입니다. 루프를 내 코드가 직접 돌리고 있어야 하네스를 개발한 것입니다.</p>
+
+  <div class="addendum">
+    <span class="add-label">노트</span>
+    이것은 설정·확장 작업을 폄하하는 구분이 아니다. Anthropic의 harness design 글과 OpenAI의 Harness engineering 글이 보여주듯,<a class="src" href="#refs">[10][11]</a> 같은 런타임이라도 무엇을 어떻게 조합하고 어떤 환경을 깔아 주느냐가 에이전트 성능을 크게 좌우한다. 설정과 엔지니어링은 그 자체로 가치 있는 전문 작업이다. 다만 <strong>"개발했다"와 "구성했다"는 다른 주장</strong>이고, 이 둘을 섞어 쓰면 듣는 사람이 결과물의 실체를 오판하게 된다.
+  </div>
+
+  <h2 id="s08"><span class="num">08 · 그리고 Harness 위에 Orchestration이 올라온다</span>한 에이전트를 잘 돌리는 문제와 여러 에이전트를 관리하는 문제는 다르다</h2>
+
+  <p>OpenAI는 2026년 4월 Symphony를 공개하며 이를 명시적으로 <strong>agent orchestrator</strong>라고 표현했습니다. 프로젝트 관리 보드를 coding agent의 control plane으로 사용해 여러 작업을 관리하는 구조입니다.<a class="src" href="#refs">[15]</a></p>
+
+  <p>이 구분은 중요합니다. 하네스가 보통 <strong>한 모델/에이전트가 어떻게 행동하는가</strong>를 책임진다면, 오케스트레이터는 <strong>여러 에이전트에게 어떤 일을 언제 배분하고 어떻게 상태를 관리할 것인가</strong>에 더 가깝습니다.</p>
+
+  <div class="diagram">               ORCHESTRATOR
+          routing / sessions / jobs
+                    │
+        ┌───────────┼───────────┐
+        ↓           ↓           ↓
+   Harness A    Harness B    Harness C
+   Claude Code  Codex        Other
+        │           │           │
+   Extensions   Extensions   Extensions
+        └───────────┼───────────┘
+                    ↓
+               Environment</div>
+
+  <p>따라서 여러 코딩 에이전트를 한곳에서 실행하고 세션이나 작업을 관리하는 제품을 설명할 때는 <strong>Harness Orchestrator 또는 Agent Orchestrator</strong>라고 부르는 편이 기능적 역할을 더 명확히 전달할 수 있습니다. 특정 제품이 스스로 어떤 용어를 쓰는지는 별도로 확인해야 합니다.</p>
+
+  <h2 id="s09"><span class="num">09 · 결론</span>모델을 고르는 시대에서, 모델이 일하는 구조를 설계하는 시대로</h2>
+
+  <p>몇 년 전까지 생성형 AI를 비교하는 핵심 질문은 "어떤 모델이 더 좋은가?"였습니다. 하지만 에이전트 시대에는 같은 모델이라도 context, tools, runtime loop, permissions, tests, memory, environment가 어떻게 설계되어 있느냐에 따라 결과가 크게 달라집니다. Microsoft, Anthropic, OpenAI의 최근 공식 글들이 공통적으로 강조하는 지점도 바로 이 주변 실행 구조입니다.<a class="src" href="#refs">[1][9][11]</a></p>
+
+  <p class="pull">Agent 성능 = Model만의 성능이 아니다. Model × Harness × Tools × Context × Environment × Feedback의 결과에 가깝다.</p>
+
+  <p>그래서 'Harness'라는 단어의 완벽한 사전적 경계를 외우는 것보다, 대화할 때 <strong>"여기서 하네스라고 부르는 범위가 어디까지인가?"</strong>를 확인하는 것이 더 중요합니다. 제가 기술 커뮤니케이션에서 사용할 기준은 위 5층 분류입니다 — Model(기반 모델), Harness(실행 런타임/스캐폴딩), Extension(Skill·Plugin·Hook·MCP), Environment(파일·Shell·Git·브라우저), Orchestrator(다수 에이전트의 작업·세션 관리). 이 분류는 표준화 문서가 아니라 현재 공식 문서들의 서로 다른 용례를 바탕으로 한 실무적 커뮤니케이션 프레임입니다.</p>
+
+  <div class="demo">
+    <span class="demo-label">함께 읽기</span>
+    하네스를 실행 통제 구조의 관점에서 더 깊이 판별하는 글 — <a href="/blog/harness-is-not-a-label.html" style="color: var(--clay-deep);">「하네스라는 말이 너무 쉬워졌다」</a>. 기술 이동의 큰 흐름 속 하네스의 위치는 <a href="/blog/prompt-to-agent-1.html" style="color: var(--clay-deep);">「질문의 시대는 끝났다 ①」</a>에서 다룹니다.
+  </div>
+
+  <h2 id="refs"><span class="num">References</span>주요 출처</h2>
+
+  <ol class="refs">
+    <li>[1] Microsoft Learn, "Agent Harnesses", Agent Framework, updated 2026-07-08. <a href="https://learn.microsoft.com/en-us/agent-framework/agents/harness">learn.microsoft.com/en-us/agent-framework/agents/harness</a></li>
+    <li>[2] Microsoft Learn, "Step 6: Agent Harness", updated 2026-07-10. <a href="https://learn.microsoft.com/en-us/agent-framework/get-started/harness">learn.microsoft.com/en-us/agent-framework/get-started/harness</a></li>
+    <li>[3] OpenAI Help Center, "OpenAI Codex CLI – Getting Started". <a href="https://help.openai.com/en/articles/11096431">help.openai.com/en/articles/11096431</a></li>
+    <li>[4] Anthropic Engineering, "Demystifying evals for AI agents". <a href="https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents">anthropic.com/engineering/demystifying-evals-for-ai-agents</a></li>
+    <li>[5] Anthropic Research, "Trustworthy agents in practice", 2026. <a href="https://www.anthropic.com/research/trustworthy-agents">anthropic.com/research/trustworthy-agents</a></li>
+    <li>[6] NIST-hosted Best Practice Guide, "Testing Spreadsheet Applications", test harness definition. <a href="https://www.nist.gov/system/files/documents/2017/05/09/NPL-Best-Practice-Guide-No-7-Testing-Spreadsheet-Applications-Dec2006.pdf">nist.gov (PDF)</a></li>
+    <li>[7] Python Documentation, unittest — Unit testing framework. <a href="https://docs.python.org/3/library/unittest.html">docs.python.org/3/library/unittest.html</a></li>
+    <li>[8] Huang et al., "MemoHarness: Agent Harnesses That Learn from Experience", arXiv:2607.14159, 2026. <a href="https://arxiv.org/abs/2607.14159">arxiv.org/abs/2607.14159</a></li>
+    <li>[9] Anthropic Engineering, "Effective harnesses for long-running agents", 2025-11-26. <a href="https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents">anthropic.com/engineering/effective-harnesses-for-long-running-agents</a></li>
+    <li>[10] Anthropic Engineering, "Harness design for long-running application development", 2026-03-24. <a href="https://www.anthropic.com/engineering/harness-design-long-running-apps">anthropic.com/engineering/harness-design-long-running-apps</a></li>
+    <li>[11] OpenAI Engineering, Ryan Lopopolo, "Harness engineering: leveraging Codex in an agent-first world", 2026-02-11. <a href="https://openai.com/index/harness-engineering/">openai.com/index/harness-engineering</a></li>
+    <li>[12] Martin Fowler, "Harness Engineering - first thoughts", 2026. <a href="https://martinfowler.com/articles/exploring-gen-ai/harness-engineering-memo.html">martinfowler.com/articles/exploring-gen-ai/harness-engineering-memo.html</a></li>
+    <li>[13] Anthropic Docs, "Claude Code overview". <a href="https://docs.anthropic.com/en/docs/claude-code/overview">docs.anthropic.com/en/docs/claude-code/overview</a></li>
+    <li>[14] Chen et al., "Co-Harness: Co-Evolving Harnesses and Model Weights for LLM Agents", arXiv:2607.22688, 2026. <a href="https://arxiv.org/abs/2607.22688">arxiv.org/abs/2607.22688</a></li>
+    <li>[15] OpenAI Engineering, "An open-source spec for Codex orchestration: Symphony", 2026-04-27. <a href="https://openai.com/index/open-source-codex-orchestration-symphony/">openai.com/index/open-source-codex-orchestration-symphony</a></li>
+  </ol>
+
+  <div class="source-note">
+    <strong>출처 사용 원칙</strong> — 제품 정의는 해당 기업의 공식 문서를 우선했고, 범용적 개념 정리는 논문과 소프트웨어 공학의 오래된 'test harness' 용례로 보강했습니다. "Agent Harness 최초 창시자"는 신뢰할 만한 단일 근거가 없어 특정 인물이나 회사를 최초로 단정하지 않았습니다.
+  </div>]]></content:encoded>
     </item>
     <item>
       <title>미시적 AI 혁신은 어떻게 국가적 AX로 이어지는가</title>
@@ -32,8 +400,165 @@
       <pubDate>Mon, 03 Aug 2026 00:00:00 GMT</pubDate>
       <dc:creator>신성진</dc:creator>
       <category>AX 전략론</category>
-      <description>국가 전략은 거시적 혁신을 말하지만, 현장은 법령 검색의 불편 같은 작은 문제에서 출발한다. 광진구 주무관의 MCP, 국가 데이터 MCP 개방, 아래에서 위로 올라가는 AX의 다섯 단계.</description>
-      <content:encoded><![CDATA[<h1>미시적 AI 혁신은 어떻게 국가적 AX로 이어지는가</h1><p>거시적 혁신은 국가와 산업 단위의 버티컬 AI, 미시적 혁신은 개인과 부서 단위의 호라이즌털 AI다. 광진구 주무관의 MCP 사례가 보여주듯 사용자가 소비자를 넘어 업무 시스템의 설계자가 되기 시작했고, 국가 데이터 MCP 개방은 이 미시적 혁신을 거시적 혁신으로 확장하는 기반이 된다. 불편의 문제 정의 → 작은 도구 검증 → 팀의 도구 → 조직의 표준 → 공공 인프라 연결의 다섯 단계, 그리고 그 사이에서 교육자가 서야 할 자리.</p>]]></content:encoded>
+      <description>국가 전략은 거시적 혁신을 말하지만, 현장은 법령 검색의 불편 같은 작은 문제에서 출발한다. 광진구 주무관의 MCP, 국가 데이터 MCP 개방, 그리고 아래에서 위로 올라가는 AX의 다섯 단계 — 거대한 전략과 직원 업무 사이의 간극을 메우는 경로.</description>
+      <content:encoded><![CDATA[<h1>미시적 AI 혁신은 어떻게<br>국가적 AX로 이어지는가</h1>
+
+  <p class="dek">
+    국가 전략은 거시적 혁신을 말하지만, 현장은 법령 검색의
+    불편 같은 작은 문제에서 출발합니다. 아래에서 위로 올라가는
+    AX의 다섯 단계, 국가 데이터 MCP의 의미, 그리고 그 사이에서
+    교육자가 서야 할 자리를 정리합니다.
+  </p>
+
+  
+
+  <p class="lede">요즘 국가 AI 전략을 보면 대부분 거대한 산업과 인프라를 중심으로 이야기합니다. 조선, 제조, 국방, 물류, 에너지처럼 국가 경쟁력과 직접 연결되는 산업에 AI를 적용하고, 대규모 데이터와 설비, 시스템을 결합해 생산성과 효율을 높이자는 방향입니다. 이러한 접근은 분명 중요합니다. 다만 현장에서 교육과 컨설팅을 하는 입장에서 보면 한 가지 간극이 존재합니다.</p>
+
+  <p class="pull">국가 전략은 거시적 혁신을 말하지만, 실제 현장에서 AI를 사용하는 사람들은 훨씬 작은 문제에서 출발합니다.</p>
+
+  <p>법령 정보를 찾기 불편해서 직접 MCP를 만들고, 반복되는 행정업무가 불편해서 간단한 자동화 도구를 만들고, 보고서 작성이 오래 걸려 자신에게 맞는 AI 업무도구를 만드는 것처럼 <strong>개인과 조직의 구체적인 불편에서 출발하는 혁신</strong>입니다.</p>
+
+  <p>저는 이러한 움직임을 <strong>'미시적 AI 혁신'</strong>이라고 봅니다.</p>
+
+  <h2 id="s01"><span class="num">01</span>거시적 혁신과 미시적 혁신</h2>
+
+  <p>거시적 혁신은 국가와 산업 단위에서 진행됩니다. 제조공정 지능화, 조선·국방 AI, 물류 최적화, 산업 데이터 플랫폼, 국가 AI 인프라, 대규모 공공 AX. 이는 산업 구조와 국가 경쟁력을 바꾸는 <strong>버티컬 AI</strong> 중심의 혁신입니다.</p>
+
+  <p>반면 미시적 혁신은 개인과 부서, 현장 단위에서 시작됩니다. 불편한 법령 검색 개선, 반복 행정업무 자동화, 공공데이터 접근 단순화, 보고서와 회의록 자동 작성, 기관별 업무도구 개발, 직원 개인의 AI 활용. 이는 특정 산업 전체를 바꾸기보다, 한 사람의 업무와 한 조직의 작은 프로세스를 개선하는 <strong>호라이즌털 AI</strong> 중심의 혁신입니다.</p>
+
+  <table class="data-table">
+    <thead>
+      <tr><th></th><th>거시적 혁신</th><th>미시적 혁신</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="model-name">단위</td><td>국가·산업</td><td>개인·부서·현장</td></tr>
+      <tr><td class="model-name">예시</td><td>제조공정 지능화, 조선·국방 AI, 물류 최적화, 국가 AI 인프라</td><td>법령 검색 개선, 행정업무 자동화, 보고서·회의록 자동 작성, 기관별 업무도구</td></tr>
+      <tr><td class="model-name">성격</td><td>버티컬 AI — 산업 구조와 국가 경쟁력을 바꾼다</td><td>호라이즌털 AI — 한 사람의 업무와 작은 프로세스를 바꾼다</td></tr>
+    </tbody>
+  </table>
+
+  <p>두 혁신은 규모와 출발점이 다르지만 완전히 분리된 것은 아닙니다.</p>
+
+  <h2 id="s02"><span class="num">02</span>광진구 주무관의 MCP 사례가 의미하는 것</h2>
+
+  <p>광진구의 한 주무관이 법령 정보를 활용하는 과정에서 불편함을 느끼고 직접 MCP를 개발했다는 사례는 매우 상징적입니다. 이 사례의 핵심은 단순히 공무원 한 명이 기술을 만들었다는 데 있지 않습니다.</p>
+
+  <p>기존에는 정부나 대형 SI 기업이 시스템을 구축하고, 현장 직원은 만들어진 시스템을 사용하는 구조였습니다. 그러나 이제는 현장 사용자가 자신의 불편을 직접 정의하고, AI와 API, MCP를 이용해 업무도구를 만들기 시작했습니다.</p>
+
+  <p class="pull">사용자가 단순한 소비자가 아니라, 업무 시스템의 설계자이자 개선자가 되기 시작한 것입니다.</p>
+
+  <p>이것이 미시적 혁신의 본질입니다. 문제를 가장 잘 아는 사람이 문제를 정의하고, 필요한 데이터와 도구를 연결하며, 자신과 동료가 사용할 수 있는 작은 해결책을 만들고, 그 해결책이 조직 내부에서 확산됩니다. 이러한 움직임은 기존의 대규모 정보화사업과 다른 혁신 경로를 만듭니다.</p>
+
+  <div class="demo">
+    <span class="demo-label">함께 읽기</span>
+    이 사례의 상세한 전말 — 코닥(Kordoc)과 국가법령정보 MCP의 기능, 그리고 국가데이터처 KOSIS MCP로 이어진 확산 — 은 특강 시리즈 <a href="/blog/prompt-to-agent-4.html" style="color: var(--clay-deep);">「질문의 시대는 끝났다 ④ 바이브코딩, 골목길, 그리고 네 개의 질문」</a>에서 다뤘습니다.
+  </div>
+
+  <h2 id="s03"><span class="num">03</span>국가 데이터 MCP가 갖는 의미</h2>
+
+  <p>국가기관이 공공데이터를 기존 API 형태뿐 아니라 MCP 방식으로 제공하려는 움직임은 이 미시적 혁신을 <strong>제도적으로 지원</strong>한다는 의미가 있습니다.</p>
+
+  <p>API는 개발자가 정해진 방식으로 데이터를 요청하는 인터페이스입니다. 반면 MCP는 AI 에이전트가 데이터와 기능을 보다 자연스럽게 발견하고 활용할 수 있도록 연결 구조를 제공합니다. 국가기관이 MCP를 공식 제공한다는 것은 단순히 새로운 기술규격을 도입하는 일이 아닙니다.</p>
+
+  <p class="pull">국가가 보유한 데이터와 기능을, AI가 활용할 수 있는 공공 인프라로 전환하는 것입니다.</p>
+
+  <p>이렇게 되면 개인 개발자, 공무원, 교육생, 소규모 기업도 대규모 시스템을 직접 구축하지 않고 국가 데이터를 기반으로 새로운 업무도구를 만들 수 있습니다. 예를 들어 다음과 같은 일이 가능해집니다.</p>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>활용 데이터</th><th>만들 수 있는 도구</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="model-name">법령 MCP</td><td>기관별 규정 검토 도구</td></tr>
+      <tr><td class="model-name">공공데이터 MCP</td><td>지역정책 분석 도구</td></tr>
+      <tr><td class="model-name">통계 MCP</td><td>보고서 자동 작성</td></tr>
+      <tr><td class="model-name">조달·예산 데이터</td><td>사업검토 도구</td></tr>
+      <tr><td class="model-name">행정정보</td><td>민원 대응 도구</td></tr>
+    </tbody>
+  </table>
+
+  <p>이러한 작은 도구들이 부서와 기관에서 반복적으로 사용되면, 결과적으로 국가 행정의 일하는 방식 자체가 바뀔 수 있습니다. 따라서 국가 데이터 MCP는 <strong>미시적 혁신을 거시적 혁신으로 확장하는 기반</strong>이라고 볼 수 있습니다.</p>
+
+  <h2 id="s04"><span class="num">04</span>미시적 혁신은 어떻게 거시적 혁신으로 이어지는가</h2>
+
+  <p>미시적 혁신이 자동으로 거시적 혁신이 되는 것은 아닙니다. 개인이 만든 작은 도구가 조직과 국가 수준의 변화로 이어지려면 몇 단계가 필요합니다.</p>
+
+  <p><strong>첫째, 개인의 불편이 업무문제로 정의되어야 합니다.</strong> 단순히 "불편하다"에서 끝나는 것이 아니라, 어떤 업무에서 시간이 얼마나 소요되고 어떤 오류가 반복되는지를 구체적으로 정의해야 합니다.</p>
+
+  <p><strong>둘째, 작은 도구로 효과를 검증해야 합니다.</strong> 처음부터 대규모 시스템을 만들기보다 MCP, API, 생성형 AI, 자동화도구를 활용해 작은 프로토타입을 만들고 실제 업무에서 효과를 확인해야 합니다.</p>
+
+  <p><strong>셋째, 개인의 도구가 팀의 도구가 되어야 합니다.</strong> 한 사람만 사용할 수 있는 도구는 개인 생산성 향상에 그칩니다. 업무절차, 권한, 데이터 형식, 검토기준을 정리해 동료가 함께 사용할 수 있어야 합니다.</p>
+
+  <p><strong>넷째, 팀의 도구가 조직의 표준이 되어야 합니다.</strong> 부서별로 흩어진 도구를 검토해 공통 기능을 표준화하고, 보안·권한·기록·책임 기준을 적용해야 합니다.</p>
+
+  <p><strong>다섯째, 조직의 표준이 공공 인프라와 연결되어야 합니다.</strong> 국가 데이터, 법령, 행정정보, 조달, 통계 등을 MCP와 API로 연결하면 개별 기관의 혁신이 다른 기관에서도 재사용될 수 있습니다.</p>
+
+  <p>이 과정을 거치면 작은 현장 혁신이 조직 혁신이 되고, 조직 혁신이 국가적 AX로 확장됩니다.</p>
+
+  <h2 id="s05"><span class="num">05</span>교육자의 역할은 거시적 시스템을 직접 구축하는 것이 아니다</h2>
+
+  <p>교육자나 소규모 컨설턴트가 조선소의 생산시스템이나 국방 AI, 제조공정 전체를 직접 구축할 수는 없습니다. 그것은 대규모 인프라, 전문인력, 도메인 데이터, 장기간의 시스템 통합이 필요한 영역입니다.</p>
+
+  <p>그렇다고 교육자의 역할이 작거나 주변적인 것은 아닙니다. 오히려 교육자는 <strong>미시적 혁신이 발생하도록 만드는 사람</strong>입니다.</p>
+
+  <p>현장의 불편을 AI 과제로 바꾸도록 돕는 것. 직원이 자신의 업무를 구조화하도록 돕는 것. 작은 AI 도구와 프로토타입을 만들도록 돕는 것. 개인의 성공사례를 팀의 업무방식으로 확산하는 것. 무분별한 자동화를 막고 검증과 책임 기준을 가르치는 것. 그리고 현장 사례를 조직과 정책에 전달하는 것.</p>
+
+  <p class="pull">교육자는 거시적 혁신의 최종 시스템을 만드는 사람이 아니라, 거시적 혁신이 시작되는 지점을 만드는 사람입니다.</p>
+
+  <h2 id="s06"><span class="num">06</span>위에서 아래로만 내려오는 AX가 아니다</h2>
+
+  <p>기존의 AX 전략은 대체로 위에서 아래로 내려옵니다. 정부가 전략을 만들고, 기관이 사업을 발주하고, 대기업과 SI 기업이 시스템을 구축하고, 직원이 이를 사용하는 방식입니다. 그러나 생성형 AI 시대에는 <strong>아래에서 위로 올라가는 AX</strong>도 중요해졌습니다. 직원이 문제를 발견하고, 작은 도구를 만들고, 팀에서 효과를 검증하고, 기관이 이를 표준화하고, 정부가 공통 인프라로 확장합니다.</p>
+
+  <p>국가 AI 전략이 성공하려면 두 방향이 만나야 합니다.</p>
+
+  <div class="flow-pair">
+    <div class="flow">
+      <span class="flow-title">Top-down · 전략이 내려오는 길</span>
+      <div class="step"><strong>국가 전략과 산업 인프라</strong></div>
+      <div class="arrow">↓</div>
+      <div class="step">공공 데이터 · API · MCP · 플랫폼</div>
+      <div class="arrow">↓</div>
+      <div class="step">기관의 업무 시스템</div>
+      <div class="arrow">↓</div>
+      <div class="step">부서별 AI 도구</div>
+      <div class="arrow">↓</div>
+      <div class="step"><strong>직원의 실제 업무 혁신</strong></div>
+    </div>
+    <div class="flow">
+      <span class="flow-title">Bottom-up · 혁신이 올라가는 길</span>
+      <div class="step"><strong>직원의 불편과 아이디어</strong></div>
+      <div class="arrow">↓</div>
+      <div class="step">작은 AI 프로토타입</div>
+      <div class="arrow">↓</div>
+      <div class="step">팀 단위 활용</div>
+      <div class="arrow">↓</div>
+      <div class="step">기관 표준화</div>
+      <div class="arrow">↓</div>
+      <div class="step"><strong>국가 정책과 공공 인프라 반영</strong></div>
+    </div>
+  </div>
+
+  <p>이것이 미시적 혁신이 거시적 혁신으로 이어지는 경로입니다.</p>
+
+  <h2 id="s07"><span class="num">07</span>내가 집중해야 할 영역</h2>
+
+  <p>내가 대규모 제조 AI나 국방 AI 시스템을 직접 만들 수는 없습니다. 그러나 그것이 나의 한계만을 의미하지는 않습니다. 내가 집중할 수 있는 영역은 분명합니다.</p>
+
+  <p>공공기관 직원이 자신의 문제를 정의하도록 돕는 것. 생성형 AI와 MCP를 활용한 작은 업무도구를 만들게 하는 것. 업무 자동화와 AI 활용을 조직 내 표준으로 확산하는 것. 현장에서 나온 혁신 사례를 정책과 시스템으로 연결하는 것. 그리고 <strong>거대한 AX 전략과 실제 직원 업무 사이의 간극을 메우는 것</strong>.</p>
+
+  <p>나는 거시적 혁신을 직접 구축하는 사람이 아니라, 미시적 혁신이 지속적으로 발생하고 확산되도록 만드는 역할을 할 수 있습니다.</p>
+
+  <h2 id="s08"><span class="num">결론</span>거시적 AX는 미시적 혁신 없이 완성되지 않는다</h2>
+
+  <p>국가적 AX는 거대한 산업 프로젝트만으로 완성되지 않습니다. 조선, 제조, 국방, 물류와 같은 버티컬 AI가 국가 경쟁력을 높이는 한 축이라면, 공무원과 직원이 자신의 업무문제를 해결하기 위해 만드는 작은 AI 도구와 업무혁신은 또 다른 축입니다.</p>
+
+  <p>미시적 혁신은 작아 보이지만, 반복되고 공유되고 표준화되면 조직의 운영방식을 바꿉니다. 그리고 국가가 데이터와 기능을 MCP와 API 형태로 개방하면, 이러한 혁신은 기관과 산업을 넘어 확산될 수 있습니다.</p>
+
+  <p class="pull">거대한 전략이 방향을 만든다면, 실제 변화를 만들어내는 것은 현장에서 자신의 문제를 해결하려는 수많은 사람들의 작은 시도입니다.</p>
+
+  <div class="source-note">
+    <strong>함께 읽기</strong> · 이 글의 문제의식은 <a href="/blog/working-governance.html">「작동하는 거버넌스, 바닥에서 올라오는 AX」</a>와 특강 시리즈 <a href="/blog/prompt-to-agent-1.html">「질문의 시대는 끝났다」(전 4편)</a>에서 이어집니다. 광진구 주무관의 MCP와 국가데이터처 KOSIS MCP 사례의 상세는 <a href="/blog/prompt-to-agent-4.html">시리즈 4편</a>을 참고하세요.
+  </div>]]></content:encoded>
     </item>
     <item>
       <title>질문의 시대는 끝났다 ④ 바이브코딩, 골목길, 그리고 네 개의 질문</title>
@@ -41,9 +566,128 @@
       <guid isPermaLink="true">https://cdsa.kr/blog/prompt-to-agent-4.html</guid>
       <pubDate>Sat, 01 Aug 2026 01:30:00 GMT</pubDate>
       <dc:creator>신성진</dc:creator>
-      <category>시리즈 · 질문의 시대는 끝났다</category>
-      <description>한 공무원이 자기 골목길을 치웠더니, 중앙부처가 같은 방식으로 국가 데이터를 열었다. 코닥·국가법령정보 MCP에서 KOSIS MCP까지, 그리고 Cheaper·Better·Faster·Easier 네 개의 판정 질문. 특강 시리즈 완결편.</description>
-      <content:encoded><![CDATA[<h1>바이브코딩, 골목길, 그리고 네 개의 질문</h1><p>바이브코딩의 의미는 도전이다. 광진구청 류승인 주무관의 코닥(Kordoc)과 국가법령정보 MCP에서 국가데이터처 KOSIS MCP 시범서비스까지 — 골목길 혁신이 전국의 표준이 된 궤적. 그리고 모든 AI 도입 안건 앞에 붙여야 할 네 개의 질문: 더 싸졌는가, 더 나아졌는가, 더 빨라졌는가, 더 쉬워졌는가.</p>]]></content:encoded>
+      <category>시리즈 · 질문의 시대는 끝났다 · 4편</category>
+      <description>한 공무원이 자기 골목길을 치웠더니, 중앙부처가 같은 방식으로 국가 데이터를 열었다. 코닥·국가법령정보 MCP에서 KOSIS MCP까지 — 그리고 모든 AI 도입 안건 앞에 붙여야 할 Cheaper·Better·Faster·Easier 네 개의 질문. 특강 시리즈 완결편.</description>
+      <content:encoded><![CDATA[<h1>바이브코딩, 골목길,<br>그리고 네 개의 질문</h1>
+
+  <p class="dek">
+    한 공무원이 자기 골목길을 치웠더니, 중앙부처가 같은
+    방식으로 국가 데이터를 열었습니다. 바이브코딩이 결국
+    무엇을 의미하는지, 그리고 모든 AI 도입 안건 앞에 붙여야
+    할 네 개의 질문 — 시리즈 완결편입니다.
+  </p>
+
+  
+
+  <div class="series-box">
+    <span class="series-title">시리즈 · 질문의 시대는 끝났다 — 14개의 명제</span>
+    공공기관 관리자·실무자 대상 특강 원고를 4편으로 나눠 싣습니다.
+    <ol>
+      <li><a href="/blog/prompt-to-agent-1.html">1편 · 기술의 이동 — 프롬프트에서 피지컬 AI까지 (명제 01–05)</a></li>
+      <li><a href="/blog/prompt-to-agent-2.html">2편 · RAG 구축의 시대를 지나, 에이전트를 향해 (명제 06–08)</a></li>
+      <li><a href="/blog/prompt-to-agent-3.html">3편 · 중간관리자, AX팀, 그리고 튀는 사람 (명제 09–11)</a></li>
+      <li><span class="current">4편 · 바이브코딩, 골목길, 그리고 네 개의 질문 (명제 12–14)</span></li>
+    </ol>
+  </div>
+
+  <p class="lede">기술의 이동을 읽고(1편), 기관의 전환을 설계했다면(2·3편), 마지막은 사람과 문화입니다. 바이브코딩이 결국 무엇을 의미하는지, 한 공무원의 골목길 청소가 어떻게 중앙부처의 응답으로 이어졌는지, 그리고 모든 AI 도입 안건 앞에 붙여야 할 네 개의 질문까지 — 시리즈의 완결편입니다.</p>
+
+  <h2 id="s12"><span class="num">명제 12</span>바이브코딩의 의미는 도전이다</h2>
+
+  <blockquote>한 번도 해보지 않은 일에 도전하는 것.</blockquote>
+
+  <p>바이브코딩의 의미, AI 도입의 의미는 결국 이것입니다.</p>
+
+  <p>개발자와 소수 IT 담당자만 보던 기술이 모두에게 공유되어 <strong>다양한 관점</strong>이 생기는 것. 지금껏 도전해 본 적 없는 일에 도전해 <strong>내 영역의 경계를 확장</strong>하는 것. <strong>Try &amp; Error</strong>, 그리고 중간에 포기하지 않고 끝까지 <strong>완수</strong>하는 경험.</p>
+
+  <p>생성형 AI 시대가 우리에게 주는 메시지는 도구의 사용법이 아니라 이 태도입니다.</p>
+
+  <div class="demo">
+    <span class="demo-label">특강 시연</span>
+    콘솔(터미널)로 브라우저를 직접 제어해 보기. 그리고 생애 첫 Python 코드를 실행해 보기.
+  </div>
+
+  <div class="addendum">
+    <span class="add-label">덧붙임</span>
+    이 시연에서 중요한 것은 성공이 아니라 <strong>실패를 보여주는 것</strong>이다. 에러 메시지가 뜨고, 그것을 AI에게 붙여 넣고, 고쳐서 다시 실행되는 장면. 대부분의 사람이 코딩을 포기하는 지점이 첫 에러이기 때문이다. "에러는 실패가 아니라 다음 단계의 입력"이라는 것을 한 번 체험하면, 그다음부터는 혼자 간다.
+  </div>
+
+  <h2 id="s13"><span class="num">명제 13</span>고속도로는 국가가 닦지만, 골목길은 내가 치운다</h2>
+
+  <blockquote>작은 혁신은 어떻게 전국의 표준이 되었나.</blockquote>
+
+  <p>조직과 국가는 생각보다 당신의 엑셀과 한글 파일에 관심이 없습니다. 고속도로는 국가가 닦지만 골목길은 누가 치워주지 않습니다. 내 책상의 불편을 AI로 해소하는 일에서 시작해야 합니다.</p>
+
+  <p><strong>개인의 시작</strong> — 광진구청 7년차 일반행정 류승인 주무관은 법제처를 수백 번 수동 검색하다 지쳐서 도구를 직접 만들었습니다.</p>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>도구</th><th>무엇을 하나</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="model-name">코닥(Kordoc)</td>
+        <td>공공기관이 쓰는 HWP·HWPX·PDF를 자동 분석해 텍스트를 추출하고 비교·정리·생성까지 지원. 공개 공문서와 법령 별표·서식 수천 건을 처리하며 성능을 입증.</td>
+      </tr>
+      <tr>
+        <td class="model-name">국가법령정보 MCP<br>(Korean Law MCP)</td>
+        <td>법률 1,600여 개, 행정규칙 1만여 개, 대법원·헌법재판소·조세심판원 판례까지 이어지는 법령 체계를 64개의 구조화된 도구로 감쌌다. 약칭 자동 인식("화관법" → "화학물질관리법"), 조문번호 변환, 별표·별지 서식 자동 추출 같은 실무 기능 완비.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>관련 전공자가 아닌 현직 공무원이 실무 경험만으로 만들었고, 이 사례는 국회의원 SNS를 통해 전국에 알려졌습니다.</p>
+
+  <p><strong>국가의 응답</strong> — 그리고 사례는 사례로 끝나지 않았습니다. 국가데이터처가 2026년 7월 8일 <strong>KOSIS MCP 시범서비스</strong>를 개시했습니다. 국가통계포털에 수록된 1,360여 종의 국가승인통계와 26만여 개 통계표를 Claude·Gemini·ChatGPT에 직접 연결하는 방식입니다. 이용자는 통계를 일일이 검색하고 여러 표를 비교·가공하는 과정 없이, 일상언어 질의만으로 원하는 통계표를 만들 수 있습니다. 7월 16일에는 설정 가이드까지 공지로 배포됐습니다.</p>
+
+  <p class="pull">한 개인이 자기 골목길을 치웠더니, 중앙부처가 같은 방식으로 국가 데이터를 열었습니다. 이만한 혁신 확산 사례가 또 있는가.</p>
+
+  <div class="demo">
+    <span class="demo-label">사례 링크</span>
+    GitHub korean-law-mcp · KOSIS 공지 「AI 연계 개방형 표준 프로토콜 MCP 설정 가이드」(2026.7.16) — 지금 바로 연결해 볼 수 있다.
+  </div>
+
+  <div class="addendum">
+    <span class="add-label">덧붙임</span>
+    이 사례에서 배울 것은 "공무원도 개발할 수 있다"가 아니다. <strong>불편을 겪은 사람이 만들었기 때문에 잘 만들어졌다</strong>는 것이다. 약칭 자동 인식이나 별표 추출 같은 기능은 법령을 매일 찾아본 사람만 필요성을 안다. 외부 업체가 요구사항 정의서만 보고 만들었다면 절대 들어가지 않았을 기능이다.
+    <br><br>
+    그리고 확산에는 조건이 있었다. 광진구는 세종사이버대학교와 AI 분야 업무협약을 맺고 직원 대상 실습교육과 공모전을 지속해 왔다. <strong>개인의 시도를 받아 줄 기관의 그릇이 먼저 있었다.</strong> 사례를 부러워하기 전에, 우리 기관에 그 그릇이 있는지를 먼저 물어야 한다.
+  </div>
+
+  <h2 id="s14"><span class="num">명제 14</span>AI 전환을 판정하는 네 개의 질문</h2>
+
+  <blockquote>더 싸졌는가, 더 나아졌는가, 더 빨라졌는가, 더 쉬워졌는가.</blockquote>
+
+  <p>다시 한번, AI는 만능 키가 아닙니다. 우리 업무 사이사이의 공백과 비효율을 메워 주는 최첨단 도구입니다.</p>
+
+  <p>도입 전에는 <strong>'이것으로 무엇을 풀고 싶은가'</strong>를 되묻고, 도입 후에는 네 가지로 판정합니다.</p>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>기준</th><th>확인할 것</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="model-name">Cheaper</td><td>비용·투입 인력이 실제로 줄었는가</td></tr>
+      <tr><td class="model-name">Better</td><td>결과물의 품질과 정확도가 올라갔는가</td></tr>
+      <tr><td class="model-name">Faster</td><td>처리 시간과 대기 시간이 짧아졌는가</td></tr>
+      <tr><td class="model-name">Easier</td><td>담당자가 실제로 더 편해졌는가</td></tr>
+    </tbody>
+  </table>
+
+  <p>네 질문에 '그렇다'고 답할 수 있어야 진짜 쓰이는 AI 전환입니다.</p>
+
+  <p>기술의 이동을 읽고(명제 01–05), 기관의 전환을 설계하고(06–11), 내 책상의 골목길부터 치우는 일(12–13). 14개 명제는 결국 이 네 질문으로 수렴합니다.</p>
+
+  <p class="pull">도입 안건마다 '무엇을 풀고 싶은가' 한 줄 + Cheaper / Better / Faster / Easier 4문항 판정표를 붙입니다.</p>
+
+  <div class="addendum">
+    <span class="add-label">덧붙임</span>
+    이 네 가지 중 공공에서 가장 자주 빠지는 것이 <strong>Easier</strong>다. 비용과 시간은 보고서에 숫자로 쓰기 좋지만, "담당자가 편해졌는가"는 측정이 애매해서 생략된다. 그런데 도입한 시스템이 6개월 뒤 방치되는 이유는 거의 언제나 여기에 있다. 판정표에서 이 항목만은 <strong>실제 사용자에게 직접 물어서</strong> 채워야 한다.
+  </div>
+
+  <div class="source-note">
+    <strong>근거 자료</strong> · 코닥(Kordoc)·국가법령정보 MCP — 헤럴드경제 등 언론 보도(2026.4.3) · KOSIS MCP 시범서비스 — 국가데이터처/KOSIS 공지(2026.7.8 개시, 7.16 가이드). 본 시리즈는 공공기관 관리자·실무자 대상 특강 원고(2026년 8월 1일 기준)를 블로그 연재용으로 재구성했습니다. <a href="/blog/prompt-to-agent-1.html">1편(기술의 이동)</a> · <a href="/blog/prompt-to-agent-2.html">2편(RAG를 넘어)</a> · <a href="/blog/prompt-to-agent-3.html">3편(사람과 조직)</a>에서 전체 흐름을 확인할 수 있습니다.
+  </div>]]></content:encoded>
     </item>
     <item>
       <title>질문의 시대는 끝났다 ③ 중간관리자, AX팀, 그리고 튀는 사람</title>
@@ -51,9 +695,85 @@
       <guid isPermaLink="true">https://cdsa.kr/blog/prompt-to-agent-3.html</guid>
       <pubDate>Sat, 01 Aug 2026 01:00:00 GMT</pubDate>
       <dc:creator>신성진</dc:creator>
-      <category>시리즈 · 질문의 시대는 끝났다</category>
-      <description>중간관리자는 컨텍스트를 만드는 사람이다. AX팀의 최소 조합은 업무·도구·조직을 아는 세 사람이다. AI를 잘 쓰는 사람은 뽑는 것이 아니라 교육으로 발굴하는 것이다.</description>
-      <content:encoded><![CDATA[<h1>중간관리자, AX팀, 그리고 튀는 사람</h1><p>AI는 맥락정보를 받기 전까지는 할루시네이션이다. 그 컨텍스트를 만들어내는 사람이 중간관리자다. AX팀은 IT 개발자만으로 만들 수 없고, 교육에서 튀는 사람을 찾아 첨병으로 세워야 한다 — 기관 전환에서 사람의 자리를 다루는 3편.</p>]]></content:encoded>
+      <category>시리즈 · 질문의 시대는 끝났다 · 3편</category>
+      <description>중간관리자는 컨텍스트를 만드는 사람이다. AX팀의 최소 조합은 업무·도구·조직을 아는 세 사람이다. AI를 잘 쓰는 사람은 뽑는 것이 아니라 교육으로 발굴하는 것이다 — 기관 전환에서 사람의 자리를 다루는 3편.</description>
+      <content:encoded><![CDATA[<h1>중간관리자, AX팀,<br>그리고 튀는 사람</h1>
+
+  <p class="dek">
+    에이전트가 실무를 대신할수록, 사람의 자리는 어디로
+    가는가. 컨텍스트를 생산하는 중간관리자, 세 사람의
+    최소 조합으로 꾸리는 AX팀, 그리고 교육에서 발굴해
+    첨병으로 세우는 인재까지.
+  </p>
+
+  
+
+  <div class="series-box">
+    <span class="series-title">시리즈 · 질문의 시대는 끝났다 — 14개의 명제</span>
+    공공기관 관리자·실무자 대상 특강 원고를 4편으로 나눠 싣습니다.
+    <ol>
+      <li><a href="/blog/prompt-to-agent-1.html">1편 · 기술의 이동 — 프롬프트에서 피지컬 AI까지 (명제 01–05)</a></li>
+      <li><a href="/blog/prompt-to-agent-2.html">2편 · RAG 구축의 시대를 지나, 에이전트를 향해 (명제 06–08)</a></li>
+      <li><span class="current">3편 · 중간관리자, AX팀, 그리고 튀는 사람 (명제 09–11)</span></li>
+      <li><a href="/blog/prompt-to-agent-4.html">4편 · 바이브코딩, 골목길, 그리고 네 개의 질문 (명제 12–14)</a></li>
+    </ol>
+  </div>
+
+  <p class="lede">"일이 많아졌다, 검토만 는다"는 호소가 곳곳에서 들립니다. 에이전트가 실무를 대신할수록 조직의 사람들은 무엇을 해야 하는가 — 3편은 이 질문에 답합니다. 중간관리자의 재정의에서 출발해, AX팀의 구성, 그리고 교육으로 인재를 발굴하는 방법까지. 기관의 전환에서 가장 자주 놓치는 것은 기술이 아니라 사람의 자리입니다.</p>
+
+  <h2 id="s09"><span class="num">명제 09</span>중간관리자는 컨텍스트를 만드는 사람이다</h2>
+
+  <blockquote>'일이 많아졌다, 검토만 는다'는 호소에 대한 답.</blockquote>
+
+  <p>AI는 맥락정보를 받기 전까지는 할루시네이션입니다. 여기서 맥락정보란 조직의 암묵지적인 분위기, 상하관계에서의 지시 맥락과 의도, 판단과 의사결정의 환경을 말합니다. 이런 정보는 팔란티어 같은 시스템으로도 <strong>데이터화하기 어렵습니다</strong>.</p>
+
+  <p>그 컨텍스트를 만들어내는 사람이 중간관리자입니다. 최상위의 지시를 해석하고 판단해서 직원들에게 <strong>역할과 책임과 권한</strong>으로 번역해 주는 일. 이것은 AI가 대체할 수 없습니다.</p>
+
+  <p>"중간관리자를 둬야 하느냐"는 질문은 방향이 반대입니다. AI 시대에 중간관리자의 역할은 축소되는 것이 아니라 <strong>재정의</strong>되어야 합니다. 결재 경로의 한 칸에서, 조직의 맥락을 생산하는 자리로.</p>
+
+  <p class="pull">지시를 그대로 전달하지 않습니다. 배경·의도·판단 기준을 붙여 컨텍스트로 전달합니다.</p>
+
+  <div class="addendum">
+    <span class="add-label">덧붙임</span>
+    이것을 개인의 역량 문제로 두지 말고 <strong>기록의 문제</strong>로 바꾸면 실행 가능해진다. 지시를 전달할 때 배경 두 줄, 판단 기준 두 줄을 함께 남기는 것을 부서의 기본 양식으로 만들면, 그 기록이 그대로 AI에 넣을 컨텍스트가 된다. 중간관리자의 판단이 조직의 자산으로 축적되는 유일한 방법이다.
+  </div>
+
+  <h2 id="s10"><span class="num">명제 10</span>AX팀은 IT 개발자만으로 만들 수 없다</h2>
+
+  <blockquote>순서는 '기술 도입'이 아니라 '해결할 문제 먼저 찾기'다.</blockquote>
+
+  <p>IT 개발자로만 구성된 AX팀은 무엇을 만들 수는 있어도 <strong>무엇을 풀어야 하는지</strong>를 정하지 못합니다. 업무를 이해하고 여러 부서를 경험한 사람이 팀에 들어와 업무 재설계를 맡고, 직원들과 소통하며 해결할 과제를 골라야 합니다.</p>
+
+  <div class="demo">
+    <span class="demo-label">사례</span>
+    국민권익위원회 해결과제 발굴 사이트 — public-task.lovable.app. 현장의 불편을 과제 목록으로 만들어 공유하는 것부터가 AX의 출발점이 될 수 있다. 문제를 먼저 목록화하고, 도구는 그다음이다.
+  </div>
+
+  <div class="addendum">
+    <span class="add-label">덧붙임</span>
+    AX팀 구성의 최소 조합은 세 사람이다. <strong>업무를 아는 사람</strong>(문제 정의), <strong>도구를 아는 사람</strong>(구현), <strong>조직을 아는 사람</strong>(확산과 제도화). 세 번째가 빠진 팀이 가장 흔하고, 가장 자주 실패한다. 좋은 도구를 만들어 놓고 아무도 쓰지 않는 상황이 여기서 나온다.
+  </div>
+
+  <h2 id="s11"><span class="num">명제 11</span>교육에서 튀는 사람을 찾아 첨병으로 세운다</h2>
+
+  <blockquote>AI를 잘 쓰는 사람은 뽑는 것이 아니라 발굴하는 것이다.</blockquote>
+
+  <p>AX팀 하나로 끝나지 않습니다. 각 팀과 조직에 업무전문가가 있어야 하고, AI를 잘 쓰는 사람은 <strong>교육을 통해 발굴</strong>해야 합니다.</p>
+
+  <p>교육을 해 보면 반드시 튀는 사람이 나옵니다. IT·SaaS·웹서비스를 본능적으로 잘 다루는 사람들입니다. 전공이나 직렬과 무관한 경우가 많습니다. 그들을 각 부서의 최전방 첨병으로 세우고, 발굴 결과가 <strong>인사와 조직개편에 반영</strong>되게 해야 합니다.</p>
+
+  <p>교육이 이수 실적이 아니라 인재 발굴의 채널이 될 때 조직의 AI 역량이 자랍니다.</p>
+
+  <p class="pull">교육 과정마다 산출물 경진·과제 해결 세션을 넣고, 상위 수행자를 부서 AI 리더로 지정해 실제 권한을 부여합니다.</p>
+
+  <div class="addendum">
+    <span class="add-label">덧붙임</span>
+    발굴한 사람에게 반드시 붙여야 할 것이 두 가지 있다. <strong>시간</strong>(본 업무를 줄여 주는 공식 배정)과 <strong>명분</strong>(직무기술서나 부서 업무분장에 명시). 이 둘 없이 "잘하니까 좀 도와줘"로 운영하면 6개월 안에 지쳐서 손을 뗀다. 발굴보다 유지가 어렵다.
+  </div>
+
+  <div class="source-note">
+    <strong>이 글은</strong> 공공기관 관리자·실무자 대상 특강 「질문의 시대는 끝났다 — 프롬프트에서 에이전트로」 원고의 3편(명제 09–11)입니다. 기관의 전환 전반부를 다룬 <a href="/blog/prompt-to-agent-2.html">2편</a>에서 이어지며, 사람과 문화를 다루는 <a href="/blog/prompt-to-agent-4.html">4편(완결)</a>으로 이어집니다.
+  </div>]]></content:encoded>
     </item>
     <item>
       <title>질문의 시대는 끝났다 ② RAG 구축의 시대를 지나, 에이전트를 향해</title>
@@ -61,9 +781,106 @@
       <guid isPermaLink="true">https://cdsa.kr/blog/prompt-to-agent-2.html</guid>
       <pubDate>Sat, 01 Aug 2026 00:30:00 GMT</pubDate>
       <dc:creator>신성진</dc:creator>
-      <category>시리즈 · 질문의 시대는 끝났다</category>
-      <description>청크 RAG, 문서 통째 읽기, 에이전틱 검색, MCP 직접 연결 — 문서를 쪼개는 방식 자체를 다시 물어야 한다. 용역이 아닌 협업으로 만드는 AI 사업, 기술보다 업무와 사람을 먼저 보는 리더의 순서.</description>
-      <content:encoded><![CDATA[<h1>RAG 구축의 시대를 지나, 에이전트를 향해</h1><p>컨텍스트 윈도우가 길어지고 모델의 맥락 해석력이 강해지면서 청크 기반 RAG의 전제가 흔들리고 있다. 넓어진 선택지, 발주서에 누가 함께 만들지를 먼저 쓰는 AI 사업, 그리고 병목부터 찾는 리더의 순서 — 기관의 전환을 다루는 2편.</p>]]></content:encoded>
+      <category>시리즈 · 질문의 시대는 끝났다 · 2편</category>
+      <description>청크 RAG, 문서 통째 읽기, 에이전틱 검색, MCP 직접 연결 — 문서를 쪼개는 방식 자체를 다시 물어야 한다. 발주서에 무엇을 만들지보다 누가 함께 만들지를 먼저 쓰는 AI 사업, 그리고 기술보다 업무와 사람을 먼저 보는 리더의 순서.</description>
+      <content:encoded><![CDATA[<h1>RAG 구축의 시대를 지나,<br>에이전트를 향해</h1>
+
+  <p class="dek">
+    문서를 쪼개는 방식 자체를 다시 물어야 할 때가 왔습니다.
+    넓어진 기술 선택지에서 출발해, 용역이 아닌 협업으로
+    만드는 AI 사업, 그리고 기술보다 업무와 사람을 먼저 보는
+    리더의 순서까지 — 기관의 전환을 다룹니다.
+  </p>
+
+  
+
+  <div class="series-box">
+    <span class="series-title">시리즈 · 질문의 시대는 끝났다 — 14개의 명제</span>
+    공공기관 관리자·실무자 대상 특강 원고를 4편으로 나눠 싣습니다.
+    <ol>
+      <li><a href="/blog/prompt-to-agent-1.html">1편 · 기술의 이동 — 프롬프트에서 피지컬 AI까지 (명제 01–05)</a></li>
+      <li><span class="current">2편 · RAG 구축의 시대를 지나, 에이전트를 향해 (명제 06–08)</span></li>
+      <li><a href="/blog/prompt-to-agent-3.html">3편 · 중간관리자, AX팀, 그리고 튀는 사람 (명제 09–11)</a></li>
+      <li><a href="/blog/prompt-to-agent-4.html">4편 · 바이브코딩, 골목길, 그리고 네 개의 질문 (명제 12–14)</a></li>
+    </ol>
+  </div>
+
+  <p class="lede">공공부문은 지난 몇 년, 문서를 쪼개고 청크를 나누고 임베딩하는 RAG 시스템 구축에 바빴습니다. 그런데 컨텍스트 윈도우가 길어지고 모델의 맥락 해석력이 강해지면서, 그 전제가 흔들리고 있습니다. 기관의 전환을 다루는 2편은 기술 스택의 선택지에서 출발해, 사업을 발주하는 방식과 리더의 우선순위까지 내려갑니다.</p>
+
+  <h2 id="s06"><span class="num">명제 06</span>RAG 구축의 시대를 지나, 에이전트를 향해</h2>
+
+  <blockquote>문서를 쪼개는 방식 자체를 다시 물어야 한다.</blockquote>
+
+  <p>선택지가 넓어졌습니다.</p>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>방식</th><th>특징</th><th>적합한 경우</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="model-name">청크 기반 RAG</td><td>문서를 조각내 검색</td><td>문서량이 매우 많고 질의가 정형적일 때</td></tr>
+      <tr><td class="model-name">문서 통째 읽기</td><td>긴 컨텍스트에 원문 전체 투입</td><td>규정·계약서처럼 맥락이 끊기면 안 되는 문서</td></tr>
+      <tr><td class="model-name">에이전틱 검색</td><td>AI가 스스로 탐색·재질의</td><td>어디에 답이 있는지 모를 때</td></tr>
+      <tr><td class="model-name">MCP 직접 연결</td><td>원천 데이터·API에 직결</td><td>통계·법령처럼 원본이 구조화돼 있을 때</td></tr>
+    </tbody>
+  </table>
+
+  <p>더 넓고 더 최신화된 정보를 습득하는 구조로, 변화에 맞춰 계속 갈아타며 적응해야 합니다.</p>
+
+  <div class="demo">
+    <span class="demo-label">특강 시연</span>
+    같은 질문을 청크 기반 RAG와 에이전틱 검색으로 각각 처리해 답의 품질을 비교.
+  </div>
+
+  <div class="addendum">
+    <span class="add-label">덧붙임</span>
+    이 말은 기존 RAG 투자가 헛되었다는 뜻이 아니다. 문서를 정리하고 메타데이터를 붙이고 접근 권한을 정한 작업은 어떤 방식으로 가든 그대로 쓰인다. 버려야 할 것은 <strong>"한 번 구축하면 끝"이라는 전제</strong>이지, 축적된 자산이 아니다.
+  </div>
+
+  <h2 id="s07"><span class="num">명제 07</span>용역회사에 맡기는 AI사업에서, 협업으로 만드는 AI사업으로</h2>
+
+  <blockquote>AI 사업은 구축이 끝이 아니라 시작이다.</blockquote>
+
+  <p>AI 사업은 트렌드에 따라 양태가 계속 바뀝니다. 구축이 끝이 아니라 유지보수와 개편이 상시 과제가 된다는 뜻이고, 이를 쫓아가려면 외주만으로는 부족합니다. <strong>내부 전문인재 양성</strong>이 전제 조건입니다.</p>
+
+  <p>기관의 AI 도입은 실무자가 AI를 잘 쓰는 것을 넘어, <strong>'쓸 수 있는 · 써야 하는 · 쓰고 싶은' AI 서비스</strong>를 만드는 일입니다. 그 설계는 직원과 업무를 아는 사람만 할 수 있습니다. 인터뷰 몇 번과 보고자료만으로 외부 업체가 조직의 맥락을 이해하기는 어렵습니다.</p>
+
+  <p class="pull">발주서에 '무엇을 만들지'보다 '누가 함께 만들지'를 먼저 씁니다. 내부 인력의 역할과 투입 시간을 사업 구조에 포함시킵니다.</p>
+
+  <div class="addendum">
+    <span class="add-label">덧붙임</span>
+    실무적으로는 세 가지가 계약서에 들어가야 한다. ① 내부 담당자의 <strong>공동 개발 참여 시간</strong>을 과업에 명시할 것 ② 산출물에 <strong>소스코드와 프롬프트·설정값</strong>을 포함시킬 것 ③ 준공 후 <strong>기관이 직접 수정할 수 있는 범위</strong>를 문서로 남길 것. 이 세 가지가 빠지면 다음 해에 같은 업체에 다시 의존하게 된다.
+  </div>
+
+  <h2 id="s08"><span class="num">명제 08</span>리더는 기술이 아니라 업무와 사람부터 본다</h2>
+
+  <blockquote>AI가 도울 지점을 찾는 순서는 정해져 있다.</blockquote>
+
+  <p>업무를 단위로 <strong>쪼개서 분석</strong>하고, 그 안에서 <strong>병목 · 어려움 · 막힌 곳</strong>을 찾아내는 일. 이것이 리더가 먼저 해야 할 일입니다. 어떤 AI를 살지는 그다음 문제입니다.</p>
+
+  <p>'AI가 잘한다'의 범위가 글을 읽고 쓰는 것에서 도구를 다루는 것으로 넓어졌기 때문에, 어떤 도구·어떤 기존 시스템과 엮을지 정하는 <strong>오케스트레이션 설계</strong>가 도입의 성패를 가릅니다. 모델 선택보다 조합 설계가 리더의 의사결정입니다.</p>
+
+  <p>부서 업무 1개를 단계로 쪼개고, 단계마다 아래 세 칸을 채워 봅니다.</p>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>업무 단계</th><th>병목인가</th><th>AI가 도울 수 있나</th><th>어떤 도구·시스템과 엮나</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="model-name">(예) 민원 접수 분류</td><td>○ 하루 200건 수작업</td><td>○ 분류·요약</td><td>민원시스템 API + LLM</td></tr>
+      <tr><td class="model-name">(예) 결재 문서 작성</td><td>△</td><td>○ 초안 생성</td><td>한글 문서 + 과거 결재문</td></tr>
+      <tr><td class="model-name">(예) 대면 상담</td><td>×</td><td>×</td><td>—</td></tr>
+    </tbody>
+  </table>
+
+  <div class="addendum">
+    <span class="add-label">덧붙임</span>
+    이 표를 채우다 보면 대개 "AI가 도울 수 있나"에 ○가 몰린다. 그래서 한 칸을 더 두는 것이 좋다 — <strong>"이 단계가 개선되면 무엇이 달라지는가"</strong>. 여기에 답할 수 없는 항목은 기술적으로 가능해도 우선순위에서 내려야 한다.
+  </div>
+
+  <div class="source-note">
+    <strong>이 글은</strong> 공공기관 관리자·실무자 대상 특강 「질문의 시대는 끝났다 — 프롬프트에서 에이전트로」 원고의 2편(명제 06–08)입니다. 기술의 이동을 다룬 <a href="/blog/prompt-to-agent-1.html">1편</a>에서 이어지며, 사람과 조직을 다루는 <a href="/blog/prompt-to-agent-3.html">3편</a>으로 이어집니다.
+  </div>]]></content:encoded>
     </item>
     <item>
       <title>질문의 시대는 끝났다 ① 기술은 네 번 이동했다 — 프롬프트 · 컨텍스트 · 하네스 · 피지컬 AI</title>
@@ -71,9 +888,174 @@
       <guid isPermaLink="true">https://cdsa.kr/blog/prompt-to-agent-1.html</guid>
       <pubDate>Sat, 01 Aug 2026 00:00:00 GMT</pubDate>
       <dc:creator>신성진</dc:creator>
-      <category>시리즈 · 질문의 시대는 끝났다</category>
-      <description>빅3가 같은 달에 내놓은 것은 챗봇이 아니라 에이전트였다. 프롬프트 → 컨텍스트 → 하네스 → 피지컬 AI, 지난 3년 AI 활용의 중심이 네 번 이동한 궤적. 특강 시리즈 1편.</description>
-      <content:encoded><![CDATA[<h1>기술은 네 번 이동했다</h1><p>모델 성능이 낮던 시기의 답은 프롬프트였다. 멀티모달과 긴 컨텍스트로 중심은 컨텍스트로, 지금의 붐은 하네스로, 그리고 그 연결이 물리 세계로 확장된 피지컬 AI까지. ChatGPT Work·Claude Cowork·Gemini Spark가 보여주는 것: 대화가 아니라 산출물이, 답변이 아니라 실행이 경쟁의 단위가 됐다.</p>]]></content:encoded>
+      <category>시리즈 · 질문의 시대는 끝났다 · 1편</category>
+      <description>빅3가 같은 달에 내놓은 것은 챗봇이 아니라 에이전트였다. 프롬프트 → 컨텍스트 → 하네스 → 피지컬 AI, 지난 3년 AI 활용의 중심이 네 번 이동한 궤적을 공공기관 관리자·실무자의 눈높이로 정리한 특강 시리즈 1편.</description>
+      <content:encoded><![CDATA[<h1>기술은 네 번 이동했다<br>프롬프트 · 컨텍스트 · 하네스 · 피지컬 AI</h1>
+
+  <p class="dek">
+    질문을 잘 쓰는 기술의 시대가 끝나고, 일을 끝내는
+    에이전트의 시대가 왔습니다. 지난 3년 AI 활용의 중심이
+    네 번 이동한 궤적을, 공공기관 관리자와 실무자의
+    눈높이로 따라가 봅니다.
+  </p>
+
+  
+
+  <div class="series-box">
+    <span class="series-title">시리즈 · 질문의 시대는 끝났다 — 14개의 명제</span>
+    공공기관 관리자·실무자 대상 특강 원고를 4편으로 나눠 싣습니다.
+    <ol>
+      <li><span class="current">1편 · 기술의 이동 — 프롬프트에서 피지컬 AI까지 (명제 01–05)</span></li>
+      <li><a href="/blog/prompt-to-agent-2.html">2편 · RAG 구축의 시대를 지나, 에이전트를 향해 (명제 06–08)</a></li>
+      <li><a href="/blog/prompt-to-agent-3.html">3편 · 중간관리자, AX팀, 그리고 튀는 사람 (명제 09–11)</a></li>
+      <li><a href="/blog/prompt-to-agent-4.html">4편 · 바이브코딩, 골목길, 그리고 네 개의 질문 (명제 12–14)</a></li>
+    </ol>
+  </div>
+
+  <p class="lede">모델 성능이 낮던 시기의 답은 프롬프트였습니다. 같은 모델이라도 질문을 어떻게 쓰느냐가 결과를 갈랐고, 그래서 프롬프트 엔지니어링이 하나의 기술로 취급됐습니다. 그 시대가 끝나 가고 있습니다. 질문을 다듬는 손끝이 아니라, 일을 맡기고 결과를 검증하는 눈이 새로운 역량이 되고 있습니다. 이 변화를 이해하려면 지난 3년 동안 AI 활용의 중심이 어디에서 어디로 옮겨 왔는지를 먼저 봐야 합니다.</p>
+
+  <h2 id="s01"><span class="num">명제 01</span>프롬프트 → 컨텍스트 → 하네스 → 피지컬 AI</h2>
+
+  <blockquote>지난 3년, AI 활용의 중심은 네 번 이동했다.</blockquote>
+
+  <p>멀티모달과 긴 컨텍스트 윈도우, 리즈닝이 갖춰지면서 중심은 <strong>컨텍스트</strong>로 옮겨 갔습니다. 질문을 다듬는 것보다 <em>무엇을 읽게 할 것인가</em>가 중요해진 것입니다. 규정·원문·데이터를 통째로 주면 모델이 알아서 해석하는 시대가 열렸습니다.</p>
+
+  <p>지금의 붐은 <strong>하네스</strong>입니다. AI를 파일시스템·터미널·브라우저·API·MCP 같은 도구와 연결해 실제로 일하게 만드는 실행 체계를 말합니다. 그 연결이 화면 밖 물리 세계의 인지와 행동으로 확장된 것이 <strong>피지컬 AI</strong>입니다.</p>
+
+  <p>컨텍스트와 하네스가 맞물리면서 에이전트가 폭발적으로 늘고 있습니다. 이 네 단계가 이 시리즈 전체를 관통하는 축입니다.</p>
+
+  <div class="addendum">
+    <span class="add-label">덧붙임</span>
+    이 이동은 대체가 아니라 <strong>누적</strong>이다. 하네스 시대에도 프롬프트는 여전히 필요하고, 컨텍스트 설계는 오히려 더 중요해졌다. 새 단계가 등장할 때마다 앞 단계가 사라졌다고 오해하면, 기관은 "우리는 프롬프트 교육 이미 했다"며 다음 단계를 건너뛴다. 네 단계는 층층이 쌓이는 구조로 이해해야 한다.
+  </div>
+
+  <h2 id="s02"><span class="num">명제 02</span>이제는 Chat이 아니라 Action이다</h2>
+
+  <blockquote>빅3가 같은 달에 내놓은 것은 챗봇이 아니라 에이전트였다.</blockquote>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>제품</th><th>출시</th><th>무엇이 다른가</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="model-name">OpenAI ChatGPT Work</td>
+        <td>2026.7.9</td>
+        <td>GPT-5.6과 Codex를 결합해 여러 앱과 파일을 넘나들며 몇 시간짜리 프로젝트를 스스로 진행. 문서·스프레드시트·슬라이드·웹앱을 완성해 돌려준다.</td>
+      </tr>
+      <tr>
+        <td class="model-name">Anthropic Claude Cowork</td>
+        <td>2026</td>
+        <td>비개발자를 위한 에이전트형 데스크톱 앱.</td>
+      </tr>
+      <tr>
+        <td class="model-name">Google Gemini Spark</td>
+        <td>국내 2026.7.30</td>
+        <td>노트북을 덮거나 화면이 잠겨 있어도 클라우드에서 백그라운드로 작업을 이어가는 24시간 개인 에이전트. Gmail·Docs·Sheets와 별도 설정 없이 연동.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>세 회사 모두 '질문에 답하는 챗봇'이 아니라 <strong>'일을 끝내는 에이전트'</strong>를 제품의 전면에 세웠습니다. 대화가 아니라 산출물이, 답변이 아니라 실행이 경쟁의 단위가 됐습니다.</p>
+
+  <div class="demo">
+    <span class="demo-label">특강 시연</span>
+    ChatGPT Work와 Claude Desktop으로 한국방송통신전파진흥원 공개 데이터를 분석 → 분석 결과보고서 → 인포그래픽까지 한 흐름으로 진행.
+  </div>
+
+  <div class="addendum">
+    <span class="add-label">덧붙임</span>
+    실행 단위가 바뀌면 검증 단위도 바뀐다. 챗봇 시대에는 답변 한 문단을 눈으로 훑으면 됐지만, 에이전트는 몇 시간 동안 여러 파일을 만들고 고친다. 무엇을 어디까지 확인할 것인지를 미리 정해 두지 않으면, 검토 부담이 실무자에게 통째로 넘어간다. <strong>에이전트 도입은 검증 절차 설계와 한 세트다.</strong>
+  </div>
+
+  <h2 id="s03"><span class="num">명제 03</span>계획하고, 맥락을 읽고, 도구를 호출한다</h2>
+
+  <blockquote>그래서 우리는 그것을 에이전트라 부른다.</blockquote>
+
+  <p>LLM은 이제 목표를 받으면 스스로 작업을 단계로 쪼개 <strong>계획</strong>을 세웁니다. 수십만 토큰의 문서·데이터·이력을 읽어내는 <strong>컨텍스트 해석력</strong>이 그 계획을 현실에 붙잡아 두고, 검색·코드 실행·파일 편집·API 같은 <strong>도구 호출</strong>이 계획을 실행으로 바꿉니다.</p>
+
+  <p class="pull">계획 · 맥락 · 도구. 이 세 가지가 갖춰진 순간부터 챗봇이 아니라 에이전트입니다.</p>
+
+  <div class="demo">
+    <span class="demo-label">특강 시연</span>
+    ChatGPT에 명령을 내리고, 오른쪽 사이드 패널에서 생각 → 도구 실행 → 검증이 흘러가는 과정을 실시간으로 관찰. 말로 설명하는 것보다 화면을 한 번 보는 것이 빠르다.
+  </div>
+
+  <div class="addendum">
+    <span class="add-label">덧붙임</span>
+    이 사이드 패널을 보여주는 이유는 신기해서가 아니다. <strong>AI가 어디서 틀렸는지를 추적할 수 있다는 것</strong>을 보여주기 위해서다. 계획 단계에서 잘못 쪼갰는지, 맥락을 잘못 읽었는지, 도구 호출이 실패했는지가 화면에 남는다. 이 추적 가능성이 공공에서 AI를 쓸 수 있게 만드는 최소 조건이다.
+  </div>
+
+  <h2 id="s04"><span class="num">명제 04</span>코딩에이전트가 곧 하네스의 실체다</h2>
+
+  <blockquote>쏟아지는 코딩에이전트, 그것이 하네스다.</blockquote>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>구분</th><th>도구</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="model-name">상용 데스크톱·IDE</td>
+        <td>Claude Code, Claude Desktop, OpenAI Codex, ChatGPT 데스크톱, Google Antigravity, Cursor, VS Code + GitHub Copilot, xAI Grok</td>
+      </tr>
+      <tr>
+        <td class="model-name">오픈소스</td>
+        <td>OpenClaw, Hermes Agent(Nous Research, 2026.2 공개 · GitHub 스타 6만+), OpenHands, Cline</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>이들의 공통점은 코드를 잘 쓰는 것이 아닙니다. 파일시스템·터미널·브라우저·MCP를 쥐고 <strong>계획 → 실행 → 검증 → 재실행</strong>의 루프를 도는 실행 체계라는 점입니다. 하네스의 실체가 바로 이것이고, 코딩은 그 첫 번째 응용일 뿐입니다.</p>
+
+  <div class="demo">
+    <span class="demo-label">특강 시연</span>
+    Claude Code로 한국방송통신전파진흥원 데이터를 3D 인터랙티브 시각화로 변환. 코드를 몰라도 한 문장의 지시로 완성된다.
+  </div>
+
+  <div class="addendum">
+    <span class="add-label">덧붙임</span>
+    "코딩에이전트"라는 이름이 오해를 만든다. 개발자용 도구로 들리기 때문이다. 실제로는 <strong>파일을 다루는 모든 업무의 도구</strong>다. 한글 문서 일괄 편집, 엑셀 수백 개 병합, 스캔 PDF 정리, 홈페이지 자료 수집 — 공공 업무의 상당수가 여기 해당한다. 명칭 때문에 비개발 부서가 스스로 배제하지 않도록, 교육에서는 "업무 자동화 에이전트"로 소개하는 편이 낫다.
+  </div>
+
+  <h2 id="s05"><span class="num">명제 05</span>모델이 화면 밖으로 나오고 있다</h2>
+
+  <blockquote>LLM에는 손·발·눈이 없었다. 이제 몸을 얻는 중이다.</blockquote>
+
+  <p>2026년 7월 30일 Google DeepMind가 <strong>Gemini Robotics 2</strong>를 발표했습니다. 세 개의 모델로 구성됩니다.</p>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>모델</th><th>역할</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="model-name">Gemini Robotics ER 2</td>
+        <td>계획을 세우는 두뇌. 공간 추론, 다단계 작업 계획, 로봇 간 협업 담당. Gemini API와 AI Studio에서 지금 사용 가능.</td>
+      </tr>
+      <tr>
+        <td class="model-name">Gemini Robotics 2 (VLA)</td>
+        <td>시각·언어 입력을 모터 제어로 바꾸는 모델. 휴머노이드를 발끝부터 손끝까지 제어.</td>
+      </tr>
+      <tr>
+        <td class="model-name">On-Device 2</td>
+        <td>로봇에 직접 올라가는 경량 모델. 새로운 로봇 형태에 몇 시간 만에 적응.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>이전 세대가 상반신·팔 위주였다면, 이번에는 걷고 앉고 균형을 잡는 <strong>전신 제어</strong>와 <strong>멀티 로봇 협업</strong>까지 들어왔습니다. 다만 DeepMind 스스로 "아직 느리고 진정한 손재주는 먼 목표"라고 밝혔다는 점도 함께 봐야 합니다.</p>
+
+  <p>하네스가 AI를 디지털 도구와 연결했다면, 피지컬 AI는 그 연결을 물리 세계의 인지와 행동으로 확장합니다. 프롬프트에서 출발한 이동이 지금 도착한 지점입니다.</p>
+
+  <div class="addendum">
+    <span class="add-label">덧붙임</span>
+    공공에서 피지컬 AI는 당장의 도입 과제가 아니다. 하지만 <strong>왜 지금 이 이야기를 하는가</strong>는 분명하다. 시설 점검, 재난 현장 확인, 도로·상하수도 순찰처럼 사람이 직접 가야만 했던 업무의 성격이 5년 안에 달라진다. 지금 필요한 것은 로봇 구매가 아니라, <strong>현장 데이터를 어떤 형태로 쌓아 둘 것인가</strong>에 대한 판단이다.
+  </div>
+
+  <div class="source-note">
+    <strong>근거 자료</strong> · ChatGPT Work 출시 — OpenAI 공식 발표(2026.7.9) · Gemini Spark 국내 출시 — Google Korea 블로그(2026.7.30) · Gemini Robotics 2 — Google DeepMind 블로그(2026.7.30) · Hermes Agent — Nous Research GitHub·공식 문서(2026.2 공개). 본 시리즈는 공공기관 관리자·실무자 대상 특강 원고(2026년 8월 1일 기준)를 블로그 연재용으로 재구성한 것입니다. 기술 변화 속도를 고려해 인용된 제품 정보는 열람 시점에 재확인을 권합니다.
+  </div>]]></content:encoded>
     </item>
     <item>
       <title>옵시디언을 깔기 전에, 검색 문장 세 개를 먼저 써라</title>

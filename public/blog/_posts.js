@@ -35,6 +35,17 @@
   // publishTime = '09:00:00' 같은 KST 시각. 미명시 시 '09:00:00'
   const POSTS = [
     {
+      slug: 'llm-does-nothing',
+      title: 'LLM은 아무것도 못한다 — 도구를 쥐는 순간 에이전트가 된다',
+      date: '2026. 8. 19',
+      category: '바이브코딩',
+      href: '/blog/llm-does-nothing.html',
+      author: '신성진',
+      publishTime: '09:00:00',
+      dek: 'LLM 홀로는 글을 읽고 쓸 뿐이다. 검색 API, 파워쉘·CMD, 파이썬, 브라우저, MCP, RAG를 쥐어줄 때 에이전트가 완성된다. 챗봇의 시대가 막을 내리는 이유, 바이브코딩에 대한 편견, 그리고 사무직이 LLM을 PC의 손발로 만드는 일곱 가지 경로 — 도식 한 장으로 정리한 에이전트의 원리.',
+      views: { base: 10, daily: 8, publishedISO: '2026-08-19' },
+    },
+    {
       slug: 'agent-harness-terminology',
       title: "AI 에이전트 시대의 '하네스(Harness)', 도대체 무엇인가",
       date: '2026. 8. 7',
