@@ -2,6 +2,11 @@ import { useState } from 'react'
 
 const articles = [
   {
+    title: 'AI에게 말을 시키지 말고, 판단만 시켜라 — System One과 Jev',
+    description: '문장 생성이 아니라 판단과 확률만 돌려주는 새 모델 계보. LLM은 생각하고, Jev는 판단하고, 코드는 실행한다.',
+    href: '/blog/system-one-jev.html',
+  },
+  {
     title: 'LLM은 아무것도 못한다 — 도구를 쥐는 순간 에이전트가 된다',
     description: '챗봇의 시대가 막을 내린다. 파워쉘·파이썬·브라우저·MCP를 쥐어줄 때 에이전트가 완성되는 원리와 바이브코딩 일곱 가지 경로.',
     href: '/blog/llm-does-nothing.html',

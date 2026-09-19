@@ -35,6 +35,17 @@
   // publishTime = '09:00:00' 같은 KST 시각. 미명시 시 '09:00:00'
   const POSTS = [
     {
+      slug: 'system-one-jev',
+      title: 'AI에게 말을 시키지 말고, 판단만 시켜라 — System One과 Jev',
+      date: '2026. 9. 19',
+      category: '에이전트 트렌드',
+      href: '/blog/system-one-jev.html',
+      author: '신성진',
+      publishTime: '09:00:00',
+      dek: 'TypeSafe AI가 공개한 System One Model과 Jev. 문장을 생성하지 않고 선택지에 대한 판단과 확률만 돌려주는 새 모델 계보다. Choice·Score·Noul, RLCD와 Confidence, "hallucination이 없다"는 말의 정확한 뜻, 그리고 Cloudflare·Vercel·OpenRouter에서 지금 바로 써보는 법 — LLM은 생각하고, Jev는 판단하고, 코드는 실행한다.',
+      views: { base: 10, daily: 8, publishedISO: '2026-09-19' },
+    },
+    {
       slug: 'llm-does-nothing',
       title: 'LLM은 아무것도 못한다 — 도구를 쥐는 순간 에이전트가 된다',
       date: '2026. 8. 19',
