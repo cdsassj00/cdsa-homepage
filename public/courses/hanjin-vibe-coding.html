@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>바이브 코딩 업무자동화 2일 과정 (1차) · 한진그룹 × CDSA</title>
+<title>바이브 코딩 업무자동화 2일 과정 · 한진그룹 × CDSA</title>
 <meta name="robots" content="noindex">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@300;400;500;600&family=Inter:wght@400;500;600;700&family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://js.tosspayments.com/v1/payment-widget"></script>
@@ -104,7 +104,7 @@
 
   <!-- 포스터 히어로 -->
   <section class="hero">
-    <span class="badge">한진그룹 임직원 전용 · 2일 집중 과정 · 시리즈 1차</span>
+    <span class="badge">한진그룹 임직원 전용 · 2일 집중 과정</span>
     <h1>바이브 코딩 업무자동화<br><span class="accent">기술스택과 프로젝트 실습</span></h1>
     <p class="tagline">기술스택 10개를 하나씩 익히고, 수강생이 직접 요청한 현업 프로젝트로 조합하는 실습 과정입니다. 불필요한 업무혁신 절차나 긴 워크플로우 설명은 제외하고 — 각 기술이 무엇인지, 어디에 쓰는지, 어떤 방식으로 실습하는지에 집중합니다.</p>
     <div class="stack-line">Python · VBA · HTML · CSS · JavaScript · 데이터 API · 기능 API · AI API · DB·SQL · SLM</div>
@@ -115,7 +115,7 @@
     <div class="cell"><div class="k">교육 기간</div><div class="v">2일 × 4시간</div><div class="s">총 8시간 · 일정 별도 협의</div></div>
     <div class="cell"><div class="k">교육 방식</div><div class="v">오프라인 실습</div><div class="s">1인 1노트북 · 전원 실습 완주</div></div>
     <div class="cell"><div class="k">교육 대상</div><div class="v">한진그룹 임직원</div><div class="s">코딩 경험 불필요 · 비개발 직군 환영</div></div>
-    <div class="cell"><div class="k">수강료</div><div class="v">1,320,000원</div><div class="s">1,200,000원 + VAT · 교재·실습파일 제공</div></div>
+    <div class="cell"><div class="k">수강료</div><div class="v">2,640,000원</div><div class="s">2,400,000원 + VAT · 2일 전체 일괄 청구</div></div>
   </div>
 
   <!-- PART 1 -->
@@ -172,7 +172,7 @@
     <div class="info-box">
       <div class="info-row">
         <span class="label">과정명</span>
-        <span class="value">바이브 코딩 업무자동화 (2일) · 1차</span>
+        <span class="value">바이브 코딩 업무자동화 (2일)</span>
       </div>
       <div class="info-row">
         <span class="label">강사</span>
@@ -184,21 +184,21 @@
       </div>
       <div class="info-row">
         <span class="label">공급가액</span>
-        <span class="value">1,200,000원</span>
+        <span class="value">2,400,000원</span>
       </div>
       <div class="info-row">
         <span class="label">부가가치세 (10%)</span>
-        <span class="value">120,000원</span>
+        <span class="value">240,000원</span>
       </div>
       <div class="info-row total">
         <span class="label">합계 (VAT 포함)</span>
-        <span class="value">1,320,000원</span>
+        <span class="value">2,640,000원</span>
       </div>
     </div>
 
     <div id="payment-method"></div>
     <div id="agreement"></div>
-    <button id="payment-button">1,320,000원 결제하기</button>
+    <button id="payment-button">2,640,000원 결제하기</button>
 
     <p class="notice">
       결제 완료 화면에서 주문번호와 승인 내역을 확인하실 수 있습니다.<br>
@@ -219,13 +219,13 @@
 <script>
 (function(){
   var pw = PaymentWidget('live_gck_Gv6LjeKD8ab7wdXZRBEw3wYxAdXy', PaymentWidget.ANONYMOUS);
-  pw.renderPaymentMethods('#payment-method', { value: 1320000 });
+  pw.renderPaymentMethods('#payment-method', { value: 2640000 });
   pw.renderAgreement('#agreement', { variantKey: 'AGREEMENT' });
   document.getElementById('payment-button').addEventListener('click', function(){
     var oid = 'HJ26-' + Date.now() + '-' + Math.random().toString(36).slice(2,8);
     pw.requestPayment({
       orderId: oid,
-      orderName: '바이브 코딩 업무자동화 — 한진그룹 1차 (2일 과정)',
+      orderName: '바이브 코딩 업무자동화 — 한진그룹 (2일 과정)',
       successUrl: window.location.origin + '/courses/success.html',
       failUrl: window.location.origin + '/courses/fail.html',
       customerEmail: '',

@@ -14,8 +14,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   // 상품별 기대 금액 검증 — 클라이언트가 조작한 금액의 승인을 차단
   // orderId 접두어는 각 결제 페이지의 requestPayment에서 부여한다
   const EXPECTED_AMOUNTS: Record<string, number> = {
-    'HJ26': 1320000,  // 한진그룹 바이브 코딩 업무자동화 1차 (공급가 120만 + VAT)
-    'HJ26B': 1320000, // 한진그룹 바이브 코딩 업무자동화 2차 (공급가 120만 + VAT)
+    'HJ26': 2640000,  // 한진그룹 바이브 코딩 업무자동화 2일 과정 (공급가 240만 + VAT)
     'YK26': 1100000,  // 유한킴벌리 바이브 코딩 특강
     'AXP10': 638000,  // AXP-10 AI·HR 과정
     'FB26': 990,      // Five Blades 세미나
