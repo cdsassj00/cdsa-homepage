@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI가 검색하는 것이 아니라, AI가 만든 의미 지도를 탐색한다 — 로컬 시맨틱 검색의 구조 · CDSA 블로그</title>
+<meta name="description" content="서버도 API도 없이 브라우저에서 돌아가는 의미 기반 검색을 직접 만들어 봤다. EmbeddingGemma 2로 언어를 좌표로 바꾸고, 검색은 수학이 한다. 시맨틱 검색·임베딩·벡터 검색의 진짜 구조와 '의미 컴파일러'라는 관점.">
+<meta property="og:title" content="AI가 검색하는 것이 아니라, AI가 만든 의미 지도를 탐색한다">
+<meta property="og:description" content="의미 기반 검색의 패러다임 전환은 AI가 답을 생성하는 데 있지 않다. 언어와 이미지를 검색 가능한 좌표로 변환하는 데 있다. 브라우저에서 직접 만들어 본 로컬 시맨틱 검색의 구조.">
+<meta property="og:type" content="article">
+<!-- BEGIN SEO -->
+<meta name="keywords" content="시맨틱 검색, 의미 기반 검색, 임베딩, 벡터 검색, EmbeddingGemma 2, 로컬 AI, 온디바이스 AI, RAG, IndexedDB, 코사인 유사도, 벡터 데이터베이스, 폐쇄망 AI, 신성진">
+
+<link rel="canonical" href="https://cdsa.kr/blog/local-semantic-search.html">
+<meta property="og:url" content="https://cdsa.kr/blog/local-semantic-search.html">
+<meta property="og:site_name" content="한국데이터사이언티스트협회">
+<meta property="og:image" content="https://cdsa.kr/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta property="article:published_time" content="2026-10-07T09:00:00+09:00">
+<meta property="article:modified_time" content="2026-10-07T09:00:00+09:00">
+<meta property="article:author" content="신성진">
+<meta property="article:section" content="로컬 AI">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI가 검색하는 것이 아니라, AI가 만든 의미 지도를 탐색한다">
+<meta name="twitter:description" content="의미 기반 검색의 패러다임 전환은 AI가 답을 생성하는 데 있지 않다. 언어와 이미지를 검색 가능한 좌표로 변환하는 데 있다.">
+<meta name="twitter:image" content="https://cdsa.kr/og-image.png">
+<meta name="author" content="신성진">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "AI가 검색하는 것이 아니라, AI가 만든 의미 지도를 탐색한다 — 로컬 시맨틱 검색의 구조",
+  "description": "서버도 API도 없이 브라우저에서 돌아가는 의미 기반 검색을 직접 만들어 봤다. EmbeddingGemma 2로 언어를 좌표로 바꾸고, 검색은 수학이 한다.",
+  "datePublished": "2026-10-07T09:00:00+09:00",
+  "dateModified": "2026-10-07T09:00:00+09:00",
+  "author": {
+    "@type": "Person",
+    "name": "신성진",
+    "affiliation": {
+      "@type": "Organization",
+      "name": "한국데이터사이언티스트협회",
+      "url": "https://cdsa.kr"
+    }
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "한국데이터사이언티스트협회",
+    "url": "https://cdsa.kr",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://cdsa.kr/og-image.png"
+    }
+  },
+  "image": [
+    "https://cdsa.kr/og-image.png"
+  ],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://cdsa.kr/blog/local-semantic-search.html"
+  },
+  "articleSection": "로컬 AI",
+  "inLanguage": "ko-KR"
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "CDSA",
+      "item": "https://cdsa.kr/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "블로그",
+      "item": "https://cdsa.kr/blog/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "AI가 검색하는 것이 아니라, AI가 만든 의미 지도를 탐색한다",
+      "item": "https://cdsa.kr/blog/local-semantic-search.html"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "의미 기반 검색(시맨틱 검색)이란 무엇인가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "단어가 일치하는 문서를 찾는 키워드 검색과 달리, 문장을 의미 공간의 좌표(벡터)로 변환한 뒤 좌표가 가까운 문서를 찾는 검색 방식입니다. 검색 기준이 '같은 단어인가'에서 '같은 의미 공간에 있는가'로 바뀝니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "시맨틱 검색은 AI 없이도 가능한가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "동의어 사전, 형태소 분석, TF-IDF, BM25, 온톨로지 같은 전통 기법으로 제한적인 의미 확장은 가능합니다. 그러나 '조용히 쉬고 싶은 장소'와 '사람이 적은 해변 숙소' 같은 문맥적 관계를 일반화하려면 임베딩 모델이 필요합니다. 단, 검색 시점에 생성형 AI가 답을 만들 필요는 없습니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "EmbeddingGemma 2는 무엇인가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "구글 딥마인드가 2026년 10월 6일 공개한 온디바이스 임베딩 모델입니다. 740M 파라미터로 텍스트·코드·이미지·영상·오디오를 하나의 768차원 의미 공간에 매핑하며, 벡터를 512·256·128차원으로 잘라 쓸 수 있고 Apache 2.0 라이선스로 폰과 브라우저에서 직접 실행됩니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "로컬 임베딩 검색의 장점은 무엇인가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "API 비용이 없고, 자료가 외부로 나가지 않으며, 임베딩을 한 번 만들면 계속 재사용되고, 검색 결과가 원문 기반이라 환각이 없고, 네트워크 없이도 작동합니다. 보안·폐쇄망 조직에서 특히 유용한 구조입니다."
+      }
+    }
+  ]
+}
+</script>
+<!-- END SEO -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NZL39P5EYZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NZL39P5EYZ');
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/blog/_layout.css">
+<style>
+  :root {
+    --cream: #faf9f5;
+    --cream-deep: #f3efe3;
+    --ink: #1a1a1a;
+    --ink-soft: #3d3d3a;
+    --ink-mute: #6b6b66;
+    --rule: #d9d6cc;
+    --clay: #cc785c;
+    --clay-deep: #a85a42;
+    --code-bg: #f2f0e8;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--cream); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  body { font-family: "Fraunces", "Noto Serif KR", Georgia, serif; font-weight: 300; font-size: 19px; line-height: 1.72; letter-spacing: -0.005em; }
+
+  .topnav { position: fixed; top: 0; left: 0; right: 0; height: 48px; background: rgba(250, 249, 245, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; }
+  .topnav-left { display: flex; align-items: center; gap: 18px; }
+  .topnav-left a { color: var(--ink-soft); text-decoration: none; transition: color 0.2s; }
+  .topnav-left a:hover { color: var(--clay-deep); }
+  .topnav-home { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 600; font-size: 16px; color: var(--ink) !important; letter-spacing: -0.3px; }
+  .topnav-sep { color: var(--rule); font-size: 11px; }
+  .topnav-right { display: flex; gap: 16px; }
+  .topnav-right a { color: var(--ink-mute); text-decoration: none; font-size: 12px; transition: color 0.2s; }
+  .topnav-right a:hover { color: var(--clay-deep); }
+  .topnav-current { color: var(--ink) !important; font-weight: 600; position: relative; }
+  .topnav-current::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 2px; background: var(--clay); border-radius: 1px; }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 116px 28px 120px; }
+  .breadcrumb { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; margin-bottom: 36px; display: flex; align-items: center; gap: 8px; color: var(--ink-mute); }
+  .breadcrumb a { color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--ink); }
+  .breadcrumb .bc-sep { color: var(--rule); }
+
+  .kicker { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay-deep); margin-bottom: 28px; }
+  h1 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 400; font-size: 42px; line-height: 1.2; letter-spacing: -0.02em; margin: 0 0 24px; color: var(--ink); word-break:keep-all;overflow-wrap:break-word;}
+  .dek { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 300; font-style: italic; font-size: 21px; line-height: 1.55; color: var(--ink-soft); margin: 0 0 40px; word-break:keep-all;overflow-wrap:break-word;}
+  .byline { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); padding: 18px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-bottom: 56px; display: flex; justify-content: space-between; }
+  .byline strong { font-weight: 500; color: var(--ink-soft); }
+
+  .lede { font-size: 19px; line-height: 1.72; margin-bottom: 22px; word-break:keep-all;overflow-wrap:break-word;}
+  .lede::first-letter { font-family: "Fraunces", serif; font-weight: 400; font-size: 68px; float: left; line-height: 0.88; padding: 8px 10px 0 0; color: var(--clay); }
+
+  h2 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 28px; line-height: 1.25; letter-spacing: -0.015em; margin: 64px 0 8px; color: var(--ink); scroll-margin-top: 80px; word-break:keep-all;overflow-wrap:break-word;}
+  h2 .num { font-family: "Inter", sans-serif; font-size: 12px; font-weight: 600; color: var(--clay); letter-spacing: 0.1em; display: block; margin-bottom: 10px; }
+  h3 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 18px; margin: 34px 0 10px; color: var(--ink); letter-spacing: -0.01em; word-break:keep-all;overflow-wrap:break-word;}
+  p { margin: 0 0 22px; }
+  p + p { margin-top: -6px; }
+  strong { font-weight: 500; color: var(--ink); }
+  em { font-style: italic; }
+  code { font-family: "JetBrains Mono", monospace; font-size: 0.88em; background: var(--code-bg); padding: 2px 6px; border-radius: 3px; color: var(--clay-deep); }
+  a { color: var(--clay-deep); }
+
+  blockquote {
+    margin: 32px 0;
+    padding: 4px 0 4px 22px;
+    border-left: 2px solid var(--clay);
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-style: italic;
+    font-size: 20px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+
+  .scenario-quote {
+    background: var(--code-bg);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 20px 24px;
+    margin: 20px 0 24px;
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-style: italic;
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
+  .key-box {
+    margin: 20px 0 26px;
+    padding: 14px 18px;
+    border-left: 2px solid var(--clay);
+    background: rgba(204, 120, 92, 0.06);
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .key-box .label {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--clay-deep);
+    margin-right: 8px;
+  }
+
+  ul.flow {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0 24px;
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 15.5px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    border-left: 2px solid var(--rule);
+    padding-left: 20px;
+  }
+  ul.flow li { margin-bottom: 5px; }
+  ul.flow li::before { content: "·"; color: var(--clay); font-weight: 700; margin-right: 8px; }
+
+  pre.diagram {
+    background: var(--code-bg);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 18px 22px;
+    font-family: "JetBrains Mono", "Menlo", monospace;
+    font-size: 12.5px;
+    line-height: 1.7;
+    overflow-x: auto;
+    margin: 24px 0 28px;
+    color: var(--ink-soft);
+    white-space: pre;
+  }
+
+  .summary-table {
+    margin: 28px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 14.5px;
+  }
+  .summary-table .row {
+    display: grid;
+    grid-template-columns: 170px 1fr;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--rule);
+    line-height: 1.55;
+  }
+  .summary-table .row:last-child { border-bottom: none; }
+  .summary-table .row.head {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    padding: 10px 0;
+  }
+  .summary-table .name { font-weight: 600; color: var(--ink); }
+  .summary-table .def { color: var(--ink-soft); }
+
+  .diagram-box { margin: 32px 0 12px; }
+  .diagram-box svg { width: 100%; height: auto; display: block; }
+  .diagram-cap { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12.5px; color: var(--ink-mute); text-align: center; margin: 10px 0 32px; }
+
+  .rule { border: none; border-top: 1px solid var(--rule); margin: 56px 0; }
+  .footer { margin-top: 72px; padding-top: 28px; border-top: 1px solid var(--rule); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); line-height: 1.65; }
+  .footer strong { color: var(--ink-soft); font-weight: 600; }
+  .footer a { color: var(--clay-deep); text-decoration: none; }
+  .bottom-nav { margin-top: 72px; padding: 36px 0; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .bottom-nav a { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .bottom-nav a:hover { color: var(--ink); }
+  .bottom-nav-home { font-family: "Fraunces", "Noto Serif KR", serif !important; font-size: 16px !important; font-style: italic; font-weight: 400; }
+
+  @media (max-width: 560px) {
+    .wrap { padding: 92px 22px 80px; }
+    h1 { font-size: 32px; word-break:keep-all;overflow-wrap:break-word;}
+    .dek { font-size: 18px; word-break:keep-all;overflow-wrap:break-word;}
+    body { font-size: 17px; }
+    .summary-table .row { grid-template-columns: 1fr; gap: 4px; padding: 14px 0; }
+    .summary-table .row.head { display: none; }
+    .topnav-right { display: none; }
+    pre.diagram { font-size: 10.5px; }
+  }
+
+  @media (max-width: 400px) {
+    h1 { font-size: 26px !important; line-height: 1.22; }
+    .dek { font-size: 16px !important; }
+    h2 { font-size: 22px !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="topnav-left">
+    <a href="/" class="topnav-home">CDSA</a>
+    <span class="topnav-sep">|</span>
+    <a href="/">홈페이지</a>
+    <a href="/blog/" class="topnav-current">블로그</a>
+  </div>
+  <nav class="topnav-right">
+    <a href="/framework.html">프레임워크</a>
+    <a href="/fullcourse.html">Full Course</a>
+  </nav>
+</header>
+
+<button class="blog-hamburger" aria-label="블로그 목록 열기"><span></span><span></span><span></span></button>
+<div class="blog-overlay"></div>
+<aside class="blog-left">
+  <div class="blog-left-title">Blog Posts</div>
+  <ol class="blog-left-list"></ol>
+</aside>
+<aside class="blog-right">
+  <div class="blog-right-title">On This Page</div>
+  <ul class="blog-toc"></ul>
+</aside>
+
+<article class="wrap">
+
+  <nav class="breadcrumb">
+    <a href="/">← CDSA 홈</a>
+    <span class="bc-sep">/</span>
+    <a href="/blog/">블로그</a>
+    <span class="bc-sep">/</span>
+    <span>로컬 시맨틱 검색</span>
+  </nav>
+
+  <div class="kicker">Editorial &middot; 로컬 AI</div>
+
+  <h1>AI가 검색하는 것이 아니라,<br>AI가 만든 의미 지도를<br>탐색한다</h1>
+
+  <p class="dek">서버도, API 키도, 생성형 AI도 없이 브라우저에서 돌아가는 의미 기반 검색을 직접 만들어 봤다. 핵심은 "검색할 때 AI가 답을 생성한다"가 아니라 "AI가 의미를 좌표로 바꿔 놓는다"는 것이었다. 시맨틱 검색의 진짜 구조, 그리고 'AI를 의미 컴파일러로 쓴다'는 관점.</p>
+
+  <div class="byline">
+    <span><strong>신성진</strong>  &middot;  한국데이터사이언티스트협회</span>
+    <span>2026. 10. 7</span>
+  </div>
+
+  <p class="lede">검색창에 "조용히 쉬고 싶은 장소"를 입력하면 "사람이 적은 해변과 작은 항구 근처 숙소"라는 문서가 올라옵니다. 두 문장에 겹치는 단어는 하나도 없습니다. 그런데 이 검색은 외부 AI 서버를 한 번도 호출하지 않습니다. 네트워크를 끊어도 작동합니다. 직접 만들어 보니 분명해졌습니다. <strong>의미 기반 검색의 비밀은 검색 순간의 AI가 아니라, 미리 만들어 둔 의미의 좌표에 있습니다.</strong></p>
+
+  <h2 id="s01"><span class="num">01  /  분해</span>앱을 다섯 단계로 뜯어보면</h2>
+
+  <p>제가 만든 앱의 구조를 단계별로 분해하면 명확합니다.</p>
+
+  <pre class="diagram">① 문서의 의미를 벡터로 변환 ── EmbeddingGemma 2
+② 벡터를 로컬에 저장 ─────── IndexedDB (브라우저 내장 DB)
+③ 검색어를 벡터로 변환 ───── EmbeddingGemma 2
+④ 가까운 벡터를 계산 ─────── 단순 수학 연산
+⑤ 결과를 정렬해서 표시 ───── 일반 프로그램</pre>
+
+  <p>AI가 직접 관여하는 부분은 ①과 ③, 즉 <strong>언어를 벡터로 바꾸는 순간뿐</strong>입니다. 검색·저장·순위 계산은 AI가 아니라 일반적인 소프트웨어와 수학입니다.</p>
+
+  <p>여기서 쓴 EmbeddingGemma 2는 구글 딥마인드가 2026년 10월 6일 공개한 온디바이스 임베딩 모델입니다. 740M 파라미터로 텍스트·코드·이미지·영상·오디오를 하나의 768차원 의미 공간에 매핑하고, 필요에 따라 벡터를 512·256·128차원으로 잘라 쓸 수 있습니다(Matryoshka 표현 학습). 텍스트만 쓰면 램 191MB 수준으로 폰에서도 돌아가고, Apache 2.0 라이선스라 상업적으로도 자유롭습니다. 제 앱은 256차원으로 잘라 썼습니다. 저장 공간이 3분의 1로 줄어드는데 검색 품질은 체감상 거의 차이가 없었습니다.</p>
+
+  <h2 id="s02"><span class="num">02  /  전환</span>"같은 단어인가"에서 "같은 의미 공간에 있는가"로</h2>
+
+  <p>기존 키워드 검색은 문자열 일치입니다. 검색어가 "밤하늘의 빛"인데 문서가 "오로라는 태양 입자와 자기장 때문에 발생한다"라면, <code>밤하늘</code>이나 <code>빛</code> 같은 단어가 문서에 정확히 없으니 찾기 어렵습니다.</p>
+
+  <p>임베딩 모델은 문장을 의미 공간의 좌표로 바꿉니다.</p>
+
+  <pre class="diagram">"밤하늘의 신비로운 빛"  →  [0.12, -0.31, 0.48, ...]
+"오로라는 왜 생길까"    →  [0.10, -0.29, 0.51, ...]</pre>
+
+  <p>두 벡터가 가까우면, 단어가 달라도 관련된 문서로 판단합니다. 검색의 기준이 <strong>"같은 단어인가?"에서 "같은 의미 공간에 있는가?"로 바뀐 것</strong>입니다.</p>
+
+  <div class="diagram-box">
+  <svg viewBox="0 0 720 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="의미 공간: 단어가 달라도 의미가 가까우면 좌표가 가깝다">
+    <g font-family="Inter, 'Noto Sans KR', sans-serif">
+      <rect x="16" y="16" width="688" height="330" rx="14" fill="#f2f0e8" stroke="#d9d6cc"/>
+      <text x="36" y="44" font-size="11" font-weight="700" letter-spacing="2" fill="#a85a42">의미 공간 — 768차원을 평면에 비유하면</text>
+
+      <!-- 오로라 클러스터 -->
+      <circle cx="200" cy="140" r="7" fill="#cc785c"/>
+      <text x="216" y="136" font-size="12.5" fill="#3d3d3a">"오로라는 왜 생길까"</text>
+      <circle cx="238" cy="188" r="7" fill="#cc785c"/>
+      <text x="254" y="192" font-size="12.5" fill="#3d3d3a">"태양 입자와 자기장"</text>
+      <!-- 검색어 -->
+      <rect x="138" y="196" width="14" height="14" transform="rotate(45 145 203)" fill="#1a1a1a"/>
+      <text x="56" y="232" font-size="12.5" font-weight="700" fill="#1a1a1a">검색어 "밤하늘의 빛"</text>
+      <line x1="152" y1="198" x2="194" y2="146" stroke="#cc785c" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <line x1="156" y1="202" x2="230" y2="188" stroke="#cc785c" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <text x="150" y="168" font-size="10.5" fill="#a85a42">가깝다 = 관련 문서</text>
+
+      <!-- 커피 클러스터 -->
+      <circle cx="560" cy="110" r="7" fill="#b9b4a5"/>
+      <text x="470" y="90" font-size="12.5" fill="#6b6b66">"중약배전 원두의 산미"</text>
+      <circle cx="596" cy="150" r="7" fill="#b9b4a5"/>
+      <text x="520" y="178" font-size="12.5" fill="#6b6b66">"새콤한 커피 향"</text>
+
+      <!-- WebGPU 클러스터 -->
+      <circle cx="520" cy="280" r="7" fill="#b9b4a5"/>
+      <text x="430" y="308" font-size="12.5" fill="#6b6b66">"WebGPU 신경망 추론"</text>
+      <circle cx="580" cy="256" r="7" fill="#b9b4a5"/>
+      <text x="596" y="252" font-size="12.5" fill="#6b6b66">"그래픽카드 계산"</text>
+
+      <text x="360" y="380" text-anchor="middle" font-size="12" fill="#6b6b66">단어가 하나도 겹치지 않아도, 의미가 가까우면 좌표가 가깝다 — 거리 계산은 AI가 아니라 수학이 한다</text>
+    </g>
+  </svg>
+  </div>
+  <p class="diagram-cap">임베딩이 만드는 의미 지도 — 검색은 이 지도 위에서 가장 가까운 점을 찾는 일이다.</p>
+
+  <h2 id="s03"><span class="num">03  /  경계</span>완전히 AI 없이도 가능한가</h2>
+
+  <p>어느 수준의 의미 검색인지에 따라 다릅니다.</p>
+
+  <h3>단순한 의미 확장은 AI 없이도 가능합니다</h3>
+
+  <p>동의어 사전, 형태소 분석, TF-IDF, BM25, LSA·LSI, 온톨로지, 지식 그래프, 사람이 만든 분류 체계로 제한적인 의미 검색을 만들 수 있습니다. 예를 들어 이런 규칙을 미리 작성하는 방식입니다.</p>
+
+  <pre class="diagram">자동차 = 차량 = 승용차
+휴가 = 여행 = 관광
+노트북 = 랩톱</pre>
+
+  <p>하지만 사람이 모든 표현과 관계를 정의해야 합니다. 새로운 문장, 문맥, 다국어, 이미지까지 일반화하기는 어렵습니다.</p>
+
+  <h3>문맥적 관계는 임베딩 모델이 필요합니다</h3>
+
+  <p>다음 관계를 동의어 목록으로 표현할 수 있을까요.</p>
+
+  <pre class="diagram">"조용히 쉬고 싶은 장소"
+ → "사람이 적은 해변과 작은 항구 근처 숙소"
+
+"그래픽카드로 브라우저 계산을 빠르게"
+ → "WebGPU 기반 신경망 추론"
+
+"새콤하고 밝은 향의 커피"
+ → "중약배전 원두의 산미를 살리는 추출법"</pre>
+
+  <p>이런 문맥적 관계를 자연스럽게 알아내는 데에는 임베딩 모델이 필요합니다. 즉 정확한 결론은 이렇습니다. <strong>의미 기반 검색은 AI 없이도 실행되는 것처럼 만들 수 있지만, 의미를 이해하는 벡터를 만드는 과정에는 AI가 필요합니다.</strong></p>
+
+  <h2 id="s04"><span class="num">04  /  착시</span>왜 'AI 없이 검색되는 것처럼' 느껴지는가</h2>
+
+  <p>EmbeddingGemma 2는 사용자 대신 답을 작성하지 않습니다.</p>
+
+  <ul class="flow">
+    <li>문서를 읽고 요약하지 않습니다</li>
+    <li>검색 결과를 설명하지 않습니다</li>
+    <li>대화를 만들지 않습니다</li>
+    <li>서버로 내용을 보내지 않습니다</li>
+    <li>사실을 새로 생성하지 않습니다</li>
+  </ul>
+
+  <p>모델은 입력을 <strong>256개의 숫자로 변환하고 끝</strong>입니다. 그다음부터는 벡터의 내적이라는 단순 계산입니다.</p>
+
+  <pre class="diagram">score = queryVector · documentVector</pre>
+
+  <p>그래서 사용자는 생성형 AI를 쓰는 느낌 없이 의미 검색을 이용합니다. 가장 정확한 표현은 이것입니다.</p>
+
+  <blockquote>AI가 검색하는 것이 아니라, AI가 만들어 놓은 의미 지도를 일반 검색엔진이 탐색한다.</blockquote>
+
+  <h2 id="s05"><span class="num">05  /  구조</span>AI를 답변자가 아니라 의미 컴파일러로</h2>
+
+  <p>더 중요한 것은 구조적 변화입니다. 이 방식에서는 AI가 서비스의 중심이 아닙니다.</p>
+
+  <div class="diagram-box">
+  <svg viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AI를 답변자로 쓰는 구조와 의미 컴파일러로 쓰는 구조 비교">
+    <g font-family="Inter, 'Noto Sans KR', sans-serif">
+      <text x="16" y="30" font-size="11" font-weight="700" letter-spacing="2" fill="#6b6b66">기존 — AI를 답변자로</text>
+      <rect x="16" y="46" width="180" height="52" rx="9" fill="#f2f0e8" stroke="#d9d6cc"/>
+      <text x="106" y="68" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a1a">사용자 질문</text>
+      <text x="106" y="86" text-anchor="middle" font-size="10" fill="#6b6b66">매번 발생</text>
+      <text x="216" y="78" text-anchor="middle" font-size="14" fill="#cc785c">→</text>
+      <rect x="236" y="46" width="230" height="52" rx="9" fill="#faf9f5" stroke="#cc785c" stroke-dasharray="5 4"/>
+      <text x="351" y="68" text-anchor="middle" font-size="12.5" font-weight="600" fill="#a85a42">외부 AI 서버 — 매번 추론</text>
+      <text x="351" y="86" text-anchor="middle" font-size="10" fill="#6b6b66">비용 발생 · 자료 외부 전송 · 환각 가능</text>
+      <text x="486" y="78" text-anchor="middle" font-size="14" fill="#cc785c">→</text>
+      <rect x="506" y="46" width="198" height="52" rx="9" fill="#f2f0e8" stroke="#d9d6cc"/>
+      <text x="605" y="68" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a1a">답변 생성</text>
+      <text x="605" y="86" text-anchor="middle" font-size="10" fill="#6b6b66">문장으로 반환</text>
+
+      <line x1="16" y1="134" x2="704" y2="134" stroke="#d9d6cc" stroke-width="1"/>
+
+      <text x="16" y="168" font-size="11" font-weight="700" letter-spacing="2" fill="#a85a42">로컬 의미 검색 — AI를 의미 컴파일러로</text>
+      <rect x="16" y="184" width="160" height="52" rx="9" fill="#f2f0e8" stroke="#d9d6cc"/>
+      <text x="96" y="206" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a1a">자료 · 질문</text>
+      <text x="96" y="224" text-anchor="middle" font-size="10" fill="#6b6b66">언어 · 이미지</text>
+      <text x="196" y="216" text-anchor="middle" font-size="14" fill="#cc785c">→</text>
+      <rect x="216" y="184" width="180" height="52" rx="10" fill="#cc785c"/>
+      <text x="306" y="206" text-anchor="middle" font-size="13.5" font-weight="700" fill="#ffffff">로컬 임베딩</text>
+      <text x="306" y="224" text-anchor="middle" font-size="10" fill="#f6e3db">의미 → 좌표 (한 번만)</text>
+      <text x="416" y="216" text-anchor="middle" font-size="14" fill="#cc785c">→</text>
+      <rect x="436" y="184" width="130" height="52" rx="9" fill="#f2f0e8" stroke="#d9d6cc"/>
+      <text x="501" y="206" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a1a">IndexedDB</text>
+      <text x="501" y="224" text-anchor="middle" font-size="10" fill="#6b6b66">벡터 저장</text>
+      <text x="586" y="216" text-anchor="middle" font-size="14" fill="#cc785c">→</text>
+      <rect x="606" y="184" width="98" height="52" rx="9" fill="#f2f0e8" stroke="#d9d6cc"/>
+      <text x="655" y="206" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a1a">거리 계산</text>
+      <text x="655" y="224" text-anchor="middle" font-size="10" fill="#6b6b66">수학 · 코드</text>
+
+      <text x="360" y="286" text-anchor="middle" font-size="12" fill="#6b6b66">AI 호출은 좌표를 만들 때 한 번 — 그 뒤로는 일반 프로그램이 재사용한다</text>
+    </g>
+  </svg>
+  </div>
+  <p class="diagram-cap">AI를 매번 호출하는 서비스가 아니라, AI를 인덱서 또는 컴파일러처럼 쓰는 구조.</p>
+
+  <p>이것이 중요한 이유는 다음과 같습니다.</p>
+
+  <ul class="flow">
+    <li>API 비용이 없습니다</li>
+    <li>자료가 외부로 나가지 않습니다</li>
+    <li>임베딩을 한 번 생성하면 계속 재사용합니다</li>
+    <li>검색 결과가 원문 기반이라 환각이 없습니다</li>
+    <li>네트워크가 없어도 작동합니다</li>
+    <li>텍스트와 이미지를 같은 방식으로 검색할 수 있습니다</li>
+    <li>사용자가 자신만의 의미 검색엔진을 소유합니다</li>
+  </ul>
+
+  <p>특히 두 번째와 다섯 번째가 결정적입니다. <strong>자료가 외부로 나가지 않고 오프라인에서 작동한다</strong>는 것은, 외부 API를 쓸 수 없는 보안·폐쇄망 조직 — 행정망 PC, 금융권 내부망, 연구소 보안 구역 — 에서도 의미 검색을 가질 수 있다는 뜻입니다. "우리는 보안 때문에 AI를 못 씁니다"라는 조직이 가장 먼저 도입할 수 있는 AI가 역설적으로 이 구조입니다.</p>
+
+  <div class="key-box">
+    <span class="label">계보 연결</span>이 블로그에서 다뤄온 흐름과 정확히 이어진다. <a href="/blog/llm-does-nothing.html">에이전트는 LLM에게 도구를 쥐여주는 것</a>이었고, <a href="/blog/system-one-jev.html">System One은 AI를 판단 부품으로 코드에 넣는 것</a>이었다. 로컬 임베딩 검색은 AI를 '의미 컴파일러'로 데이터 쪽에 넣는다. 셋 다 같은 방향이다 — AI가 서비스를 지배하는 것이 아니라, 사람이 설계한 구조 안에 AI가 부품으로 들어간다.
+  </div>
+
+  <h2 id="s06"><span class="num">06  /  단서</span>검색어를 입력할 때도 모델은 필요하다</h2>
+
+  <p>한 가지 단서는 있습니다. 문서 벡터를 미리 만들어 놓아도, 새로운 검색어를 같은 좌표계로 변환해야 합니다.</p>
+
+  <pre class="diagram">저장된 문서 벡터 ────────────────────┐
+                                     ├─ 거리 비교
+새 검색어 → EmbeddingGemma 2 (로컬) ─┘</pre>
+
+  <p>따라서 자유로운 자연어 검색에서는 작은 임베딩 모델이 계속 필요합니다. 다만 이 모델은 브라우저에 한 번 내려받은 후 로컬에서 실행되므로, 외부 AI 서비스는 여전히 필요하지 않습니다. 텍스트 기준 램 191MB짜리 모델이 브라우저 안에서 이 역할을 해냅니다.</p>
+
+  <h2 id="s07"><span class="num">07  /  정리</span>생성에서 변환으로</h2>
+
+  <p>한 문장으로 정리하면 이렇습니다.</p>
+
+  <blockquote>의미 검색의 패러다임 전환은 AI가 검색 결과를 생성하는 데 있지 않고, 인간의 언어와 이미지를 검색 가능한 좌표로 변환하는 데 있다.</blockquote>
+
+  <p>그래서 제가 만든 앱은 "AI 검색 서비스"라기보다 <strong>"AI로 만든 로컬 의미 인덱스"</strong>에 가깝습니다. 생성형 AI 없이도 작동하지만, 의미 공간을 만드는 작은 임베딩 AI를 핵심 엔진으로 씁니다.</p>
+
+  <p>그리고 이것은 하나의 앱 이야기가 아닙니다. 어제 나온 EmbeddingGemma 2 같은 모델이 폰과 브라우저에서 돌아가기 시작하면서, "내 자료 전부에 의미 검색을 붙인다"는 것이 서버 없이, 비용 없이, 자료 유출 없이 가능한 일이 됐습니다. 사내 규정집, 업무 매뉴얼, 민원 사례집, 개인 노트 — PC로 일하는 모든 사람이 자기만의 의미 검색엔진을 소유하는 시대가 조용히 열리고 있습니다.</p>
+
+  <p style="font-size:14px;color:var(--ink-mute)">참고: Google DeepMind, EmbeddingGemma 2 공개 (2026. 10. 6) — <a href="https://www.marktechpost.com/2026/10/06/google-deepmind-releases-embeddinggemma-2-a-740m-open-multimodal-embedding-model-built-on-gemma-4/" target="_blank" rel="noopener">MarkTechPost 보도</a> · <a href="https://ollama.com/library/embeddinggemma-2" target="_blank" rel="noopener">Ollama 모델 페이지</a></p>
+
+  <div class="footer">
+    <strong>신성진 (Shinsungjin)</strong><br>
+    한국데이터사이언티스트협회 대표 &middot; CDSA<br>
+    개인·조직 AX 변화관리 컨설턴트 &middot; AX/DX 교육 설계 &middot; 공공기관 커리큘럼 설계<br>
+    YouTube @workbyax<br>
+    의견·질문은 <a href="mailto:sjshin@cdsa.kr">sjshin@cdsa.kr</a> 로 보내주세요.
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="/blog/system-one-jev.html">← 이전 글: System One과 Jev</a>
+    <a href="/blog/">블로그 목록 →</a>
+  </nav>
+
+</article>
+
+<script src="/blog/_posts.js" defer></script>
+</body>
+</html>

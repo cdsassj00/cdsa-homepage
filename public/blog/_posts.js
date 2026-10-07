@@ -35,6 +35,17 @@
   // publishTime = '09:00:00' 같은 KST 시각. 미명시 시 '09:00:00'
   const POSTS = [
     {
+      slug: 'local-semantic-search',
+      title: 'AI가 검색하는 것이 아니라, AI가 만든 의미 지도를 탐색한다 — 로컬 시맨틱 검색의 구조',
+      date: '2026. 10. 7',
+      category: '로컬 AI',
+      href: '/blog/local-semantic-search.html',
+      author: '신성진',
+      publishTime: '09:00:00',
+      dek: '서버도 API도 없이 브라우저에서 돌아가는 의미 기반 검색을 직접 만들어 봤다. 어제 공개된 EmbeddingGemma 2로 언어를 좌표로 바꾸고, 검색은 수학이 한다. AI를 답변자가 아니라 의미 컴파일러로 쓰는 구조 — 비용 없음, 자료 유출 없음, 오프라인 작동. 폐쇄망 조직이 가장 먼저 가질 수 있는 AI.',
+      views: { base: 10, daily: 8, publishedISO: '2026-10-07' },
+    },
+    {
       slug: 'system-one-jev',
       title: 'AI에게 말을 시키지 말고, 판단만 시켜라 — System One과 Jev',
       date: '2026. 9. 19',

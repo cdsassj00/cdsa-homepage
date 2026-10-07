@@ -2,6 +2,11 @@ import { useState } from 'react'
 
 const articles = [
   {
+    title: 'AI가 검색하는 것이 아니라, AI가 만든 의미 지도를 탐색한다',
+    description: '브라우저에서 서버 없이 돌아가는 로컬 시맨틱 검색 제작기. EmbeddingGemma 2로 의미를 좌표로 바꾸면 검색은 수학이 한다.',
+    href: '/blog/local-semantic-search.html',
+  },
+  {
     title: 'AI에게 말을 시키지 말고, 판단만 시켜라 — System One과 Jev',
     description: '문장 생성이 아니라 판단과 확률만 돌려주는 새 모델 계보. LLM은 생각하고, Jev는 판단하고, 코드는 실행한다.',
     href: '/blog/system-one-jev.html',
