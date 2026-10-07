@@ -36,7 +36,7 @@
   const POSTS = [
     {
       slug: 'local-semantic-search',
-      title: 'AI가 검색하는 것이 아니라, AI가 만든 의미 지도를 탐색한다 — 로컬 시맨틱 검색의 구조',
+      title: 'EmbeddingGemma 2로 만드는 로컬 시맨틱 검색 — AI가 만든 의미 지도를 탐색한다',
       date: '2026. 10. 7',
       category: '로컬 AI',
       href: '/blog/local-semantic-search.html',
