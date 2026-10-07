@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>로컬 시맨틱 검색 데모 · CDSA Labs</title>
+<meta name="description" content="서버 없이 브라우저 안에서 돌아가는 의미 기반 검색 데모. EmbeddingGemma가 문장을 좌표로 바꾸고, 검색은 수학이 한다. 모델 로드 후에는 네트워크를 꺼도 작동한다.">
+<link rel="canonical" href="https://cdsa.kr/apps/semantic-search.html">
+<meta property="og:title" content="로컬 시맨틱 검색 데모 — AI가 만든 의미 지도를 탐색한다">
+<meta property="og:description" content="서버도 API도 없이 브라우저에서 돌아가는 의미 검색. 단어가 달라도 의미가 가까우면 찾아낸다.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cdsa.kr/apps/semantic-search.html">
+<meta property="og:image" content="https://cdsa.kr/og-image.png">
+<meta property="og:locale" content="ko_KR">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NZL39P5EYZ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-NZL39P5EYZ');</script>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{--paper:#000;--surf:#1c1c1e;--tint:#2c2c2e;--tint2:#3a3a3c;--hair:#38383a;--ink:#f5f5f7;--body:#d1d1d6;--mut:#98989d;--faint:#6e6e73;--accent:#0a84ff;--accent-hi:#409cff;--red:#ff453a;--green:#30d158;--gold:#ffd60a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Pretendard Variable",Pretendard,-apple-system,"Noto Sans KR",sans-serif;background:var(--paper);color:var(--ink);word-break:keep-all;overflow-wrap:break-word;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;font-size:15px;line-height:1.7}
+body::before{content:'';position:fixed;inset:0;z-index:-2;background-image:radial-gradient(circle,rgba(255,255,255,.025) 1px,transparent 1px);background-size:28px 28px;pointer-events:none}
+body::after{content:'';position:fixed;inset:0;z-index:-1;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(10,132,255,.06),transparent 55%);pointer-events:none}
+
+.topbar{position:fixed;top:0;left:0;right:0;height:48px;background:rgba(0,0,0,.8);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--hair);z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,40px);font-size:13px}
+.topbar a{color:var(--mut);text-decoration:none}.topbar a:hover{color:var(--accent-hi)}
+.topbar-brand{font-weight:600;font-size:15px;color:var(--ink)!important}
+
+.wrap{max-width:880px;margin:0 auto;padding:96px clamp(18px,5vw,40px) 80px}
+.overline{font-size:11px;font-weight:700;letter-spacing:.18em;color:var(--accent);text-transform:uppercase;margin-bottom:12px}
+h1{font-size:clamp(26px,4.5vw,40px);line-height:1.2;letter-spacing:-.025em;margin-bottom:14px}
+h1 .blue{color:var(--accent-hi)}
+.sub{font-size:15px;color:var(--body);max-width:640px;line-height:1.8;margin-bottom:10px}
+.sub a{color:var(--accent-hi);text-decoration:none}
+.offline-note{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--green);background:rgba(48,209,88,.08);border:1px solid rgba(48,209,88,.25);border-radius:100px;padding:6px 14px;margin:10px 0 0}
+
+.step{background:var(--surf);border:1px solid var(--hair);border-radius:16px;padding:22px clamp(16px,3vw,26px);margin-top:18px}
+.step-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.step-num{width:26px;height:26px;border-radius:50%;background:rgba(10,132,255,.15);border:1px solid rgba(10,132,255,.4);color:var(--accent-hi);font-size:12.5px;font-weight:700;display:flex;align-items:center;justify-content:center;flex:none}
+.step-title{font-size:16px;font-weight:700}
+.step-tag{font-size:10.5px;font-weight:700;letter-spacing:.08em;padding:3px 9px;border-radius:5px;margin-left:auto}
+.tag-ai{background:rgba(10,132,255,.12);color:var(--accent-hi);border:1px solid rgba(10,132,255,.3)}
+.tag-db{background:rgba(255,214,10,.1);color:var(--gold);border:1px solid rgba(255,214,10,.3)}
+.tag-math{background:rgba(48,209,88,.1);color:var(--green);border:1px solid rgba(48,209,88,.3)}
+.step p.desc{font-size:13px;color:var(--mut);margin-bottom:14px;line-height:1.7}
+
+select,textarea,input[type=text]{width:100%;background:var(--tint);border:1px solid var(--hair);border-radius:10px;padding:12px 14px;font-size:14px;color:var(--ink);font-family:inherit;outline:none;transition:border-color .2s}
+select:focus,textarea:focus,input[type=text]:focus{border-color:var(--accent)}
+textarea{min-height:150px;resize:vertical;line-height:1.8;font-size:13.5px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:var(--accent);color:#fff;font-size:14px;font-weight:700;border:none;border-radius:10px;cursor:pointer;font-family:inherit;transition:all .2s}
+.btn:hover{background:var(--accent-hi)}
+.btn:disabled{background:var(--tint2);color:var(--faint);cursor:not-allowed}
+.btn-ghost{background:transparent;border:1px solid var(--hair);color:var(--body);font-weight:500}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent-hi);background:transparent}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+
+.progress{height:8px;background:var(--tint);border-radius:100px;overflow:hidden;margin-top:12px;display:none}
+.progress .bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent-hi));border-radius:100px;transition:width .2s}
+.status{font-size:12.5px;color:var(--mut);margin-top:10px;line-height:1.7;font-variant-numeric:tabular-nums}
+.status b{color:var(--ink)}
+.status .ok{color:var(--green)}
+.status .err{color:var(--red)}
+
+.search-row{display:flex;gap:10px;margin-top:4px}
+.search-row input{flex:1}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.chip{font-size:12px;color:var(--body);background:var(--tint);border:1px solid var(--hair);border-radius:100px;padding:6px 13px;cursor:pointer;transition:all .2s}
+.chip:hover{border-color:var(--accent);color:var(--accent-hi)}
+
+.results{margin-top:16px;display:flex;flex-direction:column;gap:8px}
+.res{background:var(--tint);border:1px solid var(--hair);border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:14px}
+.res .pct{font-size:15px;font-weight:700;color:var(--accent-hi);min-width:58px;text-align:right;font-variant-numeric:tabular-nums}
+.res .txt{font-size:13.5px;color:var(--ink);line-height:1.6;flex:1}
+.res .meter{height:5px;background:var(--tint2);border-radius:100px;overflow:hidden;margin-top:7px}
+.res .meter i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-hi));border-radius:100px}
+.res.top{border-color:rgba(10,132,255,.45)}
+.timing{font-size:12px;color:var(--faint);margin-top:12px;font-variant-numeric:tabular-nums}
+.timing b{color:var(--green);font-weight:600}
+
+.how{margin-top:34px;border-top:1px solid var(--hair);padding-top:26px}
+.how h2{font-size:17px;margin-bottom:14px}
+.how-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.how-card{background:var(--surf);border:1px solid var(--hair);border-radius:12px;padding:16px}
+.how-card .t{font-size:13px;font-weight:700;margin-bottom:6px}
+.how-card .d{font-size:12px;color:var(--mut);line-height:1.7}
+.footer{margin-top:50px;padding-top:22px;border-top:1px solid var(--hair);font-size:12px;color:var(--faint);line-height:1.9}
+.footer a{color:var(--mut);text-decoration:none}
+@media(max-width:640px){.how-grid{grid-template-columns:1fr}.search-row{flex-direction:column}}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a href="/" class="topbar-brand">CDSA</a>
+  <nav style="display:flex;gap:16px">
+    <a href="/blog/local-semantic-search.html">원리 설명 글</a>
+    <a href="/blog/">블로그</a>
+  </nav>
+</header>
+
+<main class="wrap">
+  <div class="overline">CDSA Labs · Local Semantic Search</div>
+  <h1>로컬 시맨틱 검색 데모<br><span class="blue">AI가 만든 의미 지도를 탐색한다</span></h1>
+  <p class="sub">서버도 API 키도 없습니다. 임베딩 모델이 브라우저 안에서 문장을 좌표로 바꾸고, 검색은 수학이 합니다. 원리가 궁금하면 <a href="/blog/local-semantic-search.html">해설 글</a>을 읽어보세요.</p>
+  <div class="offline-note">● 모델 로드가 끝나면 네트워크(와이파이)를 꺼도 검색이 작동합니다</div>
+
+  <!-- STEP 1 -->
+  <section class="step">
+    <div class="step-head"><span class="step-num">1</span><span class="step-title">임베딩 모델 로드</span><span class="step-tag tag-ai">AI — 여기서만 쓴다</span></div>
+    <p class="desc">임베딩 모델을 브라우저로 내려받아 로컬에서 실행합니다. 최초 1회만 내려받고 이후에는 브라우저 캐시에서 즉시 로드됩니다. 자료는 어디로도 전송되지 않습니다.</p>
+    <div class="row">
+      <select id="modelSel" style="max-width:460px">
+        <option value="onnx-community/embeddinggemma-300m-ONNX" selected>EmbeddingGemma 300m — 권장 (약 300MB, 한국어 우수)</option>
+        <option value="Xenova/multilingual-e5-small">multilingual-e5-small — 빠른 모델 (약 120MB)</option>
+        <option value="onnx-community/embeddinggemma-2-ONNX">EmbeddingGemma 2 — 실험적 (0.7B, 대용량·미검증)</option>
+      </select>
+      <button class="btn" id="loadBtn" onclick="loadModel()">모델 로드</button>
+    </div>
+    <div class="progress" id="loadProg"><div class="bar" id="loadBar"></div></div>
+    <div class="status" id="loadStatus">대기 중 — 모델을 로드하면 시작됩니다.</div>
+  </section>
+
+  <!-- STEP 2 -->
+  <section class="step">
+    <div class="step-head"><span class="step-num">2</span><span class="step-title">문서를 의미 좌표로 변환</span><span class="step-tag tag-db">저장 — IndexedDB</span></div>
+    <p class="desc">아래 문서들(한 줄 = 문서 하나)을 256차원 벡터로 변환해 브라우저 내장 DB(IndexedDB)에 저장합니다. 자유롭게 지우고 본인의 문장을 넣어보세요.</p>
+    <textarea id="docsInput">오로라는 태양에서 날아온 입자와 지구 자기장이 만나 극지방 하늘에서 빛을 내는 현상이다
+사람이 적은 해변과 작은 항구 근처의 조용한 숙소를 모아 둔 여행 안내서
+WebGPU를 이용하면 그래픽카드로 브라우저 안에서 신경망 추론을 빠르게 실행할 수 있다
+중약배전 원두는 산미가 살아 있어 새콤하고 밝은 향의 커피를 내리기에 좋다
+도로에 생긴 포트홀 보수 요청은 도로관리과에서 접수하여 처리한다
+주민등록등본은 정부24 웹사이트나 가까운 주민센터 무인발급기에서 발급받을 수 있다
+엑셀 반복 업무는 VBA 매크로나 파워쿼리로 자동화하면 처리 시간이 크게 줄어든다
+PowerShell 스크립트로 폴더 안의 파일 이름을 규칙에 따라 한 번에 바꿀 수 있다
+퇴직금은 계속근로기간 1년에 대해 30일분 이상의 평균임금을 지급해야 한다
+야외 결혼식은 비 예보가 있으면 실내 대체 공간을 미리 확보해 두는 것이 안전하다
+고양이는 하루 대부분을 잠으로 보내며 밤에 활동성이 높아지는 야행성 동물이다
+김치찌개는 잘 익은 김치와 돼지고기를 넣고 끓여야 깊은 맛이 난다</textarea>
+    <div class="row">
+      <button class="btn" id="indexBtn" onclick="buildIndex()" disabled>의미 인덱스 만들기</button>
+      <button class="btn btn-ghost" onclick="clearIndex()">저장된 인덱스 비우기</button>
+    </div>
+    <div class="progress" id="idxProg"><div class="bar" id="idxBar"></div></div>
+    <div class="status" id="idxStatus">모델을 먼저 로드하세요.</div>
+  </section>
+
+  <!-- STEP 3 -->
+  <section class="step">
+    <div class="step-head"><span class="step-num">3</span><span class="step-title">의미로 검색</span><span class="step-tag tag-math">수학 — AI 없음</span></div>
+    <p class="desc">검색어를 같은 좌표계로 바꾼 뒤, 저장된 벡터와의 내적(코사인 유사도)만 계산합니다. 단어가 하나도 안 겹쳐도 의미가 가까우면 올라옵니다.</p>
+    <div class="search-row">
+      <input type="text" id="queryInput" placeholder="예: 밤하늘의 신비로운 빛" onkeydown="if(event.key==='Enter')doSearch()">
+      <button class="btn" id="searchBtn" onclick="doSearch()" disabled>검색</button>
+    </div>
+    <div class="chips">
+      <span class="chip" onclick="setQ('밤하늘의 신비로운 빛')">밤하늘의 신비로운 빛</span>
+      <span class="chip" onclick="setQ('조용히 쉬고 싶은 장소')">조용히 쉬고 싶은 장소</span>
+      <span class="chip" onclick="setQ('그래픽카드로 계산을 빠르게')">그래픽카드로 계산을 빠르게</span>
+      <span class="chip" onclick="setQ('새콤한 맛이 나는 음료')">새콤한 맛이 나는 음료</span>
+      <span class="chip" onclick="setQ('길이 파손됐을 때 신고하는 곳')">길이 파손됐을 때 신고하는 곳</span>
+      <span class="chip" onclick="setQ('회사를 그만두면 받는 돈')">회사를 그만두면 받는 돈</span>
+    </div>
+    <div class="results" id="results"></div>
+    <div class="timing" id="timing"></div>
+  </section>
+
+  <div class="how">
+    <h2>이 데모에서 일어나는 일</h2>
+    <div class="how-grid">
+      <div class="how-card"><div class="t" style="color:var(--accent-hi)">① 임베딩 — AI</div><div class="d">문장을 256개의 숫자(좌표)로 변환합니다. AI가 하는 일은 이것뿐입니다. 답을 쓰지도, 요약하지도 않습니다.</div></div>
+      <div class="how-card"><div class="t" style="color:var(--gold)">② 저장 — IndexedDB</div><div class="d">좌표를 브라우저 내장 DB에 저장합니다. 한 번 만들면 계속 재사용하고, 외부로 나가지 않습니다.</div></div>
+      <div class="how-card"><div class="t" style="color:var(--green)">③ 검색 — 수학</div><div class="d">score = 검색어벡터 · 문서벡터. 내적 한 줄입니다. RAG에서 생성(G)을 뺐으니 결과는 언제나 원문이고, 환각이 없습니다.</div></div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    ㈜한국데이터사이언티스트협회 (CDSA) · <a href="/blog/local-semantic-search.html">원리 해설: AI가 검색하는 것이 아니라, AI가 만든 의미 지도를 탐색한다</a><br>
+    모델: EmbeddingGemma (Google DeepMind, Apache 2.0) · 실행: Transformers.js · 저장: IndexedDB — 모든 연산은 이 브라우저 안에서 일어납니다.
+  </footer>
+</main>
+
+<script type="module">
+import { pipeline, env } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3/+esm';
+
+let extractor = null;
+let currentModel = null;
+let index = []; // {text, vec}
+
+/* 모델별 설정 — 프롬프트 접두어와 사용 차원(MRL 절단) */
+const MODEL_CFG = {
+  'onnx-community/embeddinggemma-300m-ONNX': { q: 'task: search result | query: ', d: 'title: none | text: ', dim: 256 },
+  'onnx-community/embeddinggemma-2-ONNX':    { q: 'task: search result | query: ', d: 'title: none | text: ', dim: 256 },
+  'Xenova/multilingual-e5-small':            { q: 'query: ', d: 'passage: ', dim: 384 }
+};
+let cfg = MODEL_CFG['onnx-community/embeddinggemma-300m-ONNX'];
+
+const $ = id => document.getElementById(id);
+const esc = s => s.replace(/[<>&"]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]));
+
+/* ---------- IndexedDB ---------- */
+function idb() {
+  return new Promise((res, rej) => {
+    const r = indexedDB.open('cdsa-semantic-demo', 1);
+    r.onupgradeneeded = () => r.result.createObjectStore('vectors');
+    r.onsuccess = () => res(r.result);
+    r.onerror = () => rej(r.error);
+  });
+}
+async function idbSet(key, val) {
+  try { const db = await idb(); return new Promise((res, rej) => {
+    const tx = db.transaction('vectors', 'readwrite');
+    tx.objectStore('vectors').put(val, key);
+    tx.oncomplete = res; tx.onerror = () => rej(tx.error);
+  }); } catch(e) {}
+}
+async function idbGet(key) {
+  try { const db = await idb(); return new Promise((res, rej) => {
+    const rq = db.transaction('vectors').objectStore('vectors').get(key);
+    rq.onsuccess = () => res(rq.result); rq.onerror = () => rej(rq.error);
+  }); } catch(e) { return null; }
+}
+async function idbClear() {
+  try { const db = await idb(); return new Promise((res) => {
+    const tx = db.transaction('vectors', 'readwrite');
+    tx.objectStore('vectors').clear(); tx.oncomplete = res;
+  }); } catch(e) {}
+}
+
+/* ---------- 모델 로드 ---------- */
+window.loadModel = async function() {
+  const model = $('modelSel').value;
+  $('loadBtn').disabled = true;
+  $('loadProg').style.display = 'block';
+  const t0 = performance.now();
+  const files = {};
+  const progress_callback = (p) => {
+    if (p.status === 'progress' && p.total) {
+      files[p.file] = p.loaded / p.total;
+      const vals = Object.values(files);
+      const avg = vals.reduce((a,b)=>a+b,0) / vals.length;
+      $('loadBar').style.width = (avg*100).toFixed(1) + '%';
+      $('loadStatus').innerHTML = '내려받는 중… <b>' + (avg*100).toFixed(0) + '%</b> (최초 1회만, 이후 브라우저 캐시 사용)';
+    }
+  };
+  try {
+    $('loadStatus').textContent = '모델 준비 중…';
+    cfg = MODEL_CFG[model] || cfg;
+    /* WebGPU는 양자화 모델에서 정밀도가 깨지는 사례가 있어 WASM(CPU)으로 고정한다 */
+    extractor = await pipeline('feature-extraction', model, { dtype: 'q8', device: 'wasm', progress_callback });
+    currentModel = model + ' · WASM(CPU) · q8';
+    const sec = ((performance.now()-t0)/1000).toFixed(1);
+    $('loadBar').style.width = '100%';
+    $('loadStatus').innerHTML = '<span class="ok">✓ 로드 완료</span> — ' + esc(currentModel) + ' (' + sec + '초). 이제 네트워크 없이 작동합니다.';
+    $('indexBtn').disabled = false;
+    $('idxStatus').textContent = '문서를 인덱싱할 준비가 됐습니다.';
+    const saved = await idbGet('index::v3::' + model);
+    if (saved && saved.length) {
+      index = saved;
+      $('idxStatus').innerHTML = '<span class="ok">✓ 저장돼 있던 인덱스 ' + saved.length + '개 문서를 IndexedDB에서 복원했습니다.</span> 바로 검색할 수 있습니다.';
+      $('searchBtn').disabled = false;
+    }
+  } catch(e) {
+    $('loadStatus').innerHTML = '<span class="err">로드 실패: ' + esc(String(e.message || e)) + '</span> — 권장 모델(300m)로 다시 시도해 보세요.';
+    $('loadBtn').disabled = false;
+  }
+};
+
+/* ---------- 임베딩 ---------- */
+async function embed(texts, isQuery) {
+  const prompted = texts.map(t => (isQuery ? cfg.q : cfg.d) + t);
+  const out = await extractor(prompted, { pooling: 'mean', normalize: true });
+  const full = out.tolist();
+  return full.map(v => {
+    const cut = v.slice(0, cfg.dim);
+    const n = Math.sqrt(cut.reduce((s,x)=>s+x*x, 0)) || 1;
+    return cut.map(x => x/n);
+  });
+}
+
+window.buildIndex = async function() {
+  const lines = $('docsInput').value.split('\n').map(s=>s.trim()).filter(Boolean);
+  if (!lines.length) { $('idxStatus').textContent = '문서를 한 줄 이상 입력하세요.'; return; }
+  $('indexBtn').disabled = true;
+  $('idxProg').style.display = 'block';
+  const t0 = performance.now();
+  index = [];
+  for (let i = 0; i < lines.length; i++) {
+    const [vec] = await embed([lines[i]], false);
+    index.push({ text: lines[i], vec });
+    $('idxBar').style.width = (((i+1)/lines.length)*100).toFixed(1) + '%';
+    $('idxStatus').innerHTML = '변환 중… <b>' + (i+1) + ' / ' + lines.length + '</b>';
+  }
+  const ms = Math.round(performance.now()-t0);
+  await idbSet('index::v3::' + $('modelSel').value, index);
+  $('idxStatus').innerHTML = '<span class="ok">✓ 문서 ' + lines.length + '개를 ' + cfg.dim + '차원 벡터로 변환해 IndexedDB에 저장했습니다.</span> (' + ms + 'ms — 문서당 평균 ' + Math.round(ms/lines.length) + 'ms)';
+  $('indexBtn').disabled = false;
+  $('searchBtn').disabled = false;
+};
+
+window.clearIndex = async function() {
+  await idbClear();
+  index = [];
+  $('results').innerHTML = '';
+  $('timing').textContent = '';
+  $('searchBtn').disabled = true;
+  $('idxStatus').textContent = '저장된 인덱스를 비웠습니다.';
+};
+
+/* ---------- 검색 ---------- */
+window.setQ = function(q) { $('queryInput').value = q; if (!$('searchBtn').disabled) doSearch(); };
+
+window.doSearch = async function() {
+  const q = $('queryInput').value.trim();
+  if (!q || !index.length || !extractor) return;
+  $('searchBtn').disabled = true;
+  const t0 = performance.now();
+  const [qv] = await embed([q], true);
+  const tEmbed = performance.now();
+  const scored = index.map(d => ({ ...d, score: d.vec.reduce((s,x,i)=>s+x*qv[i], 0) }))
+                      .sort((a,b)=>b.score-a.score).slice(0, 5);
+  const tMath = performance.now();
+  const max = scored[0].score, min = scored[scored.length-1].score, span = (max-min) || 1;
+  $('results').innerHTML = scored.map((d,i) => {
+    const w = (20 + 80*(d.score-min)/span).toFixed(0);
+    return '<div class="res' + (i===0?' top':'') + '"><div class="pct">' + d.score.toFixed(3) + '<div style="font-size:9.5px;font-weight:500;color:var(--faint)">유사도</div></div><div class="txt">' + esc(d.text) + '<div class="meter"><i style="width:' + w + '%"></i></div></div></div>';
+  }).join('');
+  $('timing').innerHTML = '검색어 임베딩(AI·로컬) <b>' + Math.round(tEmbed-t0) + 'ms</b> · 유사도 계산(수학) <b>' + (tMath-tEmbed).toFixed(1) + 'ms</b> · 서버 호출 <b>0회</b>';
+  $('searchBtn').disabled = false;
+  if (typeof gtag === 'function') gtag('event', 'semantic_search', { app: 'semantic-search-demo' });
+};
+</script>
+</body>
+</html>
