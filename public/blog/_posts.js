@@ -35,6 +35,17 @@
   // publishTime = '09:00:00' 같은 KST 시각. 미명시 시 '09:00:00'
   const POSTS = [
     {
+      slug: 'embeddinggemma-2-airgapped-rag',
+      title: 'EmbeddingGemma 2: 폐쇄망에서도 돌아가는 멀티모달 RAG, 1세대와 무엇이 달라졌나',
+      date: '2026. 10. 7',
+      category: 'AI 인프라 실무',
+      href: '/blog/embeddinggemma-2-airgapped-rag.html',
+      author: '신성진',
+      publishTime: '09:00:00',
+      dek: '2026년 10월 구글이 공개한 EmbeddingGemma 2. 텍스트 전용이던 1세대와 달리 글·코드·이미지·영상·오디오를 하나의 벡터 공간에 넣고, Apache 2.0으로 기관 내부에서 돌아간다. 1세대와의 수치 비교, 모듈형 구조와 8K 예산, float16·차원 축소·접두어 같은 모델 카드 주의사항, 그리고 공공기관 폐쇄망 RAG 구성 예시와 도입 전 점검 목록.',
+      views: { base: 10, daily: 8, publishedISO: '2026-10-07' },
+    },
+    {
       slug: 'system-one-jev',
       title: 'AI에게 말을 시키지 말고, 판단만 시켜라 — System One과 Jev',
       date: '2026. 9. 19',

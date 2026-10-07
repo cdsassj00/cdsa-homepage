@@ -2,6 +2,11 @@ import { useState } from 'react'
 
 const articles = [
   {
+    title: 'EmbeddingGemma 2: 폐쇄망에서도 돌아가는 멀티모달 RAG',
+    description: '글·이미지·영상·오디오를 한 벡터 공간에, Apache 2.0으로 기관 내부에서. 1세대 비교와 공공기관 폐쇄망 도입 주의사항.',
+    href: '/blog/embeddinggemma-2-airgapped-rag.html',
+  },
+  {
     title: 'AI에게 말을 시키지 말고, 판단만 시켜라 — System One과 Jev',
     description: '문장 생성이 아니라 판단과 확률만 돌려주는 새 모델 계보. LLM은 생각하고, Jev는 판단하고, 코드는 실행한다.',
     href: '/blog/system-one-jev.html',
