@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import avatarUrl from '../assets/chat-avatar.jpg'
 import avatarVideo from '../assets/chat-avatar.mp4'
+import { announcePanel, onPanelChange } from './floatingBus'
 
 type Msg = { role: 'user' | 'assistant'; content: string }
 
@@ -42,7 +43,21 @@ function Linkified({ text }: { text: string }) {
 }
 
 export default function FloatingChat() {
-  const [open, setOpen] = useState(false)
+  const [open, setOpenRaw] = useState(false)
+  const [otherOpen, setOtherOpen] = useState(false)
+  const setOpen = (next: boolean) => {
+    setOpenRaw(next)
+    announcePanel(next ? 'chat' : null)
+  }
+  useEffect(() => onPanelChange((id) => {
+    if (id === 'chat') return
+    if (id) {
+      setOpenRaw(false)
+      setOtherOpen(true)
+    } else {
+      setOtherOpen(false)
+    }
+  }), [])
   const [msgs, setMsgs] = useState<Msg[]>([GREETING])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
@@ -126,17 +141,19 @@ export default function FloatingChat() {
         className="fixed bottom-[168px] right-6 z-[91] flex items-center gap-3 group"
         aria-label="CDSA 챗봇 열기"
       >
-        {!open && (
+        {!open && !otherOpen && (
           <span className="hidden sm:block bg-cream-50 border border-ink-700/15 shadow-lg rounded-full px-5 py-2.5 text-[14px] font-medium text-ink-700 group-hover:text-clay-700 group-hover:border-clay-500/40 transition-colors">
             신성진 대표에게 질문 <span className="text-ink-400">· CDSA</span>
           </span>
         )}
         <span className="relative block shrink-0">
-          {open ? (
+          {open || otherOpen ? (
             <img
               src={avatarUrl}
               alt="신성진 대표 · CDSA"
-              className="w-12 h-12 rounded-full object-cover shadow-xl ring-2 ring-ink-700 transition-all duration-300"
+              className={`w-12 h-12 rounded-full object-cover shadow-xl transition-all duration-300 ${
+                open ? 'ring-2 ring-ink-700' : 'ring-2 ring-clay-500/60 opacity-80'
+              }`}
             />
           ) : (
             <video
@@ -150,9 +167,10 @@ export default function FloatingChat() {
               className="w-[150px] h-[150px] sm:w-[208px] sm:h-[208px] rounded-full object-cover shadow-xl ring-4 ring-clay-500 group-hover:ring-clay-600 group-hover:scale-105 chat-breathe transition-all duration-300"
             />
           )}
-          {open ? (
+          {open && (
             <span className="absolute -bottom-0.5 -right-0.5 w-5 h-5 rounded-full bg-ink-700 text-cream-50 text-[10px] leading-none flex items-center justify-center ring-2 ring-cream-50">✕</span>
-          ) : (
+          )}
+          {!open && !otherOpen && (
             <span className="absolute bottom-2 right-0 bg-clay-600 text-cream-50 text-[14px] font-bold tracking-wide px-3 py-1.5 rounded-full ring-2 ring-cream-50">AI</span>
           )}
         </span>
@@ -161,7 +179,7 @@ export default function FloatingChat() {
       {open && (
         <>
           <div className="fixed inset-0 z-[85]" onClick={() => setOpen(false)} />
-          <div className="fixed bottom-[228px] right-6 z-[93] w-[min(440px,calc(100vw-24px))] bg-cream-50 border border-ink-700/15 rounded-sm shadow-2xl overflow-hidden animate-chatUp flex flex-col" style={{ height: 'min(640px, calc(100vh - 268px))' }}>
+          <div className="fixed bottom-[228px] right-6 z-[95] w-[min(440px,calc(100vw-24px))] bg-cream-50 border border-ink-700/15 rounded-sm shadow-2xl overflow-hidden animate-chatUp flex flex-col" style={{ height: 'min(640px, calc(100vh - 268px))' }}>
             {/* 헤더 */}
             <div className="px-4 py-2.5 border-b border-ink-700/10 flex items-center gap-2.5 shrink-0">
               <img src={avatarUrl} alt="" className="w-8 h-8 rounded-full object-cover ring-1 ring-clay-500/50" />

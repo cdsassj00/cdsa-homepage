@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { announcePanel, onPanelChange } from './floatingBus'
 
 const articles = [
   {
@@ -100,7 +101,14 @@ const articles = [
 ]
 
 export default function FloatingInsights() {
-  const [open, setOpen] = useState(false)
+  const [open, setOpenRaw] = useState(false)
+  const setOpen = (next: boolean) => {
+    setOpenRaw(next)
+    announcePanel(next ? 'insights' : null)
+  }
+  useEffect(() => onPanelChange((id) => {
+    if (id && id !== 'insights') setOpenRaw(false)
+  }), [])
 
   if (articles.length === 0) return null
 
@@ -135,7 +143,7 @@ export default function FloatingInsights() {
             className="fixed inset-0 z-[85]"
             onClick={() => setOpen(false)}
           />
-          <div className="fixed bottom-[96px] right-6 z-[90] w-[340px] bg-cream-50 border border-ink-700/15 rounded-sm shadow-2xl overflow-hidden">
+          <div className="fixed bottom-[96px] right-6 z-[95] w-[340px] bg-cream-50 border border-ink-700/15 rounded-sm shadow-2xl overflow-hidden">
             <div className="px-5 py-3 border-b border-ink-700/10">
               <span className="font-mono text-[10px] tracking-[0.2em] text-clay-600 uppercase">
                 관점 · 인사이트

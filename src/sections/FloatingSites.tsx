@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { announcePanel, onPanelChange } from './floatingBus'
 
 type Site = { name: string; desc: string; href: string }
 
@@ -73,7 +74,14 @@ const groups: { label: string; items: Site[] }[] = [
 ]
 
 export default function FloatingSites() {
-  const [open, setOpen] = useState(false)
+  const [open, setOpenRaw] = useState(false)
+  const setOpen = (next: boolean) => {
+    setOpenRaw(next)
+    announcePanel(next ? 'sites' : null)
+  }
+  useEffect(() => onPanelChange((id) => {
+    if (id && id !== 'sites') setOpenRaw(false)
+  }), [])
 
   return (
     <>
@@ -105,7 +113,7 @@ export default function FloatingSites() {
             className="fixed inset-0 z-[85]"
             onClick={() => setOpen(false)}
           />
-          <div className="fixed bottom-[160px] right-6 z-[92] w-[min(360px,calc(100vw-24px))] bg-cream-50 border border-ink-700/15 rounded-sm shadow-2xl overflow-hidden animate-slideUp flex flex-col" style={{ maxHeight: 'calc(100vh - 200px)' }}>
+          <div className="fixed bottom-[160px] right-6 z-[95] w-[min(360px,calc(100vw-24px))] bg-cream-50 border border-ink-700/15 rounded-sm shadow-2xl overflow-hidden animate-slideUp flex flex-col" style={{ maxHeight: 'calc(100vh - 200px)' }}>
             <div className="px-4 py-3 border-b border-ink-700/10 shrink-0">
               <span className="font-mono text-[10px] tracking-[0.2em] text-ink-500 uppercase">
                 CDSA · 연관 사이트
