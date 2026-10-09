@@ -1,7 +1,10 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import Anthropic from '@anthropic-ai/sdk';
 
-// CDSA 사이트 도우미 챗봇 — 지식 컨텍스트 (안정 프리픽스: 프롬프트 캐싱 대상)
+// CDSA 사이트 도우미 챗봇 — OpenRouter 경유 (모델은 환경변수로 교체 가능)
+const DEFAULT_MODEL = 'anthropic/claude-haiku-4.5';
+const FALLBACK_MODELS = ['google/gemini-2.5-flash'];
+
+// 지식 컨텍스트
 const SYSTEM = `당신은 한국데이터사이언티스트협회(CDSA, cdsa.kr) 홈페이지의 안내 도우미입니다. 방문자의 질문에 한국어 존댓말로, 간결하게(2~5문장) 답합니다.
 
 ## CDSA 소개
@@ -53,33 +56,37 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(400).json({ error: 'Last message must be from user' });
   }
 
-  if (!process.env.ANTHROPIC_API_KEY) {
+  const apiKey = process.env.OPENROUTER_API_KEY;
+  if (!apiKey) {
     return res.status(500).json({ error: 'Chat configuration error' });
   }
-
-  const client = new Anthropic();
+  const model = process.env.OPENROUTER_MODEL || DEFAULT_MODEL;
 
   try {
-    const response = await client.beta.messages.create({
-      model: 'claude-opus-5',
-      max_tokens: 1024,
-      betas: ['server-side-fallback-2026-07-01'],
-      fallbacks: 'default',
-      output_config: { effort: 'low' },
-      cache_control: { type: 'ephemeral' },
-      system: SYSTEM,
-      messages: clean,
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + apiKey,
+        'Content-Type': 'application/json',
+        'HTTP-Referer': 'https://cdsa.kr',
+        'X-Title': 'CDSA Homepage Assistant',
+      },
+      body: JSON.stringify({
+        model,
+        models: [model, ...FALLBACK_MODELS],
+        max_tokens: 1024,
+        messages: [{ role: 'system', content: SYSTEM }, ...clean],
+      }),
     });
 
-    if (response.stop_reason === 'refusal') {
-      return res.status(200).json({ reply: FALLBACK_REPLY });
+    if (!response.ok) {
+      const detail = await response.text();
+      console.error('OpenRouter error:', response.status, detail.slice(0, 300));
+      return res.status(502).json({ error: 'Chat service unavailable' });
     }
 
-    const reply = response.content
-      .filter((b): b is Anthropic.Beta.BetaTextBlock => b.type === 'text')
-      .map((b) => b.text)
-      .join('')
-      .trim();
+    const data = await response.json();
+    const reply = (data?.choices?.[0]?.message?.content || '').trim();
 
     return res.status(200).json({ reply: reply || FALLBACK_REPLY });
   } catch (error) {
