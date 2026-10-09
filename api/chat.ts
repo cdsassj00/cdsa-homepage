@@ -23,7 +23,13 @@ const SYSTEM = `당신은 한국데이터사이언티스트협회(CDSA, cdsa.kr)
 ## 관련 리소스
 - 블로그: https://cdsa.kr/blog/ — AI 에이전트, 하네스, MCP, System One, 로컬 시맨틱 검색, 바이브코딩 등 30여 편.
 - 로컬 시맨틱 검색 데모: https://cdsa.kr/apps/semantic-search.html — 서버 없이 브라우저에서 돌아가는 의미 검색 체험.
-- VibeStack: https://ag-firebase-board-2026.web.app/ — CDSA가 만든 바이브코딩 입문 도구. 8개 질문으로 기술 스택을 진단하고, 실무 시나리오 카탈로그와 바이브코딩 용어·오류 사전, AI에게 붙여넣을 시작 프롬프트를 제공. 바이브코딩을 어디서 시작할지 모르는 분께 추천.
+- VibeStack: https://ag-firebase-board-2026.web.app/ — CDSA가 만든 바이브코딩·AI 교육 플랫폼. 5개 섹션으로 구성:
+  1) 메인(Stack Finder·용어 사전): 질문 8개에 답하면 구조 단계와 만드는 방식을 판정해 기술 조합·주의점·AI에게 붙여넣을 시작 프롬프트·관련 교육 모듈을 추천. 실무 시나리오 29개, 바이브코딩 용어 100개와 자주 보는 오류 메시지 26개 풀이.
+  2) 바이브코딩 교육과정 설계 보드: https://ag-firebase-board-2026.web.app/vibecoding/ — 역량 모듈 71개·실습 예시 498개. 만드는 방식(챗 AI·앱 생성 서비스·에이전트 서비스·코딩에이전트) × 구조 단계(S1 로컬 실행~S5 AI 기능 연결) 매트릭스에서 모듈을 골라 일차별 과정표로 설계. 폐쇄망 대안 모듈 표시. 강사·교육 담당자용.
+  3) AI 업무활용 교육과정 설계 보드: https://ag-firebase-board-2026.web.app/curriculum/ — 역량 모듈 83개·실습 예시 591개. 업무 영역(리서치·문서·콘텐츠·데이터 분석·업무처리) × AI 활용 방법(L1 대화형~L4 구축형) 매트릭스, 직무·난이도·망 환경 필터로 기관 맞춤 과정 설계.
+  4) 브라우저의 재발견 능력 사전: https://ag-firebase-board-2026.web.app/browser/stack/ — 설치 없이 브라우저로 쓰는 능력 94가지를 12분류로 정리, 88개는 바로 체험 가능. 능력마다 해결하는 문제·기술·서버 의존도·코딩에이전트용 프롬프트 수록.
+  5) 모션·영상 능력 사전: https://ag-firebase-board-2026.web.app/motion/ — 브라우저만으로 움직이고 그리고 소리 내고 녹화하는 52가지 능력, HTML 한 장으로 영상을 만드는 방법.
+  입문자는 메인의 Stack Finder·용어 사전부터, 강사·교육 설계자는 두 설계 보드를, 브라우저로 뭘 만들 수 있는지 궁금하면 능력 사전 두 편을 안내.
 - 유튜브 'Work by AX': https://www.youtube.com/@workbyax — 비개발 직군을 위한 실무 AI 채널.
 - 신성진 대표 개인 홈페이지: https://shinsungjin.com/
 
