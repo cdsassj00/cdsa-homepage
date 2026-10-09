@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import avatarUrl from '../assets/chat-avatar.jpg'
+import avatarVideo from '../assets/chat-avatar.mp4'
 
 type Msg = { role: 'user' | 'assistant'; content: string }
 
@@ -131,15 +132,24 @@ export default function FloatingChat() {
           </span>
         )}
         <span className="relative block shrink-0">
-          <img
-            src={avatarUrl}
-            alt="신성진 대표 · CDSA"
-            className={`rounded-full object-cover shadow-xl transition-all duration-300 ${
-              open
-                ? 'w-12 h-12 ring-2 ring-ink-700'
-                : 'w-[150px] h-[150px] sm:w-[208px] sm:h-[208px] ring-4 ring-clay-500 group-hover:ring-clay-600 group-hover:scale-105 chat-breathe'
-            }`}
-          />
+          {open ? (
+            <img
+              src={avatarUrl}
+              alt="신성진 대표 · CDSA"
+              className="w-12 h-12 rounded-full object-cover shadow-xl ring-2 ring-ink-700 transition-all duration-300"
+            />
+          ) : (
+            <video
+              src={avatarVideo}
+              poster={avatarUrl}
+              autoPlay
+              muted
+              loop
+              playsInline
+              aria-label="신성진 대표 · CDSA"
+              className="w-[150px] h-[150px] sm:w-[208px] sm:h-[208px] rounded-full object-cover shadow-xl ring-4 ring-clay-500 group-hover:ring-clay-600 group-hover:scale-105 chat-breathe transition-all duration-300"
+            />
+          )}
           {open ? (
             <span className="absolute -bottom-0.5 -right-0.5 w-5 h-5 rounded-full bg-ink-700 text-cream-50 text-[10px] leading-none flex items-center justify-center ring-2 ring-cream-50">✕</span>
           ) : (
@@ -156,13 +166,13 @@ export default function FloatingChat() {
             <div className="px-4 py-2.5 border-b border-ink-700/10 flex items-center gap-2.5 shrink-0">
               <img src={avatarUrl} alt="" className="w-8 h-8 rounded-full object-cover ring-1 ring-clay-500/50" />
               <div className="min-w-0 flex-1">
-                <div className="text-[12.5px] font-semibold text-ink-900 leading-tight">신성진 대표 · CDSA</div>
-                <div className="text-[10px] text-ink-400 leading-tight">
+                <div className="text-[15px] font-semibold text-ink-900 leading-tight">신성진 대표 · CDSA</div>
+                <div className="text-[11.5px] text-ink-400 leading-tight">
                   {mode === 'chat' ? 'AI 도우미 — 답변은 부정확할 수 있습니다' : '직접 메일 보내기'}
                 </div>
               </div>
               {mode !== 'chat' && (
-                <button onClick={() => setMode('chat')} className="text-[11px] text-ink-500 hover:text-clay-700 transition-colors shrink-0">
+                <button onClick={() => setMode('chat')} className="text-[12.5px] text-ink-500 hover:text-clay-700 transition-colors shrink-0">
                   ← 챗봇으로
                 </button>
               )}
@@ -174,7 +184,7 @@ export default function FloatingChat() {
               {msgs.map((m, i) => (
                 <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div
-                    className={`max-w-[85%] px-3.5 py-2.5 text-[13px] leading-relaxed whitespace-pre-wrap ${
+                    className={`max-w-[85%] px-3.5 py-2.5 text-[15px] leading-relaxed whitespace-pre-wrap ${
                       m.role === 'user'
                         ? 'bg-ink-700 text-cream-50 rounded-lg rounded-br-sm'
                         : 'bg-cream-100 border border-ink-700/8 text-ink-900 rounded-lg rounded-bl-sm'
@@ -199,7 +209,7 @@ export default function FloatingChat() {
                     <button
                       key={q}
                       onClick={() => send(q)}
-                      className="text-[11.5px] px-3 py-1.5 rounded-full border border-ink-700/15 text-ink-700 hover:border-clay-500 hover:text-clay-700 transition-colors bg-cream-50"
+                      className="text-[13px] px-3.5 py-2 rounded-full border border-ink-700/15 text-ink-700 hover:border-clay-500 hover:text-clay-700 transition-colors bg-cream-50"
                     >
                       {q}
                     </button>
@@ -221,19 +231,19 @@ export default function FloatingChat() {
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="궁금한 점을 입력하세요"
                 maxLength={500}
-                className="flex-1 bg-cream-100 border border-ink-700/10 rounded px-3 py-2 text-[13px] text-ink-900 placeholder:text-ink-400 outline-none focus:border-clay-500 transition-colors"
+                className="flex-1 bg-cream-100 border border-ink-700/10 rounded px-3 py-2.5 text-[15px] text-ink-900 placeholder:text-ink-400 outline-none focus:border-clay-500 transition-colors"
               />
               <button
                 type="submit"
                 disabled={loading || !input.trim()}
-                className="px-3.5 py-2 rounded bg-clay-600 text-cream-50 text-[12.5px] font-medium hover:bg-clay-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                className="px-4 py-2.5 rounded bg-clay-600 text-cream-50 text-[14px] font-medium hover:bg-clay-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
               >
                 전송
               </button>
             </form>
             <button
               onClick={() => setMode('mail')}
-              className="shrink-0 pb-2.5 text-[11px] text-ink-500 hover:text-clay-700 transition-colors text-center w-full"
+              className="shrink-0 pb-3 text-[13px] text-ink-500 hover:text-clay-700 transition-colors text-center w-full"
             >
               ✉ 신성진 대표에게 직접 메일 보내기
             </button>
@@ -242,26 +252,26 @@ export default function FloatingChat() {
             {/* 메일 폼 */}
             {mode === 'mail' && (
               <form onSubmit={sendMail} className="flex-1 overflow-y-auto px-4 py-4 space-y-3">
-                <p className="text-[12px] text-ink-500 leading-relaxed">
+                <p className="text-[13.5px] text-ink-500 leading-relaxed">
                   남겨주신 내용은 신성진 대표의 메일(sjshin@cdsa.kr)로 바로 전달되고, 입력하신 주소로 회신드립니다.
                 </p>
                 <div>
-                  <label className="block text-[11px] font-medium text-ink-700 mb-1">이름 *</label>
+                  <label className="block text-[12.5px] font-medium text-ink-700 mb-1">이름 *</label>
                   <input name="name" required maxLength={50} placeholder="홍길동"
-                    className="w-full bg-cream-100 border border-ink-700/10 rounded px-3 py-2 text-[13px] text-ink-900 placeholder:text-ink-400 outline-none focus:border-clay-500 transition-colors" />
+                    className="w-full bg-cream-100 border border-ink-700/10 rounded px-3 py-2.5 text-[15px] text-ink-900 placeholder:text-ink-400 outline-none focus:border-clay-500 transition-colors" />
                 </div>
                 <div>
-                  <label className="block text-[11px] font-medium text-ink-700 mb-1">이메일 *</label>
+                  <label className="block text-[12.5px] font-medium text-ink-700 mb-1">이메일 *</label>
                   <input name="email" type="email" required maxLength={100} placeholder="hong@company.co.kr"
-                    className="w-full bg-cream-100 border border-ink-700/10 rounded px-3 py-2 text-[13px] text-ink-900 placeholder:text-ink-400 outline-none focus:border-clay-500 transition-colors" />
+                    className="w-full bg-cream-100 border border-ink-700/10 rounded px-3 py-2.5 text-[15px] text-ink-900 placeholder:text-ink-400 outline-none focus:border-clay-500 transition-colors" />
                 </div>
                 <div>
-                  <label className="block text-[11px] font-medium text-ink-700 mb-1">내용 *</label>
+                  <label className="block text-[12.5px] font-medium text-ink-700 mb-1">내용 *</label>
                   <textarea name="message" required maxLength={1500} rows={5} placeholder="문의하실 내용을 자유롭게 남겨주세요."
-                    className="w-full bg-cream-100 border border-ink-700/10 rounded px-3 py-2 text-[13px] text-ink-900 placeholder:text-ink-400 outline-none focus:border-clay-500 transition-colors resize-none" />
+                    className="w-full bg-cream-100 border border-ink-700/10 rounded px-3 py-2.5 text-[15px] text-ink-900 placeholder:text-ink-400 outline-none focus:border-clay-500 transition-colors resize-none" />
                 </div>
                 <button type="submit" disabled={mailSending}
-                  className="w-full py-2.5 rounded bg-clay-600 text-cream-50 text-[13px] font-medium hover:bg-clay-700 disabled:opacity-50 transition-colors">
+                  className="w-full py-3 rounded bg-clay-600 text-cream-50 text-[15px] font-medium hover:bg-clay-700 disabled:opacity-50 transition-colors">
                   {mailSending ? '보내는 중…' : '메일 보내기'}
                 </button>
               </form>
@@ -271,9 +281,9 @@ export default function FloatingChat() {
             {mode === 'sent' && (
               <div className="flex-1 flex flex-col items-center justify-center px-6 text-center gap-3">
                 <span className="w-12 h-12 rounded-full bg-clay-600/10 border border-clay-500/40 text-clay-700 text-xl flex items-center justify-center">✓</span>
-                <div className="text-[14px] font-semibold text-ink-900">전달되었습니다</div>
-                <p className="text-[12px] text-ink-500 leading-relaxed">신성진 대표가 확인 후 남겨주신 이메일로 회신드리겠습니다.</p>
-                <button onClick={() => setMode('chat')} className="mt-1 text-[12px] text-clay-700 hover:text-clay-500 transition-colors">
+                <div className="text-[16px] font-semibold text-ink-900">전달되었습니다</div>
+                <p className="text-[13.5px] text-ink-500 leading-relaxed">신성진 대표가 확인 후 남겨주신 이메일로 회신드리겠습니다.</p>
+                <button onClick={() => setMode('chat')} className="mt-1 text-[13.5px] text-clay-700 hover:text-clay-500 transition-colors">
                   ← 챗봇으로 돌아가기
                 </button>
               </div>
