@@ -13,6 +13,7 @@ import Footer from './sections/Footer'
 import FullCourse from './sections/FullCourse'
 import FloatingInsights from './sections/FloatingInsights'
 import FloatingSites from './sections/FloatingSites'
+import FloatingChat from './sections/FloatingChat'
 import ExecutiveLoungeStrip from './sections/FloatingLounge'
 
 function SectionDots() {
@@ -45,6 +46,7 @@ function App() {
       <Footer />
       <FloatingInsights />
       <FloatingSites />
+      <FloatingChat />
     </div>
   )
 }

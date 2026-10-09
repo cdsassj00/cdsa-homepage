@@ -2,6 +2,11 @@ import { useState } from 'react'
 
 const sites = [
   {
+    name: 'VibeStack',
+    desc: '바이브코딩 스택 진단 · 시나리오 · 용어사전',
+    href: 'https://ag-firebase-board-2026.web.app/',
+  },
+  {
     name: 'OpenCabinet',
     desc: 'AI 에이전트 도구 아카이브',
     href: 'https://opencabinet.cc/',
