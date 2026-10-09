@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import avatarUrl from '../assets/chat-avatar.jpg'
 
 type Msg = { role: 'user' | 'assistant'; content: string }
 
@@ -96,7 +97,11 @@ export default function FloatingChat() {
       })
       if (!r.ok) throw new Error(String(r.status))
       const data = await r.json()
-      setMsgs((m) => [...m, { role: 'assistant', content: data.reply }])
+      const raw = String(data.reply ?? '')
+      const wantsMail = raw.includes('[MAIL_FORM]')
+      const reply = raw.replace(/\s*\[MAIL_FORM\]\s*/g, '').trim()
+      setMsgs((m) => [...m, { role: 'assistant', content: reply || raw }])
+      if (wantsMail) setTimeout(() => setMode('mail'), 600)
       if (typeof window.gtag === 'function') window.gtag('event', 'chatbot_message')
     } catch {
       setMsgs((m) => [
@@ -127,7 +132,7 @@ export default function FloatingChat() {
         )}
         <span className="relative block shrink-0">
           <img
-            src="/chat-avatar.jpg"
+            src={avatarUrl}
             alt="신성진 대표 · CDSA"
             className={`rounded-full object-cover shadow-xl transition-all duration-300 ${
               open
@@ -149,7 +154,7 @@ export default function FloatingChat() {
           <div className="fixed bottom-[206px] right-6 z-[93] w-[min(360px,calc(100vw-24px))] bg-cream-50 border border-ink-700/15 rounded-sm shadow-2xl overflow-hidden animate-chatUp flex flex-col" style={{ height: 'min(480px, calc(100vh - 246px))' }}>
             {/* 헤더 */}
             <div className="px-4 py-2.5 border-b border-ink-700/10 flex items-center gap-2.5 shrink-0">
-              <img src="/chat-avatar.jpg" alt="" className="w-8 h-8 rounded-full object-cover ring-1 ring-clay-500/50" />
+              <img src={avatarUrl} alt="" className="w-8 h-8 rounded-full object-cover ring-1 ring-clay-500/50" />
               <div className="min-w-0 flex-1">
                 <div className="text-[12.5px] font-semibold text-ink-900 leading-tight">신성진 대표 · CDSA</div>
                 <div className="text-[10px] text-ink-400 leading-tight">
