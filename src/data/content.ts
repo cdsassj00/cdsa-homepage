@@ -438,7 +438,7 @@ export const showcases = [
   },
   {
     title: '문서 리드 수집 플랫폼',
-    subtitle: '이 홈페이지의 문의 폼도 우리가 만들었습니다',
+    subtitle: '커리큘럼 플립북과 리드 수집을 한 곳에서',
     description:
       '플립북 뷰어로 커리큘럼을 미리 보여주고 리드를 수집하는 통합 플랫폼. 이 인터랙션도 우리 교육에서 가르치는 방식으로 만들어졌습니다.',
     href: 'https://cdsapaper.lovable.app/inquiry/cdsa',
@@ -749,6 +749,20 @@ export const institutions: Institution[] = [
 
 // YouTube — 실제 영상 ID + 제목 (대표 제공 2026-04-12)
 export const videos = [
+  { id: 'a1bAK0J5CA8', title: 'AI 에이전트 업무자동화 12 — 클로드 웹·앱·Cowork의 차이' },
+  { id: 'QjmsnaS9JJE', title: 'AI 에이전트 업무자동화 11 — Cowork와 Code, GitHub 자동 배포의 원리' },
+  { id: 'DPbiFO9vPys', title: 'AI 에이전트 업무자동화 10 — 클로드 코드로 주식 분석 챗봇 만들기' },
+  { id: 'hnNya4LlIMk', title: 'AI 에이전트 업무자동화 9 — 단일 HTML로 업무도구 만들기' },
+  { id: 'flcLWYAl3T8', title: 'AI 에이전트 업무자동화 8 — HTML 공개와 API 키를 숨기는 백엔드' },
+  { id: '46wqHxGWYa8', title: 'AI 에이전트 업무자동화 7 — 핸드오버 문서와 Vercel·Supabase 연결' },
+  { id: 'GcvXagplAk8', title: 'AI 에이전트 업무자동화 6 — AI로 만든 사이트에 로그인·DB 붙이기' },
+  { id: 'p1TH5vsS2kw', title: 'AI 에이전트 업무자동화 5 — 내 사이트에 AI 챗봇 붙이기' },
+  { id: '7_VHGu6XBMw', title: 'AI 에이전트 업무자동화 4 — PDF 디자인을 내 문서에 입히는 AI 스킬' },
+  { id: 'M70OC1pgqQE', title: 'AI 에이전트 업무자동화 3 — API와 MCP는 뭐가 다를까' },
+  { id: '0vfsJwbMC-4', title: 'AI 에이전트 업무자동화 2 — LLM은 시키기만 한다' },
+  { id: 'RT8npwoWHCs', title: 'AI 에이전트 업무자동화 1 — 이제 에이전트가 직접 검색해 파일 만든다' },
+  { id: 'MRqUQ4C-Vzg', title: '신성진 — AX 업무전환 쇼릴' },
+  { id: 'zyQ4GWF6iGc', title: 'AI챔피언 강사양성 44 — 문서 10개를 3D 그래프로 연결하기' },
   { id: 'PhdqYl5T3p0', title: '구글 제미나이 특강' },
   { id: 'xDl9DZrZYqc', title: 'AI 에이전트로 데이터 분석' },
   { id: 'clTItVDsr64', title: '바이브코딩으로 데이터 분석하기' },

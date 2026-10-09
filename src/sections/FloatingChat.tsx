@@ -159,6 +159,7 @@ export default function FloatingChat() {
             <video
               src={avatarVideo}
               poster={avatarUrl}
+              preload="auto"
               autoPlay
               muted
               loop

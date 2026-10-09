@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { curriculum, site } from '../data/content'
+import { curriculum } from '../data/content'
 import { useInquiry } from './InquiryModal'
 
 // Fisher-Yates seeded shuffle so cards reorder on each mount but stay stable during session
@@ -87,14 +87,12 @@ export default function Tracks() {
                   <span className="text-ink-400">대상 · </span>
                   {c.target}
                 </span>
-                <a
-                  href={site.curriculumUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={() => openInquiry(`[${c.name}] 과정 문의드립니다.\n\n교육 대상:\n예상 인원:\n희망 시기:\n`)}
                   className="text-xs text-clay-700 font-medium hover:text-clay-800 underline underline-offset-4"
                 >
                   이 과정 문의 →
-                </a>
+                </button>
               </div>
             </article>
           ))}
@@ -112,7 +110,7 @@ export default function Tracks() {
               커리큘럼 살펴보기 ↓
             </a>
             <button
-              onClick={openInquiry}
+              onClick={() => openInquiry()}
               className="inline-flex items-center gap-2 px-7 py-3 rounded-full border border-ink-700/30 text-ink-800 text-sm hover:border-clay-700 hover:text-clay-700 transition-colors"
             >
               맞춤 설계 의뢰 →
