@@ -2,6 +2,11 @@ import { useState } from 'react'
 
 const sites = [
   {
+    name: 'Shinsungjin.com',
+    desc: '신성진 대표 개인 홈페이지',
+    href: 'https://shinsungjin.com/',
+  },
+  {
     name: 'VibeStack',
     desc: '바이브코딩 스택 진단 · 시나리오 · 용어사전',
     href: 'https://ag-firebase-board-2026.web.app/',
@@ -35,7 +40,7 @@ export default function FloatingSites() {
     <>
       <button
         onClick={() => setOpen(!open)}
-        className={`fixed bottom-6 left-6 z-[90] flex items-center gap-2 shadow-lg transition-all duration-300 ${
+        className={`fixed bottom-[76px] right-6 z-[90] flex items-center gap-2 shadow-lg transition-all duration-300 ${
           open
             ? 'bg-ink-700 text-cream-50 px-4 py-3 rounded-full'
             : 'bg-cream-50 text-ink-700 border border-ink-700/20 hover:border-clay-500 hover:text-clay-700 px-4 py-3 rounded-full'
@@ -61,7 +66,7 @@ export default function FloatingSites() {
             className="fixed inset-0 z-[85]"
             onClick={() => setOpen(false)}
           />
-          <div className="fixed bottom-20 left-6 z-[90] w-[260px] bg-cream-50 border border-ink-700/15 rounded-sm shadow-2xl overflow-hidden animate-slideUp">
+          <div className="fixed bottom-[128px] right-6 z-[92] w-[260px] bg-cream-50 border border-ink-700/15 rounded-sm shadow-2xl overflow-hidden animate-slideUp">
             <div className="px-4 py-3 border-b border-ink-700/10">
               <span className="font-mono text-[10px] tracking-[0.2em] text-ink-500 uppercase">
                 CDSA · 연관 사이트
