@@ -122,11 +122,11 @@ export default function FloatingChat() {
       {/* 토글 버튼 — 신성진 대표 원형 아바타 */}
       <button
         onClick={() => setOpen(!open)}
-        className="fixed bottom-[146px] right-6 z-[91] flex items-center gap-3 group"
+        className="fixed bottom-[168px] right-6 z-[91] flex items-center gap-3 group"
         aria-label="CDSA 챗봇 열기"
       >
         {!open && (
-          <span className="hidden sm:block bg-cream-50 border border-ink-700/15 shadow-lg rounded-full px-4 py-2 text-[12px] font-medium text-ink-700 group-hover:text-clay-700 group-hover:border-clay-500/40 transition-colors">
+          <span className="hidden sm:block bg-cream-50 border border-ink-700/15 shadow-lg rounded-full px-5 py-2.5 text-[14px] font-medium text-ink-700 group-hover:text-clay-700 group-hover:border-clay-500/40 transition-colors">
             신성진 대표에게 질문 <span className="text-ink-400">· CDSA</span>
           </span>
         )}
@@ -137,13 +137,13 @@ export default function FloatingChat() {
             className={`rounded-full object-cover shadow-xl transition-all duration-300 ${
               open
                 ? 'w-12 h-12 ring-2 ring-ink-700'
-                : 'w-[104px] h-[104px] ring-4 ring-clay-500 group-hover:ring-clay-600 group-hover:scale-105 chat-breathe'
+                : 'w-[150px] h-[150px] sm:w-[208px] sm:h-[208px] ring-4 ring-clay-500 group-hover:ring-clay-600 group-hover:scale-105 chat-breathe'
             }`}
           />
           {open ? (
             <span className="absolute -bottom-0.5 -right-0.5 w-5 h-5 rounded-full bg-ink-700 text-cream-50 text-[10px] leading-none flex items-center justify-center ring-2 ring-cream-50">✕</span>
           ) : (
-            <span className="absolute bottom-1 -right-1 bg-clay-600 text-cream-50 text-[10.5px] font-bold tracking-wide px-2 py-1 rounded-full ring-2 ring-cream-50">AI</span>
+            <span className="absolute bottom-2 right-0 bg-clay-600 text-cream-50 text-[14px] font-bold tracking-wide px-3 py-1.5 rounded-full ring-2 ring-cream-50">AI</span>
           )}
         </span>
       </button>
@@ -151,7 +151,7 @@ export default function FloatingChat() {
       {open && (
         <>
           <div className="fixed inset-0 z-[85]" onClick={() => setOpen(false)} />
-          <div className="fixed bottom-[206px] right-6 z-[93] w-[min(360px,calc(100vw-24px))] bg-cream-50 border border-ink-700/15 rounded-sm shadow-2xl overflow-hidden animate-chatUp flex flex-col" style={{ height: 'min(480px, calc(100vh - 246px))' }}>
+          <div className="fixed bottom-[228px] right-6 z-[93] w-[min(440px,calc(100vw-24px))] bg-cream-50 border border-ink-700/15 rounded-sm shadow-2xl overflow-hidden animate-chatUp flex flex-col" style={{ height: 'min(640px, calc(100vh - 268px))' }}>
             {/* 헤더 */}
             <div className="px-4 py-2.5 border-b border-ink-700/10 flex items-center gap-2.5 shrink-0">
               <img src={avatarUrl} alt="" className="w-8 h-8 rounded-full object-cover ring-1 ring-clay-500/50" />

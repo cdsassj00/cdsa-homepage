@@ -109,22 +109,22 @@ export default function FloatingInsights() {
       {/* Floating button — 우하단 */}
       <button
         onClick={() => setOpen(!open)}
-        className={`fixed bottom-6 right-6 z-[90] flex items-center gap-2 shadow-lg transition-all duration-300 ${
+        className={`fixed bottom-6 right-6 z-[90] flex items-center gap-2.5 shadow-lg transition-all duration-300 ${
           open
-            ? 'bg-clay-700 text-cream-50 px-4 py-3 rounded-full'
-            : 'bg-ink-900 text-cream-50 hover:bg-clay-700 px-5 py-3 rounded-full floating-pulse'
+            ? 'bg-clay-700 text-cream-50 px-5 py-4 rounded-full'
+            : 'bg-ink-900 text-cream-50 hover:bg-clay-700 px-6 py-4 rounded-full floating-pulse'
         }`}
         aria-label="관점 · 인사이트 열기"
       >
         <svg
-          width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2"
+          width="22" height="22" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2"
           className={`transition-transform duration-300 ${open ? 'rotate-45' : ''}`}
         >
           <line x1="10" y1="4" x2="10" y2="16" />
           <line x1="4" y1="10" x2="16" y2="10" />
         </svg>
         {!open && (
-          <span className="text-[13px] font-medium tracking-wide">관점 · 인사이트</span>
+          <span className="text-[15px] font-medium tracking-wide">관점 · 인사이트</span>
         )}
       </button>
 
@@ -135,7 +135,7 @@ export default function FloatingInsights() {
             className="fixed inset-0 z-[85]"
             onClick={() => setOpen(false)}
           />
-          <div className="fixed bottom-20 right-6 z-[90] w-[300px] bg-cream-50 border border-ink-700/15 rounded-sm shadow-2xl overflow-hidden">
+          <div className="fixed bottom-[96px] right-6 z-[90] w-[340px] bg-cream-50 border border-ink-700/15 rounded-sm shadow-2xl overflow-hidden">
             <div className="px-5 py-3 border-b border-ink-700/10">
               <span className="font-mono text-[10px] tracking-[0.2em] text-clay-600 uppercase">
                 관점 · 인사이트
