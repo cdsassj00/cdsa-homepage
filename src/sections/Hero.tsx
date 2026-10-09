@@ -4,6 +4,7 @@ import { MeshDistortMaterial } from '@react-three/drei'
 import type { Mesh } from 'three'
 import { hero } from '../data/content'
 import { useInquiry } from './InquiryModal'
+import { useCurriculumBook } from '../pages/CurriculumBook'
 
 /**
  * Hero geometric 3D background.
@@ -76,6 +77,7 @@ function OrbitRing() {
 
 export default function Hero() {
   const { openInquiry } = useInquiry()
+  const { openBook } = useCurriculumBook()
   return (
     <section
       id="top"
@@ -160,14 +162,12 @@ export default function Hero() {
               {hero.ctaPrimary.label}
               <span aria-hidden>→</span>
             </button>
-            <a
-              href={hero.ctaSecondary.href}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={() => openBook()}
               className="btn-outline px-6 md:px-7 py-3 md:py-3.5 text-sm md:text-base"
             >
               {hero.ctaSecondary.label}
-            </a>
+            </button>
           </div>
         </div>
       </div>
