@@ -17,7 +17,7 @@ const GREETING: Msg = {
 
 /** URL을 자동으로 링크로 바꿔 렌더링 */
 function Linkified({ text }: { text: string }) {
-  const parts = text.split(/(https?:\/\/[^\s)'"<>]+)/g)
+  const parts = text.replace(/\*\*(.+?)\*\*/g, '$1').replace(/^#{1,4}\s*/gm, '').split(/(https?:\/\/[^\s)'"<>]+)/g)
   return (
     <>
       {parts.map((p, i) =>
