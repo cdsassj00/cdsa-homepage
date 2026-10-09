@@ -83,32 +83,46 @@ export default function FloatingChat() {
 
   return (
     <>
-      {/* 토글 버튼 — 우측, 관점·인사이트 버튼 위 */}
+      {/* 토글 버튼 — 신성진 대표 원형 아바타 */}
       <button
         onClick={() => setOpen(!open)}
-        className={`fixed bottom-[86px] right-6 z-[90] flex items-center gap-2 shadow-lg transition-all duration-300 px-4 py-3 rounded-full ${
-          open
-            ? 'bg-ink-700 text-cream-50'
-            : 'bg-clay-600 text-cream-50 hover:bg-clay-700'
-        }`}
+        className="fixed bottom-[86px] right-6 z-[90] flex items-center gap-3 group"
         aria-label="CDSA 챗봇 열기"
       >
-        <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2">
-          <path d="M3 4h14v9H8l-4 3v-3H3z" strokeLinejoin="round" />
-        </svg>
-        {!open && <span className="text-[12px] font-medium tracking-wide">AI 도우미</span>}
+        {!open && (
+          <span className="hidden sm:block bg-cream-50 border border-ink-700/15 shadow-lg rounded-full px-4 py-2 text-[12px] font-medium text-ink-700 group-hover:text-clay-700 group-hover:border-clay-500/40 transition-colors">
+            신성진 대표에게 질문 <span className="text-ink-400">· CDSA</span>
+          </span>
+        )}
+        <span className="relative block shrink-0">
+          <img
+            src="/chat-avatar.jpg"
+            alt="신성진 대표 · CDSA"
+            className={`rounded-full object-cover shadow-xl transition-all duration-300 ${
+              open
+                ? 'w-12 h-12 ring-2 ring-ink-700'
+                : 'w-[76px] h-[76px] ring-[3px] ring-clay-500 group-hover:ring-clay-600 group-hover:scale-105 chat-breathe'
+            }`}
+          />
+          {open ? (
+            <span className="absolute -bottom-0.5 -right-0.5 w-5 h-5 rounded-full bg-ink-700 text-cream-50 text-[10px] leading-none flex items-center justify-center ring-2 ring-cream-50">✕</span>
+          ) : (
+            <span className="absolute bottom-0 -right-1 bg-clay-600 text-cream-50 text-[9.5px] font-bold tracking-wide px-1.5 py-[3px] rounded-full ring-2 ring-cream-50">AI</span>
+          )}
+        </span>
       </button>
 
       {open && (
         <>
           <div className="fixed inset-0 z-[85]" onClick={() => setOpen(false)} />
-          <div className="fixed bottom-[140px] right-6 z-[90] w-[min(360px,calc(100vw-24px))] bg-cream-50 border border-ink-700/15 rounded-sm shadow-2xl overflow-hidden animate-chatUp flex flex-col" style={{ height: 'min(500px, calc(100vh - 180px))' }}>
+          <div className="fixed bottom-[150px] right-6 z-[90] w-[min(360px,calc(100vw-24px))] bg-cream-50 border border-ink-700/15 rounded-sm shadow-2xl overflow-hidden animate-chatUp flex flex-col" style={{ height: 'min(500px, calc(100vh - 190px))' }}>
             {/* 헤더 */}
-            <div className="px-4 py-3 border-b border-ink-700/10 flex items-center justify-between shrink-0">
-              <span className="font-mono text-[10px] tracking-[0.2em] text-ink-500 uppercase">
-                CDSA · AI 도우미
-              </span>
-              <span className="text-[10px] text-ink-400">답변은 부정확할 수 있습니다</span>
+            <div className="px-4 py-2.5 border-b border-ink-700/10 flex items-center gap-2.5 shrink-0">
+              <img src="/chat-avatar.jpg" alt="" className="w-8 h-8 rounded-full object-cover ring-1 ring-clay-500/50" />
+              <div className="min-w-0">
+                <div className="text-[12.5px] font-semibold text-ink-900 leading-tight">신성진 대표 · CDSA</div>
+                <div className="text-[10px] text-ink-400 leading-tight">AI 도우미 — 답변은 부정확할 수 있습니다</div>
+              </div>
             </div>
 
             {/* 메시지 */}
@@ -179,6 +193,9 @@ export default function FloatingChat() {
 
       <style>{`
         @keyframes chatUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes chatBreathe { 0%, 100% { box-shadow: 0 0 0 0 rgba(193,106,74,.35); } 55% { box-shadow: 0 0 0 11px rgba(193,106,74,0); } }
+        .chat-breathe { animation: chatBreathe 2.8s ease-out infinite; }
+        @media (prefers-reduced-motion: reduce) { .chat-breathe { animation: none; } }
         .animate-chatUp { animation: chatUp 0.2s ease-out; }
         .chat-dot { width: 6px; height: 6px; border-radius: 50%; background: #b8a99a; animation: chatPulse 1s ease-in-out infinite; }
         @keyframes chatPulse { 0%, 100% { opacity: 0.3; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-2px); } }
