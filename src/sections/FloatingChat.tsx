@@ -6,10 +6,12 @@ import { announcePanel, onPanelChange } from './floatingBus'
 type Msg = { role: 'user' | 'assistant'; content: string }
 
 const QUICK = [
-  '어떤 교육을 하나요?',
-  'AI챔피언이 뭔가요?',
-  '취업준비 과정은 얼마인가요?',
-  '바이브코딩을 어디서 시작하죠?',
+  '우리 기관 맞춤 교육은 어떻게 설계되나요?',
+  'AI챔피언 강사양성과정 커리큘럼이 궁금해요',
+  '폐쇄망(행정망)에서도 바이브코딩이 되나요?',
+  '취업준비 과정에서 만드는 포트폴리오 4종은?',
+  'VibeStack으로 내 기술 스택 진단하는 법',
+  '임원·리더 대상 AI 리더십 교육도 있나요?',
 ]
 
 const GREETING: Msg = {
