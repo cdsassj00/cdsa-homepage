@@ -35,6 +35,17 @@
   // publishTime = '09:00:00' 같은 KST 시각. 미명시 시 '09:00:00'
   const POSTS = [
     {
+      slug: 'cloudflare-deno-celld',
+      title: 'Cloudflare가 Deno 팀을 품었다 — 진짜 핵심은 celld다',
+      date: '2026. 10. 12',
+      category: '에이전트 인프라',
+      href: '/blog/cloudflare-deno-celld.html',
+      author: '신성진',
+      publishTime: '09:00:00',
+      dek: '2026년 10월 9일, Deno 팀 전원이 Cloudflare에 합류했다. 뉴스의 핵심은 인수가 아니라 celld — Workers·Durable Objects 앱을 기관 자체 서버에서 돌리게 해주는 오픈소스다. 같은 코드를 클라우드와 자체 서버 중 골라 실행하는 구조, Astro·VoidZero·Deno로 이어진 수직 통합, 그리고 폐쇄망 도입 전에 확인할 것들.',
+      views: { base: 10, daily: 8, publishedISO: '2026-10-12' },
+    },
+    {
       slug: 'local-semantic-search',
       title: 'EmbeddingGemma 2로 만드는 로컬 시맨틱 검색 — AI가 만든 의미 지도를 탐색한다',
       date: '2026. 10. 7',

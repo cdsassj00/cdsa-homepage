@@ -19,7 +19,7 @@ const OUT_FILE = resolve(ROOT, 'public/rss.xml');
 
 const SITE = 'https://cdsa.kr';
 const FEED_TITLE = '한국데이터사이언티스트협회 · CDSA 블로그';
-const FEED_DESC = 'AI 시대, 일하는 방식을 바꾸는 전문가들. 공공·대기업 150여 기관에서 AI·데이터 교육을 직접 설계하고 실행합니다.';
+const FEED_DESC = 'AI 시대, 일하는 방식을 바꾸는 전문가들. 중앙정부·지자체·공기업·대기업 등 600개 기관에서 AI·데이터 교육을 직접 설계하고 실행합니다.';
 const FEED_LANG = 'ko';
 const FEED_IMAGE = `${SITE}/og-image.png`;
 

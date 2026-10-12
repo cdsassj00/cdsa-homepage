@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloudflare가 Deno 팀을 품었다 — 진짜 핵심은 celld다 · CDSA 블로그</title>
+<meta name="description" content="2026년 10월 9일, Deno 팀 전원이 Cloudflare에 합류했다. 뉴스의 핵심은 인수 자체가 아니라 celld — Workers·Durable Objects 앱을 기관 자체 서버에서 돌리게 해주는 오픈소스다. 바이브코딩, AI 에이전트, 공공기관 폐쇄망 관점에서 정리했다.">
+<meta property="og:title" content="Cloudflare가 Deno 팀을 품었다 — 진짜 핵심은 celld다">
+<meta property="og:description" content="같은 코드를 Cloudflare 클라우드와 자체 서버 중 골라 실행하는 시대가 열리는가. workerd+celld 통합이 바이브코딩 결과물과 AI 에이전트 운영에 갖는 의미, 그리고 폐쇄망 도입 전에 확인할 것들.">
+<meta property="og:type" content="article">
+<!-- BEGIN SEO -->
+<meta name="keywords" content="Cloudflare, Deno, celld, workerd, Workers, Durable Objects, 자체 호스팅, 셀프호스팅, AI 에이전트, 바이브코딩, 폐쇄망, 공공기관, Astro, VoidZero, 신성진">
+
+<link rel="canonical" href="https://cdsa.kr/blog/cloudflare-deno-celld.html">
+<meta property="og:url" content="https://cdsa.kr/blog/cloudflare-deno-celld.html">
+<meta property="og:site_name" content="한국데이터사이언티스트협회">
+<meta property="og:image" content="https://cdsa.kr/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta property="article:published_time" content="2026-10-12T09:00:00+09:00">
+<meta property="article:modified_time" content="2026-10-12T09:00:00+09:00">
+<meta property="article:author" content="신성진">
+<meta property="article:section" content="에이전트 인프라">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cloudflare가 Deno 팀을 품었다 — 진짜 핵심은 celld다">
+<meta name="twitter:description" content="같은 코드를 클라우드와 자체 서버 중 골라 실행하는 시대. workerd+celld 통합이 AI 에이전트 운영에 갖는 의미.">
+<meta name="twitter:image" content="https://cdsa.kr/og-image.png">
+<meta name="author" content="신성진">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Cloudflare가 Deno 팀을 품었다 — 진짜 핵심은 celld다",
+  "description": "2026년 10월 9일 Deno 팀 전원의 Cloudflare 합류 발표를 바이브코딩, AI 에이전트, 자체 서버, 공공기관 폐쇄망 관점에서 정리한다. 핵심은 workerd와 celld의 통합이다.",
+  "datePublished": "2026-10-12T09:00:00+09:00",
+  "dateModified": "2026-10-12T09:00:00+09:00",
+  "author": {
+    "@type": "Person",
+    "name": "신성진",
+    "affiliation": {
+      "@type": "Organization",
+      "name": "한국데이터사이언티스트협회",
+      "url": "https://cdsa.kr"
+    }
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "한국데이터사이언티스트협회",
+    "url": "https://cdsa.kr",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://cdsa.kr/og-image.png"
+    }
+  },
+  "image": [
+    "https://cdsa.kr/og-image.png"
+  ],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://cdsa.kr/blog/cloudflare-deno-celld.html"
+  },
+  "articleSection": "에이전트 인프라",
+  "inLanguage": "ko-KR"
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "CDSA",
+      "item": "https://cdsa.kr/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "블로그",
+      "item": "https://cdsa.kr/blog/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Cloudflare가 Deno 팀을 품었다 — 진짜 핵심은 celld다",
+      "item": "https://cdsa.kr/blog/cloudflare-deno-celld.html"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "celld란 무엇인가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Deno가 2026년 8월 공개한 오픈소스로, Cloudflare Workers와 Durable Objects 방식의 애플리케이션을 Cloudflare 바깥의 자체 인프라에서 분산 운영할 수 있게 해주는 데몬입니다. 객체 하나가 자체 SQLite DB를 가진 작은 서버(cell)가 되고, 장기 상태는 운영자가 소유한 S3 호환 버킷에 저장됩니다. Cloudflare는 이를 자사의 오픈소스 Workers 런타임인 workerd와 통합하겠다고 발표했습니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "폐쇄망 공공기관에서 바로 쓸 수 있나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "아직은 별도 검증 과제입니다. celld는 D1·R2·Queues 같은 바인딩을 자체 구현한다고 밝히고 있지만, Cloudflare 관리형 서비스의 인증·권한·운영 기능까지 똑같이 작동한다고 보기는 어렵습니다. 통합 자체도 2026년 10월 발표 단계라 완성도와 호환성 확인이 필요합니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "기존 Deno 사용자는 어떻게 되나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Deno 런타임은 1년간 버그·보안 업데이트 후 Deno 팀의 개발이 종료되며 오픈소스로는 유지됩니다. Deno Deploy는 6개월 후 종료 예정이므로 운영 중인 서비스는 이전 계획이 필요합니다. JSR 패키지 레지스트리는 계속 운영됩니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "AI 에이전트와 무슨 관계가 있나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "에이전트는 모델 API만으로 돌아가지 않고 실행환경, 상태 저장, 세션, 작업 큐가 함께 필요합니다. Workers가 실행 로직을, Durable Objects가 에이전트별 상태·세션을, D1/R2가 데이터·파일을, Queues가 비동기 작업을 맡는 구조인데, 이 프로그래밍 모델을 클라우드와 자체 서버 중 골라 실행할 수 있게 되면 기관 내부 업무용 에이전트가 훨씬 현실적인 선택지가 됩니다."
+      }
+    }
+  ]
+}
+</script>
+<!-- END SEO -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NZL39P5EYZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NZL39P5EYZ');
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/blog/_layout.css">
+<style>
+  :root {
+    --cream: #faf9f5;
+    --cream-deep: #f3efe3;
+    --ink: #1a1a1a;
+    --ink-soft: #3d3d3a;
+    --ink-mute: #6b6b66;
+    --rule: #d9d6cc;
+    --clay: #cc785c;
+    --clay-deep: #a85a42;
+    --code-bg: #f2f0e8;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--cream); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  body { font-family: "Fraunces", "Noto Serif KR", Georgia, serif; font-weight: 300; font-size: 19px; line-height: 1.72; letter-spacing: -0.005em; }
+
+  .topnav { position: fixed; top: 0; left: 0; right: 0; height: 48px; background: rgba(250, 249, 245, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; }
+  .topnav-left { display: flex; align-items: center; gap: 18px; }
+  .topnav-left a { color: var(--ink-soft); text-decoration: none; transition: color 0.2s; }
+  .topnav-left a:hover { color: var(--clay-deep); }
+  .topnav-home { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 600; font-size: 16px; color: var(--ink) !important; letter-spacing: -0.3px; }
+  .topnav-sep { color: var(--rule); font-size: 11px; }
+  .topnav-right { display: flex; gap: 16px; }
+  .topnav-right a { color: var(--ink-mute); text-decoration: none; font-size: 12px; transition: color 0.2s; }
+  .topnav-right a:hover { color: var(--clay-deep); }
+  .topnav-current { color: var(--ink) !important; font-weight: 600; position: relative; }
+  .topnav-current::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 2px; background: var(--clay); border-radius: 1px; }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 116px 28px 120px; }
+  .breadcrumb { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; margin-bottom: 36px; display: flex; align-items: center; gap: 8px; color: var(--ink-mute); }
+  .breadcrumb a { color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--ink); }
+  .breadcrumb .bc-sep { color: var(--rule); }
+
+  .kicker { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay-deep); margin-bottom: 28px; }
+  h1 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 400; font-size: 44px; line-height: 1.18; letter-spacing: -0.02em; margin: 0 0 24px; color: var(--ink); word-break:keep-all;overflow-wrap:break-word;}
+  .dek { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 300; font-style: italic; font-size: 21px; line-height: 1.55; color: var(--ink-soft); margin: 0 0 40px; word-break:keep-all;overflow-wrap:break-word;}
+  .byline { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); padding: 18px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-bottom: 56px; display: flex; justify-content: space-between; }
+  .byline strong { font-weight: 500; color: var(--ink-soft); }
+
+  .lede { font-size: 19px; line-height: 1.72; margin-bottom: 22px; word-break:keep-all;overflow-wrap:break-word;}
+  .lede::first-letter { font-family: "Fraunces", serif; font-weight: 400; font-size: 68px; float: left; line-height: 0.88; padding: 8px 10px 0 0; color: var(--clay); }
+
+  h2 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 28px; line-height: 1.25; letter-spacing: -0.015em; margin: 64px 0 8px; color: var(--ink); scroll-margin-top: 80px; word-break:keep-all;overflow-wrap:break-word;}
+  h2 .num { font-family: "Inter", sans-serif; font-size: 12px; font-weight: 600; color: var(--clay); letter-spacing: 0.1em; display: block; margin-bottom: 10px; }
+  h3 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 18px; margin: 34px 0 10px; color: var(--ink); letter-spacing: -0.01em; word-break:keep-all;overflow-wrap:break-word;}
+  p { margin: 0 0 22px; }
+  p + p { margin-top: -6px; }
+  strong { font-weight: 500; color: var(--ink); }
+  em { font-style: italic; }
+  code { font-family: "JetBrains Mono", monospace; font-size: 0.88em; background: var(--code-bg); padding: 2px 6px; border-radius: 3px; color: var(--clay-deep); }
+  a { color: var(--clay-deep); }
+
+  blockquote {
+    margin: 32px 0;
+    padding: 4px 0 4px 22px;
+    border-left: 2px solid var(--clay);
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-style: italic;
+    font-size: 20px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+
+  .key-box {
+    margin: 20px 0 26px;
+    padding: 14px 18px;
+    border-left: 2px solid var(--clay);
+    background: rgba(204, 120, 92, 0.06);
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .key-box .label {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--clay-deep);
+    margin-right: 8px;
+  }
+
+  ul.flow {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0 24px;
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 15.5px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    border-left: 2px solid var(--rule);
+    padding-left: 20px;
+  }
+  ul.flow li { margin-bottom: 5px; }
+  ul.flow li::before { content: "·"; color: var(--clay); font-weight: 700; margin-right: 8px; }
+
+  .summary-table {
+    margin: 28px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 14.5px;
+  }
+  .summary-table .row {
+    display: grid;
+    grid-template-columns: 170px 1fr;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--rule);
+    line-height: 1.55;
+  }
+  .summary-table .row:last-child { border-bottom: none; }
+  .summary-table .row.head {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    padding: 10px 0;
+  }
+  .summary-table .name { font-weight: 600; color: var(--ink); font-family: "JetBrains Mono", monospace; font-size: 13.5px; }
+  .summary-table .def { color: var(--ink-soft); }
+
+  .diagram-box { margin: 32px 0 12px; }
+  .diagram-box svg { width: 100%; height: auto; display: block; }
+  .diagram-cap { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12.5px; color: var(--ink-mute); text-align: center; margin: 10px 0 32px; }
+
+  .timeline { margin: 28px 0 32px; padding-left: 4px; font-family: "Inter", "Noto Sans KR", sans-serif; }
+  .timeline .tl-item { position: relative; padding: 0 0 26px 28px; border-left: 2px solid var(--rule); margin-left: 8px; }
+  .timeline .tl-item:last-child { border-left-color: transparent; padding-bottom: 0; }
+  .timeline .tl-item::before { content: ''; position: absolute; left: -7px; top: 2px; width: 12px; height: 12px; border-radius: 50%; background: var(--clay); border: 2px solid var(--cream); }
+  .timeline .tl-date { font-family: "JetBrains Mono", monospace; font-size: 12px; color: var(--clay-deep); letter-spacing: 0.05em; }
+  .timeline .tl-name { font-size: 17px; font-weight: 600; color: var(--ink); margin: 2px 0; }
+  .timeline .tl-desc { font-size: 13.5px; color: var(--ink-mute); line-height: 1.55; }
+
+  .rule { border: none; border-top: 1px solid var(--rule); margin: 56px 0; }
+  .footer { margin-top: 72px; padding-top: 28px; border-top: 1px solid var(--rule); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); line-height: 1.65; }
+  .footer strong { color: var(--ink-soft); font-weight: 600; }
+  .footer a { color: var(--clay-deep); text-decoration: none; }
+  .bottom-nav { margin-top: 72px; padding: 36px 0; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .bottom-nav a { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .bottom-nav a:hover { color: var(--ink); }
+  .bottom-nav-home { font-family: "Fraunces", "Noto Serif KR", serif !important; font-size: 16px !important; font-style: italic; font-weight: 400; }
+
+  @media (max-width: 560px) {
+    .wrap { padding: 92px 22px 80px; }
+    h1 { font-size: 34px; word-break:keep-all;overflow-wrap:break-word;}
+    .dek { font-size: 18px; word-break:keep-all;overflow-wrap:break-word;}
+    body { font-size: 17px; }
+    .summary-table .row { grid-template-columns: 1fr; gap: 4px; padding: 14px 0; }
+    .summary-table .row.head { display: none; }
+    .topnav-right { display: none; }
+  }
+
+  @media (max-width: 400px) {
+    h1 { font-size: 26px !important; line-height: 1.22; }
+    .dek { font-size: 16px !important; }
+    h2 { font-size: 22px !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="topnav-left">
+    <a href="/" class="topnav-home">CDSA</a>
+    <span class="topnav-sep">|</span>
+    <a href="/">홈페이지</a>
+    <a href="/blog/" class="topnav-current">블로그</a>
+  </div>
+  <nav class="topnav-right">
+    <a href="/framework.html">프레임워크</a>
+    <a href="/fullcourse.html">Full Course</a>
+  </nav>
+</header>
+
+<button class="blog-hamburger" aria-label="블로그 목록 열기"><span></span><span></span><span></span></button>
+<div class="blog-overlay"></div>
+<aside class="blog-left">
+  <div class="blog-left-title">Blog Posts</div>
+  <ol class="blog-left-list"></ol>
+</aside>
+<aside class="blog-right">
+  <div class="blog-right-title">On This Page</div>
+  <ul class="blog-toc"></ul>
+</aside>
+
+<article class="wrap">
+
+  <nav class="breadcrumb">
+    <a href="/">CDSA</a><span class="bc-sep">/</span><a href="/blog/">블로그</a><span class="bc-sep">/</span><span>Cloudflare × Deno</span>
+  </nav>
+
+  <div class="kicker">에이전트 인프라 · 2026 Cloudflare 브리프</div>
+  <h1>Cloudflare가 Deno 팀을 품었다 — 진짜 핵심은 celld다</h1>
+  <p class="dek">같은 코드를 Cloudflare 클라우드와 기관 자체 서버 중에서 골라 실행한다. 2026년 10월 9일의 발표를 바이브코딩, AI 에이전트, 공공기관 폐쇄망의 눈으로 읽는다.</p>
+
+  <div class="byline">
+    <span><strong>신성진</strong> · 한국데이터사이언티스트협회</span>
+    <span>2026. 10. 12</span>
+  </div>
+
+  <p class="lede">바이브코딩으로 만든 AI 에이전트를 어디에서 운영할 것인가. 이 질문에 대한 선택지가 조용히 하나 늘었습니다. 2026년 10월 9일(미국 현지), Cloudflare와 Deno는 <strong>Deno 팀 전원이 Cloudflare에 합류한다</strong>고 양사 공식 블로그에서 동시에 발표했습니다. 외신은 인수로 보도했고, 금액은 비공개입니다. 그런데 이 뉴스를 "런타임 회사가 팔렸다" 정도로 읽으면 가장 중요한 단어를 놓칩니다. 발표문의 무게 중심은 Deno라는 런타임이 아니라 <code>celld</code>라는 오픈소스에 실려 있습니다.</p>
+
+  <h2 id="s01"><span class="num">01 / 무슨 일이</span>Deno 팀 전원이 Cloudflare에 합류했다</h2>
+
+  <p>Deno는 Node.js 창시자 라이언 달(Ryan Dahl)이 공동 설립한 JavaScript·TypeScript 런타임 회사입니다. Node.js를 만든 사람이 Node.js의 설계 후회를 고쳐 다시 만든 런타임이 Deno였고, 그 팀이 이제 통째로 Cloudflare로 들어갑니다. 발표에 따르면 앞으로의 개발은 별도의 런타임과 호스팅이 아니라 <strong>Workers 공통 플랫폼</strong>에 집중되고, 목표는 Workers 프로그래밍 모델을 서버 구축의 기본 방식으로 만드는 것입니다.</p>
+
+  <p>기존 Deno 사용자에게는 실질적인 변화가 따라옵니다. Deno 런타임은 1년간 버그·보안 업데이트를 받은 뒤 Deno 팀의 개발이 종료되고(오픈소스로는 유지), Deno Deploy는 6개월 후 종료됩니다. JSR 패키지 레지스트리는 계속 운영됩니다. Deno 기반 서비스를 운영 중인 조직이라면 지금부터 이전 계획을 세워야 합니다.</p>
+
+  <h2 id="s02"><span class="num">02 / celld란</span>Cloudflare 앱을 우리 서버에서 돌리는 오픈소스</h2>
+
+  <p><code>celld</code>는 Deno가 2026년 8월 공개한 오픈소스 데몬입니다. 하는 일을 한 문장으로 줄이면 이렇습니다. <strong>Cloudflare Workers·Durable Objects 방식으로 만든 애플리케이션을 Cloudflare 바깥, 즉 자체 인프라에서 분산 운영할 수 있게 해준다.</strong> 객체 하나가 자체 SQLite DB를 가진 작은 서버, 즉 셀(cell)이 되고, 장기 상태는 운영자가 소유한 S3 호환 버킷에 저장됩니다.</p>
+
+  <p>그리고 이번 발표의 기술적 핵심이 바로 여기 있습니다. Cloudflare는 자사의 오픈소스 Workers 런타임 <code>workerd</code>와 <code>celld</code>를 통합해, <strong>자체 호스팅을 비공식 우회로가 아닌 정식 지원 방식으로</strong> 만들겠다고 밝혔습니다. 지금까지 Workers 코드는 사실상 Cloudflare 네트워크에서만 "제대로" 돌았습니다. 앞으로는 같은 코드가 기관 서버실에서도 1급 시민으로 돈다는 선언입니다.</p>
+
+  <h2 id="s03"><span class="num">03 / 구조 변화</span>배포 대상이 아니라 실행 방식을 표준화한다</h2>
+
+  <p>구조로 보면 변화가 선명합니다. 지금까지의 흐름은 바이브코딩으로 코드를 쓰고, wrangler로 Workers에 배포하고, Cloudflare 네트워크에서만 실행하는 외길이었습니다. 발표가 지향하는 흐름은 갈림길입니다.</p>
+
+  <div class="diagram-box">
+    <svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="기존 구조와 지향 구조 비교 도식">
+      <style>
+        .lbl { font: 600 11px 'Inter','Noto Sans KR',sans-serif; fill: #a85a42; letter-spacing: 1px; }
+        .bx { fill: #f2f0e8; stroke: #d9d6cc; rx: 6; }
+        .bxh { fill: rgba(204,120,92,0.12); stroke: #cc785c; rx: 6; }
+        .t1 { font: 600 13px 'Noto Sans KR',sans-serif; fill: #1a1a1a; }
+        .t2 { font: 400 10.5px 'JetBrains Mono',monospace; fill: #6b6b66; }
+        .ar { stroke: #a85a42; stroke-width: 1.5; fill: none; marker-end: url(#ah); }
+      </style>
+      <defs>
+        <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="#a85a42"/>
+        </marker>
+      </defs>
+      <text x="0" y="16" class="lbl">기존</text>
+      <rect class="bx" x="0" y="28" width="170" height="54"/>
+      <text x="85" y="51" text-anchor="middle" class="t1">바이브코딩</text>
+      <text x="85" y="68" text-anchor="middle" class="t2">코드 작성</text>
+      <line class="ar" x1="178" y1="55" x2="222" y2="55"/>
+      <rect class="bx" x="230" y="28" width="170" height="54"/>
+      <text x="315" y="51" text-anchor="middle" class="t1">Workers 배포</text>
+      <text x="315" y="68" text-anchor="middle" class="t2">wrangler</text>
+      <line class="ar" x1="408" y1="55" x2="452" y2="55"/>
+      <rect class="bx" x="460" y="28" width="220" height="54"/>
+      <text x="570" y="51" text-anchor="middle" class="t1">Cloudflare</text>
+      <text x="570" y="68" text-anchor="middle" class="t2">네트워크에서만 실행</text>
+
+      <text x="0" y="140" class="lbl">지향</text>
+      <rect class="bx" x="0" y="168" width="170" height="54"/>
+      <text x="85" y="191" text-anchor="middle" class="t1">바이브코딩</text>
+      <text x="85" y="208" text-anchor="middle" class="t2">코드 작성</text>
+      <line class="ar" x1="178" y1="195" x2="222" y2="195"/>
+      <rect class="bxh" x="230" y="162" width="190" height="66"/>
+      <text x="325" y="189" text-anchor="middle" class="t1">공통 Workers 실행환경</text>
+      <text x="325" y="208" text-anchor="middle" class="t2">workerd + celld</text>
+      <line class="ar" x1="428" y1="183" x2="472" y2="165"/>
+      <line class="ar" x1="428" y1="207" x2="472" y2="240"/>
+      <rect class="bx" x="480" y="138" width="200" height="54"/>
+      <text x="580" y="161" text-anchor="middle" class="t1">Cloudflare 클라우드</text>
+      <text x="580" y="178" text-anchor="middle" class="t2">글로벌 네트워크</text>
+      <rect class="bx" x="480" y="216" width="200" height="54"/>
+      <text x="580" y="239" text-anchor="middle" class="t1">자체 서버</text>
+      <text x="580" y="256" text-anchor="middle" class="t2">기관·기업 인프라</text>
+    </svg>
+  </div>
+  <p class="diagram-cap">발표가 지향하는 미래의 단순화 개념도 — 모든 Cloudflare 서비스가 그대로 호환된다는 의미는 아니다.</p>
+
+  <p>저는 이 변화를 이렇게 요약합니다. Cloudflare는 지금까지 <em>배포 대상</em>이었습니다. 이제는 <em>실행 방식</em>이 되려고 합니다. "우리 서버에 올려라"가 아니라 "어디서 돌리든 이 방식으로 돌려라"입니다. 서버를 임대하는 회사에서, 서버를 운영하는 방식 자체를 표준화하려는 회사로의 확장입니다.</p>
+
+  <h2 id="s04"><span class="num">04 / 에이전트 관점</span>에이전트는 모델 API만으로 돌아가지 않는다</h2>
+
+  <p>이 인수가 AI 에이전트와 무슨 상관이냐는 질문이 나올 수 있습니다. 전부 상관있습니다. <a href="/blog/llm-does-nothing.html">LLM은 아무것도 못한다</a>에서 썼듯, 에이전트는 모델에 도구와 실행 환경을 쥐여줄 때 완성됩니다. 에이전트를 실제로 운영하려면 모델 API 호출 말고도 실행환경, 데이터베이스, 상태 저장, 작업 큐, 사용자별 세션 관리가 전부 필요합니다. Cloudflare의 구성요소는 이 필요와 정확히 포개집니다.</p>
+
+  <div class="summary-table">
+    <div class="row head"><span>구성요소</span><span>에이전트에서 하는 일</span></div>
+    <div class="row"><span class="name">Workers</span><span class="def">API와 실행 로직</span></div>
+    <div class="row"><span class="name">Durable Objects</span><span class="def">에이전트별 상태·세션 유지</span></div>
+    <div class="row"><span class="name">D1 / R2</span><span class="def">업무 데이터와 파일 저장</span></div>
+    <div class="row"><span class="name">Queues</span><span class="def">비동기 작업 처리</span></div>
+    <div class="row"><span class="name">AI 모델 API</span><span class="def">판단·분석·생성</span></div>
+  </div>
+
+  <p>라이언 달 본인도 Durable Objects가 에이전트 운영에 특히 유용하다고 강조했습니다. 객체 하나가 상태를 가진 작은 서버라는 Durable Objects의 모델은, 직원 한 명당 에이전트 하나라는 구도와 자연스럽게 맞아떨어집니다. 기관 직원 100명이 각자 자기 에이전트를 갖고, 각 에이전트가 자기 작업 상태와 메시지 이력을 들고 있는 구조를 이 프로그래밍 모델로 설계할 수 있습니다.</p>
+
+  <div class="key-box">
+    <span class="label">단서</span>기술이 합쳐진다고 완성형 에이전트 플랫폼이 자동으로 나오는 것은 아니다. 인증, 권한, 보안, 운영관리는 여전히 설계해야 할 몫으로 남는다.
+  </div>
+
+  <h2 id="s05"><span class="num">05 / 연속 인수</span>2026년, 세 번의 인수</h2>
+
+  <p>이번 건만 떼어 보면 놓치는 그림이 있습니다. Cloudflare는 올해 세 번 움직였습니다.</p>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-date">2026.01.16</div>
+      <div class="tl-name">Astro</div>
+      <div class="tl-desc">프론트엔드·웹 프레임워크 — 웹사이트 제작 역량 확보</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026.06.04</div>
+      <div class="tl-name">VoidZero</div>
+      <div class="tl-desc">Vite 등 빌드 도구 — 코드 빌드·개발 도구 역량 강화</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026.10.09</div>
+      <div class="tl-name">Deno 팀</div>
+      <div class="tl-desc">서버 실행·자체 호스팅(celld) — 실행 계층 장악</div>
+    </div>
+  </div>
+
+  <p>웹 제작, 빌드, 실행, 운영. 개발 생태계의 수직 통합입니다. AI가 코드를 쓰는 시대에 프레임워크·빌드 도구·런타임을 한 회사가 쥔다는 것은, 바이브코딩의 기본 경로 자체를 자사 생태계로 깔겠다는 뜻입니다. 코딩에이전트가 "웹 서비스 만들어줘"라는 요청을 받았을 때 자연스럽게 선택하는 스택이 Astro + Vite + Workers가 되는 미래를 그리고 있는 겁니다.</p>
+
+  <h2 id="s06"><span class="num">06 / 폐쇄망 관점</span>공공기관에는 무엇이 달라지나</h2>
+
+  <p>CDSA가 이 발표를 유심히 본 이유는 따로 있습니다. 우리는 <a href="/blog/working-governance.html">행정망·폐쇄망에서 돌아가는 바이브코딩</a>을 계속 다뤄 왔습니다. 그 관점에서 이 발표는 하나의 오래된 벽에 균열을 내는 사건입니다. 지금까지 외부 클라우드가 막힌 조직에서 Workers 스타일의 서버리스 앱은 사실상 선택지가 아니었습니다. workerd와 celld의 통합이 약속대로 진행되면, 외부망에서 바이브코딩으로 만들고 검증한 에이전트를 <strong>같은 코드 그대로 내부망 서버에서 운영</strong>하는 경로가 생깁니다.</p>
+
+  <p>실무 구도는 이렇게 정리할 수 있습니다. 외부 클라우드 사용이 허용된 업무는 Cloudflare에서 신속하게 배포하고, 기관 내부 데이터를 다루는 업무는 자체 서버용 Workers 실행환경을 검토합니다. 개발 환경과 운영 환경의 차이가 줄어들면 기관 간 시스템 이전 가능성도 함께 올라갑니다. A기관에서 만든 에이전트를 B기관 서버로 옮기는 일이, 환경 전체를 재구축하는 일에서 설정을 바꾸는 일로 내려올 수 있습니다.</p>
+
+  <div class="key-box">
+    <span class="label">주의</span>폐쇄망 도입은 아직 별도 검증 과제다. celld는 D1·R2·Queues 같은 바인딩을 자체 구현한다고 밝히지만, S3 호환 스토리지가 필요하고, Cloudflare 관리형 서비스의 인증·운영 기능까지 똑같이 작동한다고 보기는 어렵다. 통합 자체도 발표 단계이며 완성도·호환성은 앞으로 확인해야 한다.
+  </div>
+
+  <h2 id="s07"><span class="num">07 / 판단</span>바이브코딩 결과물이 '운영 시스템'이 되는 길</h2>
+
+  <p>제가 가장 주목하는 대목은 따로 있습니다. 바이브코딩의 다음 단계에 대한 이야기입니다. 지금까지 비개발자가 AI와 함께 만든 결과물은 대체로 개인 실습용에 머물렀습니다. 잘 되면 링크 공유까지. 그런데 "AI로 만들고, 클라우드든 자체 서버든 비슷한 방식으로 실행하고, 여러 에이전트의 상태와 작업을 관리한다"는 그림이 실현되면, 바이브코딩 결과물이 <strong>기관이 실제 운영하는 시스템</strong>으로 올라설 통로가 넓어집니다.</p>
+
+  <blockquote>Cloudflare는 서버를 임대하는 회사에서,<br>서버를 운영하는 방식 자체를 표준화하려는 회사로 가고 있다.</blockquote>
+
+  <p>물론 현재는 방향을 공식 발표한 단계입니다. workerd와 celld 통합의 완성도, 바인딩 호환성, 운영 도구의 성숙도는 전부 앞으로의 확인 과제입니다. 그래도 질문 하나는 오늘부터 유효해졌습니다. 여러분의 기관·회사라면, 바이브코딩으로 만든 AI 에이전트를 어디에서 운영하시겠습니까. 퍼블릭 클라우드인가, 자체 서버인가, 아니면 업무별로 둘 다인가. 이 질문에 답을 준비해 두는 조직과 그렇지 않은 조직의 거리는, 통합이 완성되는 날 한 번에 벌어질 겁니다.</p>
+
+  <p style="font-size:14px;color:var(--ink-mute)">출처: Cloudflare, <a href="https://blog.cloudflare.com/deno-joins-cloudflare/" target="_blank" rel="noopener">Deno joins Cloudflare</a> · Deno, <a href="https://deno.com/blog/cloudflare" target="_blank" rel="noopener">Deno is joining Cloudflare</a> (2026. 10. 9) · celld: <a href="https://github.com/denoland/celld" target="_blank" rel="noopener">github.com/denoland/celld</a> · Astro 인수(2026. 1. 16)·VoidZero 인수(2026. 6. 4)는 Cloudflare 공식 보도자료 기준</p>
+
+  <div class="footer">
+    <strong>신성진 (Shinsungjin)</strong><br>
+    한국데이터사이언티스트협회 대표 &middot; CDSA<br>
+    개인·조직 AX 변화관리 컨설턴트 &middot; AX/DX 교육 설계 &middot; 공공기관 커리큘럼 설계<br>
+    YouTube @workbyax<br>
+    의견·질문은 <a href="mailto:sjshin@cdsa.kr">sjshin@cdsa.kr</a> 로 보내주세요.
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="/blog/local-semantic-search.html">← 이전 글: 로컬 시맨틱 검색</a>
+    <a href="/blog/">블로그 목록 →</a>
+  </nav>
+
+</article>
+
+<script src="/blog/_posts.js" defer></script>
+</body>
+</html>

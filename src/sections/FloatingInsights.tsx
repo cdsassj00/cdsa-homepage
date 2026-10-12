@@ -3,6 +3,11 @@ import { announcePanel, onPanelChange } from './floatingBus'
 
 const articles = [
   {
+    title: 'Cloudflare가 Deno 팀을 품었다 — 진짜 핵심은 celld다',
+    description: 'Workers 앱을 기관 자체 서버에서 돌리는 celld. 바이브코딩 결과물이 운영 시스템이 되는 길과 폐쇄망 도입 전 확인할 것들.',
+    href: '/blog/cloudflare-deno-celld.html',
+  },
+  {
     title: 'AI가 검색하는 것이 아니라, AI가 만든 의미 지도를 탐색한다',
     description: '브라우저에서 서버 없이 돌아가는 로컬 시맨틱 검색 제작기. EmbeddingGemma 2로 의미를 좌표로 바꾸면 검색은 수학이 한다.',
     href: '/blog/local-semantic-search.html',
