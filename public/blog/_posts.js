@@ -35,6 +35,17 @@
   // publishTime = '09:00:00' 같은 KST 시각. 미명시 시 '09:00:00'
   const POSTS = [
     {
+      slug: 'ai-young-organizations',
+      title: 'AI는 작은 조직의 것이 아니다 — 젊은 조직의 것이다',
+      date: '2026. 10. 18',
+      category: '조직과 AI',
+      href: '/blog/ai-young-organizations.html',
+      author: '신성진',
+      publishTime: '09:00:00',
+      dek: '1인 기업이 앞서는 이유는 규모가 작아서가 아니다. 레거시와 결재 구조가 없어서다. AI 네이티브 스타트업의 1인당 매출 6배 격차, 미승인 AI 사용 15%→45%, 레거시 때문에 취소된 AI 프로젝트 84%, 2006년 망분리에서 2026년 시범 도입까지 — 그리고 "중소기업 활용률이 더 낮다"는 반증까지 숫자로 정리했다. 가르는 변수는 규모가 아니라 연식이다.',
+      views: { base: 10, daily: 8, publishedISO: '2026-10-18' },
+    },
+    {
       slug: 'cloudflare-deno-celld',
       title: 'Cloudflare가 Deno 팀을 품었다 — 진짜 핵심은 celld다',
       date: '2026. 10. 12',
