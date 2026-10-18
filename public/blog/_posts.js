@@ -35,6 +35,17 @@
   // publishTime = '09:00:00' 같은 KST 시각. 미명시 시 '09:00:00'
   const POSTS = [
     {
+      slug: 'ai-native-organization',
+      title: 'AI 네이티브 환경은 오늘 시작하는 조직의 것이다',
+      date: '2026. 10. 19',
+      category: 'AI 거버넌스 · 조직론',
+      href: '/blog/ai-native-organization.html',
+      author: '신성진',
+      publishTime: '10:00:00',
+      dek: '격차는 규모가 아니라 연식(年式)이다. 1인 사업자 1인당 매출 348만 달러 vs 일반 SaaS 58만 달러, CIO 84%가 레거시로 AI 프로젝트 취소, 한국 공공은 2026년에야 업무망에서 챗GPT 시범 도입. 공공·대기업·학교가 "개인은 쓰는데 조직은 못 쓰는" 상태를 벗어나는 세 가지 길.',
+      views: { base: 10, daily: 8, publishedISO: '2026-10-19' },
+    },
+    {
       slug: 'cloudflare-deno-celld',
       title: 'Cloudflare가 Deno 팀을 품었다 — 진짜 핵심은 celld다',
       date: '2026. 10. 12',

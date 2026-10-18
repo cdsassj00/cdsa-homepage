@@ -3,6 +3,11 @@ import { announcePanel, onPanelChange } from './floatingBus'
 
 const articles = [
   {
+    title: 'AI 네이티브 환경은 오늘 시작하는 조직의 것이다',
+    description: '격차는 규모가 아니라 연식이다. 1인당 매출 348만 달러 vs 58만 달러, CIO 84%가 레거시로 AI 취소. 공공·대기업·학교가 "개인은 쓰는데 조직은 못 쓰는" 상태를 벗어나는 세 가지 길.',
+    href: '/blog/ai-native-organization.html',
+  },
+  {
     title: 'Cloudflare가 Deno 팀을 품었다 — 진짜 핵심은 celld다',
     description: 'Workers 앱을 기관 자체 서버에서 돌리는 celld. 바이브코딩 결과물이 운영 시스템이 되는 길과 폐쇄망 도입 전 확인할 것들.',
     href: '/blog/cloudflare-deno-celld.html',
