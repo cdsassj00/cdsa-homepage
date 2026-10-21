@@ -36,13 +36,13 @@
   const POSTS = [
     {
       slug: 'inception-mercury-studio',
-      title: '타자기에서 화가로 — 확산 방식 AI(Inception Mercury)를 \'체험\'으로 가르치는 사이트 만들기',
+      title: '타자기가 아니라 화가 — Inception Mercury(dLLM)와 체험 사이트 사용법',
       date: '2026. 10. 21',
-      category: '바이브 코딩 · UX',
+      category: 'AI 모델 해설 · 체험 가이드',
       href: '/blog/inception-mercury-studio.html',
       author: '신성진',
       publishTime: '10:00:00',
-      dek: 'ChatGPT는 한 글자씩 쓰고, 인셉션은 문장 전체를 한 번에 그립니다. 이 차이를 수강생이 설명 없이도 "느끼게" 만들기 위해 강의용 체험 사이트의 UI/UX를 뜯어고친 기록. 탭 순서, 동일 화면 비교 패널, 콜드 스타트 분리, 쉬운 말 재작성 — 그리고 "쉽게는 톤이 아니라 구조"라는 결론.',
+      dek: 'ChatGPT·Claude·Gemini는 글자를 한 개씩 쓰고, Inception의 Mercury는 문장 전체를 동시에 그린다. 스탠퍼드 Stefano Ermon이 세운 Inception Labs, 입력 1M당 $0.10·1,000 tok/s의 Mercury 3, OpenAI 호환 API — 그리고 수강생이 직접 체험할 수 있는 사이트의 네 가지 탭(라이브 테스트·속도 레이스·디노이징 랩·원리&스펙) 사용법.',
       views: { base: 10, daily: 8, publishedISO: '2026-10-21' },
     },
     {

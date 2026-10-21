@@ -16,16 +16,16 @@
       <link>https://cdsa.kr/blog/</link>
     </image>
     <item>
-      <title>타자기에서 화가로 — 확산 방식 AI(Inception Mercury)를 '체험'으로 가르치는 사이트 만들기</title>
+      <title>타자기가 아니라 화가 — Inception Mercury(dLLM)와 체험 사이트 사용법</title>
       <link>https://cdsa.kr/blog/inception-mercury-studio.html</link>
       <guid isPermaLink="true">https://cdsa.kr/blog/inception-mercury-studio.html</guid>
       <pubDate>Wed, 21 Oct 2026 01:00:00 GMT</pubDate>
       <dc:creator>신성진</dc:creator>
-      <category>바이브 코딩 · UX</category>
-      <description>ChatGPT는 한 글자씩 쓰고, 인셉션은 문장 전체를 한 번에 그립니다. 이 차이를 수강생이 설명 없이도 "느끼게" 만들기 위해 강의용 체험 사이트의 UI/UX를 뜯어고친 기록. 탭 순서, 동일 화면 비교 패널, 콜드 스타트 분리, 쉬운 말 재작성, 그리고 "쉽게는 톤이 아니라 구조"라는 결론.</description>
-      <content:encoded><![CDATA[<h1>타자기에서 화가로 — 확산 방식 AI(Inception Mercury)를 '체험'으로 가르치는 사이트 만들기</h1>
-  <p class="dek">ChatGPT는 한 글자씩 쓰고, 인셉션은 문장 전체를 한 번에 그립니다. 이 차이를 수강생이 설명 없이도 '느끼게' 만들기 위해 강의용 체험 사이트의 UI/UX를 뜯어고친 기록.</p>
-  <p>요즘 강의에서 가장 많이 받는 질문이 "확산(디퓨전) 방식 언어 모델이 뭐가 다른데요?"입니다. 비유를 하나 정했습니다. 기존 AI는 한 글자씩 찍는 타자기, 인셉션은 문장 전체 밑그림을 깔고 붓질 세 번으로 완성하는 화가. 이 비유를 설명이 아니라 체험으로 전달하는 사이트가 Inception Mercury dLLM Studio입니다.</p>
+      <category>AI 모델 해설</category>
+      <description>ChatGPT·Claude·Gemini는 글자를 한 개씩 쓰고, Inception Labs의 Mercury는 문장 전체를 동시에 그린다. 스탠퍼드 Stefano Ermon이 세운 Inception, 입력 1M당 $0.10·1,000 tok/s의 Mercury 3, OpenAI 호환 API — 그리고 수강생이 직접 체험할 수 있는 사이트의 네 가지 탭(라이브 테스트·속도 레이스·디노이징 랩·원리&amp;스펙) 사용법.</description>
+      <content:encoded><![CDATA[<h1>타자기가 아니라 화가 — Inception Mercury(dLLM)와 체험 사이트 사용법</h1>
+  <p class="dek">ChatGPT·Claude·Gemini는 글자를 한 개씩 쓰고, Inception의 Mercury는 문장 전체를 동시에 그린다. 세계 최초의 상용 디퓨전 LLM이 왜 중요한지, 그리고 수강생이 직접 체험할 수 있는 사이트의 네 가지 탭을 어떻게 돌려봐야 하는지.</p>
+  <p>AI가 글을 쓸 때 거의 모든 모델이 공유해 온 전제가 하나 있다. 왼쪽에서 오른쪽으로, 한 글자씩. Inception Labs의 Mercury는 그 전제를 뒤집는다. 문장 전체의 흐릿한 밑그림을 먼저 깔고, 여러 자리의 글자를 동시에 선명하게 복원한다. 글자가 늘어나도 생성 속도가 거의 늘지 않는다.</p>
   <p><a href="https://cdsa.kr/blog/inception-mercury-studio.html">전체 글 읽기 →</a></p>]]></content:encoded>
     </item>
     <item>
