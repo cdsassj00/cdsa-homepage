@@ -3,6 +3,11 @@ import { announcePanel, onPanelChange } from './floatingBus'
 
 const articles = [
   {
+    title: '타자기에서 화가로 — 확산 방식 AI를 체험으로 가르치는 사이트',
+    description: '인셉션 Mercury(dLLM) 강의용 사이트 UI/UX 뜯어고친 기록. 탭 순서·동일 화면 비교·콜드 스타트 분리·쉬운 말 재작성, 그리고 "쉽게는 톤이 아니라 구조"라는 결론.',
+    href: '/blog/inception-mercury-studio.html',
+  },
+  {
     title: 'AI 네이티브 환경은 오늘 시작하는 조직의 것이다',
     description: '격차는 규모가 아니라 연식이다. 1인당 매출 348만 달러 vs 58만 달러, CIO 84%가 레거시로 AI 취소. 공공·대기업·학교가 "개인은 쓰는데 조직은 못 쓰는" 상태를 벗어나는 세 가지 길.',
     href: '/blog/ai-native-organization.html',

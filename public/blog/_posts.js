@@ -35,6 +35,17 @@
   // publishTime = '09:00:00' 같은 KST 시각. 미명시 시 '09:00:00'
   const POSTS = [
     {
+      slug: 'inception-mercury-studio',
+      title: '타자기에서 화가로 — 확산 방식 AI(Inception Mercury)를 \'체험\'으로 가르치는 사이트 만들기',
+      date: '2026. 10. 21',
+      category: '바이브 코딩 · UX',
+      href: '/blog/inception-mercury-studio.html',
+      author: '신성진',
+      publishTime: '10:00:00',
+      dek: 'ChatGPT는 한 글자씩 쓰고, 인셉션은 문장 전체를 한 번에 그립니다. 이 차이를 수강생이 설명 없이도 "느끼게" 만들기 위해 강의용 체험 사이트의 UI/UX를 뜯어고친 기록. 탭 순서, 동일 화면 비교 패널, 콜드 스타트 분리, 쉬운 말 재작성 — 그리고 "쉽게는 톤이 아니라 구조"라는 결론.',
+      views: { base: 10, daily: 8, publishedISO: '2026-10-21' },
+    },
+    {
       slug: 'ai-native-organization',
       title: 'AI 네이티브 환경은 오늘 시작하는 조직의 것이다',
       date: '2026. 10. 19',

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>타자기에서 화가로 — 확산 방식 AI(Inception Mercury)를 '체험'으로 가르치는 사이트 만들기 · CDSA 블로그</title>
+<meta name="description" content="ChatGPT는 한 글자씩 쓰고, 인셉션은 문장 전체를 한 번에 그립니다. 이 차이를 수강생이 설명 없이도 '느끼게' 만들기 위해 강의용 체험 사이트의 UI/UX를 뜯어고친 기록.">
+<meta property="og:title" content="타자기에서 화가로 — 확산 방식 AI(Inception Mercury)를 '체험'으로 가르치는 사이트 만들기">
+<meta property="og:description" content="ChatGPT는 한 글자씩 쓰고, 인셉션은 문장 전체를 한 번에 그립니다. 이 차이를 수강생이 설명 없이도 '느끼게' 만들기 위해 강의용 체험 사이트의 UI/UX를 뜯어고친 기록.">
+<meta property="og:type" content="article">
+<meta name="keywords" content="AI, LLM, 확산모델, dLLM, Inception Mercury, React, Vite, Vercel, UX">
+
+<link rel="canonical" href="https://cdsa.kr/blog/inception-mercury-studio.html">
+<meta property="og:url" content="https://cdsa.kr/blog/inception-mercury-studio.html">
+<meta property="og:site_name" content="한국데이터사이언티스트협회">
+<meta property="og:image" content="https://cdsa.kr/blog/images/inception-mercury-studio/01-first-screen.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta property="article:published_time" content="2026-10-21T10:00:00+09:00">
+<meta property="article:modified_time" content="2026-10-21T10:00:00+09:00">
+<meta property="article:author" content="신성진">
+<meta property="article:section" content="바이브 코딩 · UX">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="타자기에서 화가로 — 확산 방식 AI(Inception Mercury)를 '체험'으로 가르치는 사이트 만들기">
+<meta name="twitter:description" content="ChatGPT는 한 글자씩 쓰고, 인셉션은 문장 전체를 한 번에 그립니다. 이 차이를 수강생이 설명 없이도 '느끼게' 만들기 위해 UI/UX를 뜯어고친 기록.">
+<meta name="twitter:image" content="https://cdsa.kr/blog/images/inception-mercury-studio/01-first-screen.png">
+<meta name="author" content="신성진">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "타자기에서 화가로 — 확산 방식 AI(Inception Mercury)를 '체험'으로 가르치는 사이트 만들기",
+  "description": "ChatGPT는 한 글자씩 쓰고, 인셉션은 문장 전체를 한 번에 그립니다. 이 차이를 수강생이 설명 없이도 '느끼게' 만들기 위해 강의용 체험 사이트의 UI/UX를 뜯어고친 기록.",
+  "datePublished": "2026-10-21T10:00:00+09:00",
+  "dateModified": "2026-10-21T10:00:00+09:00",
+  "author": {
+    "@type": "Person",
+    "name": "신성진",
+    "affiliation": {
+      "@type": "Organization",
+      "name": "한국데이터사이언티스트협회",
+      "url": "https://cdsa.kr"
+    }
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "한국데이터사이언티스트협회",
+    "url": "https://cdsa.kr",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://cdsa.kr/og-image.png"
+    }
+  },
+  "image": ["https://cdsa.kr/blog/images/inception-mercury-studio/01-first-screen.png"],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://cdsa.kr/blog/inception-mercury-studio.html"
+  },
+  "articleSection": "바이브 코딩 · UX",
+  "inLanguage": "ko-KR"
+}
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NZL39P5EYZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NZL39P5EYZ');
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/blog/_layout.css">
+<style>
+  :root {
+    --cream: #faf9f5;
+    --cream-deep: #f3efe3;
+    --ink: #1a1a1a;
+    --ink-soft: #3d3d3a;
+    --ink-mute: #6b6b66;
+    --rule: #d9d6cc;
+    --clay: #cc785c;
+    --clay-deep: #a85a42;
+    --code-bg: #f2f0e8;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--cream); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  body { font-family: "Fraunces", "Noto Serif KR", Georgia, serif; font-weight: 300; font-size: 19px; line-height: 1.72; letter-spacing: -0.005em; }
+
+  .topnav { position: fixed; top: 0; left: 0; right: 0; height: 48px; background: rgba(250, 249, 245, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; }
+  .topnav-left { display: flex; align-items: center; gap: 18px; }
+  .topnav-left a { color: var(--ink-soft); text-decoration: none; transition: color 0.2s; }
+  .topnav-left a:hover { color: var(--clay-deep); }
+  .topnav-home { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 600; font-size: 16px; color: var(--ink) !important; letter-spacing: -0.3px; }
+  .topnav-sep { color: var(--rule); font-size: 11px; }
+  .topnav-right { display: flex; gap: 16px; }
+  .topnav-right a { color: var(--ink-mute); text-decoration: none; font-size: 12px; transition: color 0.2s; }
+  .topnav-right a:hover { color: var(--clay-deep); }
+  .topnav-current { color: var(--ink) !important; font-weight: 600; position: relative; }
+  .topnav-current::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 2px; background: var(--clay); border-radius: 1px; }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 116px 28px 120px; }
+  .breadcrumb { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; margin-bottom: 36px; display: flex; align-items: center; gap: 8px; color: var(--ink-mute); }
+  .breadcrumb a { color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--ink); }
+  .breadcrumb .bc-sep { color: var(--rule); }
+
+  .kicker { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay-deep); margin-bottom: 28px; }
+  h1 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 400; font-size: 42px; line-height: 1.18; letter-spacing: -0.02em; margin: 0 0 24px; color: var(--ink); word-break:keep-all;overflow-wrap:break-word;}
+  .dek { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 300; font-style: italic; font-size: 21px; line-height: 1.55; color: var(--ink-soft); margin: 0 0 40px; word-break:keep-all;overflow-wrap:break-word;}
+  .byline { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); padding: 18px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-bottom: 56px; display: flex; justify-content: space-between; }
+  .byline strong { font-weight: 500; color: var(--ink-soft); }
+
+  h2 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 28px; line-height: 1.25; letter-spacing: -0.015em; margin: 64px 0 16px; color: var(--ink); scroll-margin-top: 80px; word-break:keep-all;overflow-wrap:break-word;}
+  p { margin: 0 0 22px; text-align: justify; text-justify: inter-word; word-break:keep-all;overflow-wrap:break-word;}
+  p + p { margin-top: -6px; }
+  strong { font-weight: 600; color: var(--ink); }
+  em { font-style: italic; }
+  a { color: var(--clay-deep); }
+  a:hover { color: var(--ink); }
+  code { font-family: "JetBrains Mono", monospace; font-size: 0.9em; background: var(--code-bg); padding: 1px 6px; border-radius: 3px; color: var(--ink-soft); }
+  pre { font-family: "JetBrains Mono", monospace; font-size: 14px; line-height: 1.6; background: var(--code-bg); color: var(--ink); padding: 18px 20px; border-radius: 6px; overflow-x: auto; margin: 24px 0 28px; }
+  pre code { background: transparent; padding: 0; font-size: inherit; color: inherit; }
+  del { color: var(--ink-mute); text-decoration-color: var(--ink-mute); }
+
+  ul, ol { margin: 0 0 22px; padding-left: 24px; }
+  li { margin-bottom: 8px; text-align: justify; text-justify: inter-word; word-break:keep-all; overflow-wrap:break-word; }
+  li > p { margin: 0 0 8px; }
+
+  figure { margin: 32px 0 36px; }
+  figure img { display: block; width: 100%; height: auto; border-radius: 6px; border: 1px solid var(--rule); }
+  figcaption { margin-top: 10px; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12.5px; color: var(--ink-mute); text-align: center; line-height: 1.5; }
+
+  blockquote { margin: 28px 0; padding: 14px 0 14px 22px; border-left: 3px solid var(--clay); color: var(--ink-soft); font-style: italic; font-size: 18px; line-height: 1.65; }
+  blockquote p:last-child { margin-bottom: 0; }
+  blockquote a { color: var(--clay-deep); }
+
+  table { width: 100%; border-collapse: collapse; margin: 24px 0 32px; font-family: "Noto Sans KR", "Inter", sans-serif; font-size: 15px; }
+  th, td { padding: 10px 14px; border-bottom: 1px solid var(--rule); text-align: left; vertical-align: top; }
+  th { font-weight: 600; color: var(--ink); border-bottom: 2px solid var(--ink-soft); font-size: 13px; letter-spacing: 0.02em; }
+  td { color: var(--ink-soft); }
+
+  hr { border: 0; border-top: 1px solid var(--rule); margin: 48px 0; }
+
+  .hashtags { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--rule); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; color: var(--ink-mute); letter-spacing: 0.02em; display: flex; flex-wrap: wrap; gap: 14px; }
+  .footer { margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--rule); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); line-height: 1.65; }
+  .footer strong { color: var(--ink-soft); font-weight: 600; }
+  .bottom-nav { margin-top: 72px; padding: 36px 0; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .bottom-nav a { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .bottom-nav a:hover { color: var(--ink); }
+  .bottom-nav-home { font-family: "Fraunces", "Noto Serif KR", serif !important; font-size: 16px !important; font-style: italic; font-weight: 400; }
+
+  @media (max-width: 560px) {
+    .wrap { padding: 92px 22px 80px; }
+    h1 { font-size: 32px; }
+    .dek { font-size: 18px; }
+    body { font-size: 17px; }
+    .topnav-right { display: none; }
+  }
+  @media (max-width: 400px) {
+    h1 { font-size: 26px !important; line-height: 1.22; }
+    .dek { font-size: 16px !important; }
+    h2 { font-size: 22px !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="topnav-left">
+    <a href="/" class="topnav-home">CDSA</a>
+    <span class="topnav-sep">|</span>
+    <a href="/">홈페이지</a>
+    <a href="/blog/" class="topnav-current">블로그</a>
+  </div>
+  <nav class="topnav-right">
+    <a href="/framework.html">프레임워크</a>
+    <a href="/fullcourse.html">Full Course</a>
+  </nav>
+</header>
+
+<button class="blog-hamburger" aria-label="블로그 목록 열기"><span></span><span></span><span></span></button>
+<div class="blog-overlay"></div>
+<aside class="blog-left">
+  <div class="blog-left-title">Blog Posts</div>
+  <ol class="blog-left-list"></ol>
+</aside>
+<aside class="blog-right">
+  <div class="blog-right-title">On This Page</div>
+  <ul class="blog-toc"></ul>
+</aside>
+
+<article class="wrap">
+
+  <nav class="breadcrumb">
+    <a href="/">← CDSA 홈</a>
+    <span class="bc-sep">/</span>
+    <a href="/blog/">블로그</a>
+    <span class="bc-sep">/</span>
+    <span>Inception Mercury Studio</span>
+  </nav>
+
+  <div class="kicker">바이브 코딩 · UX</div>
+
+  <h1>타자기에서 화가로<br>확산 방식 AI를 '체험'으로 가르치는 사이트 만들기</h1>
+
+  <p class="dek">
+    ChatGPT는 한 글자씩 쓰고, 인셉션은 문장 전체를 한 번에 그립니다. 이 차이를 수강생이 설명 없이도 '느끼게' 만들기 위해 강의용 체험 사이트의 UI/UX를 뜯어고친 기록.
+  </p>
+
+  <div class="byline">
+    <span><strong>신성진</strong> &nbsp;&middot;&nbsp; 한국데이터사이언티스트협회</span>
+    <span>2026. 10. 21</span>
+  </div>
+
+  <blockquote>
+    <p>🔗 <strong>직접 써보기:</strong> <a href="https://inception-mercury-studio.vercel.app" target="_blank" rel="noopener">https://inception-mercury-studio.vercel.app</a><br>
+    💻 <strong>코드:</strong> <a href="https://github.com/cdsassj00/inception" target="_blank" rel="noopener">https://github.com/cdsassj00/inception</a></p>
+  </blockquote>
+
+  <h2 id="s01">들어가며: 설명보다 체험</h2>
+
+  <p>요즘 강의에서 가장 많이 받는 질문 중 하나가 "확산(디퓨전) 방식 언어 모델이 뭐가 다른데요?"입니다. 말로 설명하면 어렵습니다. 자기회귀, 병렬 디노이징, 양방향 어텐션… 듣는 사람은 벌써 눈이 감깁니다.</p>
+
+  <p>그래서 비유를 하나 정했습니다.</p>
+
+  <ul>
+    <li><strong>기존 AI(ChatGPT 등) = 타자기.</strong> 한 글자 쓰고 → 생각하고 → 또 한 글자. 답이 길수록 오래 걸립니다.</li>
+    <li><strong>인셉션(Mercury) = 화가.</strong> 문장 전체의 밑그림을 먼저 깔고, 붓질 세 번으로 한꺼번에 완성합니다.</li>
+  </ul>
+
+  <p>이 비유를 <strong>설명이 아니라 체험으로</strong> 전달하는 사이트가 <em>Inception Mercury dLLM Studio</em>입니다. React 19 + Vite로 만든 단일 페이지 앱이고, Vercel에 올라가 있습니다.</p>
+
+  <figure>
+    <img src="/blog/images/inception-mercury-studio/01-first-screen.png" alt="첫 화면 — 들어오자마자 직접 질문할 수 있다">
+    <figcaption>첫 화면 — 들어오자마자 직접 질문할 수 있다</figcaption>
+  </figure>
+
+  <h2 id="s02">원래 사이트의 문제</h2>
+
+  <p>첫 버전은 기능은 다 있었는데, 막상 수강생에게 보여주려니 세 가지가 걸렸습니다.</p>
+
+  <ol>
+    <li><strong>너무 어려웠다.</strong> 첫 화면부터 "이산 확산(dLLM) vs 자기회귀(AR)", "O(N) 순차 지연", "Memory-Bound 병목" 같은 말이 쏟아졌습니다. 수학자·과학자용 설명 같았습니다.</li>
+    <li><strong>글이 너무 많았다.</strong> 히어로 영역에 문단이 세 개, 비교 박스, 통계까지. 스크롤을 한참 내려야 뭔가 눌러볼 수 있었습니다.</li>
+    <li><strong>라이트 모드가 깨져 있었다.</strong> 다크 모드 기준으로 만들다 보니 모달 제목이 흰 글자로 하드코딩돼 밝은 배경에서 아예 안 보였고, API 키 입력창 글자도 흰색이었습니다. JSX에서 쓰는 CSS 클래스(<code>p-4</code>, <code>mt-3</code>, <code>d-none-mobile</code> 등) 상당수가 정의조차 안 돼 있어서 모달 패딩이 0이고 모바일 대응도 사실상 없었습니다.</li>
+  </ol>
+
+  <h2 id="s03">고친 것 1 — 라이브 테스트를 첫 화면으로</h2>
+
+  <p>가장 큰 결정은 <strong>탭 순서를 바꾼 것</strong>입니다. 원래는 "속도 레이스 → 디노이징 랩 → 라이브 테스트 → 원리"였는데, 라이브 테스트를 맨 앞으로 끌어왔습니다. 들어오자마자 질문 버튼 하나 고르고 실행을 누르면 <strong>진짜 인셉션 API</strong>가 답을 만듭니다. 원리 설명은 그 뒤에 있어도 늦지 않습니다.</p>
+
+  <p>히어로도 과감히 줄였습니다. 헤드라인 한 줄, 쉬운 말로 쓴 리드 한 문장, 숫자 세 개. 끝.</p>
+
+  <blockquote>
+    <p>한 글자씩 찍는 <del>타자기</del>에서, 붓질 3번으로 끝내는 <strong>화가</strong>로.</p>
+  </blockquote>
+
+  <h2 id="s04">고친 것 2 — "기존 AI였다면?" 비교 패널</h2>
+
+  <p>빠르다는 말은 비교 대상이 있어야 와닿습니다. 그래서 인셉션 답변이 끝나는 순간, <strong>같은 답을 기존 AI 타자기 속도(초당 약 80자)로 다시 재생하는 패널</strong>을 아래에 붙였습니다.</p>
+
+  <figure>
+    <img src="/blog/images/inception-mercury-studio/02-live-test-compare.png" alt="라이브 테스트 — 위는 인셉션 실제 응답, 아래는 같은 답을 기존 방식으로 받는 시뮬레이션">
+    <figcaption>라이브 테스트 — 위는 인셉션 실제 응답, 아래는 같은 답을 기존 방식으로 받는 시뮬레이션</figcaption>
+  </figure>
+
+  <ul>
+    <li>인셉션은 이미 끝났는데 아래 패널은 아직 타이핑 중인 모습이 핵심입니다.</li>
+    <li>타이머가 돌고, 끝나면 "인셉션 1.2초 vs 기존 방식 11.3초 — 약 9배" 식으로 결론이 나옵니다.</li>
+    <li>기다리기 지루하면 "건너뛰기"를 누르면 됩니다.</li>
+  </ul>
+
+  <p>구현은 단순합니다. 응답 전체 텍스트를 받아 <code>setInterval</code>로 50ms마다 4글자씩 잘라 보여주고, 끝나면 경과 시간을 기록합니다. 시뮬레이션이라는 점은 패널 제목에 명시했습니다. 숫자가 정직해야 강의에서 쓸 수 있으니까요.</p>
+
+  <h2 id="s05">고친 것 3 — 시동 시간은 속도에서 빼자</h2>
+
+  <p>실제로 써보니 첫 실행 때 몇 초간 멈추는 구간이 있었습니다. 모델이 깨어나는 콜드 스타트입니다. 이게 "생성 속도"에 섞이면 비교가 왜곡됩니다. 두 가지로 처리했습니다.</p>
+
+  <figure>
+    <img src="/blog/images/inception-mercury-studio/03-prewarm.png" alt="예열 중에는 실행 버튼이 잠긴다">
+    <figcaption>예열 중에는 실행 버튼이 잠긴다</figcaption>
+  </figure>
+
+  <ol>
+    <li><strong>자동 예열.</strong> 라이브 테스트 화면에 들어오면 1토큰짜리 초소형 요청을 미리 보내 모델을 깨웁니다. 예열이 끝날 때까지 실행 버튼은 "예열 중…"으로 잠깁니다. 페이지당 한 번만 합니다(탭을 오가도 다시 안 함).</li>
+    <li><strong>시동/생성 분리 측정.</strong> 첫 바이트가 올 때까지를 "시동(연결)", 그 이후를 "생성"으로 나눠 표시하고, tok/s와 "N배" 비교는 <strong>순수 생성 시간</strong>으로만 계산합니다.</li>
+  </ol>
+
+<pre><code>// 첫 바이트 이후만 생성 시간으로 친다
+const genMs = firstTokenTime &gt; 0 ? totalMs - firstTokenTime : totalMs;
+const tps = Math.round(outTokens / (genMs / 1000));
+</code></pre>
+
+  <h2 id="s06">고친 것 4 — 마크다운 렌더링</h2>
+
+  <p>LLM 답변은 <code>**굵게**</code>, 리스트, 코드블록, 표가 섞여 나오는데 처음엔 그냥 텍스트로 찍혔습니다. <code>react-markdown</code> + <code>remark-gfm</code>으로 바꿨습니다. HTML은 기본적으로 차단되니 안전하고, 디자인 토큰에 맞춰 제목·코드·표 스타일만 얹었습니다.</p>
+
+  <figure>
+    <img src="/blog/images/inception-mercury-studio/04-markdown.png" alt="마크다운이 제대로 그려진다 — 비교 패널도 타이핑이 끝나면 정리된다">
+    <figcaption>마크다운이 제대로 그려진다 — 비교 패널도 타이핑이 끝나면 정리된다</figcaption>
+  </figure>
+
+  <p>재미있는 디테일 하나: 아래 "기존 AI 방식" 패널은 <strong>타이핑 중에는 날것 그대로</strong>(타자기 느낌), 끝나면 마크다운으로 정리됩니다.</p>
+
+  <h2 id="s07">고친 것 5 — 쉬운 말로 전부 다시 쓰기</h2>
+
+  <p>문구를 통째로 다시 썼습니다. 원칙은 하나였습니다. <strong>비유 먼저, 전문용어는 괄호 안에.</strong></p>
+
+  <table>
+    <thead>
+      <tr><th>전</th><th>후</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>순차 생성 $O(N)$ · 글자 수만큼 시간 증가</td><td>한 글자씩 차례로 · 글자 수만큼 기다림</td></tr>
+      <tr><td>병렬 디노이징 $O(1)$ · 고정 3스텝</td><td>문장 전체를 동시에 · 붓질 3번이면 완성</td></tr>
+      <tr><td>REASONING EFFORT</td><td>생각 깊이 (REASONING)</td></tr>
+      <tr><td>디노이징 스크러버: 3단계 붓질로…</td><td>흐릿한 글자가 3번 만에 선명해지는 과정을 직접 돌려보세요</td></tr>
+    </tbody>
+  </table>
+
+  <p>"원리 &amp; 스펙" 탭은 개발자·연구자용 <strong>심화</strong> 섹션이라고 명시해 두고, 거기엔 원래의 기술 내용을 남겼습니다. 설명은 모아두되, 첫 화면에는 안 보이게.</p>
+
+  <h2 id="s08">고친 것 6 — 깨진 UI 수리</h2>
+
+  <ul>
+    <li>하드코딩된 흰색/검정 색상을 전부 테마 변수로 → 라이트 모드에서 글자가 보입니다.</li>
+    <li>미정의 유틸 클래스 구현 → 모달 패딩·여백 복원, 키노트의 "비유로 끝내는 핵심 요약" 콜아웃이 드디어 콜아웃처럼 보입니다.</li>
+    <li>모바일: 1080px 이하에서 탭 내비가 가로 스크롤 행으로 분리, 720px 이하에서 라벨 숨김.</li>
+    <li>저장된 테마를 첫 페인트 전에 적용해 라이트↔다크 깜빡임 제거.</li>
+  </ul>
+
+  <figure>
+    <img src="/blog/images/inception-mercury-studio/05-mobile.png" alt="모바일">
+    <figcaption>모바일</figcaption>
+  </figure>
+  <figure>
+    <img src="/blog/images/inception-mercury-studio/06-keynote.png" alt="강의용 키노트 슬라이드">
+    <figcaption>강의용 키노트 슬라이드</figcaption>
+  </figure>
+  <figure>
+    <img src="/blog/images/inception-mercury-studio/07-dark-mode.png" alt="다크 모드">
+    <figcaption>다크 모드</figcaption>
+  </figure>
+
+  <h2 id="s09">검증과 배포</h2>
+
+  <ul>
+    <li>모든 변경은 Playwright로 라이트/다크 × 데스크톱/모바일 스크린샷을 찍어 확인했습니다.</li>
+    <li>API 호출은 Playwright의 <code>page.route()</code>로 가짜 SSE 응답을 돌려줘서 <strong>크레딧을 쓰지 않고</strong> 비교 패널·예열·마크다운을 테스트했습니다.</li>
+    <li>Vercel에 프로덕션 배포. 번들 해시를 curl로 확인해 반영 여부를 검증했습니다.</li>
+  </ul>
+
+  <h2 id="s10">배운 것</h2>
+
+  <ol>
+    <li><strong>"쉽게"는 톤이 아니라 구조다.</strong> 문장을 순화하는 것보다 탭 순서를 바꾸고 히어로를 반으로 자른 게 훨씬 효과가 컸습니다.</li>
+    <li><strong>비교는 같은 화면 안에서.</strong> 다른 탭의 시뮬레이션보다, 방금 받은 진짜 답을 그 자리에서 느리게 다시 보여주는 게 훨씬 직관적이었습니다.</li>
+    <li><strong>측정은 정직하게 쪼개라.</strong> 콜드 스타트를 빼지 않으면 "빠르다"는 주장 자체가 흔들립니다.</li>
+    <li><strong>다크 모드 먼저 만들면 라이트 모드는 반드시 깨진다.</strong> 색은 처음부터 토큰으로.</li>
+  </ol>
+
+  <hr>
+
+  <p><em>사이트: <a href="https://inception-mercury-studio.vercel.app" target="_blank" rel="noopener">https://inception-mercury-studio.vercel.app</a> · 코드: <a href="https://github.com/cdsassj00/inception" target="_blank" rel="noopener">https://github.com/cdsassj00/inception</a></em></p>
+
+  <div class="hashtags">
+    <span>#AI</span>
+    <span>#LLM</span>
+    <span>#확산모델</span>
+    <span>#dLLM</span>
+    <span>#InceptionMercury</span>
+    <span>#React</span>
+    <span>#Vite</span>
+    <span>#Vercel</span>
+    <span>#UX</span>
+  </div>
+
+  <div class="footer">
+    <p><strong>신성진</strong> — 한국데이터사이언티스트협회 대표이사. 행정안전부 전문위원, 과학기술정보통신부 자문위원. 행정·공공·민간 폐쇄망 조직의 골목길 문제를 작은 AI로 직접 풀어내는 바이브 코딩 교육에 집중한다.</p>
+    <p>이 글은 cdsassj00/inception 저장소의 작업 노트를 블로그로 옮긴 것입니다. 의견·질문은 <a href="mailto:sjshin@cdsa.kr" style="color: var(--clay-deep); text-decoration: none;">sjshin@cdsa.kr</a>로 보내 주세요.</p>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="/blog/" class="bottom-nav-home">← 블로그 목록</a>
+    <a href="/blog/ai-native-organization.html">AI 네이티브 조직 읽기 →</a>
+  </nav>
+
+</article>
+
+<script src="/blog/_posts.js" defer></script>
+</body>
+</html>

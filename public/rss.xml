@@ -9,12 +9,25 @@
     <atom:link href="https://cdsa.kr/rss.xml" rel="self" type="application/rss+xml"/>
     <description>AI 시대, 일하는 방식을 바꾸는 전문가들. 중앙정부·지자체·공기업·대기업 등 600개 기관에서 AI·데이터 교육을 직접 설계하고 실행합니다.</description>
     <language>ko</language>
-    <lastBuildDate>Mon, 19 Oct 2026 01:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 21 Oct 2026 01:00:00 GMT</lastBuildDate>
     <image>
       <url>https://cdsa.kr/og-image.png</url>
       <title>한국데이터사이언티스트협회 · CDSA 블로그</title>
       <link>https://cdsa.kr/blog/</link>
     </image>
+    <item>
+      <title>타자기에서 화가로 — 확산 방식 AI(Inception Mercury)를 '체험'으로 가르치는 사이트 만들기</title>
+      <link>https://cdsa.kr/blog/inception-mercury-studio.html</link>
+      <guid isPermaLink="true">https://cdsa.kr/blog/inception-mercury-studio.html</guid>
+      <pubDate>Wed, 21 Oct 2026 01:00:00 GMT</pubDate>
+      <dc:creator>신성진</dc:creator>
+      <category>바이브 코딩 · UX</category>
+      <description>ChatGPT는 한 글자씩 쓰고, 인셉션은 문장 전체를 한 번에 그립니다. 이 차이를 수강생이 설명 없이도 "느끼게" 만들기 위해 강의용 체험 사이트의 UI/UX를 뜯어고친 기록. 탭 순서, 동일 화면 비교 패널, 콜드 스타트 분리, 쉬운 말 재작성, 그리고 "쉽게는 톤이 아니라 구조"라는 결론.</description>
+      <content:encoded><![CDATA[<h1>타자기에서 화가로 — 확산 방식 AI(Inception Mercury)를 '체험'으로 가르치는 사이트 만들기</h1>
+  <p class="dek">ChatGPT는 한 글자씩 쓰고, 인셉션은 문장 전체를 한 번에 그립니다. 이 차이를 수강생이 설명 없이도 '느끼게' 만들기 위해 강의용 체험 사이트의 UI/UX를 뜯어고친 기록.</p>
+  <p>요즘 강의에서 가장 많이 받는 질문이 "확산(디퓨전) 방식 언어 모델이 뭐가 다른데요?"입니다. 비유를 하나 정했습니다. 기존 AI는 한 글자씩 찍는 타자기, 인셉션은 문장 전체 밑그림을 깔고 붓질 세 번으로 완성하는 화가. 이 비유를 설명이 아니라 체험으로 전달하는 사이트가 Inception Mercury dLLM Studio입니다.</p>
+  <p><a href="https://cdsa.kr/blog/inception-mercury-studio.html">전체 글 읽기 →</a></p>]]></content:encoded>
+    </item>
     <item>
       <title>AI 네이티브 환경은 오늘 시작하는 조직의 것이다</title>
       <link>https://cdsa.kr/blog/ai-native-organization.html</link>
