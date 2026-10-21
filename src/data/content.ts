@@ -4,9 +4,9 @@ export const site = {
   name: '한국데이터사이언티스트협회',
   short: 'CDSA',
   // 고객 · 컨설팅 문의 (일반 inquiry)
-  inquiryUrl: 'https://cdsapaper.lovable.app/inquiry/cdsa',
+  inquiryUrl: 'https://leadfolio.app/inquiry/cdsa',
   // 커리큘럼 미리보기 · 커리큘럼 관련 문의 (flip-book 뷰어)
-  curriculumUrl: 'https://cdsapaper.lovable.app/view/s8p63pyg',
+  curriculumUrl: 'https://leadfolio.app/view/s8p63pyg',
   builderUrl: 'https://aicurri.lovable.app',
   marketUrl: 'https://vivecoding.lovable.app/',
   youtubeChannel: 'https://www.youtube.com/@workbyax',
@@ -21,7 +21,7 @@ export const hero = {
   mid: '한국데이터사이언티스트협회와 함께\n변화하는 AX시대, 개인과 조직의 역량을 증폭시키세요.',
   subtitle:
     '중앙정부·지자체·공기업·대기업 등 600개 기관에서 AI·데이터 교육을 직접 설계하고 실행합니다. 가르치는 강사가 교육을 설계하고, 컨설턴트가 직접 연락드립니다.',
-  ctaPrimary: { label: '교육 · 컨설팅 문의', href: 'https://cdsapaper.lovable.app/inquiry/cdsa' },
+  ctaPrimary: { label: '교육 · 컨설팅 문의', href: 'https://leadfolio.app/inquiry/cdsa' },
   ctaSecondary: { label: '커리큘럼 미리보기', href: '/curriculum' },
 }
 
@@ -450,7 +450,7 @@ export const showcases = [
     subtitle: '커리큘럼 플립북과 리드 수집을 한 곳에서',
     description:
       '플립북 뷰어로 커리큘럼을 미리 보여주고 리드를 수집하는 통합 플랫폼. 이 인터랙션도 우리 교육에서 가르치는 방식으로 만들어졌습니다.',
-    href: 'https://cdsapaper.lovable.app/inquiry/cdsa',
+    href: 'https://leadfolio.app/inquiry/cdsa',
     badge: '리드 수집',
     accent: 'ink',
   },

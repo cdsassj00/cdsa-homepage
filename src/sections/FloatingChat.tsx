@@ -84,6 +84,7 @@ export default function FloatingChat() {
           phone: '',
           message: fd.get('message'),
           website: '',
+          consent: fd.get('consent') === 'on',
         }),
       })
       if (!r.ok) throw new Error(String(r.status))
@@ -291,6 +292,10 @@ export default function FloatingChat() {
                   <textarea name="message" required maxLength={1500} rows={5} placeholder="문의하실 내용을 자유롭게 남겨주세요."
                     className="w-full bg-cream-100 border border-ink-700/10 rounded px-3 py-2.5 text-[15px] text-ink-900 placeholder:text-ink-400 outline-none focus:border-clay-500 transition-colors resize-none" />
                 </div>
+                <label className="flex items-start gap-2 text-[12.5px] text-ink-500 leading-relaxed">
+                  <input name="consent" type="checkbox" required className="mt-1 accent-clay-600" />
+                  <span>문의 회신을 위해 이름·이메일을 수집하며, 회신 목적으로만 이용합니다. 이에 동의합니다. *</span>
+                </label>
                 <button type="submit" disabled={mailSending}
                   className="w-full py-3 rounded bg-clay-600 text-cream-50 text-[15px] font-medium hover:bg-clay-700 disabled:opacity-50 transition-colors">
                   {mailSending ? '보내는 중…' : '메일 보내기'}

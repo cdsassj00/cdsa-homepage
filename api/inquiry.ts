@@ -1,15 +1,33 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-// 노션 "CDSA 문의함" 데이터베이스 (ID는 비밀 아님, 토큰은 환경변수)
-const NOTION_DB_ID = 'cc3d1a576e064323b562cb174ddb623f';
-const COURSES = ['AI챔피언 강사양성', '취업준비 AI역량강화'];
+// 문의는 LeadFolio(cdsa 워크스페이스)에 저장되고, 알림 메일도 LeadFolio가 보낸다.
+// 새 강의 페이지는 course 값만 다르게 보내면 되므로 여기 목록을 고칠 필요가 없다.
+const LEADFOLIO_INQUIRY_URL = 'https://ujoqrchwqayiwfojmmtc.supabase.co/functions/v1/inquiry-submit';
+const FORM_SLUG = 'cdsa';
+const CONSENT_VERSION = 'cdsa-homepage-v1';
+
+const text = (value: unknown, max: number) => {
+  const s = typeof value === 'string' ? value.trim() : '';
+  return s ? s.slice(0, max) : undefined;
+};
+
+function sourcePage(req: VercelRequest): string | undefined {
+  const referer = req.headers.referer;
+  if (!referer) return undefined;
+  try {
+    const url = new URL(referer);
+    return text(url.pathname, 200);
+  } catch {
+    return undefined;
+  }
+}
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { course, name, email, org, phone, message, website } = req.body || {};
+  const { course, name, email, org, phone, message, website, consent } = req.body || {};
 
   // 허니팟: 봇이 채우는 숨은 필드 — 채워져 있으면 조용히 성공 처리
   if (website) {
@@ -22,74 +40,37 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (typeof email !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return res.status(400).json({ error: 'Invalid email' });
   }
-
-  const token = process.env.NOTION_TOKEN;
-  if (!token) {
-    return res.status(500).json({ error: 'Inquiry configuration error' });
+  if (consent !== true) {
+    return res.status(400).json({ error: 'Consent required' });
   }
 
-  const courseName = COURSES.includes(course) ? course : '기타';
-
   try {
-    const response = await fetch('https://api.notion.com/v1/pages', {
+    // 서버 간 호출이라 Origin 헤더를 보내지 않는다.
+    const response = await fetch(LEADFOLIO_INQUIRY_URL, {
       method: 'POST',
-      headers: {
-        'Authorization': 'Bearer ' + token,
-        'Notion-Version': '2022-06-28',
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        parent: { database_id: NOTION_DB_ID },
-        properties: {
-          '이름': { title: [{ text: { content: String(name).slice(0, 100) } }] },
-          '과정': { select: { name: courseName } },
-          '이메일': { email: String(email).slice(0, 200) },
-          '소속': { rich_text: [{ text: { content: String(org || '').slice(0, 200) } }] },
-          '연락처': { phone_number: phone ? String(phone).slice(0, 40) : null },
-          '문의 내용': { rich_text: [{ text: { content: String(message || '').slice(0, 1900) } }] },
-          '처리상태': { select: { name: '신규' } },
+        slug: FORM_SLUG,
+        consent: true,
+        consentVersion: CONSENT_VERSION,
+        lead: {
+          name: text(name, 100),
+          email: email.trim().slice(0, 200),
+          company: text(org, 160),
+          phone: text(phone, 40),
+          customFields: {
+            inquiry: text(message, 1900),
+            course: text(course, 100) ?? '기타',
+            source_page: sourcePage(req),
+          },
         },
       }),
     });
 
     if (!response.ok) {
       const detail = await response.text();
-      console.error('Notion API error:', response.status, detail);
+      console.error('LeadFolio inquiry error:', response.status, detail);
       return res.status(502).json({ error: 'Failed to save inquiry' });
-    }
-
-    // 이메일 알림 (실패해도 문의 접수 자체는 성공 처리)
-    const resendKey = process.env.RESEND_API_KEY;
-    if (resendKey) {
-      const esc = (s: unknown) => String(s || '').replace(/[<>&"]/g, (c) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;' }[c] as string));
-      const row = (label: string, value: string) =>
-        `<tr><td style="padding:8px 12px;border-bottom:1px solid #eee;color:#888;width:90px;white-space:nowrap">${label}</td><td style="padding:8px 12px;border-bottom:1px solid #eee">${value}</td></tr>`;
-      try {
-        await fetch('https://api.resend.com/emails', {
-          method: 'POST',
-          headers: { 'Authorization': 'Bearer ' + resendKey, 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            from: 'CDSA 문의 알림 <notify@cdsa.kr>',
-            to: ['sjshin@cdsa.kr'],
-            reply_to: email,
-            subject: `[CDSA 문의] ${courseName} — ${String(name).slice(0, 30)}`,
-            html: `<div style="font-family:sans-serif;max-width:560px;margin:0 auto;padding:24px;border:1px solid #eee;border-radius:12px">`
-              + `<h2 style="margin:0 0 16px;font-size:18px">새 문의가 접수되었습니다</h2>`
-              + `<table style="width:100%;border-collapse:collapse;font-size:14px">`
-              + row('과정', esc(courseName))
-              + row('이름', esc(name))
-              + row('이메일', esc(email))
-              + row('소속', esc(org))
-              + row('연락처', esc(phone))
-              + row('문의 내용', esc(message).replace(/\n/g, '<br>'))
-              + `</table>`
-              + `<p style="font-size:12px;color:#999;margin-top:20px">이 메일에 답장하면 문의자에게 바로 전달됩니다. 전체 목록은 노션 &lsquo;CDSA 문의함&rsquo;에서 확인하세요.</p>`
-              + `</div>`,
-          }),
-        });
-      } catch (mailError) {
-        console.error('Resend notify error:', mailError);
-      }
     }
 
     return res.status(200).json({ ok: true });
