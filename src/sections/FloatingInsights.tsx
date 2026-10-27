@@ -3,8 +3,8 @@ import { announcePanel, onPanelChange } from './floatingBus'
 
 const articles = [
   {
-    title: '공무원은 1인 프리랜서가 아니다 — 공공 바이브코딩에 묻는다',
-    description: '만드는 것은 쉬워졌다. 이제는 남기는 것이 실력이다. 실험·임시 활용·본격 활용으로 이어지는 공공 AI 운영 원칙.',
+    title: '이 열기가 금지령으로 끝나지 않으려면 — 공공 바이브코딩에 바라는 것',
+    description: '상상을 현실로 만드는 열기를 함께 만든 사람의 자기 점검. 만든 것이 남아야 이 흐름이 오래간다.',
     href: '/blog/public-ai-not-freelancer.html',
   },
   {
