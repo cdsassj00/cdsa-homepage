@@ -35,6 +35,17 @@
   // publishTime = '09:00:00' 같은 KST 시각. 미명시 시 '09:00:00'
   const POSTS = [
     {
+      slug: 'public-ai-not-freelancer',
+      title: '공무원은 1인 프리랜서가 아니다 — 사이트 300개를 만들어 본 사람이 공공 바이브코딩에 묻는다',
+      date: '2026. 10. 27',
+      category: '공공 AX',
+      href: '/blog/public-ai-not-freelancer.html',
+      author: '신성진',
+      publishTime: '09:00:00',
+      dek: 'AI 잘하는 공무원들이 사이트를 쏟아내고 자랑한다. 그중 동료가 다음 달에도 여는 것은 몇 개인가. 모두가 프리랜서가 되고 싶은 집단 환상, 틀려도 정상처럼 보이는 마지막 화면, 사라지는 정부 사이트와 숨는 AI 사용자 — 그리고 실험·임시 활용·본격 활용으로 이어지는 공공 바이브코딩 운영 원칙.',
+      views: { base: 10, daily: 8, publishedISO: '2026-10-27' },
+    },
+    {
       slug: 'inception-mercury-studio',
       title: '타자기가 아니라 화가 — Inception Mercury(dLLM)와 체험 사이트 사용법',
       date: '2026. 10. 21',

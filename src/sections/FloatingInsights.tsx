@@ -3,6 +3,11 @@ import { announcePanel, onPanelChange } from './floatingBus'
 
 const articles = [
   {
+    title: '공무원은 1인 프리랜서가 아니다 — 공공 바이브코딩에 묻는다',
+    description: '만드는 것은 쉬워졌다. 이제는 남기는 것이 실력이다. 실험·임시 활용·본격 활용으로 이어지는 공공 AI 운영 원칙.',
+    href: '/blog/public-ai-not-freelancer.html',
+  },
+  {
     title: '타자기가 아니라 화가 — Inception Mercury(dLLM)와 체험 사이트 사용법',
     description: '세계 최초의 상용 디퓨전 LLM Mercury가 왜 중요한지, 그리고 수강생이 설명 없이 "느끼게" 할 수 있는 체험 사이트의 네 가지 탭을 어떻게 돌려봐야 하는지 — 비개발자용 가이드.',
     href: '/blog/inception-mercury-studio.html',

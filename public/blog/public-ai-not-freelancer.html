@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>공무원은 1인 프리랜서가 아니다 — 사이트 300개를 만들어 본 사람이 공공 바이브코딩에 묻는다 · CDSA 블로그</title>
+<meta name="description" content="AI 잘하는 공무원들이 사이트를 쏟아내고 자랑한다. 그중 동료가 다음 달에도 쓰는 것은 몇 개인가. 모두가 프리랜서가 되고 싶은 집단 환상을 짚고, 실험·임시 활용·본격 활용으로 이어지는 공공 바이브코딩 운영 원칙을 정리했다.">
+<meta property="og:title" content="공무원은 1인 프리랜서가 아니다 — 사이트 300개를 만들어 본 사람이 공공 바이브코딩에 묻는다">
+<meta property="og:description" content="만드는 것은 쉬워졌다. 이제는 남기는 것이 실력이다. 마지막 화면의 함정, 호라이즌 사건, 사라지는 정부 사이트, 숨는 AI 사용자 — 그리고 행정기관 AI 직접 개발 워킹그룹 가이드북의 세 단계.">
+<meta property="og:type" content="article">
+<!-- BEGIN SEO -->
+<meta name="keywords" content="공공 바이브코딩, 공무원 AI, AI 거버넌스, 행정기관 AI 직접 개발, 운영 가이드북, 임시 활용, 정보화 사업, 데이터 등급, 호라이즌 사건, 링크 부패, 샤이 AI, 신성진">
+
+<link rel="canonical" href="https://cdsa.kr/blog/public-ai-not-freelancer.html">
+<meta property="og:url" content="https://cdsa.kr/blog/public-ai-not-freelancer.html">
+<meta property="og:site_name" content="한국데이터사이언티스트협회">
+<meta property="og:image" content="https://cdsa.kr/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta property="article:published_time" content="2026-10-27T09:00:00+09:00">
+<meta property="article:modified_time" content="2026-10-27T09:00:00+09:00">
+<meta property="article:author" content="신성진">
+<meta property="article:section" content="공공 AX">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="공무원은 1인 프리랜서가 아니다 — 사이트 300개를 만들어 본 사람이 공공 바이브코딩에 묻는다">
+<meta name="twitter:description" content="만드는 것은 쉬워졌다. 이제는 남기는 것이 실력이다. 마지막 화면의 함정, 호라이즌 사건, 사라지는 정부 사이트, 숨는 AI 사용자 — 그리고 행정기관 AI 직접 개발 워킹그룹 가이드북의 세 단계.">
+<meta name="twitter:image" content="https://cdsa.kr/og-image.png">
+<meta name="author" content="신성진">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "공무원은 1인 프리랜서가 아니다 — 사이트 300개를 만들어 본 사람이 공공 바이브코딩에 묻는다",
+  "description": "AI 잘하는 공무원들이 사이트를 쏟아내고 자랑한다. 그중 동료가 다음 달에도 쓰는 것은 몇 개인가. 모두가 프리랜서가 되고 싶은 집단 환상을 짚고, 실험·임시 활용·본격 활용으로 이어지는 공공 바이브코딩 운영 원칙을 정리했다.",
+  "datePublished": "2026-10-27T09:00:00+09:00",
+  "dateModified": "2026-10-27T09:00:00+09:00",
+  "author": {
+    "@type": "Person",
+    "name": "신성진",
+    "affiliation": {
+      "@type": "Organization",
+      "name": "한국데이터사이언티스트협회",
+      "url": "https://cdsa.kr"
+    }
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "한국데이터사이언티스트협회",
+    "url": "https://cdsa.kr",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://cdsa.kr/og-image.png"
+    }
+  },
+  "image": [
+    "https://cdsa.kr/og-image.png"
+  ],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://cdsa.kr/blog/public-ai-not-freelancer.html"
+  },
+  "articleSection": "공공 AX",
+  "inLanguage": "ko-KR"
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "CDSA",
+      "item": "https://cdsa.kr/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "블로그",
+      "item": "https://cdsa.kr/blog/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "공무원은 1인 프리랜서가 아니다 — 사이트 300개를 만들어 본 사람이 공공 바이브코딩에 묻는다",
+      "item": "https://cdsa.kr/blog/public-ai-not-freelancer.html"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "공무원이 바이브코딩으로 만든 도구를 동료에게 공유해도 되나요?",
+      "acceptedAnswer": {"@type": "Answer", "text": "개인 실험은 권장되지만, 동료의 업무에 쓰이는 순간 공공 자원이 됩니다. 행정기관 AI 직접 개발 워킹그룹 운영 가이드북 초안은 실험(샘플 데이터·실험실 기록) → 임시 활용(부서 한정·운영 담당 지정·제3자 시험과 보안 검증) → 본격 활용(정보화 사업 전환·SLA)의 세 단계를 거치도록 제안합니다."}
+    },
+    {
+      "@type": "Question",
+      "name": "임시 활용 단계의 요건은 무엇인가요?",
+      "acceptedAnswer": {"@type": "Answer", "text": "도구가 멈춰도 업무가 계속될 수 있어야 하고, 개인 서버를 두지 않으며, 국민이 접속하는 서비스가 아닌 내부 업무에만 씁니다. 데이터 등급(공개·민감·비밀)을 확인하고, 소관 부서장이 운영 담당을 지정하며, 제3자 시험결과서·보안 검증결과서·운영계획서를 갖춥니다. 이 단계에는 SLA가 없습니다."}
+    },
+    {
+      "@type": "Question",
+      "name": "왜 AI로 만든 결과물을 검증해야 하나요?",
+      "acceptedAnswer": {"@type": "Answer", "text": "AI가 만든 결과물은 틀려도 정상처럼 보입니다. 화면이 멀쩡해도 데이터 출처, 결측치 처리, 업무 규칙의 조건문, 누락된 API 키 때문에 판단이 틀릴 수 있습니다. 검증되지 않은 시스템을 사실로 간주했던 영국 우체국 호라이즌 사건처럼, 공공 업무에서는 그 오류가 국민의 권리와 안전으로 이어집니다."}
+    }
+  ]
+}
+</script>
+<!-- END SEO -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NZL39P5EYZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NZL39P5EYZ');
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&family=Noto+Serif+KR:wght@300;400;500;600&family=Noto+Sans+KR:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/blog/_layout.css">
+<style>
+  :root {
+    --cream: #faf9f5;
+    --cream-deep: #f3efe3;
+    --ink: #1a1a1a;
+    --ink-soft: #3d3d3a;
+    --ink-mute: #6b6b66;
+    --rule: #d9d6cc;
+    --clay: #cc785c;
+    --clay-deep: #a85a42;
+    --code-bg: #f2f0e8;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--cream); color: var(--ink); -webkit-font-smoothing: antialiased; }
+  body { font-family: "Fraunces", "Noto Serif KR", Georgia, serif; font-weight: 300; font-size: 19px; line-height: 1.72; letter-spacing: -0.005em; }
+
+  .topnav { position: fixed; top: 0; left: 0; right: 0; height: 48px; background: rgba(250, 249, 245, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; }
+  .topnav-left { display: flex; align-items: center; gap: 18px; }
+  .topnav-left a { color: var(--ink-soft); text-decoration: none; transition: color 0.2s; }
+  .topnav-left a:hover { color: var(--clay-deep); }
+  .topnav-home { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 600; font-size: 16px; color: var(--ink) !important; letter-spacing: -0.3px; }
+  .topnav-sep { color: var(--rule); font-size: 11px; }
+  .topnav-right { display: flex; gap: 16px; }
+  .topnav-right a { color: var(--ink-mute); text-decoration: none; font-size: 12px; transition: color 0.2s; }
+  .topnav-right a:hover { color: var(--clay-deep); }
+  .topnav-current { color: var(--ink) !important; font-weight: 600; position: relative; }
+  .topnav-current::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 2px; background: var(--clay); border-radius: 1px; }
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 116px 28px 120px; }
+  .breadcrumb { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; margin-bottom: 36px; display: flex; align-items: center; gap: 8px; color: var(--ink-mute); }
+  .breadcrumb a { color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--ink); }
+  .breadcrumb .bc-sep { color: var(--rule); }
+
+  .kicker { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--clay-deep); margin-bottom: 28px; }
+  h1 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 400; font-size: 44px; line-height: 1.18; letter-spacing: -0.02em; margin: 0 0 24px; color: var(--ink); word-break:keep-all;overflow-wrap:break-word;}
+  .dek { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 300; font-style: italic; font-size: 21px; line-height: 1.55; color: var(--ink-soft); margin: 0 0 40px; word-break:keep-all;overflow-wrap:break-word;}
+  .byline { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); padding: 18px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-bottom: 56px; display: flex; justify-content: space-between; }
+  .byline strong { font-weight: 500; color: var(--ink-soft); }
+
+  .lede { font-size: 19px; line-height: 1.72; margin-bottom: 22px; word-break:keep-all;overflow-wrap:break-word;}
+  .lede::first-letter { font-family: "Fraunces", serif; font-weight: 400; font-size: 68px; float: left; line-height: 0.88; padding: 8px 10px 0 0; color: var(--clay); }
+
+  h2 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 28px; line-height: 1.25; letter-spacing: -0.015em; margin: 64px 0 8px; color: var(--ink); scroll-margin-top: 80px; word-break:keep-all;overflow-wrap:break-word;}
+  h2 .num { font-family: "Inter", sans-serif; font-size: 12px; font-weight: 600; color: var(--clay); letter-spacing: 0.1em; display: block; margin-bottom: 10px; }
+  h3 { font-family: "Fraunces", "Noto Serif KR", serif; font-weight: 500; font-size: 18px; margin: 34px 0 10px; color: var(--ink); letter-spacing: -0.01em; word-break:keep-all;overflow-wrap:break-word;}
+  p { margin: 0 0 22px; }
+  p + p { margin-top: -6px; }
+  strong { font-weight: 500; color: var(--ink); }
+  em { font-style: italic; }
+  code { font-family: "JetBrains Mono", monospace; font-size: 0.88em; background: var(--code-bg); padding: 2px 6px; border-radius: 3px; color: var(--clay-deep); }
+  a { color: var(--clay-deep); }
+
+  blockquote {
+    margin: 32px 0;
+    padding: 4px 0 4px 22px;
+    border-left: 2px solid var(--clay);
+    font-family: "Fraunces", "Noto Serif KR", serif;
+    font-style: italic;
+    font-size: 20px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+
+  .key-box {
+    margin: 20px 0 26px;
+    padding: 14px 18px;
+    border-left: 2px solid var(--clay);
+    background: rgba(204, 120, 92, 0.06);
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .key-box .label {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--clay-deep);
+    margin-right: 8px;
+  }
+
+  ul.flow {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0 24px;
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 15.5px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    border-left: 2px solid var(--rule);
+    padding-left: 20px;
+  }
+  ul.flow li { margin-bottom: 5px; }
+  ul.flow li::before { content: "·"; color: var(--clay); font-weight: 700; margin-right: 8px; }
+
+  .summary-table {
+    margin: 28px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    font-family: "Inter", "Noto Sans KR", sans-serif;
+    font-size: 14.5px;
+  }
+  .summary-table .row {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--rule);
+    line-height: 1.55;
+  }
+  .summary-table .row:last-child { border-bottom: none; }
+  .summary-table .row.head {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    padding: 10px 0;
+  }
+  .summary-table .name { font-weight: 600; color: var(--ink); font-family: "JetBrains Mono", monospace; font-size: 13.5px; }
+  .summary-table .def { color: var(--ink-soft); }
+
+  .diagram-box { margin: 32px 0 12px; }
+  .diagram-box svg { width: 100%; height: auto; display: block; }
+  .diagram-cap { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 12.5px; color: var(--ink-mute); text-align: center; margin: 10px 0 32px; }
+
+  .timeline { margin: 28px 0 32px; padding-left: 4px; font-family: "Inter", "Noto Sans KR", sans-serif; }
+  .timeline .tl-item { position: relative; padding: 0 0 26px 28px; border-left: 2px solid var(--rule); margin-left: 8px; }
+  .timeline .tl-item:last-child { border-left-color: transparent; padding-bottom: 0; }
+  .timeline .tl-item::before { content: ''; position: absolute; left: -7px; top: 2px; width: 12px; height: 12px; border-radius: 50%; background: var(--clay); border: 2px solid var(--cream); }
+  .timeline .tl-date { font-family: "JetBrains Mono", monospace; font-size: 12px; color: var(--clay-deep); letter-spacing: 0.05em; }
+  .timeline .tl-name { font-size: 17px; font-weight: 600; color: var(--ink); margin: 2px 0; }
+  .timeline .tl-desc { font-size: 13.5px; color: var(--ink-mute); line-height: 1.55; }
+
+  .rule { border: none; border-top: 1px solid var(--rule); margin: 56px 0; }
+  .footer { margin-top: 72px; padding-top: 28px; border-top: 1px solid var(--rule); font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--ink-mute); line-height: 1.65; }
+  .footer strong { color: var(--ink-soft); font-weight: 600; }
+  .footer a { color: var(--clay-deep); text-decoration: none; }
+  .bottom-nav { margin-top: 72px; padding: 36px 0; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .bottom-nav a { font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 13px; color: var(--clay-deep); text-decoration: none; transition: color 0.2s; }
+  .bottom-nav a:hover { color: var(--ink); }
+  .bottom-nav-home { font-family: "Fraunces", "Noto Serif KR", serif !important; font-size: 16px !important; font-style: italic; font-weight: 400; }
+
+  @media (max-width: 560px) {
+    .wrap { padding: 92px 22px 80px; }
+    h1 { font-size: 34px; word-break:keep-all;overflow-wrap:break-word;}
+    .dek { font-size: 18px; word-break:keep-all;overflow-wrap:break-word;}
+    body { font-size: 17px; }
+    .summary-table .row { grid-template-columns: 1fr; gap: 4px; padding: 14px 0; }
+    .summary-table .row.head { display: none; }
+    .topnav-right { display: none; }
+  }
+
+  @media (max-width: 400px) {
+    h1 { font-size: 26px !important; line-height: 1.22; }
+    .dek { font-size: 16px !important; }
+    h2 { font-size: 22px !important; }
+  }
+
+  .video-embed { position: relative; width: 100%; aspect-ratio: 16 / 9; margin: 32px 0 0; border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; background: #000; }
+  .video-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  ol.checklist { margin: 18px 0 28px; padding-left: 0; list-style: none; counter-reset: ck; font-family: "Inter", "Noto Sans KR", sans-serif; font-size: 15.5px; line-height: 1.7; color: var(--ink-soft); }
+  ol.checklist li { counter-increment: ck; position: relative; padding: 12px 0 12px 40px; border-bottom: 1px solid var(--rule); }
+  ol.checklist li:last-child { border-bottom: none; }
+  ol.checklist li::before { content: counter(ck); position: absolute; left: 0; top: 12px; width: 26px; height: 26px; border-radius: 50%; background: rgba(204,120,92,0.12); color: var(--clay-deep); font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center; }
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="topnav-left">
+    <a href="/" class="topnav-home">CDSA</a>
+    <span class="topnav-sep">|</span>
+    <a href="/">홈페이지</a>
+    <a href="/blog/" class="topnav-current">블로그</a>
+  </div>
+  <nav class="topnav-right">
+    <a href="/framework.html">프레임워크</a>
+    <a href="/fullcourse.html">Full Course</a>
+  </nav>
+</header>
+
+<button class="blog-hamburger" aria-label="블로그 목록 열기"><span></span><span></span><span></span></button>
+<div class="blog-overlay"></div>
+<aside class="blog-left">
+  <div class="blog-left-title">Blog Posts</div>
+  <ol class="blog-left-list"></ol>
+</aside>
+<aside class="blog-right">
+  <div class="blog-right-title">On This Page</div>
+  <ul class="blog-toc"></ul>
+</aside>
+
+<article class="wrap">
+
+  <nav class="breadcrumb">
+    <a href="/">CDSA</a><span class="bc-sep">/</span><a href="/blog/">블로그</a><span class="bc-sep">/</span><span>공공 바이브코딩</span>
+  </nav>
+
+  <div class="kicker">공공 AX · AI 거버넌스</div>
+  <h1>공무원은 1인 프리랜서가 아니다 — 사이트 300개를 만들어 본 사람이 공공 바이브코딩에 묻는다</h1>
+  <p class="dek">AI 잘하는 공무원들이 사이트를 쏟아내고 자랑한다. 그런데 그중 동료가 다음 달에도 여는 것은 몇 개인가. 만드는 것이 쉬워진 시대, 공공의 AI는 포트폴리오가 아니라 기관에 남는 업무여야 한다.</p>
+
+  <div class="byline">
+    <span><strong>신성진</strong> · 한국데이터사이언티스트협회</span>
+    <span>2026. 10. 27</span>
+  </div>
+
+  <p class="lede">요즘 SNS를 열면 낯익은 장면이 이어집니다. 공무원 지인들의 피드에 "주말에 만든 민원 분류기", "퇴근 후 바이브코딩으로 만든 우리 시 대시보드" 같은 글이 올라옵니다. 지구본이 3D로 돌아가고, 지도 위에 실시간 데이터가 반짝이고, 배포 링크와 깃허브 주소가 붙고, 좋아요가 쌓입니다. 저는 그 풍경을 비판할 처지가 아닙니다. 그 한복판에 있으니까요. 지난 한 주에만 교육과 실습에서 300개가 넘는 사이트 제작을 도왔고, 여러 과정에서 MCP를 200개 넘게 만들었고, 풀스택 프로젝트를 500건 넘게 심사했습니다. 그래서 더 분명하게 말할 수 있습니다. 지금 공공 바이브코딩에 필요한 질문은 "얼마나 만들었나"가 아니라 <strong>"무엇이 남았나"</strong>입니다.</p>
+
+  <div class="video-embed">
+    <iframe src="https://www.youtube-nocookie.com/embed/63uLP8Mc5Q8" title="사이트 300개 만들어 보니: AI 워킹그룹이 꼭 알아야 할 것" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+  <p class="diagram-cap">Work by AX — 사이트 300개 만들어 보니: AI 워킹그룹이 꼭 알아야 할 것 (운영 가이드북 요약)</p>
+
+  <h2 id="s01"><span class="num">01 / 만든 것과 남은 것</span>동료가 다음 달에도 여는 도구는 몇 개인가</h2>
+
+  <p>교육장에서 만들어진 수많은 결과물을 떠올려 봅니다. 그중 동료가 다음 주에도 열어 보고, 한 달 뒤에도 업무에 쓰고, 담당자가 바뀐 뒤에도 살아남는 것은 몇 개일까요. 제 체감으로는 1%가 되지 않습니다. 경진대회에서 상을 받은 프로그램과 현장에서 실제로 돌아가는 프로그램은 완전히 다른 문제입니다.</p>
+
+  <p>만드는 문턱이 낮아진 것은 분명한 사실입니다. 깃허브의 개발자 계정은 2023년 초 1억 명을 넘었고 2년 만에 1억 8천만 명에 이르렀습니다. 비개발자도 자기 사이트를 공개하고 배포하겠다는 의지를 갖게 됐습니다. 현장의 불편을 가장 정확히 아는 사람이 해결 방법까지 직접 구현할 수 있게 됐다는 것, 그것이 바이브코딩의 진짜 의미입니다. 그런데 바로 그 지점에서 질문이 옮겨 갑니다. 이제는 만들 수 있느냐가 아니라, 만든 것 가운데 무엇이 실제로 남느냐입니다.</p>
+
+  <h2 id="s02"><span class="num">02 / 집단 환상</span>모두가 프리랜서가 되고 싶어 한다</h2>
+
+  <p>왜 이렇게 많은 공무원이 결과물을 개인 계정에 올리고 자랑할까요. 저는 그 밑에 하나의 집단 환상이 깔려 있다고 봅니다. <strong>모두가 프리랜서가 되고 싶어 하는 환상</strong>입니다. 조직의 안전망이 약해지고 핵개인과 1인 크리에이터의 서사가 시대정신이 된 지금, AI가 그 꿈을 손에 쥐여 줬습니다. 바이브코딩은 "나도 개발자, 나도 메이커, 언젠가 나도 독립할 수 있다"는 감각을 줍니다. 그 감각은 짜릿하고, SNS는 그 감각에 보상을 줍니다.</p>
+
+  <p>민간의 개인에게 이것은 정당한 전략입니다. 포트폴리오가 곧 자산이고, 빠르게 만들고, 공개하고, 반응을 모으고, 다음 것으로 넘어가는 것이 프리랜서의 문법입니다. 문제는 이 문법을 공공에 그대로 들여올 때 생깁니다. 공무원이 업무 시간에, 업무 데이터를 보며, 업무 문제를 풀려고 만든 도구는 누구의 것입니까. 프리랜서는 납품하고 떠나면 그만이지만, 공무원의 도구는 그가 전보를 간 뒤에도 누군가 그 위에서 국민의 일을 처리합니다.</p>
+
+  <p>그래서 저는 강연에서 일부러 이렇게 말했습니다. 개인이 참고하려고 만든 1인 프리랜서식 결과물을 그대로 공공 업무에 적용하는 일은 절대 해서는 안 된다고. 그렇게 일하고 싶다면 1인 프리랜서로 나와서 하시면 된다고. 비꼬는 말이 아닙니다. 역할의 구분입니다. 자유롭게 실험하는 것은 필요하고 권장할 일입니다. 다만 그 결과물이 동료의 업무로, 기관의 업무로 들어가는 순간부터는 개인의 작품이 아니라 공공의 자원이 됩니다.</p>
+
+  <blockquote>프리랜서의 실력은 포트폴리오로 증명된다.<br>공무원의 실력은 자신이 떠난 뒤에도 남는 것으로 증명된다.</blockquote>
+
+  <h2 id="s03"><span class="num">03 / 마지막 화면의 함정</span>틀려도 정상처럼 보인다</h2>
+
+  <p>AI가 만든 결과물을 볼 때 우리는 대부분 마지막 화면과 마지막 숫자만 봅니다. 3D로 돌아가고 애니메이션이 흐르면 "잘 만들었다"는 반응이 먼저 나옵니다. 그 사이에 데이터를 어떻게 처리했는지, 빈칸과 오류값은 어떻게 다뤘는지, 우리가 아는 업무 규칙을 어떤 조건문으로 바꿨는지는 아무도 묻지 않습니다. 결과가 그럴듯할수록 확인할 이유가 없어 보이는 역설입니다.</p>
+
+  <p>강연에서 보여드린 사례가 있습니다. 전 세계의 인터넷 라디오, 산불, 지진 정보를 지도 위에 실시간으로 띄우는 화려한 대시보드입니다. 감탄이 나오지만, 그 데이터가 어디서 왔는지, 어느 시점의 것인지, 결측치는 어떻게 처리했는지는 화면 어디에도 없습니다. 만드는 과정에서 목업이나 샘플 데이터로 채웠을 가능성도 배제할 수 없습니다. 이 화면을 근거로 공공 의사결정을 한다고 상상하면 등골이 서늘해집니다.</p>
+
+  <p>엑셀 수식 하나도 마찬가지입니다. 신청번호, 거주 기간, 소득인정액, 재학 상태를 받아 최종 판정을 내리는 중첩 함수를 AI에게 만들게 하면 아주 그럴듯한 수식이 나옵니다. 저는 강의에서 일부러 규칙 하나를 틀리게 심은 수식을 보여 드리는데, 이를 찾아내는 분은 거의 없습니다. 그 수식 하나가 수급 자격이 있는 사람을 탈락시킬 수 있는데도 말입니다. 제 경험도 있습니다. API 20개를 연결한 프로그램을 다른 사람에게 배포했더니 API 키 15개가 빠진 채 5개만 돌아갔고, 결론이 완전히 다르게 나왔습니다. 화면은 멀쩡했습니다.</p>
+
+  <div class="key-box">
+    <span class="label">핵심</span>화면의 불편은 금방 드러나고 쉽게 고쳐진다. 그러나 프로그램이 오류 없이 실행됐다는 것과 업무 판단이 정확하다는 것은 완전히 다른 이야기다. 이 차이는 만든 사람 혼자서는 볼 수 없다.
+  </div>
+
+  <h2 id="s04"><span class="num">04 / 시스템을 믿은 대가</span>영국 우체국 호라이즌 사건</h2>
+
+  <p>검증되지 않은 시스템을 사실로 간주했을 때 무슨 일이 일어나는지, 우리는 이미 알고 있습니다. 영국 우체국은 1999년부터 2015년까지 회계 시스템 호라이즌이 보여 준 잔액 부족을 그대로 믿고 지점장들을 횡령과 사기 혐의로 기소했습니다. 우체국이 직접 기소한 사람만 700명이 넘습니다. 계약 해지, 유죄 판결, 파산, 수감, 가족의 붕괴가 이어졌고, 시스템을 사실로 믿는 분위기 속에서 오류를 입증할 책임은 오히려 피해자에게 지워졌습니다. 나중에 드러난 원인은 시스템의 버그였습니다.</p>
+
+  <p>이것은 AI 이전의 사건입니다. 그러나 구조는 똑같습니다. 누가 어떤 요청으로 만들었는지, 정상 사례만 확인했는지, 빈값과 중복값을 처리했는지 아무도 모르는 도구가 동료들 사이에 퍼지고, 그 결과가 "시스템이 그렇게 나왔다"는 이유로 판단의 근거가 되는 순간, 우리는 작은 호라이즌을 수없이 만들고 있는 셈입니다.</p>
+
+  <h2 id="s05"><span class="num">05 / 사라지는 사이트, 숨는 개발자</span>자랑과 숨김은 같은 뿌리다</h2>
+
+  <p>만들어 놓고 돌보지 않은 사이트는 사라집니다. 퓨 리서치 센터의 2024년 조사에 따르면 2013년에 존재했던 웹페이지의 38%가 10년 뒤 접속할 수 없게 됐고, 조사한 정부 웹페이지의 21%에는 깨진 링크가 하나 이상 있었습니다. 개인 취미로 만든 사이트라면 사라져도 그만입니다. 하지만 단 몇 명의 국민이라도 그 정보를 보고 권리를 찾으려 했다면, 갑자기 사라진 사이트는 정부에 대한 신뢰를 함께 무너뜨립니다. "이 숫자는 왜 이렇게 나왔나요?"라는 질문에 돌아오는 답이 "제작자에게 문의하세요"이고, 그 제작자는 이미 다른 부서로 떠났다면, 그 도구는 업무 자산이 아니라 방치된 쓰레기 사이트가 됩니다.</p>
+
+  <p>반대편에는 숨기는 사람들이 있습니다. 마이크로소프트와 링크드인이 31개국 3만 1천 명을 조사한 2024년 워크 트렌드 인덱스에서, 업무에 AI를 쓰는 사람의 52%는 가장 중요한 업무에 AI를 썼다는 사실을 밝히기를 꺼렸습니다. AI 사용자의 78%는 회사가 제공하지 않은 개인 AI 도구를 업무에 들여오고 있었습니다. 공공에서도 같은 일이 벌어집니다. "검토는 했나요, 검증은 했나요"라는 말을 듣기 싫어 AI로 만든 도구를 조용히 혼자 씁니다.</p>
+
+  <p>자랑하는 사람과 숨기는 사람은 정반대처럼 보입니다. 그러나 저는 둘이 같은 뿌리에서 나왔다고 봅니다. <strong>둘 다 결과물을 개인의 것으로 다룬다는 점</strong>입니다. 한쪽은 SNS에 보여 주고 한쪽은 서랍에 감추지만, 둘 다 조직이 함께 검토하고 함께 고치는 경로 바깥에 있습니다. 숨긴 도구는 오류를 발견해도 조직이 함께 고칠 수 없고, 자랑한 도구는 박수를 받는 순간 검증이 끝난 것처럼 취급됩니다.</p>
+
+  <h2 id="s06"><span class="num">06 / 거버넌스는 신뢰다</span>실험, 임시 활용, 본격 활용</h2>
+
+  <p>그렇다면 막자는 말인가요. 아닙니다. 거버넌스를 "이거 하지 마라, 저거 하지 마라"의 통제로만 보면 끝없이 통제가 됩니다. 거버넌스의 실체는 신뢰(trust)입니다. 내가 만들고 쓰는 것을 공공의 영역에서 서로 검토하고 검증할 수 있게 여는 것, 그것이 핵심입니다. 행정기관 AI 직접 개발 워킹그룹이 만든 운영 가이드북 초안은 이 신뢰를 세 단계의 절차로 풀어냅니다. 폐쇄망 환경의 도구 유형은 <a href="/blog/working-governance.html">민첩한 AI 거버넌스</a>에서 따로 정리했습니다.</p>
+
+  <div class="summary-table">
+    <div class="row head"><span>단계</span><span>무엇을 하는가 · 요건</span></div>
+    <div class="row"><span class="name">실험</span><span class="def">정부 실험실 저장소에서 만들고 시험한다. 실제 업무 자료는 넣지 않고 샘플·모의 데이터만 쓴다. 어떤 문제를 풀려는지, 어떤 결과가 나와야 하는지, 설계와 기술 스택, 소관 부서를 기록한다. 결과물은 POC 결과보고서와 활용 체크리스트다.</span></div>
+    <div class="row"><span class="name">임시 활용</span><span class="def">특정 부서·업무에 제한해 써 본다. 도구가 멈춰도 업무는 계속될 수 있어야 하고, 개인 서버를 두지 않으며, 국민이 접속하는 서비스가 아닌 내부 업무에만 쓴다. 데이터 등급(공개·민감·비밀)을 확인하고, 소관 부서장이 운영 담당을 지정하며, 제3자 시험결과서·보안 검증결과서·운영계획서를 갖춘다. SLA는 없다.</span></div>
+    <div class="row"><span class="name">본격 활용</span><span class="def">수요와 효과가 확인되면 정보화 사업으로 전환한다. 기존 유지보수 사업에 편입하거나 정식 개발 사업으로 승격하고, SLA와 장애 대응 체계를 갖춘다. 아이디어와 기본 코드를 만든 사람에게 인센티브를 줄 수 있다.</span></div>
+  </div>
+
+  <p>임시 활용 단계의 핵심은 <strong>운영 주체를 지정하는 순간 하나의 업무가 된다</strong>는 점입니다. 운영 담당이 정해지고 이력이 기록되면, 개발한 사람이 전보를 가고 운영 담당이 바뀌어도 도구는 부서의 업무 흐름 안에 남습니다. 문제가 생기면 즉시 멈추고, 사용자에게 알리고, 고쳐지면 다시 알립니다. 홀로 떠 있는 섬이 되거나 어느 날 사라지는 사이트가 되지 않습니다.</p>
+
+  <p>가이드북은 도구의 형태에 따라 점검 항목이 달라진다는 점도 짚습니다. 자료를 받아 내 PC에서만 처리하는 독립 구동형, API로 외부 데이터를 불러와 결합하는 조회 결합형, 기관의 AI 공통 기반 위에서 만든 빌더형, 외부 클라우드에 DB와 백엔드를 둔 서비스형은 위험의 크기가 전혀 다릅니다. 다른 기관이 만든 도구를 가져다 쓸 때도 원칙이 분명합니다. 그대로 쓴다면 언제든 중단될 수 있음을 전제로 임시 활용하고, 고쳐서 쓴다면 실험 단계부터 다시 밟습니다.</p>
+
+  <h2 id="s07"><span class="num">07 / 자랑 대신 이관</span>실력 있는 공무원이 받아야 할 진짜 보상</h2>
+
+  <p>이 절차를 귀찮은 서류 작업으로 볼 수도 있습니다. 하지만 저는 정반대로 봅니다. 기록은 통제가 아니라 <strong>기여를 증명하는 장치</strong>입니다. 실력 있는 공무원이 받아야 할 보상은 SNS의 좋아요가 아닙니다. 자신이 만든 도구가 정보화 사업으로 승격되고, 원저자로 기록되고, 그 사업에 함께하며 커리어를 쌓는 것입니다. 가이드북이 실험 단계에서 소속과 설계를 꼼꼼히 남기라고 하는 이유도, 나중에 그 기여를 정확히 인정하기 위해서입니다.</p>
+
+  <p>여기서 한 걸음 더 나가면 큰 그림이 보입니다. 코드가 어떻게 바뀌었는지뿐 아니라, 어디에 어떻게 쓰였고, 어떤 오류가 있었고, 어떻게 고쳤는지까지 공무원들의 실험과 운영 이력이 쌓이면, 그 이력 자체가 행정 업무를 가장 잘 아는 데이터가 됩니다. 개인 포트폴리오로 흩어지면 아무것도 남지 않지만, 공공의 기록으로 모이면 그것이 우리 행정의 소버린 AI 자산이 됩니다.</p>
+
+  <h2 id="s08"><span class="num">08 / 공유하기 전에</span>스스로 물어야 할 다섯 가지</h2>
+
+  <p>다음에 만든 것을 동료에게 건네거나 SNS에 올리기 전에, 아래 다섯 가지를 먼저 물어보시길 권합니다.</p>
+
+  <ol class="checklist">
+    <li><strong>이 도구가 멈춰도 업무는 계속되는가.</strong> 멈추는 순간 업무가 마비된다면 아직 동료에게 건넬 단계가 아닙니다.</li>
+    <li><strong>들어간 데이터는 어떤 등급인가.</strong> 실제 업무 자료가 들어갔다면, 그 도구가 바깥으로 노출되는 구조는 아닌지부터 확인해야 합니다.</li>
+    <li><strong>결과가 틀렸을 때 누가 어떻게 알아채는가.</strong> 내가 만든 로직을 남에게 설명할 수 없다면, 그 결과를 근거로 쓸 수 없습니다.</li>
+    <li><strong>내가 떠나면 누가 운영하는가.</strong> 답이 "제작자에게 문의하세요"라면 그 도구는 이미 사라지고 있는 중입니다.</li>
+    <li><strong>이것은 내 포트폴리오인가, 기관의 업무인가.</strong> 둘 다일 수는 있어도, 순서를 헷갈려서는 안 됩니다.</li>
+  </ol>
+
+  <hr class="rule">
+
+  <p>제가 함께 일해 본 공공 담당자들은 교통비 1만 5천 원도 함부로 쓰지 않습니다. 그 돈 하나를 받기 위해 근거 자료와 문서를 꼼꼼히 남깁니다. 책임을 묻기 위해서가 아니라, 어디서 잘못됐는지 정확히 짚고 고칠 수 있게 하기 위해서입니다. 그런 조직에서 국민의 권리와 안전에 닿는 판단 로직이 아무 기록 없이 개인 계정에서 돌아가고 있다면, 그것은 혁신이 아니라 공백입니다.</p>
+
+  <p>만드는 것은 쉬워졌습니다. 그래서 이제는 남기는 것이 실력입니다. 공공 바이브코딩의 성과는 몇 개를 만들었느냐가 아니라, 내가 떠난 뒤에도 무엇이 남아 동료와 국민의 일을 돕고 있느냐로 측정되어야 합니다.</p>
+
+  <p style="font-size:14px;color:var(--ink-mute)">출처: Pew Research Center, <a href="https://www.pewresearch.org/data-labs/2024/05/17/when-online-content-disappears/" target="_blank" rel="noopener">When Online Content Disappears</a> (2024. 5. 17) · Microsoft·LinkedIn, <a href="https://news.microsoft.com/source/2024/05/08/microsoft-and-linkedin-release-the-2024-work-trend-index-on-the-state-of-ai-at-work/" target="_blank" rel="noopener">2024 Work Trend Index</a> (2024. 5. 8) · <a href="https://en.wikipedia.org/wiki/British_Post_Office_scandal" target="_blank" rel="noopener">British Post Office scandal</a> · 행정기관 AI 직접 개발 워킹그룹 운영 가이드북(초안)</p>
+
+  <div class="footer">
+    <strong>신성진 (Shinsungjin)</strong><br>
+    한국데이터사이언티스트협회 대표 &middot; CDSA<br>
+    개인·조직 AX 변화관리 컨설턴트 &middot; AX/DX 교육 설계 &middot; 공공기관 커리큘럼 설계<br>
+    YouTube @workbyax<br>
+    의견·질문은 <a href="mailto:sjshin@cdsa.kr">sjshin@cdsa.kr</a> 로 보내주세요.
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="/blog/inception-mercury-studio.html">← 이전 글: 타자기가 아니라 화가 — Inception Mercury</a>
+    <a href="/blog/">블로그 목록 →</a>
+  </nav>
+
+</article>
+
+<script src="/blog/_posts.js" defer></script>
+</body>
+</html>
