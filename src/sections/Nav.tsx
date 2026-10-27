@@ -26,7 +26,7 @@ export default function Nav() {
   const links = [
     { label: '미션', href: '#mission' },
     { label: '우리가 푸는 문제', href: '#alleyway' },
-    { label: '트랙', href: '#tracks' },
+    { label: '커리큘럼', href: '#curriculum' },
     { label: '쇼케이스', href: '#showcase' },
     { label: '전문가', href: '#tutors' },
     { label: '프레임워크', href: '/framework.html' },

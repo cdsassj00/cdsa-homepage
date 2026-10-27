@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import avatarUrl from '../assets/chat-avatar.jpg'
 import avatarVideo from '../assets/chat-avatar.mp4'
-import { announcePanel, onPanelChange } from './floatingBus'
+import { announcePanel, onOpenMailForm, onPanelChange } from './floatingBus'
 
 type Msg = { role: 'user' | 'assistant'; content: string }
 
@@ -66,6 +66,16 @@ export default function FloatingChat() {
   const [mode, setMode] = useState<'chat' | 'mail' | 'sent'>('chat')
   const [mailSending, setMailSending] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
+
+  useEffect(
+    () =>
+      onOpenMailForm(() => {
+        setMode('mail')
+        setOpenRaw(true)
+        announcePanel('chat')
+      }),
+    [],
+  )
 
   async function sendMail(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()

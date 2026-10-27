@@ -8,6 +8,18 @@ export function announcePanel(id: PanelId) {
   window.dispatchEvent(new CustomEvent<PanelId>(EVT, { detail: id }))
 }
 
+const MAIL_EVT = 'cdsa:open-mail'
+
+/** 페이지 어디서든 우하단 챗 패널을 '신성진 대표에게 직접 메일 보내기' 폼으로 연다. */
+export function openMailForm() {
+  window.dispatchEvent(new Event(MAIL_EVT))
+}
+
+export function onOpenMailForm(cb: () => void) {
+  window.addEventListener(MAIL_EVT, cb)
+  return () => window.removeEventListener(MAIL_EVT, cb)
+}
+
 export function onPanelChange(cb: (id: PanelId) => void) {
   const handler = (e: Event) => cb((e as CustomEvent<PanelId>).detail)
   window.addEventListener(EVT, handler)

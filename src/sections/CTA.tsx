@@ -1,5 +1,6 @@
 import { site } from '../data/content'
 import { useInquiry } from './InquiryModal'
+import { openMailForm } from './floatingBus'
 
 export default function CTA() {
   const { openInquiry } = useInquiry()
@@ -25,12 +26,13 @@ export default function CTA() {
             >
               교육 · 컨설팅 문의 <span aria-hidden>→</span>
             </button>
-            <a
-              href={`mailto:${site.email}`}
+            <button
+              type="button"
+              onClick={openMailForm}
               className="inline-flex items-center gap-2 px-8 py-4 rounded-full border border-cream-100/30 text-cream-100 hover:border-clay-300 hover:text-clay-300 transition-colors"
             >
-              {site.email}
-            </a>
+              ✉ {site.email} 로 바로 메일 쓰기
+            </button>
           </div>
         </div>
       </div>

@@ -1,78 +1,12 @@
-import { useState, type ReactNode } from 'react'
-import { showcases, site } from '../data/content'
+import { useState } from 'react'
+import { site } from '../data/content'
+import { directory, featured } from '../data/showcase'
 
-/** Simple inline SVG icon+label thumbnails per showcase card */
-const cardIllustrations: Record<string, ReactNode> = {
-  바이브마켓: (
-    <svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-20 h-20">
-      {/* shopping bag */}
-      <rect x="28" y="38" width="64" height="52" rx="4" stroke="#8B4A18" strokeWidth="2.5" fill="#F5F0E8" />
-      <path d="M45 38V28a15 15 0 0 1 30 0v10" stroke="#8B4A18" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-      <circle cx="60" cy="60" r="6" fill="#C17A3B" opacity="0.5" />
-    </svg>
-  ),
-  커리큘럼빌더: (
-    <svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-20 h-20">
-      {/* grid layout */}
-      <rect x="22" y="18" width="32" height="26" rx="3" stroke="#8B4A18" strokeWidth="2.5" fill="#F5F0E8" />
-      <rect x="66" y="18" width="32" height="26" rx="3" stroke="#8B4A18" strokeWidth="2.5" fill="#F5F0E8" />
-      <rect x="22" y="56" width="32" height="26" rx="3" stroke="#8B4A18" strokeWidth="2.5" fill="#F5F0E8" />
-      <rect x="66" y="56" width="32" height="26" rx="3" stroke="#8B4A18" strokeWidth="2.5" fill="#F5F0E8" />
-      <line x1="38" y1="28" x2="38" y2="38" stroke="#C17A3B" strokeWidth="2" strokeLinecap="round" opacity="0.5" />
-      <line x1="82" y1="28" x2="82" y2="38" stroke="#C17A3B" strokeWidth="2" strokeLinecap="round" opacity="0.5" />
-    </svg>
-  ),
-  HWPX문서생성기: (
-    <svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-20 h-20">
-      {/* document with folded corner */}
-      <path d="M32 14h40l16 16v56a4 4 0 0 1-4 4H36a4 4 0 0 1-4-4V18a4 4 0 0 1 4-4z" stroke="#8B4A18" strokeWidth="2.5" fill="#F5F0E8" />
-      <path d="M72 14v16h16" stroke="#8B4A18" strokeWidth="2.5" strokeLinejoin="round" fill="none" />
-      <line x1="44" y1="44" x2="76" y2="44" stroke="#C17A3B" strokeWidth="2" strokeLinecap="round" opacity="0.5" />
-      <line x1="44" y1="54" x2="70" y2="54" stroke="#C17A3B" strokeWidth="2" strokeLinecap="round" opacity="0.5" />
-      <line x1="44" y1="64" x2="66" y2="64" stroke="#C17A3B" strokeWidth="2" strokeLinecap="round" opacity="0.5" />
-    </svg>
-  ),
-  AI역량진단: (
-    <svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-20 h-20">
-      {/* bar chart */}
-      <rect x="24" y="58" width="16" height="28" rx="2" stroke="#8B4A18" strokeWidth="2.5" fill="#F5F0E8" />
-      <rect x="52" y="38" width="16" height="48" rx="2" stroke="#8B4A18" strokeWidth="2.5" fill="#F5F0E8" />
-      <rect x="80" y="18" width="16" height="68" rx="2" stroke="#8B4A18" strokeWidth="2.5" fill="#F5F0E8" />
-      <line x1="18" y1="88" x2="102" y2="88" stroke="#8B4A18" strokeWidth="2.5" strokeLinecap="round" />
-      <path d="M28 52l28-18 28-16" stroke="#C17A3B" strokeWidth="2" strokeLinecap="round" strokeDasharray="4 3" opacity="0.5" fill="none" />
-    </svg>
-  ),
-  시험감독프로그램: (
-    <svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-20 h-20">
-      {/* shield with check */}
-      <path d="M60 10L28 26v28c0 20 14 34 32 40 18-6 32-20 32-40V26L60 10z" stroke="#8B4A18" strokeWidth="2.5" fill="#F5F0E8" />
-      <path d="M45 50l10 10 20-22" stroke="#C17A3B" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-    </svg>
-  ),
-  문서리드수집플랫폼: (
-    <svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-20 h-20">
-      {/* envelope / mail */}
-      <rect x="20" y="24" width="80" height="52" rx="4" stroke="#8B4A18" strokeWidth="2.5" fill="#F5F0E8" />
-      <path d="M20 28l40 26 40-26" stroke="#8B4A18" strokeWidth="2.5" strokeLinejoin="round" fill="none" />
-      <circle cx="60" cy="58" r="5" fill="#C17A3B" opacity="0.4" />
-    </svg>
-  ),
-}
-
-/** Look up illustration by title (strip spaces for key matching) */
-export function getIllustration(title: string): ReactNode {
-  const key = title.replace(/\s+/g, '')
-  return cardIllustrations[key] ?? null
-}
+const totalSites = featured.length + directory.reduce((n, g) => n + g.items.length, 0)
 
 export default function Showcase() {
+  const [showAll, setShowAll] = useState(false)
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
-  const [previewTitle, setPreviewTitle] = useState('')
-
-  const openPreview = (href: string, title: string) => {
-    setPreviewUrl(href)
-    setPreviewTitle(title)
-  }
 
   return (
     <section
@@ -80,90 +14,126 @@ export default function Showcase() {
       className="py-28 md:py-36 bg-gradient-to-b from-cream-50 to-cream-100/80 border-y border-ink-700/10"
     >
       <div className="container-editorial">
-        <div className="max-w-2xl mb-16">
-          <span className="eyebrow">EDTECH SHOWCASE</span>
-          <h2 className="h-display text-[36px] md:text-[56px] mt-5">
-            협회와 배우면, <br />
-            <span className="text-clay-700">이런 것도 만듭니다.</span>
-          </h2>
-          <p className="mt-5 text-ink-700 text-lg">
-            아래 제품들은 전부 협회 전문가들이 바이브 코딩으로 직접 만들었습니다.
-            당신도 우리 교육에서 같은 방식을 배웁니다.
-          </p>
-          <a
-            href="https://vivecoding.lovable.app/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 mt-7 px-7 py-3 rounded-full bg-ink-900 text-cream-50 text-sm font-medium hover:bg-clay-700 transition-colors"
-          >
-            교육 후 바이브코딩 산출물 보러가기 →
-          </a>
+        <div className="flex items-end justify-between flex-wrap gap-6 mb-14">
+          <div className="max-w-2xl">
+            <span className="eyebrow">LIVE SHOWCASE · 실제로 작동하는 사이트</span>
+            <h2 className="h-display text-[36px] md:text-[56px] mt-5">
+              협회와 배우면, <br />
+              <span className="text-clay-700">이런 것도 만듭니다.</span>
+            </h2>
+            <p className="mt-5 text-ink-700 text-lg leading-relaxed">
+              아래 사이트는 전부 협회 전문가들이 바이브 코딩으로 직접 만들어 지금도 운영 중인 것들입니다.
+              카드를 누르면 실제 사이트가 열립니다. 우리 교육에서 같은 방식을 배웁니다.
+            </p>
+          </div>
+          <div className="text-right">
+            <div className="font-serif text-[44px] md:text-[56px] text-clay-700 leading-none">{totalSites}</div>
+            <div className="font-mono text-[10px] tracking-[0.2em] text-ink-500 uppercase mt-2">Live sites · 2026.10 접속 확인</div>
+          </div>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
-          {showcases.map((s) => (
-            <button
-              key={s.title}
-              type="button"
-              onClick={() => openPreview(s.href, s.title)}
-              className="group block bg-cream-50 border border-ink-700/15 rounded-sm overflow-hidden hover:border-clay-500 hover:shadow-[0_18px_40px_-20px_rgba(110,55,16,0.3)] transition-all text-left"
+        {/* Featured — real screenshots */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {featured.map((s) => (
+            <a
+              key={s.href}
+              href={s.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group block bg-cream-50 border border-ink-700/15 rounded-sm overflow-hidden hover:border-clay-500 hover:shadow-[0_18px_40px_-20px_rgba(110,55,16,0.3)] transition-all"
             >
-              <div className="aspect-[4/3] bg-gradient-to-br from-clay-50 via-cream-100 to-cream-200 flex flex-col items-center justify-center relative overflow-hidden">
-                <div className="absolute inset-0 bg-paper opacity-40" />
-                <div className="relative group-hover:scale-105 transition-transform flex flex-col items-center gap-3">
-                  {getIllustration(s.title)}
-                  <span className="font-serif text-[13px] text-clay-700/70 tracking-wide">{s.title}</span>
+              <div className="relative aspect-[16/10] overflow-hidden bg-ink-900">
+                <img
+                  src={`/showcase/${s.shot}.webp`}
+                  alt={`${s.name} 화면`}
+                  loading="lazy"
+                  className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-500"
+                />
+                {s.tag && (
+                  <span className="absolute top-3 left-3 text-[10px] tracking-[0.12em] text-clay-800 border border-clay-500/60 px-2 py-0.5 rounded-full bg-cream-50/95">
+                    {s.tag}
+                  </span>
+                )}
+              </div>
+              <div className="p-6">
+                <div className="flex items-baseline justify-between gap-3">
+                  <h3 className="font-serif text-[20px] text-ink-900 leading-snug group-hover:text-clay-800 transition-colors">
+                    {s.name}
+                  </h3>
+                  <span className="text-ink-400 group-hover:text-clay-700 transition-colors shrink-0">↗</span>
                 </div>
-                <span className="absolute top-4 left-4 text-[10px] uppercase tracking-[0.18em] text-clay-700 border border-clay-500 px-2 py-1 rounded-full bg-cream-50">
-                  {s.badge}
-                </span>
+                <p className="text-[13.5px] text-ink-700 leading-relaxed mt-2">{s.desc}</p>
+                <p className="font-mono text-[10px] text-ink-400 mt-3 truncate">{s.href.replace(/^https?:\/\//, '').replace(/\/$/, '')}</p>
               </div>
-              <div className="p-7">
-                <h3 className="font-serif text-2xl text-ink-900 mb-1">{s.title}</h3>
-                <p className="text-sm text-clay-700 font-medium mb-4">{s.subtitle}</p>
-                <p className="text-[14px] text-ink-700 leading-relaxed mb-5">
-                  {s.description}
-                </p>
-                <span className="text-sm text-ink-900 font-medium underline underline-offset-4 group-hover:text-clay-700">
-                  체험해보기 →
-                </span>
-              </div>
-            </button>
+            </a>
           ))}
         </div>
 
-        {/* 커리큘럼 빌더 — 모달로 전환 */}
+        {/* Directory */}
+        <div className="mt-12 text-center">
+          <button
+            type="button"
+            onClick={() => setShowAll((v) => !v)}
+            aria-expanded={showAll}
+            className="inline-flex items-center gap-2 px-7 py-3 rounded-full border border-ink-700/30 text-ink-800 text-sm hover:border-clay-700 hover:text-clay-700 transition-colors"
+          >
+            {showAll ? '목록 접기 ↑' : `작동하는 사이트 ${totalSites}개 모두 보기 ↓`}
+          </button>
+        </div>
+
+        {showAll && (
+          <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-5 gap-px bg-ink-700/10 border border-ink-700/10 animate-[fadeUp_0.35s_ease]">
+            {directory.map((g) => (
+              <div key={g.label} className="bg-cream-50 p-6">
+                <div className="font-mono text-[10px] tracking-[0.18em] text-clay-700 uppercase mb-4">
+                  {g.label} · {g.items.length}
+                </div>
+                <ul className="space-y-3">
+                  {g.items.map((s) => (
+                    <li key={s.href}>
+                      <a href={s.href} target="_blank" rel="noopener noreferrer" className="group block">
+                        <span className="block font-serif text-[14.5px] text-ink-900 group-hover:text-clay-700 transition-colors leading-snug">
+                          {s.name} <span className="text-ink-400 text-[11px]">↗</span>
+                        </span>
+                        <span className="block text-[12px] text-ink-500 leading-snug mt-0.5">{s.desc}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Builder band */}
         <div className="mt-16 p-8 bg-cream-50 border border-ink-700/15 rounded-sm">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div>
-              <h3 className="font-serif text-xl text-ink-900 mb-2">
-                직접 조립하는 커리큘럼
-              </h3>
+              <h3 className="font-serif text-xl text-ink-900 mb-2">직접 조립하는 커리큘럼</h3>
               <p className="text-sm text-ink-700 max-w-lg">
                 드래그 앤 드랍으로 원하는 모듈을 조합해 나만의 교육과정을 설계해보세요.
               </p>
             </div>
             <div className="flex items-center gap-3">
               <button
-                onClick={() => openPreview(site.builderUrl, '커리큘럼 빌더')}
+                onClick={() => setPreviewUrl(site.builderUrl)}
                 className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-ink-900 text-cream-50 text-sm font-medium hover:bg-clay-700 transition-colors"
               >
                 빌더 체험하기 →
               </button>
               <a
-                href={site.builderUrl}
+                href="https://vivecoding.lovable.app/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm font-medium text-clay-700 hover:text-clay-800 underline underline-offset-4 whitespace-nowrap"
               >
-                전체 화면 ↗
+                수강생 산출물 보기 ↗
               </a>
             </div>
           </div>
         </div>
       </div>
 
-      {/* 모달 — iframe으로 사이트 체험 (화면 절반 크기) */}
       {previewUrl && (
         <div
           className="fixed inset-0 z-[100] bg-ink-900/75 backdrop-blur-sm flex items-center justify-center p-6 md:p-10"
@@ -174,16 +144,8 @@ export default function Showcase() {
             style={{ height: '80vh' }}
             onClick={(e) => e.stopPropagation()}
           >
-            {/* 모달 헤더 */}
             <div className="flex items-center justify-between px-5 py-3 border-b border-ink-700/10 shrink-0">
-              <div className="flex items-center gap-3 min-w-0">
-                <span className="font-serif text-[15px] text-ink-900 truncate">
-                  {previewTitle}
-                </span>
-                <span className="text-[10px] font-mono text-ink-400 tracking-wider truncate hidden md:inline">
-                  {previewUrl}
-                </span>
-              </div>
+              <span className="font-serif text-[15px] text-ink-900 truncate">커리큘럼 빌더</span>
               <div className="flex items-center gap-2 shrink-0">
                 <a
                   href={previewUrl}
@@ -202,11 +164,10 @@ export default function Showcase() {
                 </button>
               </div>
             </div>
-            {/* iframe */}
             <div className="flex-1 bg-white relative">
               <iframe
                 src={previewUrl}
-                title={previewTitle}
+                title="커리큘럼 빌더"
                 className="absolute inset-0 w-full h-full border-0"
                 style={{ transform: 'scale(0.85)', transformOrigin: 'top left', width: '117.6%', height: '117.6%' }}
               />

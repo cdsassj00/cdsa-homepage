@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
 import Webinar from './pages/Webinar.tsx'
+import Modules from './pages/Modules.tsx'
+import Experts from './pages/Experts.tsx'
 import CurriculumBook, { CurriculumBookProvider } from './pages/CurriculumBook.tsx'
 import { InquiryProvider } from './sections/InquiryModal.tsx'
 
@@ -17,6 +19,8 @@ function Router() {
   }, [])
   if (path.startsWith('/webinar')) return <Webinar />
   if (path.startsWith('/curriculum')) return <CurriculumBook />
+  if (path.startsWith('/modules')) return <Modules />
+  if (path.startsWith('/experts')) return <Experts />
   return <App />
 }
 
