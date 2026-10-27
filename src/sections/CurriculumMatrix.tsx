@@ -92,15 +92,15 @@ export default function CurriculumMatrix() {
         <div className="overflow-x-auto -mx-6 px-6 md:mx-0 md:px-0" style={{ scrollbarWidth: 'thin' }}>
           <div className="min-w-[780px] border border-ink-700/15">
             {/* Column headers */}
-            <div className="grid grid-cols-[190px_repeat(5,1fr)] border-b border-ink-700/15 bg-cream-100/60">
+            <div className="grid grid-cols-[190px_repeat(5,1fr)] border-b border-ink-800 bg-ink-800">
               <div className="p-4 flex flex-col justify-end">
-                <span className="font-mono text-[9px] tracking-[0.18em] text-ink-400 uppercase">업무 영역 →</span>
-                <span className="font-mono text-[9px] tracking-[0.18em] text-ink-400 uppercase mt-1">↓ AI 활용 방법</span>
+                <span className="font-mono text-[9px] tracking-[0.18em] text-clay-300 uppercase">업무 영역 →</span>
+                <span className="font-mono text-[9px] tracking-[0.18em] text-clay-300 uppercase mt-1">↓ AI 활용 방법</span>
               </div>
               {domainOrder.map((d) => (
-                <div key={d} className="p-4 border-l border-ink-700/10">
-                  <div className="font-serif text-[15px] text-ink-900 leading-tight">{domains[d].name}</div>
-                  <div className="text-[11px] text-ink-500 mt-1 leading-snug">{domains[d].desc}</div>
+                <div key={d} className="p-4 border-l border-cream-50/10">
+                  <div className="font-serif text-[15px] text-cream-50 leading-tight">{domains[d].name}</div>
+                  <div className="text-[11px] text-cream-200/60 mt-1 leading-snug">{domains[d].desc}</div>
                 </div>
               ))}
             </div>
@@ -127,7 +127,7 @@ export default function CurriculumMatrix() {
                       aria-pressed={active}
                       className={`text-left p-4 border-l border-ink-700/10 transition-colors ${
                         active
-                          ? 'bg-ink-900 text-cream-50'
+                          ? 'bg-clay-800 text-cream-50'
                           : ms.length
                             ? `${levelTint[l]} hover:bg-cream-200/70 cursor-pointer`
                             : `${levelTint[l]} cursor-default`
@@ -158,7 +158,7 @@ export default function CurriculumMatrix() {
               onClick={() => toggle('base')}
               aria-pressed={sel === 'base'}
               className={`w-full text-left grid grid-cols-[190px_1fr] border-t border-ink-700/15 transition-colors ${
-                sel === 'base' ? 'bg-ink-900 text-cream-50' : 'bg-cream-100/60 hover:bg-cream-200/70'
+                sel === 'base' ? 'bg-clay-800 text-cream-50' : 'bg-cream-100/60 hover:bg-cream-200/70'
               }`}
             >
               <div className="p-4">

@@ -24,20 +24,21 @@ export default function Videos() {
   }
 
   return (
-    <section id="videos" className="py-28 md:py-36 border-b border-ink-700/10">
-      <div className="container-editorial">
+    <section id="videos" className="py-28 md:py-36 bg-ink-800 text-cream-50 relative overflow-hidden">
+      <div aria-hidden className="absolute -left-48 bottom-0 w-[560px] h-[560px] rounded-full bg-clay-700/20 blur-3xl" />
+      <div className="container-editorial relative">
         <div className="flex items-end justify-between flex-wrap gap-6 mb-10">
           <div>
-            <span className="eyebrow">VIDEO · 신성진 · Work by AX</span>
-            <h2 className="h-display text-[36px] md:text-[52px] mt-5">
-              현장에서 쓰는 <span className="text-clay-700">생성형 AI를 영상으로.</span>
+            <span className="eyebrow !text-clay-300">VIDEO · 신성진 · Work by AX</span>
+            <h2 className="h-display !text-cream-50 text-[36px] md:text-[52px] mt-5">
+              현장에서 쓰는 <span className="text-clay-300">생성형 AI를 영상으로.</span>
             </h2>
           </div>
           <a
             href={site.youtubeChannel}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm font-medium text-ink-900 underline underline-offset-4 hover:text-clay-700"
+            className="text-sm font-medium text-cream-100 underline underline-offset-4 hover:text-clay-300"
           >
             @workbyax 채널 전체 보기 ↗
           </a>
@@ -54,12 +55,12 @@ export default function Videos() {
               onClick={() => pick(i)}
               className={`px-4 py-2 rounded-full text-[13px] border transition-colors ${
                 i === tab
-                  ? 'bg-ink-900 text-cream-50 border-ink-900'
-                  : 'bg-cream-50 text-ink-700 border-ink-700/20 hover:border-clay-600 hover:text-clay-700'
+                  ? 'bg-cream-50 text-ink-900 border-cream-50'
+                  : 'bg-transparent text-cream-100 border-cream-100/25 hover:border-clay-300 hover:text-clay-300'
               }`}
             >
               {s.label}
-              <span className={`ml-2 font-mono text-[10px] ${i === tab ? 'text-clay-300' : 'text-ink-400'}`}>
+              <span className={`ml-2 font-mono text-[10px] ${i === tab ? 'text-clay-700' : 'text-cream-200/50'}`}>
                 {s.videos.length}
               </span>
             </button>
@@ -67,12 +68,12 @@ export default function Videos() {
         </div>
 
         <div className="flex items-start justify-between gap-6 flex-wrap mb-8">
-          <p className="text-[15px] text-ink-700 max-w-2xl leading-relaxed">{cur.desc}</p>
+          <p className="text-[15px] text-cream-200/80 max-w-2xl leading-relaxed">{cur.desc}</p>
           <a
             href={cur.more}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[13px] text-clay-700 font-medium underline underline-offset-4 hover:text-clay-800 shrink-0"
+            className="text-[13px] text-clay-300 font-medium underline underline-offset-4 hover:text-clay-100 shrink-0"
           >
             유튜브에서 이 시리즈 보기 ↗
           </a>
@@ -82,14 +83,14 @@ export default function Videos() {
           <button
             onClick={() => scroll(-1)}
             aria-label="이전"
-            className="hidden md:flex absolute -left-5 top-[34%] z-10 w-10 h-10 rounded-full border border-ink-700/25 bg-cream-50 items-center justify-center text-ink-700 hover:border-clay-600 hover:text-clay-700 shadow-sm opacity-0 group-hover/slider:opacity-100 transition-opacity"
+            className="hidden md:flex absolute -left-5 top-[34%] z-10 w-10 h-10 rounded-full border border-cream-50/25 bg-ink-900 items-center justify-center text-cream-100 hover:border-clay-300 hover:text-clay-300 shadow-sm opacity-0 group-hover/slider:opacity-100 transition-opacity"
           >
             ‹
           </button>
           <button
             onClick={() => scroll(1)}
             aria-label="다음"
-            className="hidden md:flex absolute -right-5 top-[34%] z-10 w-10 h-10 rounded-full border border-ink-700/25 bg-cream-50 items-center justify-center text-ink-700 hover:border-clay-600 hover:text-clay-700 shadow-sm opacity-0 group-hover/slider:opacity-100 transition-opacity"
+            className="hidden md:flex absolute -right-5 top-[34%] z-10 w-10 h-10 rounded-full border border-cream-50/25 bg-ink-900 items-center justify-center text-cream-100 hover:border-clay-300 hover:text-clay-300 shadow-sm opacity-0 group-hover/slider:opacity-100 transition-opacity"
           >
             ›
           </button>
@@ -107,7 +108,7 @@ export default function Videos() {
                 onClick={() => setActive(v)}
                 className="group flex-none w-[260px] md:w-[300px] snap-start text-left flex flex-col"
               >
-                <div className="aspect-video rounded-sm border border-ink-700/15 overflow-hidden relative bg-ink-900 group-hover:border-clay-500 group-hover:shadow-[0_12px_28px_-12px_rgba(110,55,16,0.35)] transition-all duration-300">
+                <div className="aspect-video rounded-sm border border-cream-50/10 overflow-hidden relative bg-ink-900 group-hover:border-clay-300 group-hover:shadow-[0_12px_28px_-12px_rgba(110,55,16,0.35)] transition-all duration-300">
                   <img
                     src={`https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`}
                     alt={v.title}
@@ -127,7 +128,7 @@ export default function Videos() {
                     </div>
                   </div>
                 </div>
-                <p className="mt-3 font-serif text-[14px] md:text-[15px] text-ink-900 leading-snug group-hover:text-clay-700 transition-colors line-clamp-2 min-h-[2.6em]">
+                <p className="mt-3 font-serif text-[14px] md:text-[15px] text-cream-50 leading-snug group-hover:text-clay-300 transition-colors line-clamp-2 min-h-[2.6em]">
                   {v.title}
                 </p>
               </button>
