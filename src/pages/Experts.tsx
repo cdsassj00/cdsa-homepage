@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import Footer from '../sections/Footer'
-import { ExpertDetail } from '../sections/ExpertsCore'
+import { ExpertDetail, ExpertPoster } from '../sections/ExpertsCore'
 import { experts } from '../data/experts'
 
 export default function Experts() {
@@ -53,14 +53,7 @@ export default function Experts() {
             }`}
           >
             <div className={`${i % 2 ? 'md:order-2' : ''}`}>
-              <div className="relative aspect-[3/4.4] overflow-hidden bg-cream-200 border border-ink-700/10">
-                <img
-                  src={`/expert-photos/${e.slug}.webp`}
-                  alt={e.name}
-                  loading="lazy"
-                  className="absolute inset-0 w-full h-full object-cover object-top"
-                />
-              </div>
+              <ExpertPoster e={e} index={i} full />
               <div className="mt-3 font-mono text-[10px] tracking-[0.2em] text-ink-400">
                 PROFILE {String(i + 1).padStart(2, '0')} / {String(experts.length).padStart(2, '0')}
               </div>

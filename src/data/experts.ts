@@ -6,6 +6,9 @@ export interface Expert {
   name: string
   en: string
   role: string
+  word: string
+  heightCm: number
+  line: string
   thesis: string
   fields: string[]
   stats: { n: string; label: string }[]
@@ -22,6 +25,9 @@ export const experts: Expert[] = [
     name: '신성진',
     en: 'SHIN SUNG JIN',
     role: '대표이사 · AI·AX 전략 / 경영기획',
+    word: 'AX',
+    heightCm: 174,
+    line: '공공·기업의 AX를 설계하고, 직접 만들어 보인다',
     thesis: '기업 경영·재무·마케팅 실무와 공공 데이터기반행정, 생성형 AI 교육·컨설팅을 연결한다. 비개발자용 업무도구와 교육 플랫폼을 직접 설계·배포한다.',
     fields: ['생성형 AI · AX', '바이브코딩 · 자동화', '데이터분석', '경영 · 기획'],
     stats: [
@@ -46,6 +52,9 @@ export const experts: Expert[] = [
     name: '현중균',
     en: 'JUNGKYUN HYUN',
     role: '이사 · 디브릿지 대표',
+    word: 'DATA',
+    heightCm: 184,
+    line: '데이터 시각화에서 AI 서비스 구현까지',
     thesis: '데이터 시각화부터 AI 서비스 구현까지, 현업의 문제를 교육 과정으로 설계한다.',
     fields: ['생성형 AI 활용', '데이터 분석 · 시각화', '바이브코딩 · AI Agent', 'Power BI'],
     stats: [
@@ -69,6 +78,9 @@ export const experts: Expert[] = [
     name: '이중균',
     en: 'JOONG KYOON LEE',
     role: '파트너이사 · 데이터·AX·CRM',
+    word: 'CRM',
+    heightCm: 172,
+    line: '데이터 조직 운영 경험을 공공 AX로',
     thesis: '데이터 조직 운영 경험을 공공 AX 실행과 연결한다. 도입에서 내재화까지.',
     fields: ['공공 AX · 데이터 기반 행정', 'AI 리더십', 'CRM · 추천 시스템', '바이브코딩 · 노코드 분석'],
     stats: [
@@ -93,6 +105,9 @@ export const experts: Expert[] = [
     name: '김태유',
     en: 'TAE YOU KIM',
     role: 'AI 전문교수 · AX 리드 컨설턴트',
+    word: 'AGENT',
+    heightCm: 174,
+    line: '연구의 엄밀함을 에이전트 설계로',
     thesis: '연구의 엄밀함과 현장의 실행을 AI 에이전트 설계로 잇는다.',
     fields: ['AI 에이전트 · MCP', '데이터 엔지니어링', '바이브코딩', 'AI Design Thinking'],
     stats: [
@@ -116,6 +131,9 @@ export const experts: Expert[] = [
     name: '김용재',
     en: 'YONG JAE KIM',
     role: '컨설턴트 · 데이터 분석 교육',
+    word: 'AICE',
+    heightCm: 185,
+    line: '분석 도구에서 AI 업무 적용까지',
     thesis: '분석 도구를 가르치는 데서 AI를 업무에 적용하는 단계까지.',
     fields: ['데이터 분석 · R · Python', '머신러닝 · 시계열', 'LLM · RAG · AI Agent', 'AICE 자격'],
     stats: [

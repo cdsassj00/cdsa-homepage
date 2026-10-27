@@ -1,6 +1,86 @@
 import { useState } from 'react'
 import { experts, type Expert } from '../data/experts'
 
+const TALLEST = Math.max(...experts.map((x) => x.heightCm))
+
+/** 포스터형 카드: 뒤에 큰 키워드(블러 + 윤곽선), 앞에 배경을 딴 인물 */
+export function ExpertPoster({
+  e,
+  index,
+  active = true,
+  full = false,
+}: {
+  e: Expert
+  index: number
+  active?: boolean
+  full?: boolean
+}) {
+  const size = `${Math.min(58, 112 / e.word.length)}cqw`
+  return (
+    <div
+      className={`relative aspect-[3/4.4] overflow-hidden border transition-all duration-300 ${
+        active ? 'border-clay-600 shadow-[0_18px_40px_-22px_rgba(110,55,16,0.55)]' : 'border-ink-700/10'
+      }`}
+      style={{
+        containerType: 'inline-size',
+        background: 'radial-gradient(120% 70% at 50% 38%, #F4DBB9 0%, #F5F0E6 55%, #EEE6D4 100%)',
+      }}
+    >
+      {/* 키워드 — 블러 층 */}
+      <div
+        aria-hidden
+        className="absolute inset-x-0 text-center font-serif font-semibold leading-none select-none"
+        style={{ top: full ? '7%' : '9%', fontSize: size, color: '#C17A3B', opacity: 0.45, filter: 'blur(7px)', letterSpacing: '-0.04em' }}
+      >
+        {e.word}
+      </div>
+      {/* 키워드 — 윤곽선 층 */}
+      <div
+        aria-hidden
+        className="absolute inset-x-0 text-center font-serif font-semibold leading-none select-none"
+        style={{
+          top: full ? '7%' : '9%',
+          fontSize: size,
+          color: 'rgba(250,247,241,0.35)',
+          WebkitTextStroke: '1.5px rgba(139,74,24,0.55)',
+          letterSpacing: '-0.04em',
+        }}
+      >
+        {e.word}
+      </div>
+
+      {/* 실제 키 비례: 모두 같은 바닥선(카드 아래)에 서 있다고 보고 185cm를 기준으로 크기를 잡는다 */}
+      <img
+        src={`/expert-photos/${e.slug}-cut.webp`}
+        alt={e.name}
+        loading="lazy"
+        className={`absolute left-1/2 -translate-x-1/2 max-w-none transition-all duration-500 ${
+          active ? 'grayscale-0' : 'grayscale-[0.5] group-hover:grayscale-0'
+        }`}
+        style={{
+          bottom: full ? '0%' : '-62%',
+          height: `${(full ? 88 : 150) * (e.heightCm / TALLEST)}%`,
+          filter: active ? 'drop-shadow(0 10px 18px rgba(61,46,34,0.18))' : undefined,
+        }}
+      />
+
+      <div
+        className={`absolute inset-x-0 bottom-0 bg-gradient-to-t from-cream-50 to-transparent ${
+          full ? 'h-[22%] via-cream-50/70' : 'h-[42%] via-cream-50/85'
+        }`}
+      />
+      <div className="absolute left-0 top-0 p-3 font-mono text-[8.5px] tracking-[0.18em] text-clay-700/80">
+        CDSA · {String(index + 1).padStart(2, '0')}
+      </div>
+      <div className="absolute left-3 right-3 bottom-3">
+        <div className="w-6 h-px bg-clay-600 mb-2" />
+        <div className="font-serif text-[19px] md:text-[22px] text-ink-900 leading-none">{e.name}</div>
+        <div className="text-[10.5px] md:text-[11.5px] text-ink-700 leading-snug mt-1.5">{e.line}</div>
+      </div>
+    </div>
+  )
+}
+
 export function ExpertDetail({ e }: { e: Expert }) {
   return (
     <div className="grid md:grid-cols-[1.1fr_1fr] gap-10 md:gap-14">
@@ -99,25 +179,7 @@ export default function ExpertsCore() {
                 aria-pressed={active}
                 className="group text-left"
               >
-                <div
-                  className={`relative aspect-[3/4.4] overflow-hidden bg-cream-200 border transition-all duration-300 ${
-                    active ? 'border-clay-600 shadow-[0_18px_40px_-22px_rgba(110,55,16,0.55)]' : 'border-ink-700/10'
-                  }`}
-                >
-                  <img
-                    src={`/expert-photos/${x.slug}.webp`}
-                    alt={x.name}
-                    loading="lazy"
-                    className={`absolute inset-0 w-full h-full object-cover object-top transition-all duration-500 ${
-                      active ? 'grayscale-0 scale-[1.02]' : 'grayscale-[0.55] group-hover:grayscale-0'
-                    }`}
-                  />
-                  <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-ink-900/70 to-transparent" />
-                  <div className="absolute left-3 right-3 bottom-3 text-cream-50">
-                    <div className="font-serif text-[18px] md:text-[20px] leading-none">{x.name}</div>
-                    <div className="font-mono text-[8.5px] tracking-[0.16em] mt-1.5 opacity-80">{x.en}</div>
-                  </div>
-                </div>
+                <ExpertPoster e={x} index={i} active={active} />
                 <div className={`h-[2px] mt-2 transition-colors ${active ? 'bg-clay-600' : 'bg-transparent'}`} />
               </button>
             )
