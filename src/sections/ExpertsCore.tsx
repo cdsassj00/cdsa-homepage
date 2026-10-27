@@ -26,24 +26,27 @@ export function ExpertPoster({
         background: 'radial-gradient(120% 70% at 50% 38%, #F4DBB9 0%, #F5F0E6 55%, #EEE6D4 100%)',
       }}
     >
-      {/* 키워드 — 블러 층 */}
+      {/* 키워드 — 번지는 빛 */}
       <div
         aria-hidden
-        className="absolute inset-x-0 text-center font-serif font-semibold leading-none select-none"
-        style={{ top: full ? '7%' : '9%', fontSize: size, color: '#C17A3B', opacity: 0.45, filter: 'blur(7px)', letterSpacing: '-0.04em' }}
+        className="absolute inset-x-0 text-center font-serif font-bold leading-none select-none"
+        style={{ top: full ? '7%' : '9%', fontSize: size, color: '#E3A872', opacity: 0.7, filter: 'blur(14px)', letterSpacing: '-0.04em' }}
       >
         {e.word}
       </div>
-      {/* 키워드 — 윤곽선 층 */}
+      {/* 키워드 — 면으로 채운 글자, 아래로 갈수록 옅게 */}
       <div
         aria-hidden
-        className="absolute inset-x-0 text-center font-serif font-semibold leading-none select-none"
+        className="absolute inset-x-0 text-center font-serif font-bold leading-none select-none"
         style={{
           top: full ? '7%' : '9%',
           fontSize: size,
-          color: 'rgba(250,247,241,0.35)',
-          WebkitTextStroke: '1.5px rgba(139,74,24,0.55)',
           letterSpacing: '-0.04em',
+          background: 'linear-gradient(180deg, rgba(193,122,59,0.55) 0%, rgba(227,168,114,0.35) 100%)',
+          WebkitBackgroundClip: 'text',
+          backgroundClip: 'text',
+          color: 'transparent',
+          filter: 'blur(0.6px)',
         }}
       >
         {e.word}
