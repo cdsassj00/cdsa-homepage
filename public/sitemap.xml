@@ -112,12 +112,6 @@
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://cdsa.kr/blog/people-first-design.html</loc>
-    <lastmod>2026-05-30</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
     <loc>https://cdsa.kr/blog/karpathy-ghost-intelligence.html</loc>
     <lastmod>2026-05-23</lastmod>
     <changefreq>monthly</changefreq>
@@ -172,12 +166,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cdsa.kr/blog/ai-hegemony-2026.html</loc>
-    <lastmod>2026-04-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://cdsa.kr/blog/ai-value-gap-2026.html</loc>
     <lastmod>2026-04-23</lastmod>
     <changefreq>monthly</changefreq>
@@ -202,19 +190,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://cdsa.kr/blog/agent-as-workflow.html</loc>
-    <lastmod>2026-04-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://cdsa.kr/blog/domain-daxist.html</loc>
-    <lastmod>2026-04-18</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://cdsa.kr/blog/gemini-worker.html</loc>
     <lastmod>2026-04-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
