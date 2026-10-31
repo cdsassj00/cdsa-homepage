@@ -569,7 +569,7 @@ renderVids();
 
 /* 문의 폼 */
 function openInquiry(){document.getElementById('inquiryModal').style.display='flex';document.body.style.overflow='hidden'}
-function closeInquiry(e){if(e&&e.target!==e.currentTarget&&!e.target.closest('button'))return;document.getElementById('inquiryModal').style.display='none';document.body.style.overflow=''}
+function closeInquiry(e){if(e&&e.target!==e.currentTarget)return;document.getElementById('inquiryModal').style.display='none';document.body.style.overflow=''}
 function submitInquiry(ev){ev.preventDefault();var f=ev.target,b=document.getElementById('inqSubmit');b.disabled=true;b.textContent='접수 중…';
   fetch('/api/inquiry',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({course:'바이브코딩 교육',name:f.name.value,email:f.email.value,org:f.org.value,phone:f.phone.value,message:f.message.value,website:f.website.value,consent:f.consent.checked})})
   .then(function(r){if(!r.ok)throw 0;f.style.display='none';document.getElementById('inqDone').style.display='block';if(typeof gtag==='function')gtag('event','inquiry_submit',{course:'vibe-coding'})})
