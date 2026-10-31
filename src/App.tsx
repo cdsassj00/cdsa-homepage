@@ -2,15 +2,13 @@ import Nav from './sections/Nav'
 import Hero from './sections/Hero'
 import Mission from './sections/Mission'
 import Alleyway from './sections/Alleyway'
-import Tracks from './sections/Tracks'
-import CurriculumSheet from './sections/CurriculumSheet'
+import CurriculumMatrix from './sections/CurriculumMatrix'
 import Showcase from './sections/Showcase'
 import Videos from './sections/Videos'
 import Tutors from './sections/Tutors'
 import Institutions from './sections/Institutions'
 import CTA from './sections/CTA'
 import Footer from './sections/Footer'
-import FullCourse from './sections/FullCourse'
 import FloatingInsights from './sections/FloatingInsights'
 import FloatingSites from './sections/FloatingSites'
 import FloatingChat from './sections/FloatingChat'
@@ -31,10 +29,7 @@ function App() {
       <SectionDots />
       <Alleyway />
       <SectionDots />
-      <Tracks />
-      <SectionDots />
-      <FullCourse />
-      <CurriculumSheet />
+      <CurriculumMatrix />
       <SectionDots />
       <Showcase />
       <SectionDots />

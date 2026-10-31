@@ -3,6 +3,21 @@ import { announcePanel, onPanelChange } from './floatingBus'
 
 const articles = [
   {
+    title: '이 열기가 금지령으로 끝나지 않으려면 — 공공 바이브코딩에 바라는 것',
+    description: '상상을 현실로 만드는 열기를 함께 만든 사람의 자기 점검. 만든 것이 남아야 이 흐름이 오래간다.',
+    href: '/blog/public-ai-not-freelancer.html',
+  },
+  {
+    title: '타자기가 아니라 화가 — Inception Mercury(dLLM)와 체험 사이트 사용법',
+    description: '세계 최초의 상용 디퓨전 LLM Mercury가 왜 중요한지, 그리고 수강생이 설명 없이 "느끼게" 할 수 있는 체험 사이트의 네 가지 탭을 어떻게 돌려봐야 하는지 — 비개발자용 가이드.',
+    href: '/blog/inception-mercury-studio.html',
+  },
+  {
+    title: 'AI 네이티브 환경은 오늘 시작하는 조직의 것이다',
+    description: '격차는 규모가 아니라 연식이다. 1인당 매출 348만 달러 vs 58만 달러, CIO 84%가 레거시로 AI 취소. 공공·대기업·학교가 "개인은 쓰는데 조직은 못 쓰는" 상태를 벗어나는 세 가지 길.',
+    href: '/blog/ai-native-organization.html',
+  },
+  {
     title: 'Cloudflare가 Deno 팀을 품었다 — 진짜 핵심은 celld다',
     description: 'Workers 앱을 기관 자체 서버에서 돌리는 celld. 바이브코딩 결과물이 운영 시스템이 되는 길과 폐쇄망 도입 전 확인할 것들.',
     href: '/blog/cloudflare-deno-celld.html',

@@ -1,0 +1,198 @@
+import { useState } from 'react'
+import { experts, type Expert } from '../data/experts'
+
+const TALLEST = Math.max(...experts.map((x) => x.heightCm))
+
+/** 포스터형 카드: 뒤에 큰 키워드(블러 + 윤곽선), 앞에 배경을 딴 인물 */
+export function ExpertPoster({
+  e,
+  index,
+  active = true,
+  full = false,
+}: {
+  e: Expert
+  index: number
+  active?: boolean
+  full?: boolean
+}) {
+  const size = `${Math.min(58, 112 / e.word.length)}cqw`
+  return (
+    <div
+      className={`relative aspect-[3/4.4] overflow-hidden border transition-all duration-300 ${
+        active ? 'border-clay-600 shadow-[0_18px_40px_-22px_rgba(110,55,16,0.55)]' : 'border-ink-700/10'
+      }`}
+      style={{
+        containerType: 'inline-size',
+        background: 'radial-gradient(120% 70% at 50% 38%, #F4DBB9 0%, #F5F0E6 55%, #EEE6D4 100%)',
+      }}
+    >
+      {/* 키워드 — 번지는 빛 */}
+      <div
+        aria-hidden
+        className="absolute inset-x-0 text-center font-serif font-bold leading-none select-none"
+        style={{ top: full ? '7%' : '9%', fontSize: size, color: '#E3A872', opacity: 0.7, filter: 'blur(14px)', letterSpacing: '-0.04em' }}
+      >
+        {e.word}
+      </div>
+      {/* 키워드 — 면으로 채운 글자, 아래로 갈수록 옅게 */}
+      <div
+        aria-hidden
+        className="absolute inset-x-0 text-center font-serif font-bold leading-none select-none"
+        style={{
+          top: full ? '7%' : '9%',
+          fontSize: size,
+          letterSpacing: '-0.04em',
+          background: 'linear-gradient(180deg, rgba(193,122,59,0.55) 0%, rgba(227,168,114,0.35) 100%)',
+          WebkitBackgroundClip: 'text',
+          backgroundClip: 'text',
+          color: 'transparent',
+          filter: 'blur(0.6px)',
+        }}
+      >
+        {e.word}
+      </div>
+
+      {/* 실제 키 비례: 모두 같은 바닥선(카드 아래)에 서 있다고 보고 185cm를 기준으로 크기를 잡는다 */}
+      <img
+        src={`/expert-photos/${e.slug}-cut.webp`}
+        alt={e.name}
+        loading="lazy"
+        className={`absolute left-1/2 -translate-x-1/2 max-w-none transition-all duration-500 ${
+          active ? 'grayscale-0' : 'grayscale-[0.5] group-hover:grayscale-0'
+        }`}
+        style={{
+          bottom: full ? '0%' : '-62%',
+          height: `${(full ? 88 : 150) * (e.heightCm / TALLEST)}%`,
+          filter: active ? 'drop-shadow(0 10px 18px rgba(61,46,34,0.18))' : undefined,
+        }}
+      />
+
+      <div
+        className={`absolute inset-x-0 bottom-0 bg-gradient-to-t from-cream-50 to-transparent ${
+          full ? 'h-[22%] via-cream-50/70' : 'h-[42%] via-cream-50/85'
+        }`}
+      />
+      <div className="absolute left-0 top-0 p-3 font-mono text-[8.5px] tracking-[0.18em] text-clay-700/80">
+        CDSA · {String(index + 1).padStart(2, '0')}
+      </div>
+      <div className="absolute left-3 right-3 bottom-3">
+        <div className="w-6 h-px bg-clay-600 mb-2" />
+        <div className="font-serif text-[19px] md:text-[22px] text-ink-900 leading-none">{e.name}</div>
+        <div className="text-[10.5px] md:text-[11.5px] text-ink-700 leading-snug mt-1.5">{e.line}</div>
+      </div>
+    </div>
+  )
+}
+
+export function ExpertDetail({ e }: { e: Expert }) {
+  return (
+    <div className="grid md:grid-cols-[1.1fr_1fr] gap-10 md:gap-14">
+      <div>
+        <span className="font-mono text-[10px] tracking-[0.2em] text-clay-700 uppercase">{e.en}</span>
+        <h3 className="font-serif text-[30px] md:text-[38px] text-ink-900 mt-2 leading-tight">{e.name}</h3>
+        <p className="text-[14px] text-ink-500 mt-1">{e.role}</p>
+        <p className="font-serif text-[19px] md:text-[22px] text-ink-800 leading-[1.6] mt-7 border-l-2 border-clay-500 pl-5">
+          {e.thesis}
+        </p>
+        <div className="grid grid-cols-3 gap-px bg-ink-700/10 border border-ink-700/10 mt-8">
+          {e.stats.map((s) => (
+            <div key={s.label} className="bg-cream-50 p-4">
+              <div className="font-serif text-[24px] md:text-[28px] text-clay-700 leading-none">{s.n}</div>
+              <div className="text-[11.5px] text-ink-500 mt-2 leading-snug">{s.label}</div>
+            </div>
+          ))}
+        </div>
+        <div className="flex flex-wrap gap-1.5 mt-6">
+          {e.fields.map((f) => (
+            <span key={f} className="text-[12px] px-3 py-1 rounded-full border border-ink-700/15 text-ink-700 bg-cream-50">
+              {f}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <div className="space-y-7">
+        <div>
+          <div className="font-mono text-[10px] tracking-[0.2em] text-ink-400 uppercase mb-3">Career</div>
+          <ul className="space-y-2">
+            {e.career.map((c) => (
+              <li key={c} className="text-[14px] text-ink-700 leading-relaxed pl-4 relative">
+                <span className="absolute left-0 top-[0.7em] w-1.5 h-px bg-clay-600" />
+                {c}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <div className="font-mono text-[10px] tracking-[0.2em] text-ink-400 uppercase mb-3">주요 교육 기관</div>
+          <p className="text-[13.5px] text-ink-600 leading-relaxed">{e.public.join(' · ')} 외</p>
+        </div>
+        {e.books.length > 0 && (
+          <div>
+            <div className="font-mono text-[10px] tracking-[0.2em] text-ink-400 uppercase mb-3">Books</div>
+            <p className="text-[13.5px] text-ink-700 leading-relaxed">{e.books.join('  ')}</p>
+          </div>
+        )}
+        <div className="flex flex-wrap items-center gap-4 pt-2">
+          <a
+            href={`mailto:${e.email}`}
+            className="text-[13px] text-clay-700 font-medium underline underline-offset-4 hover:text-clay-800"
+          >
+            {e.email}
+          </a>
+          {e.links?.map((l) => (
+            <a
+              key={l.href}
+              href={l.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[13px] text-ink-600 underline underline-offset-4 hover:text-clay-700"
+            >
+              {l.label} ↗
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default function ExpertsCore() {
+  const [sel, setSel] = useState(0)
+  const e = experts[sel]
+
+  return (
+    <div>
+      <div className="flex items-baseline justify-between gap-4 mb-6">
+        <span className="font-mono text-[11px] tracking-[0.2em] text-clay-700 uppercase">Core Five · 핵심 전문가</span>
+        <a href="/experts" className="text-[13px] text-ink-700 underline underline-offset-4 hover:text-clay-700">
+          전문가 프로필 전체 보기 →
+        </a>
+      </div>
+
+      <div className="overflow-x-auto -mx-6 px-6 md:mx-0 md:px-0" style={{ scrollbarWidth: 'none' }}>
+        <div className="grid grid-cols-5 gap-3 md:gap-4 min-w-[720px]">
+          {experts.map((x, i) => {
+            const active = i === sel
+            return (
+              <button
+                key={x.slug}
+                type="button"
+                onClick={() => setSel(i)}
+                aria-pressed={active}
+                className="group text-left"
+              >
+                <ExpertPoster e={x} index={i} active={active} />
+                <div className={`h-[2px] mt-2 transition-colors ${active ? 'bg-clay-600' : 'bg-transparent'}`} />
+              </button>
+            )
+          })}
+        </div>
+      </div>
+
+      <div key={e.slug} className="mt-10 bg-cream-50 border border-ink-700/10 p-7 md:p-10 animate-[fadeUp_0.35s_ease]">
+        <ExpertDetail e={e} />
+      </div>
+    </div>
+  )
+}
