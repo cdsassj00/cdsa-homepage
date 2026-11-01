@@ -48,7 +48,7 @@ export const directory: { label: string; items: Site[] }[] = [
       { name: 'RAG의 모든 것 실습 랩', desc: '임베딩·검색·생성 실습', href: 'https://rag-lab.pages.dev' },
       { name: 'CDSA Harness', desc: 'AI 에이전트 교육용 하네스', href: 'https://cdsassj00.github.io/miniharness/' },
       { name: 'OpenCode 활용 매뉴얼', desc: '비개발자 AI 코딩 에이전트 입문서', href: 'https://cdsassj00.github.io/opencode-manual/' },
-      { name: 'AI 커리큘럼 빌더', desc: '역량 단계별 과정 조립', href: 'https://aicurri.lovable.app' },
+      { name: 'AI 커리큘럼 빌더', desc: '실습모듈로 과정 조립', href: '/builder' },
       { name: '바이브코딩 결과물 아카이브', desc: '공공부문 수강생 산출물 모음', href: 'https://publicax.lovable.app' },
       { name: 'AICE Associate 학습 도우미', desc: '문법·예제·기출 모의문제', href: 'https://aiceassociate.vercel.app' },
       { name: '의성군 AI 교육 아카이브', desc: '지자체 AI 교육 기록', href: 'https://eusung-lms.vercel.app' },

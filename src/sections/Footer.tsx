@@ -17,7 +17,7 @@ export default function Footer() {
             <button onClick={openInquiry} className="text-ink-700 hover:text-clay-700">
               교육 문의
             </button>
-            <a href={site.builderUrl} target="_blank" rel="noopener noreferrer" className="text-ink-700 hover:text-clay-700">
+            <a href={site.builderUrl} className="text-ink-700 hover:text-clay-700">
               커리큘럼 빌더
             </a>
             <a href={site.marketUrl} target="_blank" rel="noopener noreferrer" className="text-ink-700 hover:text-clay-700">

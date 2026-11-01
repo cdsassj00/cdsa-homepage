@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react'
 import { useInquiry } from './InquiryModal'
 import { domainOrder, domains, levels, modules, type Domain, type MatrixModule } from '../data/aiMatrix'
+import { loadLibrary, MODULE_COUNT } from '../data/moduleLibrary'
+import { openBuilder } from './floatingBus'
 
 type Level = 1 | 2 | 3 | 4
 type Selection = { l: Level; d: Domain } | 'base' | null
@@ -226,7 +228,7 @@ export default function CurriculumMatrix() {
         )}
 
         {/* Paths */}
-        <div className="mt-14 grid md:grid-cols-2 gap-px bg-ink-700/10 border border-ink-700/10">
+        <div className="mt-14 grid md:grid-cols-3 gap-px bg-ink-700/10 border border-ink-700/10">
           <a href="/fullcourse.html" className="group bg-cream-50 hover:bg-cream-100 transition-colors p-8 md:p-10">
             <span className="font-mono text-[10px] tracking-[0.2em] text-clay-700 uppercase">8 WEEKS · FULL COURSE</span>
             <h3 className="font-serif text-[22px] md:text-[26px] text-ink-900 mt-3 leading-snug group-hover:text-clay-800 transition-colors">
@@ -247,6 +249,21 @@ export default function CurriculumMatrix() {
             </p>
             <span className="inline-block mt-5 text-sm text-clay-700 font-medium underline underline-offset-4">모듈 탐색기 열기 →</span>
           </a>
+          <button
+            type="button"
+            onClick={openBuilder}
+            onMouseEnter={() => void loadLibrary().catch(() => {})}
+            className="group text-left bg-ink-800 hover:bg-clay-800 transition-colors p-8 md:p-10"
+          >
+            <span className="font-mono text-[10px] tracking-[0.2em] text-clay-300 uppercase">{MODULE_COUNT} MODULES · BUILDER</span>
+            <h3 className="font-serif text-[22px] md:text-[26px] text-cream-50 mt-3 leading-snug">
+              우리 조직 커리큘럼 직접 짜 보기
+            </h3>
+            <p className="text-[14px] text-cream-200/80 mt-3 leading-relaxed">
+              업무로 모듈을 찾아 담고 일차별로 놓으면, 그 구성 그대로 교육을 문의할 수 있습니다.
+            </p>
+            <span className="inline-block mt-5 text-sm text-clay-300 font-medium underline underline-offset-4">빌더 열기 →</span>
+          </button>
         </div>
 
         <div className="mt-10 text-center">

@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import { site } from '../data/content'
 import { directory, featured } from '../data/showcase'
+import { loadLibrary, MODULE_COUNT } from '../data/moduleLibrary'
+import { openBuilder } from './floatingBus'
 
 const totalSites = featured.length + directory.reduce((n, g) => n + g.items.length, 0)
 
 export default function Showcase() {
   const [showAll, setShowAll] = useState(false)
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null)
 
   return (
     <section
@@ -111,12 +111,13 @@ export default function Showcase() {
             <div>
               <h3 className="font-serif text-xl text-ink-900 mb-2">직접 조립하는 커리큘럼</h3>
               <p className="text-sm text-ink-700 max-w-lg">
-                드래그 앤 드랍으로 원하는 모듈을 조합해 나만의 교육과정을 설계해보세요.
+                실습모듈 {MODULE_COUNT}개를 내 업무로 찾아 담고 일차별로 놓아 보세요. 만든 구성 그대로 교육 문의까지 이어집니다.
               </p>
             </div>
             <div className="flex items-center gap-3">
               <button
-                onClick={() => setPreviewUrl(site.builderUrl)}
+                onClick={openBuilder}
+                onMouseEnter={() => void loadLibrary().catch(() => {})}
                 className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-ink-900 text-cream-50 text-sm font-medium hover:bg-clay-700 transition-colors"
               >
                 빌더 체험하기 →
@@ -133,48 +134,6 @@ export default function Showcase() {
           </div>
         </div>
       </div>
-
-      {previewUrl && (
-        <div
-          className="fixed inset-0 z-[100] bg-ink-900/75 backdrop-blur-sm flex items-center justify-center p-6 md:p-10"
-          onClick={() => setPreviewUrl(null)}
-        >
-          <div
-            className="bg-cream-50 rounded-sm w-full max-w-5xl overflow-hidden border border-ink-700/20 shadow-2xl flex flex-col"
-            style={{ height: '80vh' }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center justify-between px-5 py-3 border-b border-ink-700/10 shrink-0">
-              <span className="font-serif text-[15px] text-ink-900 truncate">커리큘럼 빌더</span>
-              <div className="flex items-center gap-2 shrink-0">
-                <a
-                  href={previewUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-xs text-clay-700 hover:text-clay-800 underline underline-offset-2"
-                >
-                  새 탭 ↗
-                </a>
-                <button
-                  onClick={() => setPreviewUrl(null)}
-                  className="text-ink-500 hover:text-ink-900 w-8 h-8 flex items-center justify-center rounded-full hover:bg-cream-200 transition-colors"
-                  aria-label="닫기"
-                >
-                  ✕
-                </button>
-              </div>
-            </div>
-            <div className="flex-1 bg-white relative">
-              <iframe
-                src={previewUrl}
-                title="커리큘럼 빌더"
-                className="absolute inset-0 w-full h-full border-0"
-                style={{ transform: 'scale(0.85)', transformOrigin: 'top left', width: '117.6%', height: '117.6%' }}
-              />
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   )
 }

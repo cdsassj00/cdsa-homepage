@@ -13,6 +13,7 @@ import FloatingInsights from './sections/FloatingInsights'
 import FloatingSites from './sections/FloatingSites'
 import FloatingChat from './sections/FloatingChat'
 import ExecutiveLoungeStrip from './sections/FloatingLounge'
+import BuilderHost from './sections/BuilderHost'
 
 function SectionDots() {
   return <div className="section-dots"><span /></div>
@@ -42,6 +43,7 @@ function App() {
       <FloatingInsights />
       <FloatingSites />
       <FloatingChat />
+      <BuilderHost />
     </div>
   )
 }

@@ -5,6 +5,7 @@ import App from './App.tsx'
 import Webinar from './pages/Webinar.tsx'
 import Modules from './pages/Modules.tsx'
 import Experts from './pages/Experts.tsx'
+import Builder from './pages/Builder.tsx'
 import CurriculumBook, { CurriculumBookProvider } from './pages/CurriculumBook.tsx'
 import { InquiryProvider } from './sections/InquiryModal.tsx'
 
@@ -21,6 +22,7 @@ function Router() {
   if (path.startsWith('/curriculum')) return <CurriculumBook />
   if (path.startsWith('/modules')) return <Modules />
   if (path.startsWith('/experts')) return <Experts />
+  if (path.startsWith('/builder')) return <Builder />
   return <App />
 }
 

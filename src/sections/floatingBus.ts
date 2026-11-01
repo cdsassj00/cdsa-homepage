@@ -20,6 +20,18 @@ export function onOpenMailForm(cb: () => void) {
   return () => window.removeEventListener(MAIL_EVT, cb)
 }
 
+const BUILDER_EVT = 'cdsa:open-builder'
+
+/** 홈 어디서든 커리큘럼 빌더 팝업을 연다. */
+export function openBuilder() {
+  window.dispatchEvent(new Event(BUILDER_EVT))
+}
+
+export function onOpenBuilder(cb: () => void) {
+  window.addEventListener(BUILDER_EVT, cb)
+  return () => window.removeEventListener(BUILDER_EVT, cb)
+}
+
 export function onPanelChange(cb: (id: PanelId) => void) {
   const handler = (e: Event) => cb((e as CustomEvent<PanelId>).detail)
   window.addEventListener(EVT, handler)

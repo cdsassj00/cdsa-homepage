@@ -7,7 +7,7 @@ export const site = {
   inquiryUrl: 'https://cdsapaper.lovable.app/inquiry/cdsa',
   // 커리큘럼 미리보기 · 커리큘럼 관련 문의 (flip-book 뷰어)
   curriculumUrl: 'https://cdsapaper.lovable.app/view/s8p63pyg',
-  builderUrl: 'https://aicurri.lovable.app',
+  builderUrl: '/builder',
   marketUrl: 'https://vivecoding.lovable.app/',
   youtubeChannel: 'https://www.youtube.com/@workbyax',
   email: 'sjshin@cdsa.kr',
@@ -414,7 +414,7 @@ export const showcases = [
     subtitle: '드래그 앤 드랍으로 조립하는 교육과정',
     description:
       '원하는 역량 단계에 맞춰 직접 교육 모듈을 조립해보세요. 바이브 코딩으로 만든 체류형 커리큘럼 디자이너.',
-    href: 'https://aicurri.lovable.app',
+    href: '/builder',
     badge: '교육 설계 도구',
     accent: 'moss',
   },
