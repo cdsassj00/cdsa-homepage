@@ -286,13 +286,14 @@ export default function CurriculumBuilder({ onClose }: { onClose?: () => void })
     setActiveDay(0)
   }
 
-  const planText = () => {
+  // 문의 API가 내용을 1,900자로 자르므로 문의용 글에는 결과물을 넣지 않는다.
+  const planText = (withOutputs: boolean) => {
     const lines = [`CDSA 커리큘럼 구성안 · ${days.length}일 · 모듈 ${picked.length}개`, '']
     days.forEach((d, i) => {
       lines.push(`${i + 1}일차`)
       for (const id of d) {
         const m = byId.get(id)
-        if (m) lines.push(`- ${m.name} (${id}) → ${m.out}`)
+        if (m) lines.push(`- ${m.name} (${id})${withOutputs ? ` → ${m.out}` : ''}`)
       }
       lines.push('')
     })
@@ -301,7 +302,7 @@ export default function CurriculumBuilder({ onClose }: { onClose?: () => void })
 
   const copyPlan = async () => {
     try {
-      await navigator.clipboard.writeText(planText())
+      await navigator.clipboard.writeText(planText(true))
       setCopied(true)
       setTimeout(() => setCopied(false), 1800)
     } catch {
@@ -445,7 +446,7 @@ export default function CurriculumBuilder({ onClose }: { onClose?: () => void })
         <button
           type="button"
           disabled={picked.length === 0}
-          onClick={() => openInquiry(`${planText()}\n교육 대상:\n예상 인원:\n희망 시기:\n`)}
+          onClick={() => openInquiry(`${planText(false)}\n교육 대상:\n예상 인원:\n희망 시기:\n`)}
           className="w-full h-11 rounded-full bg-ink-900 text-cream-50 text-[14px] font-medium hover:bg-clay-700 transition-colors disabled:bg-ink-700/25 disabled:text-ink-500"
         >
           이 구성으로 교육 문의 →

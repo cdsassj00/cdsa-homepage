@@ -48,6 +48,7 @@ export function InquiryProvider({ children }: { children: React.ReactNode }) {
           phone: fd.get('phone'),
           message: fd.get('message'),
           website: fd.get('website'),
+          consent: fd.get('consent') === 'on',
         }),
       })
       if (!r.ok) throw new Error(String(r.status))
@@ -146,6 +147,10 @@ export function InquiryProvider({ children }: { children: React.ReactNode }) {
                     className={`${inputCls} resize-none`}
                   />
                 </div>
+                <label className="flex items-start gap-2 text-[13px] text-ink-500 leading-relaxed">
+                  <input name="consent" type="checkbox" required className="mt-1 accent-clay-600" />
+                  <span>문의 회신을 위해 이름·이메일·소속·연락처를 수집하며, 회신 목적으로만 이용합니다. 이에 동의합니다. *</span>
+                </label>
                 {/* 허니팟 — 봇 차단용 숨은 필드 */}
                 <input name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
                 <button

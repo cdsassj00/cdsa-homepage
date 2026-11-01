@@ -455,7 +455,7 @@ h2 .blue{color:var(--accent-hi)}h2 .red{color:var(--red)}h2 .gold{color:var(--go
     <div class="format"><div class="format-label">FORMAT 04</div><div class="format-title">폐쇄망·행정망 전용 과정</div><div class="format-desc">외부 API 없이 Ollama·llama.cpp 로컬 모델로 운영. 공공기관 보안 환경에 맞춤 설계.</div></div>
   </div>
 
-  <a href="https://cdsapaper.lovable.app/inquiry/cdsa" class="btn btn-pulse" style="width:100%;justify-content:center;padding:18px;font-size:16px" target="_blank" rel="noopener">조직 바이브코딩 교육 문의하기 →</a>
+  <a href="https://leadfolio.app/inquiry/cdsa" class="btn btn-pulse" style="width:100%;justify-content:center;padding:18px;font-size:16px" target="_blank" rel="noopener">조직 바이브코딩 교육 문의하기 →</a>
   <button class="btn btn-ghost" style="width:100%;margin-top:10px;justify-content:center" onclick="openInquiry()" type="button">간단히 질문부터 남기기</button>
 
   <div class="pay-notice">
@@ -502,6 +502,7 @@ h2 .blue{color:var(--accent-hi)}h2 .red{color:var(--red)}h2 .gold{color:var(--go
         <div class="frow"><label>연락처</label><input name="phone" maxlength="20" placeholder="010-0000-0000"></div>
       </div>
       <div class="frow"><label>문의 내용</label><textarea name="message" rows="5" maxlength="1500" placeholder="풀고 싶은 업무 문제, 희망 포맷(하루/심화/분기형), 교육 대상 인원 등을 자유롭게 남겨주세요."></textarea></div>
+      <label style="display:flex;gap:8px;align-items:flex-start;font-size:12px;color:var(--body);margin-bottom:14px;line-height:1.6"><input type="checkbox" name="consent" required style="margin-top:3px"><span>문의 회신을 위해 이름·이메일·소속·연락처를 수집하며, 회신 목적으로만 이용합니다. 이에 동의합니다. *</span></label>
       <button type="submit" class="btn" id="inqSubmit" style="width:100%;justify-content:center">문의 접수하기</button>
     </form>
     <div class="form-done" id="inqDone">
@@ -568,9 +569,9 @@ renderVids();
 
 /* 문의 폼 */
 function openInquiry(){document.getElementById('inquiryModal').style.display='flex';document.body.style.overflow='hidden'}
-function closeInquiry(e){if(e&&e.target!==e.currentTarget&&!e.target.closest('button'))return;document.getElementById('inquiryModal').style.display='none';document.body.style.overflow=''}
+function closeInquiry(e){if(e&&e.target!==e.currentTarget)return;document.getElementById('inquiryModal').style.display='none';document.body.style.overflow=''}
 function submitInquiry(ev){ev.preventDefault();var f=ev.target,b=document.getElementById('inqSubmit');b.disabled=true;b.textContent='접수 중…';
-  fetch('/api/inquiry',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({course:'바이브코딩 교육',name:f.name.value,email:f.email.value,org:f.org.value,phone:f.phone.value,message:f.message.value,website:f.website.value})})
+  fetch('/api/inquiry',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({course:'바이브코딩 교육',name:f.name.value,email:f.email.value,org:f.org.value,phone:f.phone.value,message:f.message.value,website:f.website.value,consent:f.consent.checked})})
   .then(function(r){if(!r.ok)throw 0;f.style.display='none';document.getElementById('inqDone').style.display='block';if(typeof gtag==='function')gtag('event','inquiry_submit',{course:'vibe-coding'})})
   .catch(function(){b.disabled=false;b.textContent='다시 시도하기';alert('전송에 실패했습니다. 잠시 후 다시 시도해 주세요.')})}
 
