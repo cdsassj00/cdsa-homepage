@@ -122,7 +122,7 @@ h2 .gold{color:var(--gold)}h2 .red{color:var(--red)}h2 .accent{color:var(--accen
 .mod-result{font-size:13px;color:var(--accent-hi);margin-top:8px;font-weight:500}
 
 /* 팀 */
-.team-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:28px}
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);/* HIDDEN:김태유 원문 repeat(5,1fr) */gap:12px;margin-top:28px}
 .team-card{background:var(--surf);border:1px solid var(--hair);border-radius:16px;overflow:hidden;text-align:center;transition:border-color .3s,transform .3s}
 .team-card:hover{border-color:var(--gold);transform:translateY(-4px)}
 .team-card img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top;filter:grayscale(.15) brightness(.92)}
@@ -451,13 +451,14 @@ h2 .gold{color:var(--gold)}h2 .red{color:var(--red)}h2 .accent{color:var(--accen
   <div style="max-width:880px;margin:0 auto">
     <h2>그래서 이 과정을<br><span class="gold">누가 만들고 가르치는지</span>가 중요합니다.</h2>
     <p class="t">한국데이터사이언티스트협회 CDSA는 AI 유행 이후 ChatGPT 사용법만 가르치기 시작한 교육회사가 아닙니다. 데이터분석, 머신러닝, Power BI, Python, AI 리터러시, 생성형 AI, 업무자동화, 공공 AX까지 서로 다른 기술을 실무 교육으로 연결해온 전문가 집단입니다.</p>
-    <p class="t">AI챔피언과 관련된 공공 AI 교육 현장에서 신성진·이중균·현중균·김태유·김용재 5인의 전문가가 역량체계, 커리큘럼, 교육, 평가, 자문, 컨설팅 영역에 참여해 왔습니다.</p>
+    <!-- HIDDEN:김태유 원문: 신성진·이중균·현중균·김태유·김용재 5인의 -->
+    <p class="t">AI챔피언과 관련된 공공 AI 교육 현장에서 신성진·이중균·현중균·김용재 4인의 전문가가 역량체계, 커리큘럼, 교육, 평가, 자문, 컨설팅 영역에 참여해 왔습니다.</p>
 
     <div class="team-grid">
       <div class="team-card"><img src="/tutors/shin-sungjin.jpg" alt="신성진"><div class="team-info"><div class="team-name">신성진</div><div class="team-spec">AI 교육설계 / 공공 AX</div></div></div>
       <div class="team-card"><img src="/tutors/hyun-jungkyun.jpg" alt="현중균"><div class="team-info"><div class="team-name">현중균</div><div class="team-spec">생성형 AI / 자동화</div></div></div>
       <div class="team-card"><img src="/tutors/lee-jungkyun.jpg" alt="이중균"><div class="team-info"><div class="team-name">이중균</div><div class="team-spec">데이터분석 / Python</div></div></div>
-      <div class="team-card"><img src="/tutors/kim-taeyou.jpg" alt="김태유"><div class="team-info"><div class="team-name">김태유</div><div class="team-spec">AI 서비스 / Agent</div></div></div>
+      <!-- HIDDEN:김태유 START <div class="team-card"><img src="/tutors/kim-taeyou.jpg" alt="김태유"><div class="team-info"><div class="team-name">김태유</div><div class="team-spec">AI 서비스 / Agent</div></div></div> HIDDEN:김태유 END -->
       <div class="team-card"><img src="/tutors/kim-yongjae.jpg" alt="김용재"><div class="team-info"><div class="team-name">김용재</div><div class="team-spec">공공 AI 교육 / 컨설팅</div></div></div>
     </div>
 

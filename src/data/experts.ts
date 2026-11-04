@@ -17,9 +17,11 @@ export interface Expert {
   books: string[]
   email: string
   links?: { label: string; href: string }[]
+  /** true면 사이트에서 감춘다. 데이터는 남겨 두고 다시 열 때 이 줄만 지운다. */
+  hidden?: boolean
 }
 
-export const experts: Expert[] = [
+const allExperts: Expert[] = [
   {
     slug: 'shin-sungjin',
     name: '신성진',
@@ -102,6 +104,7 @@ export const experts: Expert[] = [
   },
   {
     slug: 'kim-taeyou',
+    hidden: true, // HIDDEN:김태유 — 사정으로 잠시 감춤
     name: '김태유',
     en: 'TAE YOU KIM',
     role: 'AI 전문교수 · AX 리드 컨설턴트',
@@ -153,3 +156,5 @@ export const experts: Expert[] = [
     email: 'yjkim@cdsa.kr',
   },
 ]
+
+export const experts = allExperts.filter((e) => !e.hidden)

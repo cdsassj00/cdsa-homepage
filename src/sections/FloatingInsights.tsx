@@ -47,11 +47,11 @@ const articles = [
     description: '하네스는 에이전트 팀 이름표가 아니다. 검색·실행·반복·검증·로그가 없으면 에이전트 오케스트레이션이다.',
     href: '/blog/harness-is-not-a-label.html',
   },
-  {
-    title: '좋은 기획은 기능이 아니라 사람을 먼저 본다',
-    description: '도구를 도입하지 말고 사람의 하루를 재설계하라. 통제감, 예측 가능성, 판단을 키우는 자동화.',
-    href: '/blog/people-first-design.html',
-  },
+  // HIDDEN:김태유   {
+  // HIDDEN:김태유     title: '좋은 기획은 기능이 아니라 사람을 먼저 본다',
+  // HIDDEN:김태유     description: '도구를 도입하지 말고 사람의 하루를 재설계하라. 통제감, 예측 가능성, 판단을 키우는 자동화.',
+  // HIDDEN:김태유     href: '/blog/people-first-design.html',
+  // HIDDEN:김태유   },
   {
     title: '코드가 사라진 자리에 무엇이 들어오는가 — 카파시 인터뷰 정리',
     description: '소프트웨어 3.0, 들쭉날쭉한 지능, 유령 비유, 에이전틱 엔지니어링, 싱킹과 이해, 오토 리서치까지 여덟 가지',

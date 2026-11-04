@@ -3,6 +3,8 @@ import Footer from '../sections/Footer'
 import { ExpertDetail, ExpertPoster } from '../sections/ExpertsCore'
 import { experts } from '../data/experts'
 
+const countWord: Record<number, string> = { 3: '세 명', 4: '네 명', 5: '다섯 명', 6: '여섯 명' }
+
 export default function Experts() {
   useEffect(() => {
     document.title = '협회의 전문가들 · CDSA'
@@ -36,7 +38,7 @@ export default function Experts() {
           협회의 <span className="text-clay-700">전문가들.</span>
         </h1>
         <p className="mt-6 text-ink-700 text-lg max-w-2xl leading-relaxed">
-          공공·기업 현장에서 AI·데이터 교육과 컨설팅을 직접 설계하고 가르치는 다섯 명입니다.
+          공공·기업 현장에서 AI·데이터 교육과 컨설팅을 직접 설계하고 가르치는 {countWord[experts.length] ?? `${experts.length}명`}입니다.
           각자의 이력과 교육 분야, 저서를 한 지면에 정리했습니다.
         </p>
       </section>

@@ -1,6 +1,49 @@
 {
+  "redirects": [
+    {
+      "source": "/blog/people-first-design.html",
+      "destination": "/blog/",
+      "permanent": false
+    },
+    {
+      "source": "/blog/ai-hegemony-2026.html",
+      "destination": "/blog/",
+      "permanent": false
+    },
+    {
+      "source": "/blog/agent-as-workflow.html",
+      "destination": "/blog/",
+      "permanent": false
+    },
+    {
+      "source": "/blog/gemini-worker.html",
+      "destination": "/blog/",
+      "permanent": false
+    },
+    {
+      "source": "/five-blades.html",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/webinar",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/webinar/:path*",
+      "destination": "/",
+      "permanent": false
+    }
+  ],
   "rewrites": [
-    { "source": "/api/:path*", "destination": "/api/:path*" },
-    { "source": "/:path*", "destination": "/index.html" }
+    {
+      "source": "/api/:path*",
+      "destination": "/api/:path*"
+    },
+    {
+      "source": "/:path*",
+      "destination": "/index.html"
+    }
   ]
 }

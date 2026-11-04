@@ -513,7 +513,7 @@ export const tracks = [
 
 // 전문가 네트워크
 // photo: 향후 이미지 URL로 교체 (현재는 이니셜 SVG 사용)
-export const tutors = [
+const allTutors = [
   {
     name: '신성진',
     role: '대표이사',
@@ -556,6 +556,7 @@ export const tutors = [
   },
   {
     name: '김태유',
+    hidden: true, // HIDDEN:김태유 — 사정으로 잠시 감춤
     role: 'AI 전문교수',
     headline: 'MSTY Korea 대표 · 前 KPMG AI 총괄 리드 · Swiss AI 박사',
     bio: 'MSTY Korea 대표(폐쇄망 기반 LLM 솔루션 개발). 前 KPMG AI 총괄 리드(Director), KPMG Canada(Toronto)·US(New York). Swiss School of Management AI 박사, Business School Lausanne 빅데이터 MBA, Indiana University Kelley School of Business.',
@@ -587,6 +588,7 @@ export const tutors = [
     photo: '/tutors/shinjh.png',
   },
 ]
+export const tutors = allTutors.filter((t) => !t.hidden)
 
 // 홈페이지 노출 기관 리스트 — 공개 가능한 실제 출강 이력만 (제안·입찰 건 제외)
 // weight: 1 = small, 2 = medium, 3 = large, 4 = very large, 5 = hero (most prominent)

@@ -164,14 +164,14 @@ export default function ExpertsCore() {
   return (
     <div>
       <div className="flex items-baseline justify-between gap-4 mb-6">
-        <span className="font-mono text-[11px] tracking-[0.2em] text-clay-700 uppercase">Core Five · 핵심 전문가</span>
+        <span className="font-mono text-[11px] tracking-[0.2em] text-clay-700 uppercase">Core {experts.length} · 핵심 전문가</span>
         <a href="/experts" className="text-[13px] text-ink-700 underline underline-offset-4 hover:text-clay-700">
           전문가 프로필 전체 보기 →
         </a>
       </div>
 
       <div className="overflow-x-auto -mx-6 px-6 md:mx-0 md:px-0" style={{ scrollbarWidth: 'none' }}>
-        <div className="grid grid-cols-5 gap-3 md:gap-4 min-w-[720px]">
+        <div className="grid gap-3 md:gap-4 min-w-[720px]" style={{ gridTemplateColumns: `repeat(${experts.length}, minmax(0, 1fr))` }}>
           {experts.map((x, i) => {
             const active = i === sel
             return (
