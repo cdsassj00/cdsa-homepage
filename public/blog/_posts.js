@@ -35,6 +35,17 @@
   // publishTime = '09:00:00' 같은 KST 시각. 미명시 시 '09:00:00'
   const POSTS = [
     {
+      slug: 'november-2026-model-wave',
+      title: '최근 2주, AI 모델이 한꺼번에 쏟아졌다 — 제미나이 4 하이드로젠·카본, 클로드 페이블 5.2, 뮤즈 엠버',
+      date: '2026. 11. 14',
+      category: 'AI 모델 동향 · 큐레이션',
+      href: '/blog/november-2026-model-wave.html',
+      author: '신성진',
+      publishTime: '12:00:00',
+      dek: '2026년 11월 초, 구글은 제미나이 4에 카본과 하이드로젠을 얹고 앤트로픽은 클로드 페이블 5.2를, 메타는 뮤즈 엠버를 내놓았습니다. 같은 2주 안에 오픈AI의 보안·이미지 모델, 큐웬4 미리보기, 카카오 의사결정 모델까지 겹쳤습니다. 공식 발표만 모아 출시일·가격·접근 범위를 정리합니다.',
+      views: { base: 10, daily: 8, publishedISO: '2026-11-14' },
+    },
+    {
       slug: 'public-ai-not-freelancer',
       title: '이 열기가 금지령으로 끝나지 않으려면 — 사이트 300개를 만들어 본 사람이 공공 바이브코딩에 바라는 것',
       date: '2026. 10. 27',
