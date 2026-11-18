@@ -22,7 +22,7 @@ export const hero = {
   subtitle:
     '중앙정부·지자체·공기업·대기업 등 600개 기관에서 AI·데이터 교육을 직접 설계하고 실행합니다. 가르치는 강사가 교육을 설계하고, 컨설턴트가 직접 연락드립니다.',
   ctaPrimary: { label: '교육 · 컨설팅 문의', href: 'https://leadfolio.app/inquiry/cdsa' },
-  ctaSecondary: { label: '커리큘럼 미리보기', href: '/curriculum' },
+  ctaSecondary: { label: '커리큘럼 미리보기', href: 'https://leadfolio.app/view/s8p63pyg' },
 }
 
 // 기존 heroFragments는 더 이상 사용하지 않음 — 히어로는 heroCloud(기관 워드 클라우드)를 사용.

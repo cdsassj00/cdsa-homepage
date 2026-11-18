@@ -2,7 +2,7 @@ import { Suspense, useRef } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { MeshDistortMaterial } from '@react-three/drei'
 import type { Mesh } from 'three'
-import { hero } from '../data/content'
+import { hero, site } from '../data/content'
 import { useInquiry } from './InquiryModal'
 import { useCurriculumBook } from '../pages/CurriculumBook'
 
@@ -162,11 +162,20 @@ export default function Hero() {
               {hero.ctaPrimary.label}
               <span aria-hidden>→</span>
             </button>
-            <button
-              onClick={() => openBook()}
+            <a
+              href={site.curriculumUrl}
+              target="_blank"
+              rel="noopener noreferrer"
               className="btn-outline px-6 md:px-7 py-3 md:py-3.5 text-sm md:text-base"
             >
               {hero.ctaSecondary.label}
+              <span aria-hidden>↗</span>
+            </a>
+            <button
+              onClick={() => openBook()}
+              className="px-2 py-3 text-sm md:text-base text-ink-700 font-medium underline underline-offset-4 decoration-clay-500/60 hover:text-clay-700"
+            >
+              커리큘럼 북 펼쳐보기
             </button>
           </div>
         </div>
